@@ -6,7 +6,7 @@
     "@material-ui/core": "latest",
     "jss": "latest",
     "next": "latest",
-    "prop-types": "latest",
+    "prop-types": "^15.6.2",
     "react": "latest",
     "react-dom": "latest",
     "react-jss": "latest",
