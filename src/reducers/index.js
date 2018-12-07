@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import conditionsReducer from "./conditionsReducer";
+import userReducer from "./userReducer";
 
 const appReducer = combineReducers({
-  condition: conditionsReducer,
+  user: userReducer,
 });
 
 export default appReducer;
