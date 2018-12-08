@@ -1,46 +1,31 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Avatar from '@material-ui/core/Avatar';
+import Grid from '@material-ui/core/Grid';
 
-function mapStateToProps(state) {
-  return {
-
-  };
-}
-
-
-class Thumbnails extends Component {
-  render() {
-    // get the props
-    const { url, size } = this.props;
-    const small = { width: '20px', height: '20px', borderRadius: 20 };
-    const medium = { width: '20px', height: '20px', borderRadius: 20 };
-    const large = { width: '20px', height: '20px', borderRadius: 20 };
-    const xtraLarge = { width: '20px', height: '20px', borderRadius: 20 };
-
-    return (
-      <div>
-        
-      </div>
-    );
-  }
-}
-
-Thumbnails.defaultProps = {
-  url: '',
-  size: 'm', // s, m, l, xl
+const styles = {
+  avatar: {
+    margin: 0,
+  },
+  bigAvatar: {
+    margin: 10,
+    width: 60,
+    height: 60,
+  },
 };
 
-Thumbnails.propTypes = {
-  // You can declare that a prop is a specific JS primitive. By default, these
-  // are all optional.
-  url: PropTypes.string.isRequired,
-  size: PropTypes.string,
+function ImageAvatars(props) {
+  const { classes } = props;
+  return (
+    <Grid container justify="center" alignItems="center">
+      <Avatar alt="Remy Sharp" src="/static/images/forgot.jpg" className={classes.avatar} />
+    </Grid>
+  );
+}
+
+ImageAvatars.propTypes = {
+  classes: PropTypes.object.isRequired,
 };
 
-
-
-
-export default connect(
-  mapStateToProps,
-)(thumbnails);
+export default withStyles(styles)(ImageAvatars);
