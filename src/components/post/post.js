@@ -157,7 +157,10 @@ class Post extends React.Component {
 
                 <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
                   <CardContent>
-                    <Typography paragraph>Method:</Typography>
+                    <Typography paragraph>
+                    <img src="/static/icons/moneybag.svg" alt="comments" width='25' height="25" />
+                    Tip Coin
+                    </Typography>
                     <Typography paragraph>
                       Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
                       minutes.
