@@ -47,8 +47,8 @@ const styles = theme => ({
   forgot: { 
     margin: '1% 0px', 
     cursor: 'pointer', 
-    textDecoration: 'underline', 
-    textDecorationColor: 'blue', 
+    // textDecoration: 'underline', 
+    // textDecorationColor: 'blue', 
     textAlign: "right" 
   },
   bottom: {
@@ -66,7 +66,7 @@ const styles = theme => ({
   }
 });
 
-class LoginPath extends Component {
+class RegisterPath extends Component {
   render(){
     const { classes } = this.props;
     return (
@@ -74,12 +74,23 @@ class LoginPath extends Component {
         <Typography variant="h2" gutterBottom style={{ margin: '4% 8%' }} > Tipestry</Typography>
 
         <Typography variant="overline" gutterBottom style={{ margin: '2% 8%', marginTop: "15%", fontSize: 20 }}> 
-          Welcome, Login to your Account
+          New Here? Create an Account...
         </Typography>
         <form className={classes.container} noValidate autoComplete="off">
           <TextField
             id="standard-full-width"
-            label="Email or Username"
+            label="Username"
+            style={{ margin: '2% 8%' }}
+            placeholder="Enter email"
+            helperText=""
+            fullWidth
+            margin="normal"
+            variant="outlined"
+          />
+
+          <TextField
+            id="standard-full-width"
+            label="Email"
             style={{ margin: '2% 8%' }}
             placeholder="Enter email"
             helperText=""
@@ -100,27 +111,35 @@ class LoginPath extends Component {
             variant="outlined"
           />
 
+          <TextField
+            id="standard-full-width"
+            label="Confirm Password"
+            style={{ margin: '2% 8%' }}
+            type="password"
+            placeholder="password"
+            helperText=""
+            fullWidth
+            margin="normal"
+            variant="outlined"
+          />
+
           <Grid container spacing={24} style={{ margin: '0 8%' }} >
             <Grid item xs={6} sm={6} style={{ paddingLeft: 0 }}>
               <Button variant="outlined" color="secondary" className={classes.button}>
-                Log In
+                Sign Up
               </Button>
             </Grid>
             <Grid item xs={6} sm={6} style={{ paddingRight: 0 }} >
-              <Typography variant="overline" gutterBottom className={classes.forgot}> 
-                <Link href="/forgotPassword">
-                  <a>Forgot Password</a>
+              <Typography variant="overline" gutterBottom className={classes.forgot} > 
+                Have an account? &nbsp;
+                <Link href="/register">
+                  <a>Log In</a>
                 </Link>
               </Typography>
             </Grid>
           </Grid>
 
-          <Typography variant="overline" gutterBottom style={{ margin: '0 8%' }} > 
-            Don't have and account? &nbsp;
-            <Link href="/register">
-              <a>Sign Up</a>
-            </Link>
-          </Typography>
+          
               
 
           <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
@@ -146,8 +165,8 @@ class LoginPath extends Component {
   }
 }
 
-LoginPath.propTypes = {
+RegisterPath.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(LoginPath);
+export default withStyles(styles)(RegisterPath);
