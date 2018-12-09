@@ -1,5 +1,9 @@
 # Next.js example
 
+// "start": "next start",
+
+
+
 ## How to use
 
 Download the example [or clone the repo](https://github.com/mui-org/material-ui):

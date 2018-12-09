@@ -79,7 +79,7 @@ class LoginPath extends Component {
         <form className={classes.container} noValidate autoComplete="off">
           <TextField
             id="standard-full-width"
-            label="Email or Username"
+            label="Email"
             style={{ margin: '2% 8%' }}
             placeholder="Enter email"
             helperText=""
