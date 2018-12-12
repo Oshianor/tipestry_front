@@ -134,8 +134,9 @@ class Post extends React.Component {
                       </IconButton>
                     </React.Fragment>
                   }
+                  component="div"
                   title="Shrimp and Chorizo Paella"
-                  subheader="&#x1f558;September 14, 2016"
+                  subheader="September 14, 2016"
                 />
                 <CardMedia
                   className={classes.media}

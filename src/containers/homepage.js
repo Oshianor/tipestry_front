@@ -6,12 +6,12 @@ import PropTypes from 'prop-types';
 
 const styles = theme => ({
   root: {
-    backgroundImage: "url('/static/images/pagecover.svg')", 
-    height: 300,
+    backgroundImage: "url('/static/homepage/headerBackground.svg')", 
+    minHeight: 300,
     backgroundAttachment: 'fixed',
     backgroundPosition: 'inherit',
     backgroundRepeat: 'no-repeat',
-    backgroundSize: "contain"
+    backgroundSize: "cover"
   },
 });
 class Homepage extends Component {
