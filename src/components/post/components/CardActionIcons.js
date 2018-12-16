@@ -9,6 +9,10 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Badge from '@material-ui/core/Badge';
 import Button from '@material-ui/core/Button';
 
+// created component
+import SharePopover from '../../popover/sharePopover';
+
+
 // icons
 
 // outlined
@@ -42,7 +46,8 @@ const styles = theme => ({
     transition: theme.transitions.create('transform', {
       duration: theme.transitions.duration.shortest,
     }),
-    marginLeft: 'auto',
+    // marginLeft: 'auto',
+    marginRight: "2%",
     [theme.breakpoints.up('sm')]: {
       marginRight: -8,
     },
@@ -61,7 +66,10 @@ const styles = theme => ({
     }`,
   },
   iconspacing: {
-    margin: '0 8px'
+    margin: '0 3%',
+    [theme.breakpoints.down('xs')]: {
+      margin: '0 1%',
+    },
   }
 });
 
@@ -102,21 +110,20 @@ class CardActionIcons extends React.Component {
         </Tooltip>
         {/*  */}
         <Tooltip title="Share Post" aria-label="Share">
-          <IconButton aria-label="Share" className={classes.iconspacing} >
-            <ShareIcon />
-          </IconButton>
+          <SharePopover />
         </Tooltip>
 
         {/* tips coin icons */}
         <IconButton
           onClick={handleExpandClick}
+          className={classes.iconspacing}
           aria-expanded={expanded}
           aria-label="Show more"
         >
           <img src="/static/icons/moneybag.svg" alt="comments" width='25' height="25" />
           <ExpandMoreIcon className={classnames(classes.expand, {
             [classes.expandOpen]: expanded,
-          })} style={{ fontSize: 15, marginLeft: -6 }} />
+          })} style={{ fontSize: 15 }} />
         </IconButton>
       </CardActions>
     );

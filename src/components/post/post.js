@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import classnames from 'classnames';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -52,7 +51,15 @@ import TipIcons from './components/TipIcons';
 
 const styles = theme => ({
   card: {
-    maxWidth: 400,
+    maxWidth: 500,
+  },
+  demo: {
+    // width: '100%',
+    marginTop: 20,
+    position: 'relative',
+    [theme.breakpoints.up("lg")]: {
+      width: 1170
+    }
   },
   media: {
     height: 0,
@@ -122,7 +129,7 @@ class Post extends React.Component {
                 <Card className={classes.card}>
                 <CardHeader
                   avatar={
-                    <Thumbnails />
+                    <Thumbnails  name="Matt"/>
                   }
                   action={
                     <React.Fragment>
@@ -145,7 +152,6 @@ class Post extends React.Component {
                 />
                 <CardContent>
                   <Typography component="p">
-                  
                     This impressive paella is a perfect party dish and a fun meal to cook together with your
                     guests. Add 1 cup of frozen peas along with the mussels, if you like.
                   </Typography>
