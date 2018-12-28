@@ -30,9 +30,9 @@ class MyApp extends App {
     const { Component, pageProps } = this.props;
     return (
       <Container>
-        <Head>
+        {/* <Head>
           <title>My page</title>
-        </Head>
+        </Head> */}
         {/* Wrap every page in Jss and Theme providers */}
         <Provider store={store}>
         

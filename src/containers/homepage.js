@@ -3,7 +3,7 @@ import Header from '../components/header/header';
 import Post from '../components/post/post';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import Preloader from '../components/preloader/preloader';
+import Tipcoin from '../components/tipcoin/tipcoin';
 
 const styles = theme => ({
   root: {
@@ -18,27 +18,13 @@ const styles = theme => ({
   },
 });
 class Homepage extends Component {
-  state = {
-    loading: false
-  }
   render() {
     const { classes } = this.props;
-    const { loading } = this.state;
     return (
       <div>
-        {
-          loading ? 
-            <Preloader />
-          :
-            <React.Fragment>
-              <div >
-                <Header />
-              </div>
-
-              <Post />
-            </React.Fragment>
-        }
-        
+        <Header />
+        <Tipcoin />
+        <Post />
       </div>
     )
   }

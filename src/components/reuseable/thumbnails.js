@@ -74,24 +74,32 @@ class Thumbnails extends Component {
       size,
       borderWidth,
       borderColor,
-      name
+      name,
+      color
     } = this.props;
+    const xs = {
+      backgroundColor: color !== "" ? color :this.colorRan(),
+      width: 25,
+      height: 25,
+      fontSize: 14,
+      border: `${borderWidth}px solid ${borderColor}`
+    }
     const sm = {
-      backgroundColor: this.colorRan(),
-      width: 40,
-      height: 40,
+      backgroundColor: color !== "" ? color : this.colorRan(),
+      width: 45,
+      height: 45,
       border: `${borderWidth}px solid ${borderColor}`
       // fontSize: 50
     }
     const md = {
-      backgroundColor: this.colorRan(),
+      backgroundColor: color !== "" ? color : this.colorRan(),
       width: 60,
       height: 60,
       fontSize: 35,
       border: `${borderWidth}px solid ${borderColor}`
     }
     const lg = {
-      backgroundColor: this.colorRan(),
+      backgroundColor: color !== "" ? color : this.colorRan(),
       width: 75,
       height: 75,
       fontSize: 50,
@@ -99,10 +107,10 @@ class Thumbnails extends Component {
       
     }
     const xl = {
-      backgroundColor: this.colorRan(),
+      backgroundColor: color !== "" ? color : this.colorRan(),
       width: 125,
       height: 125,
-      fontSize: 100,
+      fontSize: 90,
       border: `${borderWidth}px solid ${borderColor}`
     }
     let sizer;
@@ -114,6 +122,8 @@ class Thumbnails extends Component {
       sizer = lg;
     } else if (size === 'xl') {
       sizer = xl;
+    } else if (size === 'xs') {
+      sizer = xs;
     }
     if (url !== "") {
       return (
@@ -133,7 +143,8 @@ Thumbnails.defaultProps = {
   url: "",
   borderWidth: 0,
   borderColor: 'transparent',
-  size: 'sm'
+  size: 'sm',
+  color: ''
 };
 
 
@@ -143,7 +154,8 @@ Thumbnails.propTypes = {
   size: PropTypes.string,
   name: PropTypes.string,
   borderColor: PropTypes.string,
-  borderWidth: PropTypes.number
+  borderWidth: PropTypes.number,
+  color: PropTypes.string,
 };
 
 export default withStyles(styles)(Thumbnails);

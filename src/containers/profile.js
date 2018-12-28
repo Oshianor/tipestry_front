@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import Header from '../components/header/header';
+// import Header from '../components/header/header';
 import Preloader from '../components/preloader/preloader';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -35,6 +35,29 @@ class Profile extends React.Component {
     this.setState({ value });
   };
 
+  displayInfo = () => {
+    return (
+      <div style={{ marginTop: 250, marginBottom: 10, textAlign: 'center' }} >
+        <Typography variant="h4">
+          Matthew Abundance
+        </Typography>
+        <Typography variant="subtitle2">
+          Member Since: 2017
+        </Typography>
+        <Typography variant="subtitle2">
+          Next level job
+        </Typography>
+        <Typography variant="subtitle2" style={{ margin: "0px 10%" }} >
+          The progress components accept a value in the range 0 - 100. This simplifies things
+          for screen - reader users, where these are the
+          default min / max values.Sometimes, however,
+          you might be working with a data source where the values fall outside this range. 
+          Here 's how you can easily transform a value in any range to a scale
+        </Typography>
+      </div>
+    )
+  }
+
   render() {
     const { classes } = this.props;
     const { loading } = this.state;
@@ -45,9 +68,9 @@ class Profile extends React.Component {
             <Preloader />
           :
             <div>
-              <Header />
-              {/* <Topstuff /> */}
-              <Paper style={{ marginTop: 400 }}>
+              {/* <Header /> */}
+              {this.displayInfo()}
+              <Paper>
                 <Grid container justify="center">
                   <Grid>
                     <Typography style={{ textAlign: 'center' }}>12</Typography>

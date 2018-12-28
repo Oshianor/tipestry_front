@@ -10,7 +10,7 @@ import Badge from '@material-ui/core/Badge';
 import Button from '@material-ui/core/Button';
 
 // created component
-import SharePopover from '../../popover/sharePopover';
+import SharePopover from './sharePopover';
 
 
 // icons
@@ -18,19 +18,28 @@ import SharePopover from '../../popover/sharePopover';
 // outlined
 import ThumbDownAltOutlined from '@material-ui/icons/ThumbDownAltOutlined';
 import ThumbUpAltOutlined from '@material-ui/icons/ThumbUpAltOutlined';
-import FavoriteBorderOutlined from '@material-ui/icons/FavoriteBorderOutlined';
+import ThumbDownAlt from '@material-ui/icons/ThumbDownAlt';
+import ThumbUpAlt from '@material-ui/icons/ThumbUpAlt';
+
+// import FavoriteBorderOutlined from '@material-ui/icons/FavoriteBorderOutlined';
 import ChatBubbleOutlineOutlined from '@material-ui/icons/ChatBubbleOutlineOutlined';
 
 
 
 // filled
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderOutlined from '@material-ui/icons/FavoriteBorderOutlined';
+
+
 import ChatBubble from '@material-ui/icons/ChatBubble';
-import ThumbDownAlt from '@material-ui/icons/ThumbDownAlt';
-import ThumbUpAlt from '@material-ui/icons/ThumbUpAlt';
+
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+
+
+import { connect } from 'react-redux';
+import Thumb from './thumb';
 
 
 const styles = theme => ({
@@ -41,73 +50,94 @@ const styles = theme => ({
     display: 'flex',
     borderTop: '.5px solid gray'
   },
-  expand: {
-    transform: 'rotate(0deg)',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-    // marginLeft: 'auto',
-    marginRight: "2%",
-    [theme.breakpoints.up('sm')]: {
-      marginRight: -8,
+  num: {
+    fontSize: 15,
+    fontWeight: '500',
+    padding: 0,
+    color: "#403d3d",
+    marginLeft: "-7px",
+    [theme.breakpoints.up('md')]: {
+      marginLeft: "-18px",
     },
   },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
-  badge: {
-    top: 0,
-    right: -19,
-    width: 27,
-    height: 27,
-    // The border color match the background color.
-    border: `2px solid ${
-      theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[900]
-    }`,
-  },
   iconspacing: {
-    margin: '0 3%',
-    [theme.breakpoints.down('xs')]: {
-      margin: '0 1%',
+    [theme.breakpoints.only('xs')]: {
+      margin: '0 -3px',
+    },
+    [theme.breakpoints.only('sm')]: {
+      margin: '0 4px',
+    },
+    [theme.breakpoints.between('md', 'xl')]: {
+      margin: '0 10px',
     },
   }
 });
 
 class CardActionIcons extends React.Component {
-  render() {
-    const { classes, expanded, handleExpandClick } = this.props;
+  handleFavourite = () => {
 
+  }
+
+  displayFavour = () => {
+    const { data, votes, classes, topicId } = this.props;
+    // console.log('topicId', data.user.favourite, "---", topicId);
+    
+    // check if the user properieste are avaiable
+    // if (typeof data.user !== "undefined") {
+    //   if (data.user.favourite.indexOf(topicId) !== -1) {
+    //     return (
+    //       <Tooltip title="Remove from favorites" aria-label="Add to favorites">
+    //         <IconButton onClick={this.handleFavourite} aria-label="Add to favorites" className={classes.iconspacing}>
+    //           <FavoriteBorderOutlined />
+    //         </IconButton>
+    //       </Tooltip>
+    //     )
+    //   }
+    // }
+    return (
+      <Tooltip title="Add to favorites" aria-label="Add to favorites">
+        <IconButton aria-label="Add to favorites" className={classes.iconspacing}>
+          <FavoriteIcon />
+        </IconButton>
+      </Tooltip>
+    )
+  }
+
+  render() {
+    const { token, classes, expanded, handleExpandClick, votes, comment, topicObjId } = this.props;
+    // console.log('votes.length,', votes.length);
+    
     return (
       <CardActions className={classes.actions} >
+
+        <Thumb 
+          votes={votes} 
+          token={token} 
+          topicObjId={topicObjId} 
+          iconspacing={classes.iconspacing} 
+          num={classes.num} 
+        />
+
+
+
         {/*  */}
-        <Tooltip title="Thumbs Up" aria-label="Thumbs Up">
-          <IconButton aria-label="Thumbs Up" className={classes.iconspacing} >
-            <Badge badgeContent={233} color="primary" classes={{ badge: classes.badge }}>
-              <ThumbUpAlt />
-            </Badge>
-          </IconButton>
-        </Tooltip>
-        {/*  */}
-        <Tooltip title="Thumbs Down" aria-label="Thumbs Down">
-          <IconButton aria-label="Thumbs Down" className={classes.iconspacing} >
-            <ThumbDownAlt />
-          </IconButton>
-        </Tooltip>
-        {/*  */}
-        <Tooltip title="Add to favorites" aria-label="Add to favorites">
-          <IconButton aria-label="Add to favorites" className={classes.iconspacing} >
-            <FavoriteIcon />
-          </IconButton>
-        </Tooltip>
+        {this.displayFavour()}
+
+
+
         {/*  */}
         <Tooltip title="Comments" aria-label="comments">
           <IconButton aria-label="comments" className={classes.iconspacing}>
-            <Badge badgeContent={4} color="primary" classes={{ badge: classes.badge }} >
-              {/* <ChatBubble /> */}
-              <img src="/static/icons/comments.svg" alt="comments" width='25' height="25" />
-            </Badge>
+            <img src="/static/icons/comments.svg" alt="comments" width='25' height="25" />
           </IconButton>
         </Tooltip>
+        <p className={classes.num} >
+          {typeof comment[0] !== "undefined" ? comment[0].count : ""}
+        </p>
+				&nbsp;&nbsp;
+
+
+
         {/*  */}
         <Tooltip title="Share Post" aria-label="Share">
           <SharePopover />
@@ -121,10 +151,11 @@ class CardActionIcons extends React.Component {
           aria-label="Show more"
         >
           <img src="/static/icons/moneybag.svg" alt="comments" width='25' height="25" />
-          <ExpandMoreIcon className={classnames(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })} style={{ fontSize: 15 }} />
         </IconButton>
+        <p className={classes.num} >
+          {comment.length !== 0 && comment.length }
+        </p>
+				&nbsp;&nbsp;
       </CardActions>
     );
   }
@@ -132,8 +163,17 @@ class CardActionIcons extends React.Component {
 
 CardActionIcons.propTypes = {
   classes: PropTypes.object.isRequired,
-  expanded: PropTypes.bool.isRequired, 
-  handleExpandClick: PropTypes.func.isRequired
+  votes: PropTypes.array.isRequired,
+  comment: PropTypes.array.isRequired,
+  topicId: PropTypes.number.isRequired,
+  topicObjId: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
 };
 
-export default withStyles(styles)(CardActionIcons);
+function mapStateToProps(state) {
+  return {
+    data: state.data,
+  }
+}
+
+export default connect(mapStateToProps, )(withStyles(styles)(CardActionIcons));

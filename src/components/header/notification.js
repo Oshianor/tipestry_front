@@ -1,31 +1,13 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import Popper from '@material-ui/core/Popper';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
-import ShareIcon from '@material-ui/icons/Share';
-import FileCopy from '@material-ui/icons/FileCopy';
+import Typography from '@material-ui/core/Typography';
+import Notifications from '@material-ui/icons/Notifications';
+import Badge from '@material-ui/core/Badge';
+import Thumbnails from '../reuseable/thumbnails';
 
 const styles = theme => ({
   root: {
@@ -33,63 +15,36 @@ const styles = theme => ({
     
   },
   paper: {
-    maxWidth: 400,
+    width: 500,
     overflow: 'auto',
     padding: 10,
-    borderRadius: 18,
-
+    height: 200,
+    borderRadius: 10,
   },
   iconspacing: {
-    top: -14,
-    margin: '0 3%',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.only('xs')]: {
       margin: '0 1%',
+    },
+    [theme.breakpoints.only('sm')]: {
+      margin: '0 2%',
+    },
+    [theme.breakpoints.between('md', 'xl')]: {
+      margin: '0 4%',
     },
   },
   popper: {
-    zIndex: 1,
+    zIndex: 9999,
     '&[x-placement*="bottom"] $arrow': {
       top: 0,
       left: 0,
       marginTop: '-0.9em',
-      width: '17em',
+      width: '71em',
       height: '1em',
       '&::before': {
         borderWidth: '0 1em 1em 1em',
         borderColor: `transparent transparent ${theme.palette.common.white} transparent`,
       },
-    },
-    '&[x-placement*="top"] $arrow': {
-      bottom: 0,
-      left: 0,
-      marginBottom: '-0.9em',
-      width: '17em',
-      height: '1em',
-      '&::before': {
-        borderWidth: '1em 1em 0 1em',
-        borderColor: `${theme.palette.common.white} transparent transparent transparent`,
-      },
-    },
-    '&[x-placement*="right"] $arrow': {
-      left: 0,
-      marginLeft: '-0.9em',
-      height: '3em',
-      width: '1em',
-      '&::before': {
-        borderWidth: '1em 1em 1em 0',
-        borderColor: `transparent ${theme.palette.common.white} transparent transparent`,
-      },
-    },
-    '&[x-placement*="left"] $arrow': {
-      right: 0,
-      marginRight: '-0.9em',
-      height: '3em',
-      width: '1em',
-      '&::before': {
-        borderWidth: '1em 0 1em 1em',
-        borderColor: `transparent transparent transparent ${theme.palette.common.white}`,
-      },
-    },
+    }
   },
   arrow: {
     position: 'absolute',
@@ -110,14 +65,14 @@ const styles = theme => ({
   }
 });
 
-class AnchorPlayground extends React.Component {
+class Notification extends React.Component {
   state = {
     arrow: true,
     arrowRef: null,
     disablePortal: false,
     flip: true,
     open: false,
-    placement: 'top',
+    placement: 'bottom',
     preventOverflow: 'scrollParent',
   };
 
@@ -140,10 +95,6 @@ class AnchorPlayground extends React.Component {
     }));
   };
 
-  openFace = () => {
-
-  }
-
   render() {
     const { classes } = this.props;
     const { open, placement, disablePortal, flip, preventOverflow, arrow, arrowRef } = this.state;
@@ -151,7 +102,7 @@ class AnchorPlayground extends React.Component {
     const id = open ? 'Share' : null;
 
     return (
-      <div className={classes.iconspacing} >
+      <React.Fragment>
         <IconButton
           buttonRef={node => {
             this.anchorEl = node;
@@ -161,7 +112,9 @@ class AnchorPlayground extends React.Component {
           onClick={this.handleClickButton('arrow')}
           
         >
-          <ShareIcon />
+          <Badge badgeContent={17} color="secondary">
+						<Notifications style={{ color: "white" }} />
+					</Badge>
         </IconButton>
         <Popper
           id={id}
@@ -187,22 +140,34 @@ class AnchorPlayground extends React.Component {
         >
           {arrow ? <span className={classes.arrow} ref={this.handleArrowRef} /> : null}
           <Paper className={classes.paper}>
-            <a href="https://www.facebook.com/sharer/sharer.php?u=https://tipestry.com" target="_blank" className={classes.social} >
-              <img src="/static/social/facebook.png" width="25" height="25" />
-            </a>
-            <a href="https://twitter.com/share?text=visit&amp;url=https://tipestry.com" target="_blank" className={classes.social}>
-              <img src="/static/social/twitter.png" width="25" height="25" />
-            </a>
-            <FileCopy style={{ cursor: 'pointer', color: 'red' }} />
+          {
+            [1, 2, 3, 4].map((r) => (
+              <div style = {
+                {
+                  borderBottom: '1px solid darkgray',
+                  display: 'flex',
+                  alignItems: 'center',
+                  margin: 5
+                }
+              } >
+                <span style={{ marginBottom: 5 }}><Thumbnails name="spalt" /></span>
+                <Typography variant='body2' style={{ fontSize: 12, marginLeft: 15 }}>
+                  pipeline " expression to be used in place of the "
+                  local and
+                  foreign " keys. So instead of using the
+                </Typography>
+              </div>
+            ))
+          }
           </Paper>
         </Popper>
-      </div>
+      </React.Fragment>
     );
   }
 }
 
-AnchorPlayground.propTypes = {
+Notification.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(AnchorPlayground);
+export default withStyles(styles)(Notification);

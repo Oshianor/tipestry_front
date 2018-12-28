@@ -22,13 +22,6 @@ const styles = theme => ({
 });
 
 class Compose extends React.Component {
-  state = {
-    name: 'Cat in the Hat',
-    age: '',
-    multiline: 'Controlled',
-    currency: 'EUR',
-  };
-
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value,
@@ -47,7 +40,7 @@ class Compose extends React.Component {
           id="outlined-multiline-static"
           label="Multiline"
           multiline
-          rows="4"
+          rows="3"
           defaultValue="Default Value"
           className={classes.textField}
           margin="normal"

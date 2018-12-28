@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
-import Edit from '../components/editprofile/edit';
 // import Header from '../components/header/header';
+import Coindetails from '../components/checkout/coindetails';
+// import
 
-class Editprofile extends Component {
+class Checkout extends Component {
 	render() {
 		return (
 			<div>
 				{/* <Header /> */}
-				<Edit />
+				<Coindetails />
 			</div>
 		);
 	}
 }
 
-export default Editprofile;
+export default Checkout;

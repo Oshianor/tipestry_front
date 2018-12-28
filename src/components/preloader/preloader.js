@@ -14,7 +14,7 @@ const styles = theme => ({
 
 class Preloader extends Component{
 	state = {
-		msg: 'Give us a sec ☺️. We are getting this ready'
+		msg: 'Give us a sec ☺️. We are getting things ready for you.'
 	}
 
 	componentDidMount() {
@@ -22,13 +22,13 @@ class Preloader extends Component{
 			this.setState({
 				msg: 'I know it been a while but we are working on it 🙏...'
 			})
-		}, 1000);
+		}, 20000);
 
 		this.timer = setTimeout(() => {
 			this.setState({
 				msg: 'It taking too long. Your network must me slow 🚶.'
 			})
-		}, 5000);
+		}, 30000);
 	}
 
 	componentWillUnmount() {
@@ -37,6 +37,8 @@ class Preloader extends Component{
 	}
 
 	render() {
+		console.log("PRLOADER", this.state);
+		
 		const { classes } = this.props;
 		const { msg } = this.state;
 		return (
