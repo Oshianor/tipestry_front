@@ -307,24 +307,10 @@ class Header extends React.Component {
 
 	displayDesktop = () => {
 		const { anchorEl, token } = this.state;
-    const { classes } = this.props;
+    const { classes, data } = this.props;
     const isMenuOpen = Boolean(anchorEl);
 		return (
 			<div className={classes.sectionDesktop}>
-				{
-					token &&
-						<React.Fragment>
-							<Notification />
-							<IconButton
-								aria-owns={isMenuOpen ? 'material-appbar' : undefined}
-								aria-haspopup="true"
-								onClick={this.handleProfileMenuOpen}
-								color="inherit"
-							>
-								<AccountCircle />
-							</IconButton>
-						</React.Fragment>
-				}
 				<Link href="/about">
 					<Button color="inherit">About</Button>
 				</Link>
@@ -351,17 +337,6 @@ class Header extends React.Component {
 					style={{ color: 'white' }} size="small" color="secondary" className={classes.button}>
 					Upload Url
 				</Button>
-				{
-					token &&
-						<Tooltip title="Log out" aria-label="logout">
-							<IconButton
-								onClick={this.handleLogout}
-								color="inherit"
-							>
-								<Logout />
-							</IconButton>
-						</Tooltip>
-				}
 			</div>
 		)
 	}
@@ -381,8 +356,8 @@ class Header extends React.Component {
 	}
 
   render() {
-    const { anchorEl, mobileMoreAnchorEl, uploadStatus } = this.state;
-    const { classes } = this.props;
+    const { anchorEl, mobileMoreAnchorEl, uploadStatus, token } = this.state;
+    const { classes, data } = this.props;
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -394,27 +369,17 @@ class Header extends React.Component {
         open={isMobileMenuOpen}
         onClose={this.handleMobileMenuClose}
       >
-        <MenuItem>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <MailIcon />
-            </Badge>
-          </IconButton>
-          <p>Messages</p>
-        </MenuItem>
-        <MenuItem>
-          <IconButton color="inherit">
-            <Badge badgeContent={11} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <p>Notifications</p>
-        </MenuItem>
-        <MenuItem onClick={this.handleProfileMenuOpen}>
+				<MenuItem onClick={this.handleProfileMenuOpen}>
           <IconButton color="inherit">
             <AccountCircle />
           </IconButton>
-          <p>Profile</p>
+          <p>Invite</p>
+        </MenuItem>
+				<MenuItem onClick={this.handleProfileMenuOpen}>
+          <IconButton color="inherit">
+            <AccountCircle />
+          </IconButton>
+          <p>Tip Report</p>
         </MenuItem>
 				<MenuItem onClick={this.handleClickOpen}>
           <Button style={{ margin: "1% 15%" }} variant="outlined" size="small" color="secondary" className={classes.button}>
@@ -453,7 +418,32 @@ class Header extends React.Component {
 						</Link>
             
             <div className={classes.grow} />
-            {this.displayDesktop()}
+						{this.displayDesktop()}
+						{
+							token &&
+								<React.Fragment>
+									<Notification />
+									<Link href={"/profile/" + data.user._id + "/" + data.user.username} >
+										<a>
+											<Thumbnails size="xs" color="black"  name={data.user.username} />
+										</a>
+									</Link>
+									<Link href={"/profile/" + data.user._id + "/" + data.user.username} >
+										<a style={{ color: 'white', textDecoration: 'none' }}>
+											<p>&nbsp;Hi, {data.user.username}</p>
+										</a>
+									</Link>
+									
+									<Tooltip title="Log out" aria-label="logout">
+										<IconButton
+											onClick={this.handleLogout}
+											color="inherit"
+										>
+											<Logout />
+										</IconButton>
+									</Tooltip>
+								</React.Fragment>
+						}
             <div className={classes.sectionMobile}>
               <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
 								<MenuIcon />
