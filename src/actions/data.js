@@ -24,16 +24,49 @@ export const getTopics = (topic) => {
   }
 }
 
-export const getVotesCount = (comment) => {
+
+export const getSiteTopic = (topic) => {
   return {
-    type: "GET_VOTES_COUNT",
-    payload: comment
+    type: "GET_SITE_TOPIC",
+    payload: topic
   }
 }
 
-export const getCommentCount = (comment) => {
+
+// profile action setters
+export const getProfile = (arg) => {
   return {
-    type: "GET_COMMENT_COUNT",
-    payload: comment
+    type: "GET_PROFILE",
+    payload: arg
+  }
+}
+
+export const getFavourite = (arg) => {
+  console.log("FAVORU", arg);
+  
+  return {
+    type: "GET_PROFILE_FAVOURITE",
+    payload: arg
+  }
+}
+
+export const getComment = (arg) => {
+  return {
+    type: "GET_PROFILE_COMMENT",
+    payload: arg
+  }
+}
+
+export const getFollowers = (arg) => {
+  return {
+    type: "GET_PROFILE_FOLLOWERS",
+    payload: arg
+  }
+}
+
+export const getFollowing = (arg) => {
+  return {
+    type: "GET_PROFILE_FOLLOWING",
+    payload: arg
   }
 }

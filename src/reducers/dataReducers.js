@@ -1,7 +1,13 @@
 const initialstate = {
   topics: [],
   user: {},
-  token: ''
+  token: '',
+  siteTopic: {},
+  profile: {},
+  favourite: [],
+  followers: [],
+  following: [],
+  comment: []
 }
 export default (state = initialstate, action) => {
   switch (action.type) {
@@ -16,6 +22,30 @@ export default (state = initialstate, action) => {
     case "GET_TOPICS":
       return Object.assign({}, state, {
         topics: action.payload
+      });
+    case "GET_SITE_TOPIC":
+      return Object.assign({}, state, {
+        siteTopic: action.payload
+      });
+    case "GET_PROFILE":
+      return Object.assign({}, state, {
+        profile: action.payload
+      });
+    case "GET_PROFILE_FAVOURITE":
+      return Object.assign({}, state, {
+        favourite: action.payload
+      });
+    case "GET_PROFILE_COMMENT":
+      return Object.assign({}, state, {
+        comment: action.payload
+      });
+    case "GET_PROFILE_FOLLOWERS":
+      return Object.assign({}, state, {
+        followers: action.payload
+      });
+    case "GET_PROFILE_FOLLOWING":
+      return Object.assign({}, state, {
+        following: action.payload
       });
     default:
       return state

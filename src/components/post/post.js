@@ -61,7 +61,8 @@ const styles = theme => ({
 
 class Post extends React.Component {
   state = {
-    token: null
+    token: null,
+    textId: null
   }
   componentDidMount() {
     let token = localStorage.getItem('token');
@@ -69,12 +70,27 @@ class Post extends React.Component {
       token
     })
   }
-  
-  
+
+  displayTitle = (title) => {
+    if (title.length > 60) {
+      return (
+        <a style={{ cursor: 'pointer', textDecoration: 'none' }} >
+          {title.substr(0, 40)}
+        </a>
+      )
+    } else {
+      return (
+        <a style={{ color: '#1F7BD8', textDecoration: 'none' }} >
+          {title}
+        </a>
+      )
+    }
+  }
+
   render() {
-    const { classes, data } = this.props;
+    const { classes, topicValue } = this.props;
     const { token } = this.state;
-    console.log("POST", this.state);
+    // console.log("POST", this.state);
     
     return (
       <Grid container justify="center">
@@ -85,14 +101,14 @@ class Post extends React.Component {
           justify="center"
         >
           {
-            data.topics.content.map((topic, index) => (
+            topicValue.map((topic, index) => (
               <Grid item style={{ margin: "10px" }} key={index} >
                 <Card className={classes.card}>
                 <CardHeader
                   avatar={
-                    <Link href="/profile">
+                    <Link href={encodeURI("/profile/" + topic.user[0]._id + "/@" + topic.user[0].username)} >
                       <a style={{ textDecoration: 'none' }}>
-                      <Thumbnails name={topic.user[0].username} />
+                        <Thumbnails name={topic.user[0].username} />
                       </a>
                     </Link>
                   }
@@ -104,7 +120,7 @@ class Post extends React.Component {
                   }
                   component="div"
                   title={
-                    <Link href="/profile" >
+                    <Link href={encodeURI("/profile/" + topic.user[0]._id + "/@" + topic.user[0].username)} >
                       <a style={{ color: '#1F7BD8', textDecoration: 'none' }}>
                         <strong style={{ color: 'gray' }}>@</strong>
                         {typeof topic.user[0] !== "undefined" ? `${topic.user[0].username}` : "@No name"}
@@ -122,15 +138,15 @@ class Post extends React.Component {
                   image={config.url + "/topics/" + topic.sites[0].screen_path}
                   title={topic.title}
                   component="a"
-                  href="/profile"
+                  href={encodeURI("/topics/" + topic._id + "/" + topic.title)}
                 />
 
                 <CardContent>
                   <Typography component="p">
-                    <Link href="/profile">
-                      <a style={{ color: '#1F7BD8', textDecoration: 'none' }} >
-                        {topic.title}
-                      </a>
+                    <Link href={encodeURI("/topics/" + topic._id + "/" + topic.title)} >
+                      
+                        {/* {topic.title} */}
+                        {this.displayTitle(topic.title, topic._id)}
                     </Link>
                     <br />
                     <Link href="/profile">
@@ -144,7 +160,7 @@ class Post extends React.Component {
                 {/* card action icons */}
                 <CardActionsIcons 
                   votes={topic.votes}
-                  comment={topic.comment}
+                  comment={typeof topic.comment[0] !== "undefined" ? topic.comment[0].count : ""}
                   topicId={topic.id}
                   token={token}
                   topicObjId={topic._id}

@@ -33,11 +33,11 @@ class Preloader extends Component{
 
 	componentWillUnmount() {
 		clearTimeout(this.timer);
-		console.log("clear timer", this.timer);
+		// console.log("clear timer", this.timer);
 	}
 
 	render() {
-		console.log("PRLOADER", this.state);
+		// console.log("PRLOADER", this.state);
 		
 		const { classes } = this.props;
 		const { msg } = this.state;

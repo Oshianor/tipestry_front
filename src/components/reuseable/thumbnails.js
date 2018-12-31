@@ -125,9 +125,9 @@ class Thumbnails extends Component {
     } else if (size === 'xs') {
       sizer = xs;
     }
-    if (url !== "") {
+    if (url) {
       return (
-        <Avatar src="/static/images/forgot.jpg" className={classes.avatar} style={sizer} />
+        <Avatar src={url} className={classes.avatar} style={sizer} />
       );
     } else {
       return (

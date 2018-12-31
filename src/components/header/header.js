@@ -25,6 +25,11 @@ import Notification from './notification';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Logout from '@material-ui/icons/ExitToAppRounded';
 import Tooltip from '@material-ui/core/Tooltip';
+import axios from 'axios';
+import { config } from "../../../config"
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { getProfile } from "../../actions/data";
 
 
 const styles = theme => ({
@@ -101,7 +106,7 @@ const styles = theme => ({
   },
 });
 
-class PrimarySearchAppBar extends React.Component {
+class Header extends React.Component {
 	constructor(props) {
 		super(props);
 		
@@ -115,7 +120,9 @@ class PrimarySearchAppBar extends React.Component {
 			uploadStatus: false,
 			hide: false,
 			hover: false,
-			token: null
+			token: null,
+			img: null,
+			previewImg: null
 		}
 	}
 
@@ -211,26 +218,32 @@ class PrimarySearchAppBar extends React.Component {
     )
   }
 
-	upload = (e) => {
+	async upload(e) {
+		const { token } = this.state;
+		const { getProfile } = this.props;
 		e.preventDefault();
-		let self = this;
-		var reader = new FileReader();
-
-		if (e.target.files[0] !== undefined) {
-			this.setState({
-				img: this.imgUp.files[0]
-			})
-
-			reader.onload = function (e) {
-				self.setState({
-					previewImg: e.target.result
-				});
+		let formData = new FormData();
+		console.log(this.imgUp.files);
+		formData.append("img", e.target.files[0]);
+		if (token) {
+			const options = {
+				method: 'POST',
+				headers: {
+					'content-type': 'multipart/form-data',
+					'x-auth-token': token
+				},
+				data: formData,
+				url: config.api + '/users/upload'
 			}
-			reader.readAsDataURL(e.target.files[0]);
-		}
-		console.log(this.imgUp.files[0])
-	}
 
+			let upload = await axios(options);
+			console.log('upload', upload);
+			
+			if (upload.status === 200) {
+				getProfile(upload.data);
+			}
+		}
+	}
 
 	hoverOn = () => {
 		this.setState({ hover: true });
@@ -241,43 +254,40 @@ class PrimarySearchAppBar extends React.Component {
 	}
 
 	displayProfile = () => {
-		const { hover, hide } = this.state;
+		const { hover, hide, token } = this.state;
+		const { data } = this.props;
 		return (
 			<Collapse in={!hide} timeout="auto" unmountOnExit>
 				<Grid container spacing={24} style={{ position: 'absolute', width: '100%', marginTop: 35 }} >
 					<Button style={{ maxHeight: 40, marginTop: 60 }} >Upload Url</Button>
 					<div style={{ flexGrow: 1 }} />
 					<div style={{ marginTop: 30 }} onMouseEnter={this.hoverOn} onMouseLeave={this.hoverOff} >
-						<Thumbnails size="xl" borderWidth={4} borderColor="white" name="matt" color="purple" />
+						<Thumbnails 
+							size="xl" 
+							borderWidth={4} 
+							borderColor="white" 
+							name="matt" 
+							color="purple" 
+							// url={config.url + data.profile.profileimage}
+							url={'data:image/png;base64,'+ data.profile.profileimage}
+						/>
 						<IconButton
-							onClick = {
-								(e) => {
-									this.imgUp.click()
-								}
-							}
+							onClick = { (e) => { this.imgUp.click() } }
 							aria-label="Delete" 
 							style={{ marginTop: -55, marginLeft: 75, position: 'absolute' }} >
-							{
-								hover &&
-									<Camera style={
-										{
-											fontSize: 40,
-											color: 'dimgray'
-										}
-									}
-									/>
-							}
+							{ token && data.profile._id === data.user._id &&
+								hover && <Camera style={{ fontSize: 40, color: 'dimgray' }} /> }
 						</IconButton>
 						<input
 							ref={this.imgUpload}
 							type='file'
 							accept="image/*"
 							style={{ display: "none" }}
-							onChange={this.upload}
+							onChange={this.upload.bind(this)}
 						/>
 					</div>
 					<div style={{ flexGrow: 1 }} />
-					<Button style={{ maxHeight: 40, marginTop: 60 }} >Upload Url</Button>
+					<Button style={{ maxHeight: 40, marginTop: 60 }} >Edit Profile</Button>
 				</Grid>
 			</Collapse>
 		)
@@ -434,9 +444,14 @@ class PrimarySearchAppBar extends React.Component {
 					}
 				>
           <Toolbar className={classes.rootGrow}>
-            <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-              Tipestry
-            </Typography>
+						<Link href="/" >
+							<a style={{ color: 'white', textDecoration: 'none' }} >
+								<Typography className={classes.title} variant="h6" color="inherit" noWrap>
+									Tipestry
+								</Typography>
+							</a>
+						</Link>
+            
             <div className={classes.grow} />
             {this.displayDesktop()}
             <div className={classes.sectionMobile}>
@@ -459,8 +474,21 @@ class PrimarySearchAppBar extends React.Component {
   }
 }
 
-PrimarySearchAppBar.propTypes = {
+Header.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withRouter(withStyles(styles)(PrimarySearchAppBar));
+// export default withRouter(withStyles(styles)(Header));
+function mapStateToProps(state) {
+	return {
+		data: state.data,
+	}
+}
+
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({
+		getProfile: getProfile
+	}, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withStyles(styles)(Header)));

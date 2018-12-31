@@ -40,7 +40,7 @@ class Thumb extends React.Component {
   }
 
   async componentDidMount() {
-    const { topicObjId, votes } = this.props;
+    const { data, topicObjId, votes } = this.props;
     let token = localStorage.getItem('token');
 
     this.setState({
@@ -48,7 +48,7 @@ class Thumb extends React.Component {
     });
 
     if (token) {
-      // console.log('token', token);
+      console.log('token', token);
       
       const options = {
         method: 'GET',
@@ -73,8 +73,8 @@ class Thumb extends React.Component {
   }
 
   async handleVote(votes) {
-    const { topicObjId } = this.props;
-    let token = localStorage.getItem('token');
+    const { topicObjId, token } = this.props;
+    // let token = localStorage.getItem('token');
 
     if (token) {
       const options = {
@@ -108,7 +108,7 @@ class Thumb extends React.Component {
       // check if the vote userId match the current userId
       // check the vote type (thumb up or down)
       if (res.userId === data.user.id && res.votes === 1) {
-        return ( <ThumbUpAltOutlined style={{ color: '#1F7BD8' }} />
+        return ( <ThumbUpAltOutlined/>
         )
       }
     }
@@ -123,7 +123,7 @@ class Thumb extends React.Component {
     const { data } = this.props;
     if (typeof res.userId !== 'undefined') {
       if (res.userId === data.user.id && res.votes === 0) {
-        return ( <ThumbDownAltOutlined style={{ color: '#1F7BD8' }} />
+        return ( <ThumbDownAltOutlined />
         )
       }
     }
@@ -163,7 +163,8 @@ class Thumb extends React.Component {
 Thumb.propTypes = {
   classes: PropTypes.object.isRequired,
   votes: PropTypes.array.isRequired,
-  topicObjId: PropTypes.string.isRequired
+  topicObjId: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired
 };
 
 function mapStateToProps(state) {

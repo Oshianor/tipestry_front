@@ -7,14 +7,17 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import Thumbnails from '../../reuseable/thumbnails';
-import Link from 'next/link';
 import IconButton from '@material-ui/core/IconButton';
 import ThumbDownAlt from '@material-ui/icons/ThumbDownAlt';
 import ThumbUpAlt from '@material-ui/icons/ThumbUpAlt';
 import Edit from '@material-ui/icons/EditRounded';
 import RemoveCircle from '@material-ui/icons/RemoveCircle';
-import classnames from 'classnames';
-import Badge from '@material-ui/core/Badge';
+import Link from 'next/link';
+import { connect } from 'react-redux';
+import Moment from "moment";
+import Axios from 'axios';
+
+
 
 const styles = theme => ({
 	semicard: {
@@ -54,13 +57,15 @@ const styles = theme => ({
 
 class Repiles extends React.Component {
   render() {
-    const { classes } = this.props;
+		const { classes, replyValues } = this.props;
+		console.log("PPPPPPPPP", replyValues);
+		
 
     return (
 			<React.Fragment>
 				{
-					[0,0,0,0,0,0,0,0,0,0].map((tp) => (
-						<Card className={classes.semicard}>
+					replyValues.map((reply, index) => (
+						<Card className={classes.semicard} key={index} >
 							<CardHeader
 								classes = {
 									{
@@ -69,20 +74,35 @@ class Repiles extends React.Component {
 									}
 								}
 								avatar={
-									<Thumbnails size="xs" borderColor="black" borderWidth={2} name="sicker" />
+									<Link href={"/profile/@" + reply.user[0].username}>
+										<a style={{ textDecoration: 'none' }}>
+											<Thumbnails size="xs" borderColor="black" borderWidth={1} name={reply.user[0].username} />
+										</a>
+									</Link>
 								}
 								titleTypographyProps={{ fontSize: 12 }}
 								style={{ padding: "2px 25px"  }}
-								title="Shrimp and Chorizo Paella"
-								subheader="September 14, 2016"
+								title={
+									<Link href={"/profile/@" + reply.user[0].username} >
+										<a style={{ color: '#1F7BD8', textDecoration: 'none' }}>
+											<strong style={{ color: 'gray' }}>@</strong>
+											{reply.user[0].username}
+										</a>
+									</Link>
+								}
+								subheader={
+									<p style={{ fontSize: 10, margin: 0 }} >
+										{Moment(reply.created_at).fromNow()}
+									</p>
+								}
 							/>
 							<CardContent style={{ padding: "2px 25px"  }}>
-								<Typography component="p">
-									This impressive paella is a perfect party dish and a fun meal to cook together with your
-									guests. Add 1 cup of frozen peas along with the mussels, if you like.
+								<Typography component="p" style={{ fontSize: 11 }}>
+									{reply.content}
 								</Typography>
 							</CardContent>
-							<CardActions className={classes.actions} disableActionSpacing>
+							{/* <CardActions className={classes.actions} disableActionSpacing>
+								<div style={{ flexGrow: 1 }} />
 								<IconButton aria-label="Thumbs Up" className={classes.iconspacing} >
 									<ThumbUpAlt style={{ fontSize: 14 }} /> 
 								</IconButton>
@@ -99,7 +119,7 @@ class Repiles extends React.Component {
 								<IconButton aria-label="Thumbs Down" className={classes.iconspacing} >
 									<RemoveCircle style={{ fontSize: 14 }} /> 
 								</IconButton>
-							</CardActions>
+							</CardActions> */}
 						</Card>
 					))
 				}

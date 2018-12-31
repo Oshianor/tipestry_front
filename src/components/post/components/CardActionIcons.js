@@ -1,42 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import classnames from 'classnames';
 import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
-import red from '@material-ui/core/colors/red';
 import Tooltip from '@material-ui/core/Tooltip';
-import Badge from '@material-ui/core/Badge';
-import Button from '@material-ui/core/Button';
 
 // created component
 import SharePopover from './sharePopover';
 
-
-// icons
-
-// outlined
-import ThumbDownAltOutlined from '@material-ui/icons/ThumbDownAltOutlined';
-import ThumbUpAltOutlined from '@material-ui/icons/ThumbUpAltOutlined';
-import ThumbDownAlt from '@material-ui/icons/ThumbDownAlt';
-import ThumbUpAlt from '@material-ui/icons/ThumbUpAlt';
-
-// import FavoriteBorderOutlined from '@material-ui/icons/FavoriteBorderOutlined';
-import ChatBubbleOutlineOutlined from '@material-ui/icons/ChatBubbleOutlineOutlined';
-
-
-
 // filled
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderOutlined from '@material-ui/icons/FavoriteBorderOutlined';
-
-
-import ChatBubble from '@material-ui/icons/ChatBubble';
-
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-
 
 import { connect } from 'react-redux';
 import Thumb from './thumb';
@@ -83,19 +57,19 @@ class CardActionIcons extends React.Component {
     // console.log('topicId', data.user.favourite, "---", topicId);
     
     // check if the user properieste are avaiable
-    // if (typeof data.user !== "undefined") {
-    //   if (data.user.favourite.indexOf(topicId) !== -1) {
-    //     return (
-    //       <Tooltip title="Remove from favorites" aria-label="Add to favorites">
-    //         <IconButton onClick={this.handleFavourite} aria-label="Add to favorites" className={classes.iconspacing}>
-    //           <FavoriteBorderOutlined />
-    //         </IconButton>
-    //       </Tooltip>
-    //     )
-    //   }
-    // }
+    if (typeof data.user !== "undefined") {
+      if (data.user.favourite.indexOf(topicId) !== -1) {
+        return (
+          <Tooltip title="Remove from favourites" aria-label="Add to favorites">
+            <IconButton onClick={this.handleFavourite} aria-label="Add to favorites" className={classes.iconspacing}>
+              <FavoriteBorderOutlined style={{ color: '#1F7BD8' }} />
+            </IconButton>
+          </Tooltip>
+        )
+      }
+    }
     return (
-      <Tooltip title="Add to favorites" aria-label="Add to favorites">
+      <Tooltip title="Add to favourites" aria-label="Add to favorites">
         <IconButton aria-label="Add to favorites" className={classes.iconspacing}>
           <FavoriteIcon />
         </IconButton>
@@ -132,7 +106,7 @@ class CardActionIcons extends React.Component {
           </IconButton>
         </Tooltip>
         <p className={classes.num} >
-          {typeof comment[0] !== "undefined" ? comment[0].count : ""}
+          {comment}
         </p>
 				&nbsp;&nbsp;
 
@@ -150,10 +124,10 @@ class CardActionIcons extends React.Component {
           aria-expanded={expanded}
           aria-label="Show more"
         >
-          <img src="/static/icons/moneybag.svg" alt="comments" width='25' height="25" />
+          <img src="/static/icons/moneybag.svg" alt="comments" width='25' height="25" style={{ color: '#1F7BD8' }} />
         </IconButton>
         <p className={classes.num} >
-          {comment.length !== 0 && comment.length }
+        4500
         </p>
 				&nbsp;&nbsp;
       </CardActions>

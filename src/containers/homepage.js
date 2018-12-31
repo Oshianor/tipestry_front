@@ -4,6 +4,7 @@ import Post from '../components/post/post';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import Tipcoin from '../components/tipcoin/tipcoin';
+import { connect } from 'react-redux';
 
 const styles = theme => ({
   root: {
@@ -19,12 +20,12 @@ const styles = theme => ({
 });
 class Homepage extends Component {
   render() {
-    const { classes } = this.props;
+    const { data } = this.props;
     return (
       <div>
         <Header />
         <Tipcoin />
-        <Post />
+        <Post topicValue={data.topics.topic} source="topics" />
       </div>
     )
   }
@@ -34,4 +35,10 @@ Homepage.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Homepage);
+function mapStateToProps(state) {
+  return {
+    data: state.data,
+  }
+}
+
+export default connect(mapStateToProps, )(withStyles(styles)(Homepage));

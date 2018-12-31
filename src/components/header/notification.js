@@ -141,8 +141,8 @@ class Notification extends React.Component {
           {arrow ? <span className={classes.arrow} ref={this.handleArrowRef} /> : null}
           <Paper className={classes.paper}>
           {
-            [1, 2, 3, 4].map((r) => (
-              <div style = {
+            [1, 2, 3, 4].map((r, index) => (
+              <div key={index} style = {
                 {
                   borderBottom: '1px solid darkgray',
                   display: 'flex',

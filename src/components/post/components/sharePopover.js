@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import Popper from '@material-ui/core/Popper';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
@@ -11,8 +9,6 @@ import FileCopy from '@material-ui/icons/FileCopy';
 
 const styles = theme => ({
   root: {
-    // flexGrow: 1,
-    
   },
   paper: {
     maxWidth: 400,

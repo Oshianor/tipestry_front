@@ -9,7 +9,8 @@ import React, { Component } from 'react';
           style={{ 
             borderRight: "10px solid gray",
             width: "100%",
-            height: "100vh"
+            height: "70vh",
+            marginTop: 80
           }}
           title="Inline Frame Example"
           width="300"

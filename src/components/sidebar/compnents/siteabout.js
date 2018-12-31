@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import classnames from 'classnames';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
@@ -11,17 +10,17 @@ import Typography from '@material-ui/core/Typography';
 import red from '@material-ui/core/colors/red';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Thumbnails from '../../reuseable/thumbnails';
-import Tooltip from '@material-ui/core/Tooltip';
-import Badge from '@material-ui/core/Badge';
+import { connect } from 'react-redux';
+import Moment from "moment";
+import Link from 'next/link';
+import CardActionIcons from "../../post/components/CardActionIcons";
 
 const styles = theme => ({
   card: {
 		margin: '2px 5%',
     boxShadow: "0px 0px 0px 0px",
     backgroundColor: 'navajowhite'
-		// backgroundColor: 'azure'
   },
   actions: {
 		display: 'flex',
@@ -63,48 +62,45 @@ const styles = theme => ({
 });
 
 class SiteAbout extends React.Component {
-  state = { expanded: false };
-
-  handleExpandClick = () => {
-    this.setState(state => ({ expanded: !state.expanded }));
-  };
-
   render() {
-    const { classes } = this.props;
-		const { expanded } = this.state;
+    const { classes, data, token } = this.props;
     return (
       <Card className={classes.card}>
         <CardHeader
-					style={{ padding: "2px 25px"  }}
           avatar={
-            <Thumbnails name="rat" borderColor="black" borderWidth={2} />
+            <Link href={"/profile/@" + data.siteTopic[0].user[0].username}>
+              <a style={{ textDecoration: 'none' }}>
+                <Thumbnails borderColor="black" borderWidth={2} name={data.siteTopic[0].user[0].username} />
+              </a>
+            </Link>
           }
-          title="Shrimp and Chorizo Paella"
-          subheader="September 14, 2016"
+          title={
+            <Link href={"/profile/@" + data.siteTopic[0].user[0].username} >
+              <a style={{ color: '#1F7BD8', textDecoration: 'none' }}>
+                <strong style={{ color: 'gray' }}>@</strong>
+                {typeof data.siteTopic[0].user[0] !== "undefined" ? `${data.siteTopic[0].user[0].username}` : "@No name"}
+              </a>
+            </Link>
+          }
+          subheader={
+            <p style={{ fontSize: 10, margin: 0 }} >
+              {Moment(data.siteTopic[0].created_at).fromNow()}
+            </p>
+          }
         />
         <CardContent style={{ padding: "0px 25px" }}>
-          <Typography component="p" style={{   }}>
-            This impressive paella is a perfect party dish and a fun meal to cook together with your
-            guests. Add 1 cup of frozen peas along with the mussels, if you like.
+          <Typography component="p" >
+            {data.siteTopic[0].message}
           </Typography>
         </CardContent>
-        <CardActions className={classes.actions} disableActionSpacing>
-          <IconButton aria-label="Add to favorites">
-            <FavoriteIcon style={{ fontSize: 15 }} />
-          </IconButton>
-          <IconButton aria-label="Share">
-            <ShareIcon style={{ fontSize: 15 }} />
-          </IconButton>
-        	<IconButton
-						className={classes.iconspacing}
-						aria-label="Show more"
-					>
-						<img src="/static/icons/moneybag.svg" alt="comments" width='25' height="25" />
-						<ExpandMoreIcon className={classnames(classes.expand, {
-							[classes.expandOpen]: expanded,
-						})} style={{ fontSize: 15 }} />
-					</IconButton>
-				</CardActions>
+
+        <CardActionIcons
+          votes={data.siteTopic[0].votes}
+          comment={data.siteTopic[0].comment.length}
+          topicId={data.siteTopic[0].id}
+          token={token}
+          topicObjId={data.siteTopic[0]._id}
+        />
       </Card>
     );
   }
@@ -112,6 +108,13 @@ class SiteAbout extends React.Component {
 
 SiteAbout.propTypes = {
   classes: PropTypes.object.isRequired,
+  token: PropTypes.string.isRequired,
 };
 
-export default withStyles(styles)(SiteAbout);
+function mapStateToProps(state) {
+  return {
+    data: state.data,
+  }
+}
+
+export default connect(mapStateToProps, )(withStyles(styles)(SiteAbout));

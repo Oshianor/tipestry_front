@@ -18,25 +18,22 @@ class Index extends React.Component {
     
     const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
 
-    let topics = await axios.get(config.api + '/topic')
-    let dataTopics = JSON.stringify(topics.data);
-    let header = topics.headers;
+    let topics = await axios.get(config.api + '/topic?pageNumber=1')
+    let dataTopics = JSON.stringify(topics.data.content);
 
     return {
       userAgent,
-      dataTopics,
-      header
+      dataTopics
     }
   }
 
   async componentDidMount() {
-    const { data } = this.props;
+    const { dataTopics, getTopics } = this.props;
     // console.log(data);
     let token = localStorage.getItem('token');
 
     if (token) {
       // get me 
-      // console.log("DATA>TOKEN", data.token);
       
       const options = {
         method: 'GET',
@@ -53,8 +50,8 @@ class Index extends React.Component {
       this.props.getToken(token)
     }
     
-    if (this.props.dataTopics) {
-      this.props.getTopics(JSON.parse(this.props.dataTopics));
+    if (dataTopics) {
+      getTopics(JSON.parse(dataTopics));
 
       this.setState({
         loading: false
@@ -63,8 +60,9 @@ class Index extends React.Component {
   }
 
   render() {
-    // console.log("STR", JSON.parse(this.props.dataTopics));
     const { loading } = this.state;
+    console.log("INDEX",this.props);
+    
     return (
       <div>
         {
