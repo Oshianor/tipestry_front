@@ -18,13 +18,13 @@ class Register extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <Grid container spacing={24}>
+        <Grid container >
           <Grid item xs={12} sm={12} md={6} lg={5} xl={4} >
             <RegisterPath />
           </Grid>
           <Hidden only={[ 'xs', 'sm' ]}>
             <Grid item xs={12} sm={12} md={6} lg={7} xl={8} >
-              <img src="/static/images/signup.jpg" width="100%" height="100%" />
+              <img src="/static/images/signup.png" width="100%" height="100%" />
             </Grid>
           </Hidden>
         </Grid>

@@ -17,6 +17,7 @@ class Options extends React.Component {
   state = {
     anchorEl: null,
     userFollowing: [],
+    topicFollowing: []
   };
 
   componentDidMount() {
@@ -93,13 +94,14 @@ class Options extends React.Component {
         } 
       }
     }
-    
+  }
+
+  handlePostFollow() {
+
   }
 
   render() {
     const { anchorEl } = this.state;
-    
-
     return (
       <div>
         {this.displayFollow()}
@@ -116,7 +118,7 @@ class Options extends React.Component {
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
         >
-          <MenuItem style={{ fontSize: 12, padding: "5px 16px" }} onClick={this.handleClose}>
+          <MenuItem style={{ fontSize: 12, padding: "5px 16px" }} onClick={this.handlePostFollow}>
             <Add style={{ fontSize: 15 }} />&nbsp;Follow Post
           </MenuItem>
           <MenuItem style={{ fontSize: 12, padding: "5px 16px" }} onClick={this.handleClose}>

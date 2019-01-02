@@ -244,16 +244,19 @@ class Notification extends React.Component {
           {
             notify.map((not, index) => (
               <div key={index} className={classes.index} >
-                <Link href={"/" + not.link} >
+                <Link href={not.link} >
                   <a className={classes.noty} >
                     <span style={{ marginBottom: 5 }}>
                       <Thumbnails 
+                        color="black"
                         url={
-                          not.img &&
-                          not.img.length > 100 ?
-                            'data:image/png;base64,' + not.img
+                          not.img ?
+                            not.img.length > 100 ?
+                              'data:image/png;base64,' + not.img
+                            :
+                              config.url +  "/" + not.img
                           :
-                            config.url +  "/" + not.img
+                            null
                         }
                         name="T"
                       />

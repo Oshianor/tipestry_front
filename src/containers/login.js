@@ -21,13 +21,13 @@ class Login extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <Grid container spacing={24}>
-          <Grid item xs={12} sm={12} md={6} lg={6} xl={6} >
+        <Grid container>
+          <Grid item xs={12} sm={12} md={6} lg={5} xl={4} >
             <Loginpath />
           </Grid>
           <Hidden only={[ 'xs', 'sm' ]}>
-            <Grid item xs={12} sm={12} md={6} lg={6} xl={6} >
-              <img src="/static/images/login.jpg" width="100%" height="100%" />
+            <Grid item xs={12} sm={12} md={6} lg={7} xl={8} >
+              <img src="/static/images/login.png" width="100%" height="100%" />
             </Grid>
           </Hidden>
         </Grid>

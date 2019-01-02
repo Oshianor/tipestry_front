@@ -25,7 +25,20 @@ const styles = theme => ({
     height: '100vh',
     flex: 1,
     justifyContent: 'center',
-
+    [theme.breakpoints.down('sm')]: {
+      backgroundImage: "url('/static/login/phone.svg')",
+      backgroundColor: "transparent",
+      // width: "100%",
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: "cover",
+    },
+    [theme.breakpoints.only('md')]: {
+      backgroundImage: "url('/static/login/tablet.svg')",
+      backgroundColor: "transparent",
+      // width: "100%",
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: "cover",
+    },
   },
   paper: {
     padding: theme.spacing.unit * 2,
@@ -222,7 +235,11 @@ class LoginPath extends Component {
     const { password, passwordHelper, email, emailHelper, loading, res } = this.state;
     return (
       <div className={classes.root}>
-        <Typography variant="h2" gutterBottom style={{ margin: '4% 8%' }} >Tipestry</Typography>
+        {/* <Typography variant="h2" gutterBottom style={{ margin: '4% 8%' }} >Tipestry</Typography> */}
+        <Typography variant="h2" gutterBottom style={{ margin: '4% 8%' }} >
+          <img src="/static/login/newlogo.png" style={{ width: 200, height: 60 }} />
+        </Typography>
+
 
         <Typography variant="overline" gutterBottom style={{ margin: '2% 8%', marginTop: "15%", fontSize: 20 }}> 
           Welcome, Login to your Account
