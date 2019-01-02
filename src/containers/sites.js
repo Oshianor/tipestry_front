@@ -1,35 +1,27 @@
 import React, { Component } from 'react';
 import Embed from '../components/embed/embed';
 import Grid from '@material-ui/core/Grid';
-import Sidebar from '../components/sidebar/sidebar';
 import Header from "../components/header/header";
-import Siteabout from '../components/sidebar/compnents/siteabout';
+import {
+	withRouter
+} from 'next/router';
+import TopicsList from "../components/sites/listTopics";
 import { connect } from 'react-redux';
 
 class Topic extends Component {
-	state = {
-    token: null
-	}
-	
-  componentDidMount() {
-    let token = localStorage.getItem('token');
-    this.setState({
-      token
-    })
-	}
-	
 	render() {
-		const { token } = this.state;
+	const { router, data }  = this.props;
+		console.log("SITES", router.query.s);
+		
 		return (
 			<div>
 				<Header />
 				<Grid container spacing={24}>
 					<Grid item xs={12} sm={12} md={6} lg={6} xl={6} >
-						<Embed url={this.props.data.siteTopic[0].sites[0].url} />
-						<Siteabout token={token} />
+						<Embed url={router.query.s} />
 					</Grid>
 					<Grid item xs={12} sm={12} md={6} lg={6} xl={6} >
-						<Sidebar token={token} />
+						<TopicsList topics={data.site.topics} url={router.query.s} />
 					</Grid>
 				</Grid>
 			</div>
@@ -37,11 +29,11 @@ class Topic extends Component {
 	}
 }
 
-// export default Topic;
 function mapStateToProps(state) {
 	return {
 		data: state.data,
 	}
 }
 
-export default connect(mapStateToProps, )(Topic);
+
+export default connect(mapStateToProps, )(withRouter(Topic));

@@ -15,7 +15,8 @@ import React, { Component } from 'react';
           title="Inline Frame Example"
           width="300"
           height="200"
-          src="http://toxicwap.com/TV_Series/">
+          src={this.props.url}
+        >
         </iframe>
       </div>
 		)

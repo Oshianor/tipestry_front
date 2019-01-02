@@ -9,16 +9,36 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import isURL from 'validator/lib/isURL';
 import PropTypes from 'prop-types';
+import { config } from "../../../config";
+import Router from "next/router";
+import Axios from 'axios';
 
 class UploadUrl extends React.Component {
 	state = {
 		msg: ""
 	}
-	handleURL = (event) => {
-		console.log(event.target.value);
+
+	handleURLPost = async () => {
+		const { handleClose } = this.props;
+		const { url } = this.state
+
+
+		// let improved = url.replace(/^(?:https?:\/\/)?(?:www\.)?/i, "");
+		Router.push("/sites?s=" + url);
 		
-		if (!isURL(event.target.value)) this.setState({ msg: 'You need to provided a valid web url' })
-		return false;
+		handleClose();
+	}
+
+	handleURL = (event) => {
+		
+		if (!isURL(event.target.value)) {
+			this.setState({ msg: 'You need to provided a valid web url' })
+			return false;
+		} 
+
+		this.setState({
+			url: event.target.value
+		})
 	}
   render() {
 		const { uploadStatus, handleClose } = this.props;
@@ -50,7 +70,7 @@ class UploadUrl extends React.Component {
 					<Button onClick={() => handleClose()} color="primary">
 						No, Thanks
 					</Button>
-					<Button onClick={() => handleClose()} color="primary">
+					<Button onClick={this.handleURLPost} color="primary">
 						Upload
 					</Button>
 				</DialogActions>

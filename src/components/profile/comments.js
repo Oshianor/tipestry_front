@@ -8,6 +8,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import Thumbnails from '../reuseable/thumbnails';
 import Link from 'next/link';
+import Moment from "moment";
 
 const styles = theme => ({
   card: {
@@ -33,31 +34,55 @@ const styles = theme => ({
 
 class Comments extends React.Component {
   render() {
-    const { classes } = this.props;
-
+    const { classes, value } = this.props;
+		console.log(value);
+		
     return (
 			<React.Fragment>
-				<Card className={classes.card}>
-					<CardHeader
-						avatar={
-							<Thumbnails borderColor="black" borderWidth={2} name="sicker" />
-						}
-						title="Shrimp and Chorizo Paella"
-						subheader="September 14, 2016"
-					/>
-					<CardContent>
-						<Typography component="p">
-							This impressive paella is a perfect party dish and a fun meal to cook together with your
-							guests. Add 1 cup of frozen peas along with the mussels, if you like.
-						</Typography>
-					</CardContent>
-					<CardActions className={classes.actions} disableActionSpacing>
-						<div style={{ flexGrow: 1 }} />
-						<Link href="/faq" >
-							<a style={{ color: '1F7BD8' }}>View Post</a>
-						</Link>
-					</CardActions>
-				</Card>
+				{
+					typeof value[0] === "undefined" ?
+						<Typography style={{ marginTop: 10 }} variant="6" >You currently have no comment</Typography>
+					:
+						value.map((val) => (
+							<Card className={classes.card} key={val._id} >
+								<CardHeader
+									avatar={
+										<Thumbnails 
+											name={val.user[0].username} 
+											url={val.user[0].profileimage} 
+											borderColor="black" 
+											borderWidth={2} 
+										/>
+									}
+									component="div"
+                  title={
+                    <Link href={encodeURI("/profile/" + val.user[0]._id + "/@" + val.user[0].username)} >
+                      <a style={{ color: '#1F7BD8', textDecoration: 'none' }}>
+                        <strong style={{ color: 'gray' }}>@</strong>
+                        {typeof val.user[0] !== "undefined" ? `${val.user[0].username}` : "@No name"}
+                      </a>
+                    </Link>
+                  }
+                  subheader={
+                    <p style={{ fontSize: 10, margin: 0 }} >
+                      {Moment(val.created_at).fromNow()}
+                    </p>
+                  }
+								/>
+								<CardContent>
+									<Typography component="p">
+										{val.content}
+									</Typography>
+								</CardContent>
+								<CardActions className={classes.actions} disableActionSpacing>
+									<div style={{ flexGrow: 1 }} />
+									<Link href={encodeURI("/topics/" + val.topic[0]._id + "/" + val.topic[0].title)} >
+										<a style={{ color: '1F7BD8' }}>View Post</a>
+									</Link>
+								</CardActions>
+							</Card>
+						))
+				}
 			</React.Fragment>
     );
   }

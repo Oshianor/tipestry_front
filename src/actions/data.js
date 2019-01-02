@@ -6,6 +6,14 @@ export const getToken = (token) => {
   }
 }
 
+// get topic for a particaular site
+export const getSiteTopicList = (arg) => {
+  return {
+    type: "GET_SITE_TOPICS_LIST",
+    payload: arg
+  }
+}
+
 
 
 // get the user details

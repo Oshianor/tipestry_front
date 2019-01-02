@@ -4,13 +4,11 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
 import Button from '@material-ui/core/Button';
 import Camera from '@material-ui/icons/CameraAlt';
 import Collapse from '@material-ui/core/Collapse';
@@ -22,7 +20,7 @@ import Thumbnails from '../reuseable/thumbnails';
 import Grid from '@material-ui/core/Grid';
 import Link from "next/link";
 import Notification from './notification';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+// import NotificationsIcon from '@material-ui/icons/Notifications';
 import Logout from '@material-ui/icons/ExitToAppRounded';
 import Tooltip from '@material-ui/core/Tooltip';
 import axios from 'axios';
@@ -266,10 +264,9 @@ class Header extends React.Component {
 							size="xl" 
 							borderWidth={4} 
 							borderColor="white" 
-							name="matt" 
 							color="purple" 
-							// url={config.url + data.profile.profileimage}
-							url={'data:image/png;base64,'+ data.profile.profileimage}
+							url={config.url + data.profile.profileimage}
+							// url={'data:image/png;base64,'+ data.profile.profileimage}
 						/>
 						<IconButton
 							onClick = { (e) => { this.imgUp.click() } }
@@ -287,7 +284,9 @@ class Header extends React.Component {
 						/>
 					</div>
 					<div style={{ flexGrow: 1 }} />
-					<Button style={{ maxHeight: 40, marginTop: 60 }} >Edit Profile</Button>
+					<Button style={{ maxHeight: 40, marginTop: 60 }} >
+						Edit Profile
+					</Button>
 				</Grid>
 			</Collapse>
 		)
@@ -425,7 +424,7 @@ class Header extends React.Component {
 									<Notification />
 									<Link href={"/profile/" + data.user._id + "/" + data.user.username} >
 										<a>
-											<Thumbnails size="xs" color="black"  name={data.user.username} />
+											<Thumbnails size="xs" color="black"  name={typeof data.user !== "undefined" && typeof data.user.username !== "undefined" ? data.user.username : "o"} />
 										</a>
 									</Link>
 									<Link href={"/profile/" + data.user._id + "/" + data.user.username} >

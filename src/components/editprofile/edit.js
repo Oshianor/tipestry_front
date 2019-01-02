@@ -1,143 +1,3 @@
-// import React from 'react';
-// import PropTypes from 'prop-types';
-// import { withStyles } from '@material-ui/core/styles';
-// import Grid from '@material-ui/core/Grid';
-// import Thumbnails from '../reuseable/thumbnails';
-// import Typography from '@material-ui/core/Typography';
-// import TextField from '@material-ui/core/TextField';
-// import Camera from '@material-ui/icons/CameraAlt';
-// import IconButton from '@material-ui/core/IconButton';
-
-// const styles = theme => ({
-//   root: {
-//     width: '100%',
-//     marginBottom: '5%'
-//   },
-//   demo: {
-//     // width: '100%',
-//     position: 'relative',
-//     [theme.breakpoints.up("lg")]: {
-//       width: 1170
-//     }
-//   },
-//   container: {
-//     display: 'flex',
-//     flexWrap: 'wrap',
-//   },
-//   textField: {
-//     marginLeft: theme.spacing.unit,
-//     marginRight: theme.spacing.unit,
-//   },
-// });
-
-// class EditProfile extends React.Component {
-
-//   handleChange = name => event => {
-//     this.setState({
-//       [name]: event.target.value,
-//     });
-//   };
-
-//   render() {
-//     const { classes } = this.props;
-//     return (
-//       <div className={classes.root}>
-//         <Grid container justify="center">
-//           <Grid
-//             container
-//             className={classes.demo}
-//             alignItems="center"
-//             justify="center"
-//           >
-//           <Typography style={{ textAlign: 'left' }}>Personal Information</Typography>
-//             <Grid item>
-// 						  <Thumbnails name="elute" size="xl" borderColor="black" borderWidth={2} />
-//               <IconButton aria-label="Delete" style={{ marginTop: -55, marginLeft: 75, position: 'absolute' }} >
-//                 <Camera style={
-//                   {
-//                     fontSize: 40,
-//                     color: 'dimgray'
-//                   }
-//                 }
-//                 />
-//               </IconButton>
-//               <form className={classes.container} noValidate autoComplete="off">
-//                 <TextField
-//                   id="outlined-uncontrolled"
-//                   label="Uncontrolled"
-//                   defaultValue="foo"
-//                   className={classes.textField}
-//                   margin="normal"
-//                   variant="outlined"
-//                 />
-//                 <TextField
-//                   required
-//                   id="outlined-required"
-//                   label="Required"
-//                   defaultValue="Hello World"
-//                   className={classes.textField}
-//                   margin="normal"
-//                   variant="outlined"
-//                 />
-//                 <TextField
-//                   error
-//                   id="outlined-error"
-//                   label="Error"
-//                   defaultValue="Hello World"
-//                   className={classes.textField}
-//                   margin="normal"
-//                   variant="outlined"
-//                   fullWidth
-//                 />
-//                 <TextField
-//                   id="outlined-multiline-static"
-//                   label="Multiline"
-//                   multiline
-//                   rows="4"
-//                   defaultValue="Default Value"
-//                   className={classes.textField}
-//                   margin="normal"
-//                   fullWidth
-//                   variant="outlined"
-//                 />
-//               </form>
-//             </Grid>
-
-
-//           </Grid>
-//         </Grid>
-//       </div>
-//     );
-//   }
-// }
-
-// EditProfile.propTypes = {
-//   classes: PropTypes.object.isRequired,
-// };
-
-// export default withStyles(styles)(EditProfile);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -146,17 +6,17 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import green from '@material-ui/core/colors/green';
-import classNames from 'classnames';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import { Typography } from '@material-ui/core';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Thumbnails from '../reuseable/thumbnails';
-import Camera from '@material-ui/icons/CameraAlt';
-import IconButton from '@material-ui/core/IconButton';
+import isEmpty from 'validator/lib/isEmpty';
+import Router from "next/router"
+import { config } from '../../../config';
+import Axios from 'axios';
+import { connect } from 'react-redux';
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
+    marginTop: 80
   },
   textField: {
     width: 400
@@ -182,53 +42,34 @@ const styles = theme => ({
     marginTop: -12,
     marginLeft: -12,
   },
-  cutspace: {
-    marginTop: -18
-  },
-  addspace: {
-    marginTop: 18
-  }
 });
 
 
-class Productform extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.imgUpload = element => {
-      this.imgUp = element
-    }
-  }
-
+class Edit extends React.Component {
   state = {
-    name: "",
-    category: "",
-    img: {},
-    previewImg: "",
-    description: "",
-    price: "",
-    nameError: false,
-    categoryError: false,
-    imgError: false,
-    descriptionError: false,
-    priceError: false,
-    colorError: false,
-    loading: false,
-    success: false,
-    color: "#ff9800",
-    redirect: false
+    first: '',
+    last: '',
+    bio: '',
+    firstHelper: {
+      err: false,
+      msg: ''
+    },
+    lastHelper: {
+      err: false,
+      msg: ''
+    },
+    loading: false
   }
 
-  componentWillUnmount() {
-    clearTimeout(this.timer);
+  componentDidMount = () => {
+    const { data } = this.props;
+    this.setState({
+      first: data.user.name ? data.user.name.split(" ")[0] : "",
+      last: data.user.name ? data.user.name.split(" ")[1] : "",
+      bio: data.user.bio ? data.user.bio : '',
+    })
   }
-
-
-  handleChangeComplete = (color) => {
-    // console.log(color);
-
-    this.setState({ color: color.hex });
-  };
+  
 
   handleChange = name => event => {
     this.setState({
@@ -236,138 +77,144 @@ class Productform extends React.Component {
     });
   };
 
-  upload = (e) => {
-    e.preventDefault();
-    let self = this;
-    var reader = new FileReader();
-
-    if (e.target.files[0] !== undefined) {
+  handleFirst = () => {
+    const { first } = this.state;
+    if (isEmpty(first)) {
       this.setState({
-        img: this.imgUp.files[0]
-      })
-
-      reader.onload = function (e) {
-        self.setState({
-          previewImg: e.target.result
-        });
-      }
-      reader.readAsDataURL(e.target.files[0]);
+        firstHelper: {
+          msg: "First Name is required",
+          err: true
+        }
+      });
+      return false;
     }
-    // console.log(this.imgUp.files[0])
+    this.setState({
+      firstHelper: {
+        msg: "",
+        err: false
+      }
+    });
+    return true
   }
 
+  handleLast = () => {
+    const { last } = this.state;
+    if (isEmpty(last)) {
+      this.setState({
+        lastHelper: {
+          msg: "Last Name is required",
+          err: true
+        }
+      });
+      return false;
+    }
+    this.setState({
+      lastHelper: {
+        msg: "",
+        err: false
+      }
+    });
+    return true
+  }
 
-  handleFormComplete = () => {
+  async handleFormComplete() {
+    const { first, last, bio } = this.state;
+    this.setState({
+      loading: true
+    })
 
+    let token = localStorage.getItem('token');
+
+    if (token) {
+      // get me 
+      let obj = {
+        first,
+        last,
+        bio
+      }
+      const options = {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'x-auth-token': token
+        },
+        data: JSON.stringify(obj),
+        url: config.api + '/users/edit'
+      }
+      let user = await Axios(options);
+      if (!user.data.error) {
+        Router.push('/')
+      }
+    }
   }
 
   render() {
-
-    const category = ["Shoes", "Bags", "Clothes", "Electronics"]
     const { classes } = this.props;
-    const { redirect, loading, success, img, previewImg, nameError, colorError, categoryError, imgError, descriptionError, priceError } = this.state;
-    const buttonClassname = classNames({
-      [classes.buttonSuccess]: success,
-    });
+    const { first, firstHelper, last, lastHelper, bio, loading } = this.state;
+    console.log(this.state);
+    
 
     return (
       <div className={classes.root}>
+        <Typography style={{ textAlign: 'center' }} variant="h6" >Personal Information</Typography>
         <Grid container justify="center" spacing={8}>
           <form className={classes.container} autoComplete="off">
-
-            <Grid item md={12} className={classes.cutspace}>
-              {
-                previewImg !== "" &&
-                <img src={previewImg} alt="uploaded preview" width="140" height="140" />
-              }
-              
-              <Thumbnails name="elute" size="xl" borderColor="black" borderWidth={2} />
-              <IconButton
-                onClick = {
-                  (e) => {
-                    this.imgUp.click()
-                  }
-                }
-                aria-label="Delete" 
-                style={{ marginTop: -55, marginLeft: 75, position: 'absolute' }} >
-                <Camera style={
-                  {
-                    fontSize: 40,
-                    color: 'dimgray'
-                  }
-                }
-                />
-              </IconButton>
-              <input
-                ref={this.imgUpload}
-                type='file'
-                accept="image/*"
-                style={{ display: "none" }}
-                onChange={this.upload}
+            <Grid item md={12}>
+              <TextField
+                required
+                id="outlined-name"
+                label="First Name"
+                className={classes.textField}
+                value={first}
+                onChange={this.handleChange('first')}
+                margin="normal"
+                variant="outlined"
+                onBlur={this.handleFirst}
+                error={firstHelper.err}
+                helperText={firstHelper.msg}
               />
             </Grid>
 
             <Grid item md={12}>
               <TextField
+                required
                 id="outlined-name"
-                label="Name"
+                label="Last Name"
                 className={classes.textField}
-                value={this.state.name}
-                onChange={this.handleChange('name')}
+                value={last}
+                onChange={this.handleChange('last')}
                 margin="normal"
                 variant="outlined"
-                error={nameError.status}
-                helperText={nameError.msg}
+                onBlur={this.handleLast}
+                error={lastHelper.err}
+                helperText={lastHelper.msg}
               />
             </Grid>
 
-            <Grid item md={12} className={classes.cutspace}>
+            <Grid item md={12}>
               <TextField
                 id="outlined-name"
                 label="Bio"
                 multiline
                 rows={3}
                 className={classes.textField}
-                value={this.state.description}
-                onChange={this.handleChange('description')}
+                value={bio}
+                onChange={this.handleChange('bio')}
                 margin="normal"
                 variant="outlined"
-                error={descriptionError.status}
-                helperText={descriptionError.msg}
               />
             </Grid>
 
-            <Grid item md={12}>
-              <TextField
-                id="price"
-                className={classNames(classes.margin, classes.textField)}
-                variant="outlined"
-                label="Price"
-                value={this.state.price}
-                onChange={this.handleChange('price')}
-                InputProps={{
-                  startAdornment: <InputAdornment position="start">₦</InputAdornment>,
-                }}
-                error={priceError.status}
-                helperText={priceError.msg}
-              />
-            </Grid>
+              <Button
+                variant="contained"
+                color="primary"
+                disabled={loading}
+                onClick={this.handleFormComplete.bind(this)}
+              >
+                {!loading ? "Update Profile" : <CircularProgress size={24} className={classes.buttonProgress} />}
+              </Button>
 
-            <Grid item md={12}>
-              <div className={classes.wrapper}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className={buttonClassname}
-                  disabled={loading}
-                  onClick={this.handleFormComplete}
-                >
-                  Add Product
-                  {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
-                </Button>
-
-              </div>
-            </Grid>
 
           </form>
 
@@ -377,8 +224,15 @@ class Productform extends React.Component {
   }
 }
 
-Productform.propTypes = {
+Edit.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Productform);
+// export default withStyles(styles)(Productform);
+function mapStateToProps(state) {
+  return {
+    data: state.data,
+  }
+}
+
+export default connect(mapStateToProps, )(withStyles(styles)(Edit));

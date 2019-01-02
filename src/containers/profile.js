@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Comments from '../components/profile/comments';
 import Follower from '../components/profile/follower';
+import Following from '../components/profile/following';
 import Replies from '../components/profile/replies';
 import Post from '../components/post/post';
 import { connect } from 'react-redux';
@@ -22,8 +23,8 @@ const styles = {
   },
   tab: {
     alignItems: 'baseline',
-    padding: 10
-  }
+    padding: 10,
+  },
 };
 
 class Profile extends React.Component {
@@ -70,11 +71,7 @@ class Profile extends React.Component {
         
 
         <Typography variant="subtitle2" style={{ margin: "0px 10%" }} >
-          The progress components accept a value in the range 0 - 100. This simplifies things
-          for screen - reader users, where these are the
-          default min / max values.Sometimes, however,
-          you might be working with a data source where the values fall outside this range. 
-          Here 's how you can easily transform a value in any range to a scale
+          {data.profile.bio && data.profile.bio}
         </Typography>
       </div>
     )
@@ -92,19 +89,29 @@ class Profile extends React.Component {
     } else if (value === 3) {
       return <Replies value={data.replies} />;
     } else if (value === 4) {
-      return <Follower value={data.following} />;
+      return <Following value={data.following} profile={data.profile} user={data.user} />;
     } else if (value === 5) {
-      return <Follower value={data.follower} /> ;
+      return <Follower value={data.followers} profile={data.profile} user={data.user} /> ;
     }
         
   }
 
   displayTab = () => {
     const { classes, data } = this.props;
+    const { value } = this.state;
+    let token = localStorage.getItem('token')
+    const curr = {
+      // backgroundColor: "#1f7be1"
+      borderBottom: "2px solid #1f7be1"
+    }
+    const not = {
+      backgroundColor: "white"
+      // borderBottom: "2px solid #1f7be1"
+    }
     return (
       <Paper>
         <Grid container justify="center">
-          <Grid>
+          <Grid style={value === 0 ? curr : not} >
             <Button className={classes.tab} onClick={this.handleChange.bind(this, 0)}  >
               <Typography style={{ position: 'absolute'}} >
                 {data.topics.length}
@@ -113,16 +120,20 @@ class Profile extends React.Component {
               Post
             </Button>
           </Grid>
-          <Grid>
-            <Button className={classes.tab} onClick={this.handleChange.bind(this, 1)}  >
-              <Typography style={{ position: 'absolute'}} >
-                {data.favourite.length}
-              </Typography>
-              <br />
-              Favourites
-            </Button>
-          </Grid>
-          <Grid>
+          {
+            token &&
+              data.profile._id === data.user._id &&
+              <Grid style={value === 1 ? curr : not} >
+                <Button className={classes.tab} onClick={this.handleChange.bind(this, 1)}  >
+                  <Typography style={{ position: 'absolute'}} >
+                    {data.favourite.length}
+                  </Typography>
+                  <br />
+                  Favourites
+                </Button>
+              </Grid>
+          }
+          <Grid style={value === 2 ? curr : not} >
             <Button className={classes.tab} onClick={this.handleChange.bind(this, 2)}  >
               <Typography style={{ position: 'absolute'}} >
                 {data.comment.length}
@@ -138,7 +149,7 @@ class Profile extends React.Component {
               Replies
             </Button>
           </Grid> */}
-          <Grid>
+          <Grid style={value === 4 ? curr : not} >
             <Button className={classes.tab} onClick={this.handleChange.bind(this, 4)}  >
               <Typography style={{ position: 'absolute'}} >
                 {data.following.length}
@@ -147,7 +158,7 @@ class Profile extends React.Component {
               Following
             </Button>
           </Grid>
-          <Grid>
+          <Grid style={value === 5 ? curr : not} >
             <Button className={classes.tab} onClick={this.handleChange.bind(this, 5)}  >
               <Typography style={{ position: 'absolute'}} >
                 {data.followers.length}

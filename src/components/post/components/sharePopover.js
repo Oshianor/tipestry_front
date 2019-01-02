@@ -6,6 +6,10 @@ import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import ShareIcon from '@material-ui/icons/Share';
 import FileCopy from '@material-ui/icons/FileCopy';
+import { withRouter } from 'next/router';
+import { config } from '../../../../config';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import Snackbar from '@material-ui/core/Snackbar';
 
 const styles = theme => ({
   root: {
@@ -101,6 +105,7 @@ class AnchorPlayground extends React.Component {
     open: false,
     placement: 'top',
     preventOverflow: 'scrollParent',
+    copied: false
   };
 
   handleChange = key => (event, value) => {
@@ -122,16 +127,21 @@ class AnchorPlayground extends React.Component {
     }));
   };
 
-  openFace = () => {
+  handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
 
-  }
+    this.setState({ open: false });
+  };
 
   render() {
-    const { classes } = this.props;
-    const { open, placement, disablePortal, flip, preventOverflow, arrow, arrowRef } = this.state;
+    const { classes, link } = this.props;
+    const { open, placement, disablePortal, flip, preventOverflow, arrow, arrowRef, copied } = this.state;
 
     const id = open ? 'Share' : null;
-
+    // console.log("ROYETR", this.props);
+    let message = `Visit ${config.host + link} and join the conversation`;
     return (
       <div className={classes.iconspacing} >
         <IconButton
@@ -141,7 +151,6 @@ class AnchorPlayground extends React.Component {
           aria-label="Share" 
           aria-describedby={id}
           onClick={this.handleClickButton('arrow')}
-          
         >
           <ShareIcon />
         </IconButton>
@@ -169,15 +178,39 @@ class AnchorPlayground extends React.Component {
         >
           {arrow ? <span className={classes.arrow} ref={this.handleArrowRef} /> : null}
           <Paper className={classes.paper}>
-            <a href="https://www.facebook.com/sharer/sharer.php?u=https://tipestry.com" target="_blank" className={classes.social} >
+            <a href={`https://www.facebook.com/sharer/sharer.php?u=${config.host + link}&t=${message}`}
+              target="_blank" className={classes.social} >
               <img src="/static/social/facebook.png" width="25" height="25" />
             </a>
-            <a href="https://twitter.com/share?text=visit&amp;url=https://tipestry.com" target="_blank" className={classes.social}>
+            < a href = {
+              `https://twitter.com/share?text=${message}&amp;url=${config.host + link}`
+            }
+            target="_blank"
+            className = {
+              classes.social
+            } >
               <img src="/static/social/twitter.png" width="25" height="25" />
             </a>
-            <FileCopy style={{ cursor: 'pointer', color: 'red' }} />
+            <CopyToClipboard text={config.host + link}
+              onCopy={() => this.setState({ copied: true })}
+            >
+              <FileCopy style={{ cursor: 'pointer', color: 'red' }} />
+            </CopyToClipboard>
           </Paper>
         </Popper>
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }}
+          open={copied}
+          autoHideDuration={6000}
+          onClose={this.handleClose}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">Successfully copied!</span>}
+        />
       </div>
     );
   }
@@ -187,4 +220,4 @@ AnchorPlayground.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(AnchorPlayground);
+export default withRouter(withStyles(styles)(AnchorPlayground));

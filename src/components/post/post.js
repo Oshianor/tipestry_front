@@ -74,7 +74,7 @@ class Post extends React.Component {
   displayTitle = (title) => {
     if (title.length > 60) {
       return (
-        <a style={{ cursor: 'pointer', textDecoration: 'none' }} >
+        <a style={{ color: '#1F7BD8',cursor: 'pointer', textDecoration: 'none' }} >
           {title.substr(0, 40)}
         </a>
       )
@@ -135,7 +135,7 @@ class Post extends React.Component {
                 />
                 <CardMedia
                   className={classes.media}
-                  image={config.url + "/topics/" + topic.sites[0].screen_path}
+                  image={config.url + topic.screenshot}
                   title={topic.title}
                   component="a"
                   href={encodeURI("/topics/" + topic._id + "/" + topic.title)}
@@ -144,14 +144,12 @@ class Post extends React.Component {
                 <CardContent>
                   <Typography component="p">
                     <Link href={encodeURI("/topics/" + topic._id + "/" + topic.title)} >
-                      
-                        {/* {topic.title} */}
-                        {this.displayTitle(topic.title, topic._id)}
+                      {this.displayTitle(topic.title)}
                     </Link>
                     <br />
-                    <Link href="/profile">
+                    <Link href={"/sites?s=" + topic.sites[0].url} >
                       <a >
-                        {topic.sites[0].url}
+                        {topic.sites[0].url.length > 50 ? topic.sites[0].url.substr(0, 40) + "..." : topic.sites[0].url}
                       </a>
                     </Link>
                   </Typography>
@@ -164,6 +162,7 @@ class Post extends React.Component {
                   topicId={topic.id}
                   token={token}
                   topicObjId={topic._id}
+                  link={encodeURI("/topics/" + topic._id + "/" + topic.title)}
                 />
               </Card>
             </Grid>

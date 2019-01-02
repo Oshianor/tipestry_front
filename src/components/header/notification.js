@@ -8,6 +8,10 @@ import Typography from '@material-ui/core/Typography';
 import Notifications from '@material-ui/icons/Notifications';
 import Badge from '@material-ui/core/Badge';
 import Thumbnails from '../reuseable/thumbnails';
+import Link from "next/link";
+import Axios from 'axios';
+import { config } from "../../../config";
+
 
 const styles = theme => ({
   root: {
@@ -16,6 +20,12 @@ const styles = theme => ({
   },
   paper: {
     width: 500,
+    [theme.breakpoints.only('xs')]: {
+      width: 310,
+    },
+    // [theme.breakpoints.only('md')]: {
+    //   width: 420,
+    // },
     overflow: 'auto',
     padding: 10,
     height: 200,
@@ -38,6 +48,9 @@ const styles = theme => ({
       top: 0,
       left: 0,
       marginTop: '-0.9em',
+      [theme.breakpoints.only('xs')]: {
+        width: '32em',
+      },
       width: '71em',
       height: '1em',
       '&::before': {
@@ -62,25 +75,85 @@ const styles = theme => ({
   },
   social: {
     margin: "20px 5px"
+  },
+  noty: {
+    color: 'white',
+    textDecoration: 'none',
+    borderBottom: '1px solid darkgray',
+    display: 'flex',
+    alignItems: 'center',
+    margin: 5
+  },
+  index: {
+    '&:hover': {
+      backgroundColor: '#bfbebe'
+    },
   }
 });
 
 class Notification extends React.Component {
-  state = {
-    arrow: true,
-    arrowRef: null,
-    disablePortal: false,
-    flip: true,
-    open: false,
-    placement: 'bottom',
-    preventOverflow: 'scrollParent',
-  };
+  constructor(props) {
+    super(props);
+    
+    this.note=null
+    this.state = {
+      arrow: true,
+      arrowRef: null,
+      disablePortal: false,
+      flip: true,
+      open: false,
+      placement: 'bottom',
+      preventOverflow: 'scrollParent',
+      notify: [],
+      count: null
+    };
+  }
+
+  async componentDidMount() {
+    this.note = setInterval(() => {
+      this.farctNotification();
+    }, 30000);
+    
+  }
+
+  componentWillUnmount = () => {
+    clearInterval(this.note);
+  }
+  
+
+  farctNotification() {
+    let token = localStorage.getItem('token');
+
+    if (token) {
+      const options = {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'x-auth-token': token
+        },
+        url: config.api + "/notification",
+      };
+      Axios(options).then((res) => {
+        if (res.status === 200) {
+          this.setState({
+            count: res.data.count
+          })
+        }
+      }).catch(error => {
+        console.log("NOT", error);
+        
+      })
+    }
+  }
+  
 
   handleChange = key => (event, value) => {
     this.setState({
       [key]: value,
     });
   };
+  
 
   handleChangeTarget = key => event => {
     this.setState({
@@ -88,7 +161,29 @@ class Notification extends React.Component {
     });
   };
 
-  handleClickButton = node => event => {
+  handleClickButton = node => async event => {
+    let token = localStorage.getItem('token');
+    this.setState({ count: 0 })
+    if (token) {
+      const options = {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'x-auth-token': token
+        },
+        url: config.api + "/notification/read",
+      };
+      let notify = await Axios(options);
+      // console.log(7777777777, notify);
+      if (notify.status === 200) {
+        this.setState({
+          notify: notify.data
+        })
+      }
+
+    }
+
     this.setState(state => ({
       open: !state.open,
       arrowRef: node,
@@ -97,7 +192,7 @@ class Notification extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { open, placement, disablePortal, flip, preventOverflow, arrow, arrowRef } = this.state;
+    const { open, placement, disablePortal, notify, count, flip, preventOverflow, arrow, arrowRef } = this.state;
 
     const id = open ? 'Share' : null;
 
@@ -112,9 +207,15 @@ class Notification extends React.Component {
           onClick={this.handleClickButton('arrow')}
           
         >
-          <Badge badgeContent={17} color="secondary">
-						<Notifications style={{ color: "white" }} />
-					</Badge>
+          {
+            !count || count === 0 ?
+						  <Notifications style={{ color: "white" }} />
+            :
+              <Badge badgeContent={count} color="secondary">
+                <Notifications style={{ color: "white" }} />
+              </Badge>
+          }
+          
         </IconButton>
         <Popper
           id={id}
@@ -141,21 +242,27 @@ class Notification extends React.Component {
           {arrow ? <span className={classes.arrow} ref={this.handleArrowRef} /> : null}
           <Paper className={classes.paper}>
           {
-            [1, 2, 3, 4].map((r, index) => (
-              <div key={index} style = {
-                {
-                  borderBottom: '1px solid darkgray',
-                  display: 'flex',
-                  alignItems: 'center',
-                  margin: 5
-                }
-              } >
-                <span style={{ marginBottom: 5 }}><Thumbnails name="spalt" /></span>
-                <Typography variant='body2' style={{ fontSize: 12, marginLeft: 15 }}>
-                  pipeline " expression to be used in place of the "
-                  local and
-                  foreign " keys. So instead of using the
-                </Typography>
+            notify.map((not, index) => (
+              <div key={index} className={classes.index} >
+                <Link href={"/" + not.link} >
+                  <a className={classes.noty} >
+                    <span style={{ marginBottom: 5 }}>
+                      <Thumbnails 
+                        url={
+                          not.img &&
+                          not.img.length > 100 ?
+                            'data:image/png;base64,' + not.img
+                          :
+                            config.url +  "/" + not.img
+                        }
+                        name="T"
+                      />
+                    </span>
+                    <Typography variant='body2' style={{ fontSize: 12, marginLeft: 15 }}>
+                      {not.message}
+                    </Typography>
+                  </a>
+                </Link>
               </div>
             ))
           }

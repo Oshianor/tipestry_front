@@ -11,10 +11,12 @@ import SharePopover from './sharePopover';
 // filled
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderOutlined from '@material-ui/icons/FavoriteBorderOutlined';
-
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { getUser } from "../../../actions/data";
 import Thumb from './thumb';
-
+import Axios from 'axios';
+import { config } from "../../../../config";
 
 const styles = theme => ({
   button: {
@@ -48,16 +50,37 @@ const styles = theme => ({
 });
 
 class CardActionIcons extends React.Component {
-  handleFavourite = () => {
 
+  handleFavourite = async () => {
+    let token = localStorage.getItem('token');
+    const { topicId, getUser } = this.props;
+
+    if (token) {
+      const options = {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'x-auth-token': token
+        },
+        data: JSON.stringify({
+          topicId
+        }),
+        url: config.api + "/users/favourite",
+      };
+      let user = await Axios(options);
+      console.log('user', user);
+      
+      getUser(user.data.content);
+    }
   }
 
   displayFavour = () => {
-    const { data, votes, classes, topicId } = this.props;
+    const { data, classes, topicId } = this.props;
     // console.log('topicId', data.user.favourite, "---", topicId);
-    
+    let token = localStorage.getItem('token');
     // check if the user properieste are avaiable
-    if (typeof data.user !== "undefined") {
+    if (typeof data.user !== "undefined" && token && typeof data.user.favourite !== "undefined") {
       if (data.user.favourite.indexOf(topicId) !== -1) {
         return (
           <Tooltip title="Remove from favourites" aria-label="Add to favorites">
@@ -70,7 +93,7 @@ class CardActionIcons extends React.Component {
     }
     return (
       <Tooltip title="Add to favourites" aria-label="Add to favorites">
-        <IconButton aria-label="Add to favorites" className={classes.iconspacing}>
+        <IconButton onClick={this.handleFavourite} aria-label="Add to favorites" className={classes.iconspacing}>
           <FavoriteIcon />
         </IconButton>
       </Tooltip>
@@ -78,7 +101,7 @@ class CardActionIcons extends React.Component {
   }
 
   render() {
-    const { token, classes, expanded, handleExpandClick, votes, comment, topicObjId } = this.props;
+    const { token, classes, expanded, handleExpandClick, votes, comment, topicObjId, link } = this.props;
     // console.log('votes.length,', votes.length);
     
     return (
@@ -114,7 +137,7 @@ class CardActionIcons extends React.Component {
 
         {/*  */}
         <Tooltip title="Share Post" aria-label="Share">
-          <SharePopover />
+          <SharePopover link={link} />
         </Tooltip>
 
         {/* tips coin icons */}
@@ -138,10 +161,10 @@ class CardActionIcons extends React.Component {
 CardActionIcons.propTypes = {
   classes: PropTypes.object.isRequired,
   votes: PropTypes.array.isRequired,
-  comment: PropTypes.array.isRequired,
+  comment: PropTypes.string.isRequired,
   topicId: PropTypes.number.isRequired,
   topicObjId: PropTypes.string.isRequired,
-  token: PropTypes.string.isRequired,
+  token: PropTypes.string,
 };
 
 function mapStateToProps(state) {
@@ -149,5 +172,11 @@ function mapStateToProps(state) {
     data: state.data,
   }
 }
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    getUser: getUser,
+  }, dispatch)
+}
 
-export default connect(mapStateToProps, )(withStyles(styles)(CardActionIcons));
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(CardActionIcons));

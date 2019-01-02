@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Box from './components/box';
+import { config } from '../../../config';
 
 
 
@@ -22,7 +23,8 @@ const styles = theme => ({
 
 class Follower extends React.Component {
   render() {
-    const { classes } = this.props;
+    const { classes, value, profile, user } = this.props;
+    let token = localStorage.getItem('token');
     return (
       <div className={classes.root}>
         <Grid container justify="center">
@@ -33,9 +35,21 @@ class Follower extends React.Component {
             justify="center"
           >
 						{
-							[0,1,2,3,4,5,6,7,8].map((tp) => (
-								<Grid items>
-									<Box type="follow" />
+							value.map((val) => (
+								<Grid items key={val._id} >
+                  <Box 
+                    type="follow" 
+                    name={val.name ? val.name : "@" + val.username} 
+                    img={
+                      val.profileimage.length > 100 ?
+                        'data:image/png;base64,' + val.profileimage
+                      :
+                        config.url + val.profileimage
+                    } 
+                    token={token}
+                    profile={profile}
+                    user={user}
+                  />
 								</Grid>
 							))
 						}

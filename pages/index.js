@@ -15,6 +15,7 @@ class Index extends React.Component {
   }
   
   static async getInitialProps({ req }) {
+    console.log('req', req);
     
     const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
 
@@ -44,7 +45,6 @@ class Index extends React.Component {
         },
         url: config.api + '/users/me'
       }
-      
       let user = await axios(options);
       this.props.getUser(user.data);
       this.props.getToken(token)
@@ -61,7 +61,7 @@ class Index extends React.Component {
 
   render() {
     const { loading } = this.state;
-    console.log("INDEX",this.props);
+    // console.log("INDEX",this.props);
     
     return (
       <div>

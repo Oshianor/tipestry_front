@@ -7,7 +7,8 @@ const initialstate = {
   favourite: [],
   followers: [],
   following: [],
-  comment: []
+  comment: [],
+  site: []
 }
 export default (state = initialstate, action) => {
   switch (action.type) {
@@ -18,6 +19,10 @@ export default (state = initialstate, action) => {
     case "USER_DATA":
       return Object.assign({}, state, {
         user: action.payload
+      });
+    case "GET_SITE_TOPICS_LIST":
+      return Object.assign({}, state, {
+        site: action.payload
       });
     case "GET_TOPICS":
       return Object.assign({}, state, {
