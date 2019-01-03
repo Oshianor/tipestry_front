@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 
  class Embed extends Component {
 	render() {
+    const { height } = this.props;
 		return (
       <div>
         <iframe 
-          id="inlineFrameExample"
+          id="frame"
           style={{ 
             borderRight: "10px solid gray",
             width: "100%",
-            height: "70vh",
-            marginTop: 80
+            height: height ? height : "70vh",
+            // marginTop: 80
           }}
           title="Inline Frame Example"
           width="300"

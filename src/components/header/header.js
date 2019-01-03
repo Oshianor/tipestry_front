@@ -11,6 +11,10 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Button from '@material-ui/core/Button';
 import Camera from '@material-ui/icons/CameraAlt';
+import Create from '@material-ui/icons/Create';
+import Add from '@material-ui/icons/Add';
+import Remove from '@material-ui/icons/Remove';
+
 import Collapse from '@material-ui/core/Collapse';
 import {
 	withRouter
@@ -27,7 +31,7 @@ import axios from 'axios';
 import { config } from "../../../config"
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getProfile } from "../../actions/data";
+import { getProfile, getUser } from "../../actions/data";
 
 
 const styles = theme => ({
@@ -45,6 +49,18 @@ const styles = theme => ({
 			margin: "0px 10%"
 		},
 	},
+	left: {
+		marginLeft: 0,
+		[theme.breakpoints.up('sm')]: {
+			marginLeft: "10%"
+		},
+	},
+	right: {
+		marginRight: 0,
+		[theme.breakpoints.up('sm')]: {
+			marginRight: "10%"
+		},
+	},
 	img: {
 		[theme.breakpoints.up('xs')]: {
 			width: 150,
@@ -54,6 +70,14 @@ const styles = theme => ({
 			width: 230,
 			height: 230
 		}
+	},
+	logo: {
+		width: 200,
+		height: 60,
+		[theme.breakpoints.down('sm')]: {
+			width: 100,
+			height: 40,
+		},
 	},
   grow: {
     flexGrow: 1,
@@ -101,7 +125,15 @@ const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       display: 'none',
     },
-  },
+	},
+	but: {
+		maxHeight: 40,
+		marginTop: 45,
+		[theme.breakpoints.down('sm')]: {
+			fontSize: 11,
+			marginTop: 30
+		},
+	}
 });
 
 class Header extends React.Component {
@@ -253,42 +285,126 @@ class Header extends React.Component {
 
 	displayProfile = () => {
 		const { hover, hide, token } = this.state;
-		const { data } = this.props;
+		const { data, classes } = this.props;
 		return (
-			<Collapse in={!hide} timeout="auto" unmountOnExit>
-				<Grid container spacing={24} style={{ position: 'absolute', width: '100%', marginTop: 35 }} >
-					<Button style={{ maxHeight: 40, marginTop: 60 }} >Upload Url</Button>
-					<div style={{ flexGrow: 1 }} />
-					<div style={{ marginTop: 30 }} onMouseEnter={this.hoverOn} onMouseLeave={this.hoverOff} >
-						<Thumbnails 
-							size="xl" 
-							borderWidth={4} 
-							borderColor="white" 
-							color="purple" 
-							url={config.url + data.profile.profileimage}
-							// url={'data:image/png;base64,'+ data.profile.profileimage}
-						/>
-						<IconButton
-							onClick = { (e) => { this.imgUp.click() } }
-							aria-label="Delete" 
-							style={{ marginTop: -55, marginLeft: 75, position: 'absolute' }} >
-							{ token && data.profile._id === data.user._id &&
-								hover && <Camera style={{ fontSize: 40, color: 'dimgray' }} /> }
-						</IconButton>
-						<input
-							ref={this.imgUpload}
-							type='file'
-							accept="image/*"
-							style={{ display: "none" }}
-							onChange={this.upload.bind(this)}
-						/>
-					</div>
-					<div style={{ flexGrow: 1 }} />
-					<Button style={{ maxHeight: 40, marginTop: 60 }} >
-						Edit Profile
-					</Button>
-				</Grid>
-			</Collapse>
+				<Collapse in={!hide} timeout="auto" unmountOnExit>
+					<Grid container spacing={24} style={{ position: 'absolute', width: '100%', marginTop: 35 }} >
+						<Grid item  className={classes.left} >
+							<Link href={''} >
+								<a style={{ textDecoration: 'none' }} >
+									<Typography style={{ color: "white" }} className={classes.but} >
+										<img src="/static/icons/moneybag.svg"  width='20' height="20" />
+										Tip report
+									</Typography>
+								</a>
+							</Link>
+						</Grid>
+
+						<div style={{ flexGrow: 1 }} />
+
+						<Grid item style={{ marginLeft: '4.5%' }} >
+							<div style={{ marginTop: 15 }} onMouseEnter={this.hoverOn} onMouseLeave={this.hoverOff} >
+								<Thumbnails 
+									size="xl" 
+									borderWidth={4} 
+									borderColor="white" 
+									color="purple" 
+									url={config.url + data.profile.profileimage}
+									// url={'data:image/png;base64,'+ data.profile.profileimage}
+								/>
+								<IconButton
+									onClick = { (e) => { this.imgUp.click() } }
+									aria-label="Delete" 
+									style={{ marginTop: -55, marginLeft: 75, position: 'absolute' }} >
+									{ token && data.profile._id === data.user._id &&
+										hover && <Camera style={{ fontSize: 40, color: 'dimgray' }} /> }
+								</IconButton>
+								<input
+									ref={this.imgUpload}
+									type='file'
+									accept="image/*"
+									style={{ display: "none" }}
+									onChange={this.upload.bind(this)}
+								/>
+							</div>
+						</Grid>
+						
+						<div style={{ flexGrow: 1 }} />
+						
+						<Grid item className={classes.right} >
+							{
+								token &&
+								data.profile._id === data.user._id ?
+									<Link href={'/edit/' + data.user._id + "/@" + data.user.username} >
+										<a style={{ textDecoration: 'none' }} >
+											<Typography style={{ color: "white" }} className={classes.but} >
+												<Create style={{ fontSize: 17 }} />
+												Edit profile
+											</Typography>
+										</a>
+									</Link>
+								:
+									this.following()
+							}
+						</Grid>
+
+					</Grid>
+				</Collapse>
+		)
+	}
+
+	handleFollow = async () => {
+		const { data, getUser } = this.props;
+		const { token } = this.state;
+    if (token) {
+      const options = {
+        method: 'POST',
+        data: JSON.stringify({ user_id: data.profile.id }),
+        headers: {
+          'content-type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'x-auth-token': token
+        },
+        url: config.api + '/users/follow'
+      }
+
+      let follow = await axios(options);
+      // console.log("ADDING FOLLOWING", follow);
+      if (follow.data.error === false) {
+        getUser(follow.data.content)
+      }
+      
+    }
+  }
+
+	following = () => {
+		const { data, classes } = this.props;
+		if (data.user.following.indexOf(data.profile.id) === -1) {
+			return (
+				<Button 
+					size='small'
+					variant="outlined" 
+					onClick={this.handleFollow}
+					className={classes.but} 
+					style={{ color: "white", borderColor: "white", padding: "0px 6px", fontSize: 10 }} 
+				>
+					<Add style={{ fontSize: 17 }} />
+					Follow
+				</Button>
+			)
+		} 
+		return (
+			<Button 
+				size='small'
+				variant='contained' 
+				onClick={this.handleFollow}
+				className={classes.but} 
+				color='primary'
+				style={{ padding: "0px 6px", fontSize: 10 }} 
+			>
+				<Remove style={{ fontSize: 17 }} />
+				Unfollow
+			</Button>
 		)
 	}
 
@@ -310,15 +426,34 @@ class Header extends React.Component {
     const isMenuOpen = Boolean(anchorEl);
 		return (
 			<div className={classes.sectionDesktop}>
-				<Link href="/about">
-					<Button color="inherit">About</Button>
-				</Link>
-				<Link href="/faq">
-					<Button color="inherit">Faq</Button>
-				</Link>
 				{
-					!token &&
+					token ?
 						<React.Fragment>
+							<Button 
+								onClick={this.handleClickOpen} 
+								variant="outlined" 
+								style={{ color: 'white', fontSize: 14, borderColor: 'white' }} 
+								size="small" 
+								color="secondary" className={classes.button}>
+								Upload Url
+							</Button>
+							<Tooltip title="Log out" aria-label="logout">
+								<IconButton
+									onClick={this.handleLogout}
+									color="inherit"
+								>
+									<Logout />
+								</IconButton>
+							</Tooltip>
+						</React.Fragment>
+					:
+						<React.Fragment>
+							<Link href="/about">
+								<Button color="inherit">About</Button>
+							</Link>
+							<Link href="/faq">
+								<Button color="inherit">Faq</Button>
+							</Link>
 							<Link href="/login" prefetch>
 								<Button color="inherit">Login</Button>
 							</Link>
@@ -329,13 +464,6 @@ class Header extends React.Component {
 							</Link>
 						</React.Fragment>
 				}
-				
-				<Button 
-					onClick={this.handleClickOpen} 
-					variant="outlined" 
-					style={{ color: 'white' }} size="small" color="secondary" className={classes.button}>
-					Upload Url
-				</Button>
 			</div>
 		)
 	}
@@ -368,20 +496,49 @@ class Header extends React.Component {
         open={isMobileMenuOpen}
         onClose={this.handleMobileMenuClose}
       >
-				<MenuItem onClick={this.handleProfileMenuOpen}>
-          <IconButton color="inherit">
-            <AccountCircle />
-          </IconButton>
-          <p>Invite</p>
-        </MenuItem>
-				<MenuItem onClick={this.handleProfileMenuOpen}>
-          <IconButton color="inherit">
-            <AccountCircle />
-          </IconButton>
-          <p>Tip Report</p>
-        </MenuItem>
+				{
+					!token ?
+						<React.Fragment>
+							<MenuItem onClick={this.handleProfileMenuOpen}>
+								<IconButton color="inherit">
+									<AccountCircle />
+								</IconButton>
+								<p>Login</p>
+							</MenuItem>
+							<MenuItem onClick={this.handleProfileMenuOpen}>
+								<IconButton color="inherit">
+									<AccountCircle />
+								</IconButton>
+								<p>Register</p>
+							</MenuItem>
+							<MenuItem onClick={this.handleProfileMenuOpen}>
+								<IconButton color="inherit">
+									<AccountCircle />
+								</IconButton>
+								<p>Faq</p>
+							</MenuItem>
+							<MenuItem onClick={this.handleProfileMenuOpen}>
+								<IconButton color="inherit">
+									<AccountCircle />
+								</IconButton>
+								<p>About</p>
+							</MenuItem>
+						</React.Fragment>
+					:
+						<React.Fragment>
+							<MenuItem onClick={this.handleProfileMenuOpen}>
+								<IconButton
+									onClick={this.handleLogout}
+									color="inherit"
+								>
+									<Logout />
+								</IconButton>
+								<p>Logout</p>
+							</MenuItem>
+						</React.Fragment>
+				}
 				<MenuItem onClick={this.handleClickOpen}>
-          <Button style={{ margin: "1% 15%" }} variant="outlined" size="small" color="secondary" className={classes.button}>
+          <Button style={{ margin: "1% 1%" }} variant="outlined" size="small" color="secondary" className={classes.button}>
 						Upload Url
 					</Button>
         </MenuItem>
@@ -408,41 +565,34 @@ class Header extends React.Component {
 					}
 				>
           <Toolbar className={classes.rootGrow}>
-						<Link href="/" >
-							<a style={{ color: 'white', textDecoration: 'none' }} >
-								<Typography className={classes.title} variant="h6" color="inherit" noWrap>
-									Tipestry
+						<Link href="/" prefetch>
+							<a>
+								<Typography variant="h2" gutterBottom style={{ margin: '0px 3%' }} >
+									<img src="/static/login/newlogo.png" className={classes.logo} />
 								</Typography>
 							</a>
 						</Link>
             
             <div className={classes.grow} />
-						{this.displayDesktop()}
 						{
 							token &&
 								<React.Fragment>
 									<Notification />
-									<Link href={"/profile/" + data.user._id + "/" + data.user.username} >
-										<a>
-											<Thumbnails size="xs" color="black"  name={typeof data.user !== "undefined" && typeof data.user.username !== "undefined" ? data.user.username : "o"} />
-										</a>
-									</Link>
-									<Link href={"/profile/" + data.user._id + "/" + data.user.username} >
-										<a style={{ color: 'white', textDecoration: 'none' }}>
-											<p>&nbsp;Hi, {data.user.username}</p>
-										</a>
-									</Link>
-									
-									<Tooltip title="Log out" aria-label="logout">
-										<IconButton
-											onClick={this.handleLogout}
-											color="inherit"
-										>
-											<Logout />
-										</IconButton>
-									</Tooltip>
+										<Link href={"/profile/" + data.user._id + "/" + data.user.username} >
+											<a>
+												<Thumbnails size="xs" color="black"  name={typeof data.user !== "undefined" && typeof data.user.username !== "undefined" ? data.user.username : "o"} />
+											</a>
+										</Link>
+										<Link href={"/profile/" + data.user._id + "/" + data.user.username} >
+											<a style={{ color: 'white', textDecoration: 'none' }}>
+												<p>&nbsp;Hi, {data.user.username}</p>
+											</a>
+										</Link>
+										&nbsp;
+										&nbsp;
 								</React.Fragment>
 						}
+						{this.displayDesktop()}
             <div className={classes.sectionMobile}>
               <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
 								<MenuIcon />
@@ -476,7 +626,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({
-		getProfile: getProfile
+		getProfile: getProfile,
+		getUser: getUser
 	}, dispatch)
 }
 

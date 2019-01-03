@@ -6,6 +6,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Report from '@material-ui/icons/Report';
 import Add from '@material-ui/icons/Add';
+import Remove from '@material-ui/icons/Remove';
+
 // import MoreVertIcon from '@material-ui/icons/MoreVert';
 import IconButton from '@material-ui/core/IconButton';
 
@@ -21,9 +23,10 @@ class Options extends React.Component {
   };
 
   componentDidMount() {
-    const { data } = this.props;
+    const { data, following } = this.props;
     this.setState({
-      userFollowing: data.user.following
+      userFollowing: data.user.following,
+      topicFollowing: following
     })
   }
   
@@ -67,6 +70,7 @@ class Options extends React.Component {
     if (token) {
       // check if the user is logged in
       if (topicUser.id !== data.user.id) {
+      // check if the owner of the post is the same with the logged in user
         if (userFollowing.indexOf(topicUser.id) === -1) {
           return (
             <Button 
@@ -96,12 +100,38 @@ class Options extends React.Component {
     }
   }
 
-  handlePostFollow() {
+  handlePostFollow = async () => {
+    const { topicObjId } = this.props;
+    // console.log("yes", token);
+    let token = localStorage.getItem('token');
+    if (token) {
+      const options = {
+        method: 'POST',
+        data: JSON.stringify({ topicObjId }),
+        headers: {
+          'content-type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'x-auth-token': token
+        },
+        url: config.api + '/topic/follow'
+      }
 
+      let follow = await axios(options);
+      console.log("topic FOLLOWING", follow);
+      if (follow.data.error === false) {
+        this.setState({
+          topicFollowing: follow.data.content.following
+        })
+      }
+      
+    }
   }
 
   render() {
-    const { anchorEl } = this.state;
+    const { anchorEl, topicFollowing } = this.state;
+    const { data } = this.props;
+    console.log(topicFollowing);
+    
     return (
       <div>
         {this.displayFollow()}
@@ -119,7 +149,18 @@ class Options extends React.Component {
           onClose={this.handleClose}
         >
           <MenuItem style={{ fontSize: 12, padding: "5px 16px" }} onClick={this.handlePostFollow}>
-            <Add style={{ fontSize: 15 }} />&nbsp;Follow Post
+            {
+              topicFollowing.indexOf(data.user._id) === -1 ?
+                <React.Fragment>
+                  <Add style={{ fontSize: 15 }} />
+                  &nbsp;Follow Post
+                </React.Fragment>
+              :
+                <React.Fragment>
+                  <Remove style={{ fontSize: 15 }} />
+                  &nbsp;Following Post
+                </React.Fragment>
+            }
           </MenuItem>
           <MenuItem style={{ fontSize: 12, padding: "5px 16px" }} onClick={this.handleClose}>
             <img src="/static/icons/moneybag.svg" alt="comments" width='15' height="15" />

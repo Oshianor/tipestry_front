@@ -297,9 +297,13 @@ class RegisterPath extends Component {
     return (
       <div className={classes.root}>
         {/* <Typography variant="h2" gutterBottom style={{ margin: '4% 8%' }} > Tipestry</Typography> */}
-        <Typography variant="h2" gutterBottom style={{ margin: '4% 8%' }} >
-          <img src="/static/login/newlogo.png" style={{ width: 200, height: 60 }} />
-        </Typography>
+        <Link href="/" prefetch>
+          <a>
+            <Typography variant="h2" gutterBottom style={{ margin: '4% 8%' }} >
+              <img src="/static/login/newlogo.png" style={{ width: 200, height: 60 }} />
+            </Typography>
+          </a>
+        </Link>
 
         <Typography variant="overline" gutterBottom style={{ margin: '2% 8%', marginTop: "15%", fontSize: 20 }}> 
           New Here? Create an Account...

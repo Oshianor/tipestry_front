@@ -30,7 +30,7 @@ const styles = {
 class Profile extends React.Component {
   state = {
     value: 2,
-    completed: 0,
+    completed: 70,
     buffer: 10,
     color: 'secondary'
   };
@@ -56,21 +56,44 @@ class Profile extends React.Component {
           Member Since: { moment(data.profile.created_at).format('YYYY') }
         </Typography>
 
-        <div style={{ margin: "10px 0px" }}>
-          <LinearProgress 
-            style={{ margin: "0px 20%", height: 17, borderRadius: 13 }}
-            color="secondary" 
-            variant="buffer" 
-            value={completed}
-            valueBuffer={buffer} 
-          />
-          <Typography variant="subtitle2" style={{ marginTop: -20 }} >
-            Newbie
-          </Typography>
+        <div style={{ margin: "20px 20%" }}>
+          <Grid container >
+            <Grid item xs={1} >
+              <div style={{ marginTop: -5 }}>
+                <img src="/static/levels/newbie.png" width={15} height={15} />
+                <Typography variant='body2' style={{ fontSize: 10 }} >
+                  Newbie
+                </Typography>
+              </div>
+            </Grid>
+            <Grid item xs={10} >
+              <LinearProgress 
+                style={{ height: 17, borderRadius: 13, zIndex: 9999 }}
+                color="primary" 
+                variant="buffer" 
+                value={completed}
+                valueBuffer={buffer} 
+              />
+              <Typography variant='h6' style={{ fontSize: 13, zIndex: 99999, marginTop: -20 }} >
+                {completed} %
+              </Typography>
+            </Grid>
+            <Grid item xs={1} >
+              <div style={{  marginTop: -5 }}>
+                <img src="/static/levels/newbie.png" width={15} height={15} />
+                <Typography variant='body2' style={{ fontSize: 10 }} >
+                  Pro
+                </Typography>
+              </div>
+            </Grid>
+          </Grid>
+          
+          
+          
         </div>
         
 
-        <Typography variant="subtitle2" style={{ margin: "0px 10%" }} >
+        <Typography variant="subtitle2" style={{ margin: "5px 10%" }} >
           {data.profile.bio && data.profile.bio}
         </Typography>
       </div>
@@ -81,9 +104,9 @@ class Profile extends React.Component {
     const { value } = this.state;
     const { data } = this.props;
     if (value === 0) {
-      return <Post topicValue={data.topics} source="usertopics" />;
+      return <Post topicValue={data.topics} source="usertopics" errMsg="YOU CURRENTLY HAVE NO POST" />;
     } else if (value === 1) {
-      return <Post topicValue={data.favourite} source="favourite" />;
+      return <Post topicValue={data.favourite} source="favourite" errMsg="YOU CURRENTLY HAVE NO FAVOURITE POST" />;
     } else if (value === 2) {
       return <Comments value={data.comment} />;
     } else if (value === 3) {
@@ -195,3 +218,26 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, )(withStyles(styles)(Profile));
+
+
+{/* <div style={{ margin: "20px 20%" }}>
+          <div style={{ float: 'left', marginTop: -5 }}>
+            <img src="/static/levels/newbie.png" width={15} height={15} />
+            <Typography variant='body2' style={{ fontSize: 10 }} >
+              Newbie
+            </Typography>
+          </div>
+          <LinearProgress 
+            style={{ height: 17, borderRadius: 13, marginRight: 22 }}
+            color="primary" 
+            variant="buffer" 
+            value={completed}
+            valueBuffer={buffer} 
+          />
+          <div style={{ float: 'right', marginTop: -20 }}>
+            <img src="/static/levels/newbie.png" width={15} height={15} />
+            <Typography variant='body2' style={{ fontSize: 10 }} >
+              Pro
+            </Typography>
+          </div>
+        </div> */}

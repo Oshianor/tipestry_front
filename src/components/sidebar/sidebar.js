@@ -1,22 +1,37 @@
 import React, { Component } from 'react';
-// import Siteabout from './compnents/siteabout';
 import Compose from './compnents/compose';
 import Container from './container';
 import Typography from '@material-ui/core/Typography';
+import { connect } from 'react-redux';
+
 
 class Sidebar extends Component {	
 	render() {
-		const { token } = this.props;
+		const { token, data } = this.props;
 		return (
 			<div style={{ marginTop: 80, height: "90vh" }}>
 				<Typography variant="title" style={{ textAlign: 'center' }}>
 					JOIN THE CONVERSATION TODAY
 				</Typography>
-				<Container token={token} />
+				{
+					data.siteTopic[0].comment.length > 0 ?
+						<Container token={token} />
+					:
+						<Typography variant='subtitle2' style={{ textAlign: 'left', margin: '5%' }}>
+							This post has <a style={{ color: '#1F7BD8' }}>0</a> comments. Be the first to post
+						</Typography>
+				}
 				<Compose token={token} />
 			</div>
 		);
 	}
 }
 
-export default Sidebar;
+// export default Sidebar;
+function mapStateToProps(state) {
+	return {
+		data: state.data,
+	}
+}
+
+export default connect(mapStateToProps, )(Sidebar);

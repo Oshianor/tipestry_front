@@ -88,7 +88,7 @@ class Post extends React.Component {
   }
 
   render() {
-    const { classes, topicValue } = this.props;
+    const { classes, topicValue, errMsg } = this.props;
     const { token } = this.state;
     // console.log("POST", this.state);
     
@@ -101,72 +101,82 @@ class Post extends React.Component {
           justify="center"
         >
           {
-            topicValue.map((topic, index) => (
-              <Grid item style={{ margin: "10px" }} key={index} >
-                <Card className={classes.card}>
-                <CardHeader
-                  avatar={
-                    <Link href={encodeURI("/profile/" + topic.user[0]._id + "/@" + topic.user[0].username)} >
-                      <a style={{ textDecoration: 'none' }}>
-                        <Thumbnails name={topic.user[0].username} />
-                      </a>
-                    </Link>
-                  }
-                  action={
-                    <Options 
-                      token={token}
-                      topicUser={topic.user[0]}
-                    />
-                  }
-                  component="div"
-                  title={
-                    <Link href={encodeURI("/profile/" + topic.user[0]._id + "/@" + topic.user[0].username)} >
-                      <a style={{ color: '#1F7BD8', textDecoration: 'none' }}>
-                        <strong style={{ color: 'gray' }}>@</strong>
-                        {typeof topic.user[0] !== "undefined" ? `${topic.user[0].username}` : "@No name"}
-                      </a>
-                    </Link>
-                  }
-                  subheader={
-                    <p style={{ fontSize: 10, margin: 0 }} >
-                      {Moment(topic.created_at).fromNow()}
-                    </p>
-                  }
-                />
-                <CardMedia
-                  className={classes.media}
-                  image={config.url + topic.screenshot}
-                  title={topic.title}
-                  component="a"
-                  href={encodeURI("/topics/" + topic._id + "/" + topic.title)}
-                />
+            typeof topicValue[0] === "undefined" ?
+              <Typography 
+                style={{ marginTop: "10%", textAlign: 'center' }} 
+                variant="h6" 
+              >
+                {errMsg}
+              </Typography>
+            :
+              topicValue.map((topic, index) => (
+                <Grid item style={{ margin: "10px" }} key={index} >
+                  <Card className={classes.card}>
+                  <CardHeader
+                    avatar={
+                      <Link href={encodeURI("/profile/" + topic.user[0]._id + "/@" + topic.user[0].username)} >
+                        <a style={{ textDecoration: 'none' }}>
+                          <Thumbnails name={topic.user[0].username} />
+                        </a>
+                      </Link>
+                    }
+                    action={
+                      <Options 
+                        token={token}
+                        topicObjId={topic._id}
+                        following={topic.following}
+                        topicUser={topic.user[0]}
+                      />
+                    }
+                    component="div"
+                    title={
+                      <Link href={encodeURI("/profile/" + topic.user[0]._id + "/@" + topic.user[0].username)} >
+                        <a style={{ color: '#1F7BD8', textDecoration: 'none' }}>
+                          <strong style={{ color: 'gray' }}>@</strong>
+                          {typeof topic.user[0] !== "undefined" ? `${topic.user[0].username}` : "@No name"}
+                        </a>
+                      </Link>
+                    }
+                    subheader={
+                      <p style={{ fontSize: 10, margin: 0 }} >
+                        {Moment(topic.created_at).fromNow()}
+                      </p>
+                    }
+                  />
+                  <CardMedia
+                    className={classes.media}
+                    image={config.url + topic.screenshot}
+                    title={topic.title}
+                    component="a"
+                    href={encodeURI("/topics/" + topic._id + "/" + topic.title)}
+                  />
 
-                <CardContent>
-                  <Typography component="p">
-                    <Link href={encodeURI("/topics/" + topic._id + "/" + topic.title)} >
-                      {this.displayTitle(topic.title)}
-                    </Link>
-                    <br />
-                    <Link href={"/sites?s=" + topic.sites[0].url} >
-                      <a >
-                        {topic.sites[0].url.length > 50 ? topic.sites[0].url.substr(0, 40) + "..." : topic.sites[0].url}
-                      </a>
-                    </Link>
-                  </Typography>
-                </CardContent>
+                  <CardContent>
+                    <Typography component="p">
+                      <Link href={encodeURI("/topics/" + topic._id + "/" + topic.title)} >
+                        {this.displayTitle(topic.title)}
+                      </Link>
+                      <br />
+                      <Link href={"/sites?s=" + topic.sites[0].url} >
+                        <a >
+                          {topic.sites[0].url.length > 50 ? topic.sites[0].url.substr(0, 40) + "..." : topic.sites[0].url}
+                        </a>
+                      </Link>
+                    </Typography>
+                  </CardContent>
 
-                {/* card action icons */}
-                <CardActionsIcons 
-                  votes={topic.votes}
-                  comment={typeof topic.comment[0] !== "undefined" ? topic.comment[0].count : ""}
-                  topicId={topic.id}
-                  token={token}
-                  topicObjId={topic._id}
-                  link={encodeURI("/topics/" + topic._id + "/" + topic.title)}
-                />
-              </Card>
-            </Grid>
-          ))
+                  {/* card action icons */}
+                  <CardActionsIcons 
+                    votes={topic.votes}
+                    comment={typeof topic.comment[0] !== "undefined" ? topic.comment[0].count : ""}
+                    topicId={topic.id}
+                    token={token}
+                    topicObjId={topic._id}
+                    link={encodeURI("/topics/" + topic._id + "/" + topic.title)}
+                  />
+                </Card>
+              </Grid>
+            ))
           }
         </Grid>
       </Grid>

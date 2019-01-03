@@ -9,7 +9,7 @@ import { config } from '../../../../config';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getSiteTopic } from "../../../actions/data";
-
+import Link from "next/link";
 
 const styles = theme => ({
   container: {
@@ -29,13 +29,22 @@ const styles = theme => ({
 
 class Compose extends React.Component {
   state = {
-    comment: ''
+    comment: '',
+    token: null
   }
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value,
     });
   };
+
+  componentDidMount() {
+    let token = localStorage.getItem('token');
+    this.setState({
+      token
+    })
+  }
+  
 
   async handleAddComment() {
     const { data, token, getSiteTopic } = this.props;
@@ -76,7 +85,7 @@ class Compose extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { comment } = this.state;
+    const { comment, token } = this.state;
     
     return (
       <React.Fragment>
@@ -95,9 +104,22 @@ class Compose extends React.Component {
             margin="normal"
             variant="outlined"
           />
-          <Button variant="outlined" onClick={this.handleAddComment.bind(this)} color="primary" className={classes.button}>
-            Add Comment
-          </Button>
+          {
+            !token ? 
+              <Typography variant="subtitle1" >
+                You have to be &nbsp;
+                <Link href="/login" >
+                  <a>
+                    Logged In
+                  </a>
+                </Link>
+                &nbsp; comment
+              </Typography>
+            :
+              <Button variant="outlined" onClick={this.handleAddComment.bind(this)} color="primary" className={classes.button}>
+                Add Comment
+              </Button>
+          }
         </form>
       </React.Fragment>
     );

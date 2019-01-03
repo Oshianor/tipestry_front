@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Box from './components/box';
 import { config } from '../../../config';
-
+import Typography from '@material-ui/core/Typography';
 
 
 const styles = theme => ({
@@ -35,23 +35,33 @@ class Follower extends React.Component {
             justify="center"
           >
 						{
-							value.map((val) => (
-								<Grid items key={val._id} >
-                  <Box 
-                    type="follow" 
-                    name={val.name ? val.name : "@" + val.username} 
-                    img={
-                      val.profileimage.length > 100 ?
-                        'data:image/png;base64,' + val.profileimage
-                      :
-                        config.url + val.profileimage
-                    } 
-                    token={token}
-                    profile={profile}
-                    user={user}
-                  />
-								</Grid>
-							))
+              typeof value[0] === "undefined" ?
+                <Typography 
+                  style={{ marginTop: "10%", textAlign: 'center' }} 
+                  variant="h6" 
+                >
+                  YOU CURRENTLY HAVE NO FOLLOWERS
+                </Typography>
+              :
+                value.map((val) => (
+                  <Grid items key={val._id} >
+                    <Box 
+                      type="follow" 
+                      name={val.name ? val.name : "@" + val.username} 
+                      img={
+                        val.profileimage &&
+                        val.profileimage.length > 100 ?
+                          'data:image/png;base64,' + val.profileimage
+                        :
+                          config.url + val.profileimage
+                      } 
+                      id={val.id}
+                      token={token}
+                      profile={profile}
+                      user={user}
+                    />
+                  </Grid>
+                ))
 						}
           </Grid>
         </Grid>

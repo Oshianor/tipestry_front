@@ -11,7 +11,7 @@ import Thumbnails from '../reuseable/thumbnails';
 import Link from "next/link";
 import Axios from 'axios';
 import { config } from "../../../config";
-
+import { connect } from 'react-redux';
 
 const styles = theme => ({
   root: {
@@ -191,7 +191,7 @@ class Notification extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, data } = this.props;
     const { open, placement, disablePortal, notify, count, flip, preventOverflow, arrow, arrowRef } = this.state;
 
     const id = open ? 'Share' : null;
@@ -258,7 +258,7 @@ class Notification extends React.Component {
                           :
                             null
                         }
-                        name="T"
+                        name={data.user.username}
                       />
                     </span>
                     <Typography variant='body2' style={{ fontSize: 12, marginLeft: 15 }}>
@@ -280,4 +280,12 @@ Notification.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Notification);
+// export default withStyles(styles)(Notification);
+function mapStateToProps(state) {
+  return {
+    data: state.data,
+  }
+}
+
+export default connect(mapStateToProps, )(withStyles(styles)(Notification));
+

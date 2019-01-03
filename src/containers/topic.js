@@ -5,6 +5,7 @@ import Sidebar from '../components/sidebar/sidebar';
 import Header from "../components/header/header";
 import Siteabout from '../components/sidebar/compnents/siteabout';
 import { connect } from 'react-redux';
+import Typography from '@material-ui/core/Typography';
 
 class Topic extends Component {
 	state = {
@@ -20,12 +21,16 @@ class Topic extends Component {
 	
 	render() {
 		const { token } = this.state;
+		const { data } = this.props;
 		return (
 			<div>
 				<Header />
 				<Grid container spacing={24}>
 					<Grid item xs={12} sm={12} md={6} lg={6} xl={6} >
-						<Embed url={this.props.data.siteTopic[0].sites[0].url} />
+						<Typography variant="h6" style={{ margin: 5, marginTop: 80, textAlign: 'center', color: 'black' }} >
+							{data.siteTopic[0].title}
+						</Typography>
+						<Embed url={data.siteTopic[0].sites[0].url} height="70vh" />
 						<Siteabout token={token} />
 					</Grid>
 					<Grid item xs={12} sm={12} md={6} lg={6} xl={6} >

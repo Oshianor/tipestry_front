@@ -35,13 +35,17 @@ const styles = theme => ({
 class Comments extends React.Component {
   render() {
     const { classes, value } = this.props;
-		console.log(value);
-		
+
     return (
 			<React.Fragment>
 				{
 					typeof value[0] === "undefined" ?
-						<Typography style={{ marginTop: 10 }} variant="6" >You currently have no comment</Typography>
+						<Typography 
+							style={{ marginTop: "10%", textAlign: 'center' }} 
+							variant="h6" 
+						>
+							YOU CURRENTLY HAVE NO COMMENTS
+						</Typography>
 					:
 						value.map((val) => (
 							<Card className={classes.card} key={val._id} >
