@@ -67,7 +67,7 @@ class UploadUrl extends React.Component {
 					<FormHelperText style={{ color: 'red' }}>{msg}</FormHelperText>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={() => handleClose()} color="primary">
+					<Button onClick={() => handleClose()} color="secondary">
 						No, Thanks
 					</Button>
 					<Button onClick={this.handleURLPost} color="primary">

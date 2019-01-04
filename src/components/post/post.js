@@ -145,7 +145,12 @@ class Post extends React.Component {
                   />
                   <CardMedia
                     className={classes.media}
-                    image={config.url + topic.screenshot}
+                    image={
+                      topic.screenshot.length > 200 ?
+                        'data:image/png;base64,' + topic.screenshot
+                      :
+                        config.url + topic.screenshot
+                    }
                     title={topic.title}
                     component="a"
                     href={encodeURI("/topics/" + topic._id + "/" + topic.title)}

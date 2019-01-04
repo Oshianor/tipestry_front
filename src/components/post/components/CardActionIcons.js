@@ -17,6 +17,7 @@ import { getUser } from "../../../actions/data";
 import Thumb from './thumb';
 import Axios from 'axios';
 import { config } from "../../../../config";
+import Coin from './coin';
 
 const styles = theme => ({
   button: {
@@ -141,18 +142,7 @@ class CardActionIcons extends React.Component {
         </Tooltip>
 
         {/* tips coin icons */}
-        <IconButton
-          onClick={handleExpandClick}
-          className={classes.iconspacing}
-          aria-expanded={expanded}
-          aria-label="Show more"
-        >
-          <img src="/static/icons/moneybag.svg" alt="comments" width='25' height="25" style={{ color: '#1F7BD8' }} />
-        </IconButton>
-        <p className={classes.num} >
-        4500
-        </p>
-				&nbsp;&nbsp;
+        <Coin />
       </CardActions>
     );
   }

@@ -2,31 +2,42 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Report from '@material-ui/icons/Report';
 import Add from '@material-ui/icons/Add';
 import Remove from '@material-ui/icons/Remove';
-
-// import MoreVertIcon from '@material-ui/icons/MoreVert';
 import IconButton from '@material-ui/core/IconButton';
-
 import { connect } from 'react-redux';
 import { config } from '../../../../config';
 import axios from 'axios';
+import ReportComponent from './report';
 
 class Options extends React.Component {
   state = {
     anchorEl: null,
     userFollowing: [],
-    topicFollowing: []
+    topicFollowing: [],
+    report: false
   };
+
+  handleReportOpen = () => {
+    this.setState({
+      report: true
+    })
+  }
+
+  handleReportClose = () => {
+    this.setState({
+      report: false
+    })
+    this.handleClose();
+  }
 
   componentDidMount() {
     const { data, following } = this.props;
     this.setState({
-      userFollowing: data.user.following,
-      topicFollowing: following
+      userFollowing: data.user.following ? data.user.following : [],
+      topicFollowing: following ? following : []
     })
   }
   
@@ -128,9 +139,9 @@ class Options extends React.Component {
   }
 
   render() {
-    const { anchorEl, topicFollowing } = this.state;
+    const { anchorEl, topicFollowing, report } = this.state;
     const { data } = this.props;
-    console.log(topicFollowing);
+    console.log(this.state);
     
     return (
       <div>
@@ -166,10 +177,15 @@ class Options extends React.Component {
             <img src="/static/icons/moneybag.svg" alt="comments" width='15' height="15" />
             &nbsp;Gift Coin
           </MenuItem>
-          <MenuItem style={{ fontSize: 12, padding: "5px 16px" }} onClick={this.handleClose}>
+          <MenuItem style={{ fontSize: 12, padding: "5px 16px" }} onClick={this.handleReportOpen}>
             <Report style={{ fontSize: 15 }} /> &nbsp;Report post
           </MenuItem>
         </Menu>
+        <ReportComponent 
+          open={report}
+          handleReportOpen={this.handleReportOpen}
+          handleReportClose={this.handleReportClose}
+        />
       </div>
     );
   }

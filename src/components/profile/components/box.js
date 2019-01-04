@@ -90,7 +90,7 @@ class Box extends React.Component{
 							// type represent followers
 							type === "follow" ?
 							// if they are both following one another then on followers show unfollow
-								data.user.following.indexOf(id) === -1 ?
+								data.user.following && data.user.following.indexOf(id) === -1 ?
 									<React.Fragment>
 										<Add style={{ fontSize: 15 }} />
 										Follow

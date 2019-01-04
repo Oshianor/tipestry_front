@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
  class Embed extends Component {
 	render() {
-    const { height } = this.props;
+    const { height, top } = this.props;
 		return (
       <div>
         <iframe 
@@ -11,7 +11,7 @@ import React, { Component } from 'react';
             borderRight: "10px solid gray",
             width: "100%",
             height: height ? height : "70vh",
-            // marginTop: 80
+            marginTop: top ? top : 0
           }}
           title="Inline Frame Example"
           width="300"

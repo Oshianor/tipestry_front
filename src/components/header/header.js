@@ -309,8 +309,8 @@ class Header extends React.Component {
 									borderWidth={4} 
 									borderColor="white" 
 									color="purple" 
-									url={config.url + data.profile.profileimage}
-									// url={'data:image/png;base64,'+ data.profile.profileimage}
+									name={data.profile.username}
+									url={config.url + "/public/profile_images/" + data.profile.profileimage}
 								/>
 								<IconButton
 									onClick = { (e) => { this.imgUp.click() } }
@@ -379,20 +379,22 @@ class Header extends React.Component {
 
 	following = () => {
 		const { data, classes } = this.props;
-		if (data.user.following.indexOf(data.profile.id) === -1) {
-			return (
-				<Button 
-					size='small'
-					variant="outlined" 
-					onClick={this.handleFollow}
-					className={classes.but} 
-					style={{ color: "white", borderColor: "white", padding: "0px 6px", fontSize: 10 }} 
-				>
-					<Add style={{ fontSize: 17 }} />
-					Follow
-				</Button>
-			)
-		} 
+		if (data.user.following) {
+			if (data.user.following.indexOf(data.profile.id) === -1) {
+				return (
+					<Button 
+						size='small'
+						variant="outlined" 
+						onClick={this.handleFollow}
+						className={classes.but} 
+						style={{ color: "white", borderColor: "white", padding: "0px 6px", fontSize: 10 }} 
+					>
+						<Add style={{ fontSize: 17 }} />
+						Follow
+					</Button>
+				)
+			} 
+		}
 		return (
 			<Button 
 				size='small'
@@ -580,7 +582,11 @@ class Header extends React.Component {
 									<Notification />
 										<Link href={"/profile/" + data.user._id + "/" + data.user.username} >
 											<a>
-												<Thumbnails size="xs" color="black"  name={typeof data.user !== "undefined" && typeof data.user.username !== "undefined" ? data.user.username : "o"} />
+												<Thumbnails 
+													size="xs" color="black"  
+													name={typeof data.user !== "undefined" && typeof data.user.username !== "undefined" ? data.user.username : "o"} 
+													url={config.url + "/public/profile_images/" + data.user.profileimage}
+												/>
 											</a>
 										</Link>
 										<Link href={"/profile/" + data.user._id + "/" + data.user.username} >

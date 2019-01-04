@@ -15,7 +15,7 @@ class Index extends React.Component {
   }
   
   static async getInitialProps({ req }) {
-    console.log('req', req);
+    // console.log('req', req);
     
     const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
 

@@ -46,7 +46,7 @@ function FullWidthGrid(props) {
 				<Grid container spacing={24}>
 					<Grid item xs={6} sm={3}>
 						<Paper className={classes.paper} >
-							<img src="/static/tipcoins/Bitcoin-Icon.svg"
+							<img src="/static/tipcoins/bit.svg"
 								alt="comments"
 								width='50'
 								height='50'
@@ -63,7 +63,7 @@ function FullWidthGrid(props) {
 					</Grid>
 					<Grid item xs={6} sm={3}>
 						<Paper className={classes.paper}>
-							<img src="/static/tipcoins/Ethereum-Icon.svg" alt="comments" width='50' height='50' 
+							<img src="/static/tipcoins/eth.svg" alt="comments" width='50' height='50' 
 								style={
 									{
 										borderRight: "1px solid gray",
@@ -77,7 +77,7 @@ function FullWidthGrid(props) {
 					</Grid>
 					<Grid item xs={6} sm={3}>
 						<Paper className={classes.paper}>
-							<img src="/static/tipcoins/Dogecoin-Icon.svg" alt="comments" width='50' height='50' style={
+							<img src="/static/tipcoins/doge.svg" alt="comments" width='50' height='50' style={
 									{
 										borderRight: "1px solid gray",
 										paddingRight: "10%",

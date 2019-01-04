@@ -147,9 +147,17 @@ class LoginPath extends Component {
       
       if (login.data.error) {
         this.setState({
-          res: login.data
+          res: login.data,
+          password: ''
         });
       } else {
+        this.setState({
+          res: {
+            error: false,
+            msg: ''
+          },
+          password: ""
+        });
         localStorage.setItem('token', login.headers['x-auth-token']);
         this.props.getToken(login.headers['x-auth-token']);
         Router.push('/');
@@ -160,7 +168,8 @@ class LoginPath extends Component {
       
     }
     this.setState({
-      loading: false
+      loading: false,
+      password: ''
     });
     
   }

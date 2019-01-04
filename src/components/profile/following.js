@@ -41,7 +41,7 @@ class Following extends React.Component {
                   style={{ marginTop: "10%", textAlign: 'center' }} 
                   variant="h6" 
                 >
-                  YOU CURRENTLY HAVE NO FOLLOWERS
+                  YOU CURRENTLY FOLLOWING NO ONE!
                 </Typography>
               :
                 value.map((val) => (
