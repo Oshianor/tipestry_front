@@ -23,7 +23,7 @@ class Topic extends Component {
   }
 
   async componentDidMount() {
-    const { dataTopic, getSiteTopic } = this.props;
+    const { dataTopic, getSiteTopic, getUser } = this.props;
     // console.log(data);
     let token = localStorage.getItem('token');
 
@@ -40,7 +40,7 @@ class Topic extends Component {
         url: config.api + '/users/me'
       }
       let user = await axios(options);
-      this.props.getUser(user.data);
+      getUser(user.data[0]);
     }
     
     if (dataTopic) {

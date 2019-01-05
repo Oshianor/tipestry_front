@@ -49,11 +49,10 @@ class Follower extends React.Component {
                       type="follow" 
                       name={val.name ? val.name : "@" + val.username} 
                       img={
-                        val.profileimage &&
-                        val.profileimage.length > 100 ?
-                          'data:image/png;base64,' + val.profileimage
+                        val.profileimage === "" || !val.profileimage ?
+                          null 
                         :
-                          config.url + val.profileimage
+                          config.profileimage + val.profileimage
                       } 
                       id={val.id}
                       token={token}

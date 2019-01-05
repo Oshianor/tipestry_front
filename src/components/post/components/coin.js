@@ -1,11 +1,15 @@
-import React from 'react';
+ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Popper from '@material-ui/core/Popper';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
-import { withRouter } from 'next/router';
 import CoinGift from './coingift';
+import { connect } from 'react-redux';
+import Axios from 'axios';
+import { config } from "../../../../config";
+
+
 
 const styles = theme => ({
   root: {
@@ -114,8 +118,41 @@ class Coin extends React.Component {
     placement: 'top',
     preventOverflow: 'scrollParent',
     img: null,
-    gift: false
-  };
+    gift: false,
+    type: "",
+    btc: "Getting balance...",
+		currentCoin: 0
+	};
+
+	async componentDidMount() {
+		const { data } = this.props;
+		this.setState({
+			doge: data.user.doge[0].doge_balance,
+			eth: data.user.eth[0].ethapibalance,
+			tipc: data.user.eth[0].tipcapibalance,
+			tip: data.user.eth[0].tipapibalance,
+			xth: data.user.eth[0].xrtapibalance
+		})
+
+		let token = localStorage.getItem('token');
+
+    if (token) {
+      const options = {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'x-auth-token': token
+        },
+        url: config.api + "/crypto/btc/balance",
+      };
+			let btc = await Axios(options);
+			// console.log(btc);
+      this.setState({
+				btc: btc.data.result
+			})
+    }
+	}
 
   handleChange = key => (event, value) => {
     this.setState({
@@ -145,10 +182,41 @@ class Coin extends React.Component {
   };
 
   handleGift(img, name) {
-    this.setState({
-      img: '/static/tipcoins/' + img,
-      gift: true
-    })
+    const { data, topicUserObjId } = this.props;
+    if (data.user._id !== topicUserObjId) {
+      this.setState({
+        img: '/static/tipcoins/' + img,
+        type: name,
+        gift: true
+      })
+    }
+
+    // set the balance of the currenlty selected coin
+		if (name === "btc") {
+			this.setState({
+			  currentCoin: this.state.btc
+			})
+		} else if(name === 'doge') {
+			this.setState({
+        currentCoin: data.user.doge[0].doge_balance
+      })	
+		} else if(name === 'eth') {
+			this.setState({
+        currentCoin: data.user.eth[0].ethapibalance
+      })	
+		} else if (name === 'tipc') {
+			this.setState({
+        currentCoin: data.user.eth[0].tipcapibalance
+      })		
+		} else if(name === 'tip') {
+			this.setState({
+        currentCoin: data.user.eth[0].tipapibalance
+      })	
+		} else if(name === 'xth') {
+			this.setState({
+        currentCoin: data.user.eth[0].xrtapibalance
+      })		
+		}
   }
 
   handleGiftClose = () => {
@@ -158,10 +226,8 @@ class Coin extends React.Component {
   }
 
   render() {
-    console.log(this.state);
-    
-    const { classes, link } = this.props;
-    const { open, placement, disablePortal, flip, preventOverflow, arrow, arrowRef, gift, img } = this.state;
+    const { classes, link, topicUserObjId } = this.props;
+    const { currentCoin, open, placement, disablePortal, flip, preventOverflow, arrow, arrowRef, gift, img, type } = this.state;
 
     const id = open ? 'Share' : null;
     return (
@@ -201,22 +267,22 @@ class Coin extends React.Component {
         >
           {arrow ? <span className={classes.arrow} ref={this.handleArrowRef} /> : null}
           <Paper className={classes.paper}>
-            <a className={classes.lin}  onClick={this.handleGift.bind(this, 'bit.svg', 'bct')} >
+            <a className={classes.lin}  onClick={this.handleGift.bind(this, 'bit.svg', 'btc')} >
               <img src="/static/tipcoins/bit.svg" width="25" height="25" />
             </a>
             <a className={classes.lin} onClick={this.handleGift.bind(this, 'doge.svg', 'doge')} >
               <img src="/static/tipcoins/doge.svg" width="25" height="25" />
             </a>
-            <a className={classes.lin} onClick={this.handleGift.bind(this, 'eth.svg')} >
+            <a className={classes.lin} onClick={this.handleGift.bind(this, 'eth.svg', 'eth')} >
               <img src="/static/tipcoins/eth.svg" width="25" height="25" />
             </a>
-            <a className={classes.lin} onClick={this.handleGift.bind(this, 'Tip-1.png', 'tip1')} >
+            <a className={classes.lin} onClick={this.handleGift.bind(this, 'Tip-1.png', 'tipc')} >
               <img src="/static/tipcoins/Tip-1.png" width="25" height="25" />
             </a>
-						<a className={classes.lin}  onClick={this.handleGift.bind(this, 'Tip-2.png', 'tip2')} >
+						<a className={classes.lin}  onClick={this.handleGift.bind(this, 'Tip-2.png', 'tip')} >
               <img src="/static/tipcoins/Tip-2.png" width="25" height="25" />
             </a>
-						<a className={classes.lin}  onClick={this.handleGift.bind(this, 'Tip-1.png', 'tip3')} >
+						<a className={classes.lin}  onClick={this.handleGift.bind(this, 'Tip-3.png', 'xth')} >
               <img src="/static/tipcoins/Tip-3.png" width="25" height="25" />
             </a>
           </Paper>
@@ -224,6 +290,8 @@ class Coin extends React.Component {
         <CoinGift 
           open={gift}
           image={img}
+          currentCoin={currentCoin}
+          topicUserObjId={topicUserObjId}
           handleClose={this.handleGiftClose}
         />
       </div>
@@ -233,6 +301,13 @@ class Coin extends React.Component {
 
 Coin.propTypes = {
   classes: PropTypes.object.isRequired,
+  topicUserObjId: PropTypes.string.isRequired
 };
 
-export default withRouter(withStyles(styles)(Coin));
+function mapStateToProps(state) {
+  return {
+    data: state.data,
+  }
+}
+
+export default connect(mapStateToProps, )(withStyles(styles)(Coin));

@@ -141,7 +141,7 @@ class Options extends React.Component {
   render() {
     const { anchorEl, topicFollowing, report } = this.state;
     const { data } = this.props;
-    console.log(this.state);
+    // console.log(this.state);
     
     return (
       <div>

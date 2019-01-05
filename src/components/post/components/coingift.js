@@ -10,8 +10,10 @@ import classNames from 'classnames';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
-
-
+import Typography from '@material-ui/core/Typography';
+import { connect } from 'react-redux';
+// import Axios from 'axios';
+// import { config } from "../../../../config";
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
@@ -32,17 +34,31 @@ const styles = theme => ({
 
 class CoinGift extends React.Component {
 	state = {
-		amount: '',
+		amount: "",
+		error: ""
 	};
+
+	ha
+
 
 	handleChange = prop => event => {
-		this.setState({
-			[prop]: event.target.value
-		});
+		const { currentCoin } = this.props;
+		if (currentCoin > event.target.value) {
+			this.setState({
+				[prop]: event.target.value,
+				error: ""
+			});
+		} else {
+			this.setState({
+				error: "You have insuficient balance to handle this transaction"
+			});
+		}
 	};
 
+
   render() {
-		const { classes, open, image, handleClose } = this.props;
+		const { classes, open, image, handleClose, currentCoin } = this.props;
+		const { error, amount } = this.state;
     return (
 			<Dialog
 				open={open}
@@ -53,16 +69,23 @@ class CoinGift extends React.Component {
 				aria-describedby="alert-dialog-slide-description"
 			>
 				<DialogTitle id="alert-dialog-slide-title">
-					<img src={image} width={50} height={50} />
+					<div style={{ display: 'flex' }} >
+						<img src={image} width={50} height={50} />
+						<div style={{ flexGrow: 1 }} />
+						<Typography style={{ margin: 15 }} >Balance: {currentCoin}</Typography>
+					</div>
+					
 				</DialogTitle>
 				<DialogContent>
 					<TextField
+					error={error !== ""}
           id="outlined-adornment-amount"
           className={classNames(classes.margin, classes.textField)}
           variant="outlined"
 					label="Amount"
 					type='number'
-          value={this.state.amount}
+					helperText={error}
+          value={amount}
           onChange={this.handleChange('amount')}
           InputProps={{
             startAdornment: <InputAdornment position="start">$</InputAdornment>,
@@ -73,7 +96,11 @@ class CoinGift extends React.Component {
 					<Button onClick={() => handleClose()} color='secondary' >
 						Maybe later
 					</Button>
-					<Button onClick={this.handleClose} color="primary">
+					<Button 
+						disabled={error !== ""} 
+						onClick={this.handleClose} 
+						color="primary"
+					>
 						Gift
 					</Button>
 				</DialogActions>
@@ -86,4 +113,64 @@ CoinGift.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(CoinGift);
+function mapStateToProps(state) {
+	return {
+		data: state.data,
+	}
+}
+
+export default connect(mapStateToProps, )(withStyles(styles)(CoinGift));
+
+
+
+// getBalance = () => {
+// 	const { type, data } = this.props;
+// 	const { btc } = this.state;
+// 	if (type === "btc") {
+// 		return (<React.Fragment>{btc}</React.Fragment>);
+// 	} else if(type === 'doge') {
+// 		return (<React.Fragment>{data.user.doge[0].doge_balance}</React.Fragment>);		
+// 	} else if(type === 'eth') {
+// 		return (<React.Fragment>{data.user.eth[0].ethapibalance}</React.Fragment>);		
+// 	} else if (type === 'tipc') {
+// 		return (<React.Fragment>{data.user.eth[0].tipcapibalance}</React.Fragment>);		
+// 	} else if(type === 'tip') {
+// 		return (<React.Fragment>{data.user.eth[0].tipapibalance}</React.Fragment>);		
+// 	} else if(type === 'xth') {
+// 		return (<React.Fragment>{data.user.eth[0].xrtapibalance}</React.Fragment>);		
+// 	}
+// }
+
+
+
+
+	// async componentDidMount() {
+	// 	const { type, data } = this.props;
+	// 	this.setState({
+	// 		doge: data.user.doge[0].doge_balance,
+	// 		eth: data.user.eth[0].ethapibalance,
+	// 		tipc: data.user.eth[0].tipcapibalance,
+	// 		tip: data.user.eth[0].tipapibalance,
+	// 		xth: data.user.eth[0].xrtapibalance
+	// 	})
+
+	// 	let token = localStorage.getItem('token');
+
+	//   if (token) {
+	//     const options = {
+	//       method: 'GET',
+	//       headers: {
+	//         'content-type': 'application/json',
+	//         'Access-Control-Allow-Origin': '*',
+	//         'x-auth-token': token
+	//       },
+	//       url: config.api + "/crypto/btc/balance",
+	//     };
+	// 		let btc = await Axios(options);
+	// 		console.log(btc);
+
+	//     this.setState({
+	// 			btc: btc.data.result
+	// 		})
+	//   }
+	// }

@@ -74,7 +74,7 @@ class Index extends React.Component {
       }
       
       let user = await axios(options);
-      this.props.getUser(user.data);
+      this.props.getUser(user.data[0]);
     }
     
 

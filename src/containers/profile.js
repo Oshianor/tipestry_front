@@ -29,7 +29,7 @@ const styles = {
 
 class Profile extends React.Component {
   state = {
-    value: 2,
+    value: 0,
     completed: 70,
     buffer: 10,
     color: 'secondary'
@@ -39,9 +39,82 @@ class Profile extends React.Component {
     this.setState({ value });
   };
 
+  getCurrentLevel = () => {
+    const { data } = this.props;
+    if (data.profile.user_level === 1) {
+      return (
+        <div style={{ marginTop: -5 }}>
+          <img src="/static/levels/newbie.png" width={25} height={25} />
+          <Typography variant='body2' style={{ fontSize: 10 }} >
+            Newbie
+          </Typography>
+        </div>
+      )
+    } else if (data.profile.user_level === 2) {
+      return (
+        <div style={{ marginTop: -5 }}>
+          <img src="/static/levels/expert.png" width={25} height={25} />
+          <Typography variant='body2' style={{ fontSize: 10 }} >
+            Expert
+          </Typography>
+        </div>
+      )
+    } else if (data.profile.user_level === 3) {
+      return (
+        <div style={{ marginTop: -5 }}>
+          <img src="/static/levels/pro.png" width={25} height={25} />
+          <Typography variant='body2' style={{ fontSize: 10 }} >
+            Pro
+          </Typography>
+        </div>
+      )
+    } else if (data.profile.user_level === 4) {
+      return (
+        <div style={{ marginTop: -5 }}>
+          <img src="/static/levels/veteran.png" width={25} height={25} />
+          <Typography variant='body2' style={{ fontSize: 10 }} >
+            Veteran
+          </Typography>
+        </div>
+      )
+    }
+  }
+
+  getFutureLevel = () => {
+    const { data } = this.props;
+    if (data.profile.user_level === 1) {
+      return (
+        <div style={{ marginTop: -5 }}>
+          <img src="/static/levels/expert.png" width={25} height={25} />
+          <Typography variant='body2' style={{ fontSize: 10 }} >
+            Expert
+          </Typography>
+        </div>
+      )
+    } else if (data.profile.user_level === 2) {
+      return (
+        <div style={{ marginTop: -5 }}>
+          <img src="/static/levels/pro.png" width={25} height={25} />
+          <Typography variant='body2' style={{ fontSize: 10 }} >
+            Pro
+          </Typography>
+        </div>
+      )
+    } else if (data.profile.user_level === 3) {
+      return (
+        <div style={{ marginTop: -5 }}>
+          <img src="/static/levels/veteran.png" width={25} height={25} />
+          <Typography variant='body2' style={{ fontSize: 10 }} >
+            Veteran
+          </Typography>
+        </div>
+      )
+    }
+  }
+
   displayInfo = () => {
     const { data } = this.props;
-    const { completed, buffer } = this.state;
+    
     return (
       <div style={{ marginTop: 250, marginBottom: 10, textAlign: 'center' }} >
         <Typography variant="h4" style={{ textTransform: "capitalize" }}>
@@ -59,37 +132,21 @@ class Profile extends React.Component {
         <div style={{ margin: "20px 20%" }}>
           <Grid container >
             <Grid item xs={1} >
-              <div style={{ marginTop: -5 }}>
-                <img src="/static/levels/newbie.png" width={15} height={15} />
-                <Typography variant='body2' style={{ fontSize: 10 }} >
-                  Newbie
-                </Typography>
-              </div>
+              {this.getCurrentLevel()}
             </Grid>
             <Grid item xs={10} >
               <LinearProgress 
                 style={{ height: 17, borderRadius: 13, zIndex: 9999 }}
                 color="primary" 
                 variant="buffer" 
-                value={completed}
-                valueBuffer={buffer} 
+                value={100 / 5 - (data.profile.user_level)}
+                valueBuffer={100 / 5 - (data.profile.user_level)} 
               />
-              <Typography variant='h6' style={{ fontSize: 13, zIndex: 99999, marginTop: -20 }} >
-                {completed} %
-              </Typography>
             </Grid>
             <Grid item xs={1} >
-              <div style={{  marginTop: -5 }}>
-                <img src="/static/levels/newbie.png" width={15} height={15} />
-                <Typography variant='body2' style={{ fontSize: 10 }} >
-                  Pro
-                </Typography>
-              </div>
+              {this.getFutureLevel()}
             </Grid>
           </Grid>
-          
-          
-          
         </div>
         
 

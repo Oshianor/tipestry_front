@@ -198,7 +198,7 @@ class TopicList extends React.Component {
 													<ListItemAvatar>
 														<Link href={encodeURI("/topics/" + topic._id + "/" + topic.title)} >
 															<a  >
-																<Avatar style={{ borderRadius: 0 }} src="/static/images/signup.jpg" />
+																<Avatar style={{ borderRadius: 0 }} src={'data:image/png;base64,' + topic.screenshot} />
 															</a>
 														</Link>
 													</ListItemAvatar>

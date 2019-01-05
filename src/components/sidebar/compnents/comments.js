@@ -89,14 +89,14 @@ class Comments extends React.Component {
 						<Card className={classes.card} key={index}>
 							<CardHeader
 								avatar={
-									<Link href={"/profile/@" + data.siteTopic[0].user[0].username}>
+									<Link href={"/profile/" + data.siteTopic[0].user[0]._id + "/@" + data.siteTopic[0].user[0].username}>
 										<a style={{ textDecoration: 'none' }}>
 											<Thumbnails borderColor="black" borderWidth={2} name={comment.commentUser[0].username} />
 										</a>
 									</Link>
 								}
 								title={
-									<Link href={"/profile/@" + data.siteTopic[0].user[0].username} >
+									<Link href={"/profile/" + data.siteTopic[0].user[0]._id + "/@" + data.siteTopic[0].user[0].username} >
 										<a style={{ color: '#1F7BD8', textDecoration: 'none' }}>
 											<strong style={{ color: 'gray' }}>@</strong>
 											{comment.commentUser[0].username}

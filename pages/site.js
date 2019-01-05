@@ -50,7 +50,7 @@ class Sites extends Component {
         url: config.api + '/users/me'
       }
       let user = await axios(options);
-      getUser(user.data);
+      getUser(user.data[0]);
     }
     
     if (dataTopic) {

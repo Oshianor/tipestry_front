@@ -251,10 +251,10 @@ class Notification extends React.Component {
                         color="black"
                         url={
                           not.img ?
-                            not.img.length > 100 ?
-                              'data:image/png;base64,' + not.img
+                            not.img.length > 200 ?
+                              config.base64 + not.img
                             :
-                              config.url +  "/" + not.img
+                              config.profileimage + not.img
                           :
                             null
                         }

@@ -8,28 +8,33 @@ import { config } from '../config';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getTopics, getUser, getToken } from "../src/actions/data";
+// import Bottom from '../src/components/reuseable/bottom';
+import BottomScrollListerer from 'react-bottom-scroll-listener'
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 class Index extends React.Component {
   state = {
-    loading: true
+    loading: true,
+    pageNumber: 2,
+    more: false
   }
   
   static async getInitialProps({ req }) {
     // console.log('req', req);
     
-    const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
+    // const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
 
     let topics = await axios.get(config.api + '/topic?pageNumber=1')
     let dataTopics = JSON.stringify(topics.data.content);
 
     return {
-      userAgent,
+      // userAgent,
       dataTopics
     }
   }
 
   async componentDidMount() {
-    const { dataTopics, getTopics } = this.props;
+    const { dataTopics, getTopics, getUser } = this.props;
     // console.log(data);
     let token = localStorage.getItem('token');
 
@@ -46,8 +51,8 @@ class Index extends React.Component {
         url: config.api + '/users/me'
       }
       let user = await axios(options);
-      this.props.getUser(user.data);
-      this.props.getToken(token)
+      getUser(user.data[0]);
+      // this.props.getToken(token)
     }
     
     if (dataTopics) {
@@ -59,9 +64,40 @@ class Index extends React.Component {
     }
   }
 
+
+  handleFetchMoreTopics = async () => {
+    const { pageNumber } = this.state;
+    const { data, getTopics } = this.props;
+    // this.setState({
+    //   more: true
+    // })
+    let topicsCont = await axios.get(config.api + '/topic?pageNumber=' + pageNumber);
+    if (!topicsCont.data.error) {
+      topicsCont.data.content.topic.forEach(obj => {
+        data.topics.topic.push(obj);
+      })
+      // console.log("topicsCont", topicsCont);
+      
+      // console.log("BEFORE", data.topics.topic);
+      // data.topics.topic.concat(topicsCont.data.content.topic);
+      // console.log(data.topics.topic);
+      // console.log("AFTER", data.topics.topic);
+      getTopics(
+        {
+          topic: data.topics.topic,
+          total: topicsCont.data.content.total
+        }
+      );
+      this.setState({
+        // more: false,
+        pageNumber: pageNumber + 1
+      })
+    }
+  }
+
   render() {
-    const { loading } = this.state;
-    // console.log("INDEX",this.props);
+    const { loading, more } = this.state;
+    console.log(this.state);
     
     return (
       <div>
@@ -69,8 +105,24 @@ class Index extends React.Component {
           loading ? 
             <Preloader />
           :
-           <Homepage />
+            <BottomScrollListerer onBottom={this.handleFetchMoreTopics} >
+              <Homepage />
+            </BottomScrollListerer>
         }
+        {/* {
+          more && 
+            <div style={{
+              marginTop: 30,
+              left: "45%",
+              right: "20%",
+              bottom: 0,
+              position: 'absolute',
+              zIndex: 999999,
+              height: 50
+            }} >
+              <CircularProgress color="secondary" />
+            </div>
+        } */}
       </div>
     );
   }
@@ -92,4 +144,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Index);
-// abundanceoshianor@gmail.com

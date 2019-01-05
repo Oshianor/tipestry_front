@@ -102,7 +102,7 @@ class CardActionIcons extends React.Component {
   }
 
   render() {
-    const { token, classes, expanded, handleExpandClick, votes, comment, topicObjId, link } = this.props;
+    const { token, classes, topicUserObjId, votes, comment, topicObjId, link } = this.props;
     // console.log('votes.length,', votes.length);
     
     return (
@@ -142,7 +142,7 @@ class CardActionIcons extends React.Component {
         </Tooltip>
 
         {/* tips coin icons */}
-        <Coin />
+        <Coin topicObjId={topicObjId} />
       </CardActions>
     );
   }
@@ -154,6 +154,7 @@ CardActionIcons.propTypes = {
   comment: PropTypes.string.isRequired,
   topicId: PropTypes.number.isRequired,
   topicObjId: PropTypes.string.isRequired,
+  topicUserObjId: PropTypes.string.isRequired,
   token: PropTypes.string,
 };
 

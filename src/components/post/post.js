@@ -175,9 +175,10 @@ class Post extends React.Component {
                     votes={topic.votes}
                     comment={typeof topic.comment[0] !== "undefined" ? topic.comment[0].count : ""}
                     topicId={topic.id}
+                    topicUserObjId={topic.user[0]._id}
                     token={token}
                     topicObjId={topic._id}
-                    link={encodeURI("/topics/" + topic._id + "/" + topic.title)}
+                    link={encodeURI("/public/topics/" + topic._id + "/" + topic.title)}
                   />
                 </Card>
               </Grid>

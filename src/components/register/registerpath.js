@@ -382,7 +382,7 @@ class RegisterPath extends Component {
             <Grid item xs={6} sm={6} style={{ paddingRight: 0 }} >
               <Typography variant="overline" gutterBottom className={classes.forgot} > 
                 Have an account? &nbsp;
-                <Link href="/register">
+                <Link href="/login">
                   <a>Log In</a>
                 </Link>
               </Typography>

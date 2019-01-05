@@ -108,10 +108,14 @@ const styles = theme => ({
 			fontSize: 15
 		},
 		[theme.breakpoints.up('sm')]: {
-			fontSize: 25
+			fontSize: 20,
+			wordSpacing: 2,
+			letterSpacing: 3
 		},
 		[theme.breakpoints.up('lg')]: {
-			fontSize: 30
+			fontSize: 20,
+			wordSpacing: 2,
+			letterSpacing: 3
 		},
 	},
   sectionDesktop: {
@@ -234,11 +238,11 @@ class Header extends React.Component {
             </Grid>
 						<Grid item xs={6} sm={6} style={{ textAlign: 'center' }}>
 							<Typography variant="h4" className={classes.hed} >
-								Comment's that make a difference.
+								Comment anywhere
 							</Typography>
 							<Typography  variant='display4' className={classes.hedbody}>
-								Upload sites, movie links and many more.
-								Get the opinions of others, upvotes and tips your favourite comments in crypto currency
+								Comment on any website or physical location.Earn cryptocurrency tips
+								for your posts or website.
 							</Typography>
 							<Button size="medium" style={{ marginTop: 5 }} variant="outlined" >Get Started</Button>
 						</Grid>
@@ -253,7 +257,7 @@ class Header extends React.Component {
 		const { getProfile } = this.props;
 		e.preventDefault();
 		let formData = new FormData();
-		console.log(this.imgUp.files);
+		// console.log(this.imgUp.files);
 		formData.append("img", e.target.files[0]);
 		if (token) {
 			const options = {
@@ -310,7 +314,13 @@ class Header extends React.Component {
 									borderColor="white" 
 									color="purple" 
 									name={data.profile.username}
-									url={config.url + "/public/profile_images/" + data.profile.profileimage}
+									url = {
+										data.profile.profileimage === "" || !data.profile.profileimage ?
+											null 
+										:
+											config.profileimage + data.profile.profileimage
+									}
+									
 								/>
 								<IconButton
 									onClick = { (e) => { this.imgUp.click() } }
@@ -334,16 +344,16 @@ class Header extends React.Component {
 						<Grid item className={classes.right} >
 							{
 								token &&
-								data.profile._id === data.user._id ?
-									<Link href={'/edit/' + data.user._id + "/@" + data.user.username} >
-										<a style={{ textDecoration: 'none' }} >
-											<Typography style={{ color: "white" }} className={classes.but} >
-												<Create style={{ fontSize: 17 }} />
-												Edit profile
-											</Typography>
-										</a>
-									</Link>
-								:
+									data.profile._id === data.user._id ?
+										<Link href={'/edit/' + data.user._id + "/@" + data.user.username} >
+											<a style={{ textDecoration: 'none' }} >
+												<Typography style={{ color: "white" }} className={classes.but} >
+													<Create style={{ fontSize: 17 }} />
+													Edit profile
+												</Typography>
+											</a>
+										</Link>
+									:
 									this.following()
 							}
 						</Grid>
@@ -379,7 +389,7 @@ class Header extends React.Component {
 
 	following = () => {
 		const { data, classes } = this.props;
-		if (data.user.following) {
+		if (typeof data.user.following !== "undefined") {
 			if (data.user.following.indexOf(data.profile.id) === -1) {
 				return (
 					<Button 
@@ -394,20 +404,20 @@ class Header extends React.Component {
 					</Button>
 				)
 			} 
+			return (
+				<Button 
+					size='small'
+					variant='contained' 
+					onClick={this.handleFollow}
+					className={classes.but} 
+					color='primary'
+					style={{ padding: "0px 6px", fontSize: 10 }} 
+				>
+					<Remove style={{ fontSize: 17 }} />
+					Following
+				</Button>
+			)
 		}
-		return (
-			<Button 
-				size='small'
-				variant='contained' 
-				onClick={this.handleFollow}
-				className={classes.but} 
-				color='primary'
-				style={{ padding: "0px 6px", fontSize: 10 }} 
-			>
-				<Remove style={{ fontSize: 17 }} />
-				Unfollow
-			</Button>
-		)
 	}
 
 	displayBody = () => {
@@ -503,25 +513,25 @@ class Header extends React.Component {
 						<React.Fragment>
 							<MenuItem onClick={this.handleProfileMenuOpen}>
 								<IconButton color="inherit">
-									<AccountCircle />
+									{/* <AccountCircle /> */}
 								</IconButton>
 								<p>Login</p>
 							</MenuItem>
 							<MenuItem onClick={this.handleProfileMenuOpen}>
 								<IconButton color="inherit">
-									<AccountCircle />
+									{/* <AccountCircle /> */}
 								</IconButton>
 								<p>Register</p>
 							</MenuItem>
 							<MenuItem onClick={this.handleProfileMenuOpen}>
 								<IconButton color="inherit">
-									<AccountCircle />
+									{/* <AccountCircle /> */}
 								</IconButton>
 								<p>Faq</p>
 							</MenuItem>
 							<MenuItem onClick={this.handleProfileMenuOpen}>
 								<IconButton color="inherit">
-									<AccountCircle />
+									{/* <AccountCircle /> */}
 								</IconButton>
 								<p>About</p>
 							</MenuItem>
@@ -585,7 +595,12 @@ class Header extends React.Component {
 												<Thumbnails 
 													size="xs" color="black"  
 													name={typeof data.user !== "undefined" && typeof data.user.username !== "undefined" ? data.user.username : "o"} 
-													url={config.url + "/public/profile_images/" + data.user.profileimage}
+													url={
+														data.user.profileimage === "" || !data.user.profileimage ?
+															null
+														:
+															config.profileimage + data.user.profileimage
+													}
 												/>
 											</a>
 										</Link>
