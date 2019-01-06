@@ -7,17 +7,20 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import Thumbnails from '../../reuseable/thumbnails';
-import Replies from './replies';
 import IconButton from '@material-ui/core/IconButton';
-import Reply from '@material-ui/icons/Reply';
-import ThumbDownAlt from '@material-ui/icons/ThumbDownAlt';
-import ThumbUpAlt from '@material-ui/icons/ThumbUpAlt';
+import Edit from '@material-ui/icons/Edit';
+import Remove from '@material-ui/icons/RemoveCircleOutline';
 import Link from 'next/link';
-import Replycompose from './replycompose';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { getSiteTopic } from "../../../actions/data";
 import Moment from "moment";
-import Axios from 'axios';
+import ThumbComment from './thumbComment';
+import axios from 'axios';
 import { config } from '../../../../config';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+
 
 const styles = theme => ({
   card: {
@@ -33,54 +36,114 @@ const styles = theme => ({
 
 class Comments extends React.Component {
 	state = {
-		reply: null,
-		replyValues: [],
-		replyShow: null
+		// comments: [],
+		edit: null,
+		content: ''
 	}
 
-	handleDisplayReplyCompose(id) {
-		const { reply } = this.state;
-		if (id === reply) {
+
+	// async componentDidMount() {
+  //   const { data } = this.props;
+  //   this.setState({
+	// 		comments: data.siteTopic[0].comment
+  //   });
+
+	// }
+
+	handleEdit(id, mesg) {
+		const { edit } = this.state;
+		if (id === edit) {
 			this.setState({
-				reply: null
+				edit: null,
+				content: ''
 			})
 		} else {
 			this.setState({
-				reply: id
+				edit: id,
+				content: mesg
 			})
 		}
 	}
 
-	async handleFetchReply(commentObjId) {
-		const { replyShow } = this.state;
-		if (replyShow === commentObjId) {
-			this.setState({
-				replyShow: null
-			})
-		} else {
-			let getReply = await Axios.get(config.api + "/commentReply/reply/" + commentObjId);
-			if (!getReply.data.error) {
-				this.setState({
-					replyShow: commentObjId,
-					replyValues: getReply.data.content[0].reply
-				})
-			}
-		}
-		
+	handleCommentEdit = async () => {
+		// console.log("88888888");
+		const { edit, content } = this.state;
+		const { getSiteTopic } = this.props;
+
+		let token = localStorage.getItem('token');
+		if (token) {
+      const options = {
+        method: 'POST',
+        data: JSON.stringify({
+        	commentObjId: edit,
+        	content
+        }),
+        headers: {
+          'content-type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'x-auth-token': token
+        },
+        url: config.api + '/commentReply/edit'
+      }
+
+      let comment = await axios(options);
+      console.log("CHANGEING VOTES", comment);
+      if (comment.data.error === false) {
+				getSiteTopic(comment.data.content);
+        this.setState({
+					edit: null,
+					content: '',
+					// comments: comment.data.content[0].comment
+        })
+      }
+      
+    }
+	}
+
+	async handleCommentDelete(id) {
+		// console.log("88888888");
+		const { getSiteTopic } = this.props;
+
+		let token = localStorage.getItem('token');
+		if (token) {
+      const options = {
+        method: 'POST',
+        data: JSON.stringify({
+        	commentObjId: id,
+        }),
+        headers: {
+          'content-type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'x-auth-token': token
+        },
+        url: config.api + '/commentReply/delete'
+      }
+
+      let comment = await axios(options);
+      console.log("CHANGEING VOTES", comment);
+      if (comment.data.error === false) {
+				getSiteTopic(comment.data.content);
+        this.setState({
+					edit: null,
+					content: '',
+					// comments: comment.data.content[0].comment
+        })
+      }
+      
+    }
 	}
 
 
-	displayReplyForm(commentId) {
-		const { reply } = this.state;
-		if (reply === commentId) {
-			return <Replycompose />;
-		}
-	}
+	handleChange = (event) => {
+    this.setState({
+      content: event.target.value,
+    });
+  };
 
   render() {
 		const { classes, data } = this.props;
-		const { replyValues, replyShow } = this.state;
-		// console.log("COmment", data);
+		const { comments, edit, content } = this.state;
+		console.log(this.state.content);
 		
     return (
 			<React.Fragment>
@@ -89,14 +152,24 @@ class Comments extends React.Component {
 						<Card className={classes.card} key={index}>
 							<CardHeader
 								avatar={
-									<Link href={"/profile/" + data.siteTopic[0].user[0]._id + "/@" + data.siteTopic[0].user[0].username}>
+									<Link href={"/profile/" + comment.commentUser[0]._id + "/@" + comment.commentUser[0].username}>
 										<a style={{ textDecoration: 'none' }}>
-											<Thumbnails borderColor="black" borderWidth={2} name={comment.commentUser[0].username} />
+											<Thumbnails 
+												borderColor="black" 
+												borderWidth={2} 
+												name={comment.commentUser[0].username} 
+												url={
+													comment.commentUser[0].profileimage === "" || !comment.commentUser[0].profileimage ?
+														null
+													:
+														config.profileimage + comment.commentUser[0].profileimage
+												}
+											/>
 										</a>
 									</Link>
 								}
 								title={
-									<Link href={"/profile/" + data.siteTopic[0].user[0]._id + "/@" + data.siteTopic[0].user[0].username} >
+									<Link href={"/profile/" + comment.commentUser[0]._id + "/@" + comment.commentUser[0].username} >
 										<a style={{ color: '#1F7BD8', textDecoration: 'none' }}>
 											<strong style={{ color: 'gray' }}>@</strong>
 											{comment.commentUser[0].username}
@@ -110,42 +183,54 @@ class Comments extends React.Component {
 								}
 							/>
 							<CardContent style={{ padding: "0px 25px" }}>
-								<Typography component="p">
-									{comment.content}
-								</Typography>
-							</CardContent>
-							<CardActions className={classes.actions} disableActionSpacing>
-								<IconButton aria-label="Thumbs Up" className={classes.iconspacing} >
-									<ThumbUpAlt style={{ fontSize: 20 }} /> 
-								</IconButton>
-								<p style={{ fontSize: 12, marginLeft: -5, padding: 0 }} >12</p>
-								&nbsp;&nbsp;
-
-								<IconButton aria-label="Thumbs Down" className={classes.iconspacing} >
-									<ThumbDownAlt style={{ fontSize: 20 }} /> 
-								</IconButton>
-								&nbsp;&nbsp;
-
-								{/* reply icon */}
-								<IconButton aria-label="Reply" onClick={this.handleDisplayReplyCompose.bind(this, comment._id)} >
-									<Reply style={{ fontSize: 20 }} />
-								</IconButton>
-								&nbsp;&nbsp;
-
-								{/* fetch replies for this comment */}
 								{
-									// if reply exist for this comment then show this 
-									typeof comment.replyCount[0] !== "undefined" &&
-										<Typography 
-											onClick={this.handleFetchReply.bind(this, comment._id)} 
-											style={{ cursor: 'pointer' }}
-										>
-											Replies
-											&nbsp;
-											{comment.replyCount[0].count}
-										</Typography> 
+									edit && edit === comment._id ?
+										<form className={classes.container} noValidate autoComplete="off">
+											<TextField
+												label="Edit comment"
+												style={{ margin: 8, marginTop: -5 }}
+												onChange={this.handleChange}
+												fullWidth
+												value={content}
+												margin="normal"
+												multiline
+												onSubmit={this.handleCommentEdit}
+											/>
+											<Button 
+												color="secondary" 
+												style={{ marginTop: 27, marginTop: -5 }} 
+												className={classes.button}
+												onClick={this.handleCommentEdit}
+											>
+												Save
+											</Button>
+										</form>
+									:
+										<Typography component="p">
+											{comment.content}
+										</Typography>
+								}
+							</CardContent>
+
+							<CardActions className={classes.actions} disableActionSpacing>
+								<ThumbComment 
+									commentObjId={comment._id} 
+									votes={comment.votesCount}
+								/>
+
+								{
+									data.user._id === comment.commentUser[0]._id &&
+										<IconButton aria-label="Edit" onClick={this.handleEdit.bind(this, comment._id, comment.content)} >
+											<Edit style={{ fontSize: 20 }} />
+										</IconButton>
 								}
 
+								{
+									data.user._id === comment.commentUser[0]._id &&
+										<IconButton aria-label="delete" onClick={this.handleCommentDelete.bind(this, comment._id)} >
+											<Remove style={{ fontSize: 20 }} />
+										</IconButton>
+								}
 								&nbsp;&nbsp;
 								<IconButton
 									className={classes.iconspacing}
@@ -154,14 +239,7 @@ class Comments extends React.Component {
 									<img src="/static/icons/moneybag.svg" alt="comments" width='20' height="20" />
 								</IconButton>
 							</CardActions>
-							
-							{/* display reply form */}
-							{this.displayReplyForm(comment._id)}
-							
-							{
-								replyShow === comment._id &&
-									<Replies replyValues={replyValues} />
-							}
+
 						</Card>
 					))
 				}
@@ -171,7 +249,8 @@ class Comments extends React.Component {
 }
 
 Comments.propTypes = {
-  classes: PropTypes.object.isRequired,
+	classes: PropTypes.object.isRequired,
+	
 };
 
 // export default withStyles(styles)(Comments);
@@ -181,4 +260,10 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps, )(withStyles(styles)(Comments));
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({
+		getSiteTopic: getSiteTopic
+	}, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Comments));

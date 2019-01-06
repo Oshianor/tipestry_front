@@ -126,13 +126,13 @@ class Coin extends React.Component {
 
 	async componentDidMount() {
 		const { data } = this.props;
-		this.setState({
-			doge: data.user.doge[0].doge_balance,
-			eth: data.user.eth[0].ethapibalance,
-			tipc: data.user.eth[0].tipcapibalance,
-			tip: data.user.eth[0].tipapibalance,
-			xth: data.user.eth[0].xrtapibalance
-		})
+		// this.setState({
+		// 	doge: data.user.doge[0].doge_balance,
+		// 	eth: data.user.eth[0].ethapibalance,
+		// 	tipc: data.user.eth[0].tipcapibalance,
+		// 	tip: data.user.eth[0].tipapibalance,
+		// 	xth: data.user.eth[0].xrtapibalance
+		// })
 
 		let token = localStorage.getItem('token');
 
@@ -226,7 +226,7 @@ class Coin extends React.Component {
   }
 
   render() {
-    const { classes, link, topicUserObjId } = this.props;
+    const { classes, link, topicUserId } = this.props;
     const { currentCoin, open, placement, disablePortal, flip, preventOverflow, arrow, arrowRef, gift, img, type } = this.state;
 
     const id = open ? 'Share' : null;
@@ -290,8 +290,9 @@ class Coin extends React.Component {
         <CoinGift 
           open={gift}
           image={img}
+          type={type}
           currentCoin={currentCoin}
-          topicUserObjId={topicUserObjId}
+          topicUserId={topicUserId}
           handleClose={this.handleGiftClose}
         />
       </div>

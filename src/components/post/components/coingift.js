@@ -12,8 +12,8 @@ import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
-// import Axios from 'axios';
-// import { config } from "../../../../config";
+import axios from 'axios';
+import { config } from "../../../../config";
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
@@ -38,7 +38,28 @@ class CoinGift extends React.Component {
 		error: ""
 	};
 
-	ha
+	handleGift = async () => {
+		const { amount } = this.state;
+		const { topicUserId, type, handleClose } = this.props;
+		let token = localStorage.getItem('token');
+
+		if (token) {
+      const options = {
+        method: 'POST',
+        data: JSON.stringify({ amount, coinType: type, userId: topicUserId }),
+        headers: {
+          'content-type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'x-auth-token': token
+        },
+        url: config.api + '/crypto'
+      }
+
+      let completed = await axios(options);
+      // console.log("Gifting", completed);
+      handleClose()
+    }
+	}
 
 
 	handleChange = prop => event => {
@@ -98,7 +119,7 @@ class CoinGift extends React.Component {
 					</Button>
 					<Button 
 						disabled={error !== ""} 
-						onClick={this.handleClose} 
+						onClick={this.handleGift} 
 						color="primary"
 					>
 						Gift

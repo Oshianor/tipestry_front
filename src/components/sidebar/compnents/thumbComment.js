@@ -14,6 +14,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getToken } from "../../../actions/data";
 
+
 import axios from 'axios';
 import { config } from '../../../../config';
 
@@ -28,9 +29,9 @@ const styles = theme => ({
   },
 });
 
-class Thumb extends React.Component {
+class ThumbComment extends React.Component {
   state = {
-    count: 1,
+    count: "",
     res: {
       error: false,
       msg: '',
@@ -39,16 +40,16 @@ class Thumb extends React.Component {
   }
 
   async componentDidMount() {
-    const { topicObjId, votes } = this.props;
+    const { commentObjId, votes } = this.props;
     let token = localStorage.getItem('token');
 
+    // console.log('votes[0].count', votes[0] !== "undefined" ? votes[0].count : "no show");
+    
     this.setState({
-      count: typeof votes[0] !== "undefined" ? votes[0].count : 1
+      count: typeof votes[0] !== "undefined" ? votes[0].count : ""
     });
 
     if (token) {
-      // console.log('token', token);
-      
       const options = {
         method: 'GET',
         headers: {
@@ -56,12 +57,11 @@ class Thumb extends React.Component {
           'Access-Control-Allow-Origin': '*',
           'x-auth-token': token
         },
-        url: config.api + '/votes/topic/' + topicObjId
+        url: config.api + '/votes/comment/' + commentObjId
       }
       
       let vote = await axios(options);
       if (vote.data.error == false) {
-        console.log(vote.data, "9999999");
         this.setState({
           res: vote.data.content
         })
@@ -72,19 +72,19 @@ class Thumb extends React.Component {
   }
 
   async handleVote(votes) {
-    const { topicObjId } = this.props;
+    const { commentObjId } = this.props;
     let token = localStorage.getItem('token');
 
     if (token) {
       const options = {
         method: 'POST',
-        data: JSON.stringify({ votes, topicObjId }),
+        data: JSON.stringify({ votes, commentObjId }),
         headers: {
           'content-type': 'application/json',
           'Access-Control-Allow-Origin': '*',
           'x-auth-token': token
         },
-        url: config.api + '/votes/topic'
+        url: config.api + '/votes/comment'
       }
 
       let vote = await axios(options);
@@ -92,7 +92,7 @@ class Thumb extends React.Component {
       if (vote.data.error === false) {
         this.setState({
           res: vote.data.content.reply,
-          count: vote.data.content.count
+          count: vote.data.content.count === 0 ? "" : vote.data.content.count
         })
       }
       
@@ -107,13 +107,13 @@ class Thumb extends React.Component {
       // check if the vote userId match the current userId
       // check the vote type (thumb up or down)
       if (res.userId === data.user.id && res.votes === 1) {
-        return ( <ThumbUpAltOutlined style={{ color: '#1F7BD8' }} />
+        return ( <ThumbUpAltOutlined style={{ color: '#1F7BD8', fontSize: 20 }} />
         )
       }
     }
     
     return (
-      <ThumbUpAlt />
+      <ThumbUpAlt style={{ fontSize: 20 }} />
     )
   }
 
@@ -122,12 +122,12 @@ class Thumb extends React.Component {
     const { data } = this.props;
     if (typeof res.userId !== 'undefined') {
       if (res.userId === data.user.id && res.votes === 0) {
-        return ( <ThumbDownAltOutlined style={{ color: '#1F7BD8' }} />
+        return ( <ThumbDownAltOutlined style={{ color: '#1F7BD8' , fontSize: 20}} />
         )
       }
     }
     return (
-      <ThumbDownAlt />
+      <ThumbDownAlt style={{ fontSize: 20 }} />
     )
   }
   
@@ -159,10 +159,10 @@ class Thumb extends React.Component {
   }
 }
 
-Thumb.propTypes = {
+ThumbComment.propTypes = {
   classes: PropTypes.object.isRequired,
   votes: PropTypes.array.isRequired,
-  topicObjId: PropTypes.string.isRequired
+  commentObjId: PropTypes.string.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -177,4 +177,4 @@ function mapDispatchToProps(dispatch) {
   }, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Thumb));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(ThumbComment));

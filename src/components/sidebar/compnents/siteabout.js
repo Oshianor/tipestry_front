@@ -4,17 +4,15 @@ import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import red from '@material-ui/core/colors/red';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
 import Thumbnails from '../../reuseable/thumbnails';
 import { connect } from 'react-redux';
 import Moment from "moment";
 import Link from 'next/link';
 import CardActionIcons from "../../post/components/CardActionIcons";
+import { config } from "../../../../config";
+
 
 const styles = theme => ({
   card: {
@@ -70,7 +68,17 @@ class SiteAbout extends React.Component {
           avatar={
             <Link href={"/profile/@" + data.siteTopic[0].user[0].username}>
               <a style={{ textDecoration: 'none' }}>
-                <Thumbnails borderColor="black" borderWidth={2} name={data.siteTopic[0].user[0].username} />
+                <Thumbnails 
+                  borderColor="black" 
+                  borderWidth={2} 
+                  name={data.siteTopic[0].user[0].username}
+                  url={
+                    data.siteTopic[0].user[0].profileimage === "" || !data.siteTopic[0].user[0].profileimage ?
+                      null
+                    :
+                      config.profileimage + data.siteTopic[0].user[0].profileimage
+                  }
+                />
               </a>
             </Link>
           }

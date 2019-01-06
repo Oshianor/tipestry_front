@@ -173,10 +173,10 @@ class Options extends React.Component {
                 </React.Fragment>
             }
           </MenuItem>
-          <MenuItem style={{ fontSize: 12, padding: "5px 16px" }} onClick={this.handleClose}>
+          {/* <MenuItem style={{ fontSize: 12, padding: "5px 16px" }} onClick={this.handleClose}>
             <img src="/static/icons/moneybag.svg" alt="comments" width='15' height="15" />
             &nbsp;Gift Coin
-          </MenuItem>
+          </MenuItem> */}
           <MenuItem style={{ fontSize: 12, padding: "5px 16px" }} onClick={this.handleReportOpen}>
             <Report style={{ fontSize: 15 }} /> &nbsp;Report post
           </MenuItem>

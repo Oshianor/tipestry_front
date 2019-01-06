@@ -53,7 +53,12 @@ class Comments extends React.Component {
 									avatar={
 										<Thumbnails 
 											name={val.user[0].username} 
-											url={val.user[0].profileimage} 
+											url={
+												val.user[0].profileimage === "" || !val.user[0].profileimage ?
+													null
+												:
+													config.profileimage + val.user[0].profileimage
+											}
 											borderColor="black" 
 											borderWidth={2} 
 										/>

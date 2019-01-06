@@ -116,7 +116,15 @@ class Post extends React.Component {
                     avatar={
                       <Link href={encodeURI("/profile/" + topic.user[0]._id + "/@" + topic.user[0].username)} >
                         <a style={{ textDecoration: 'none' }}>
-                          <Thumbnails name={topic.user[0].username} />
+                          <Thumbnails 
+                            name={topic.user[0].username}
+                            url = {
+                              topic.user[0].profileimage === "" || !topic.user[0].profileimage ?
+                                null 
+                              :
+                                config.profileimage + topic.user[0].profileimage
+                            }
+                          />
                         </a>
                       </Link>
                     }
@@ -175,7 +183,7 @@ class Post extends React.Component {
                     votes={topic.votes}
                     comment={typeof topic.comment[0] !== "undefined" ? topic.comment[0].count : ""}
                     topicId={topic.id}
-                    topicUserObjId={topic.user[0]._id}
+                    topicUserId={topic.user[0].id}
                     token={token}
                     topicObjId={topic._id}
                     link={encodeURI("/public/topics/" + topic._id + "/" + topic.title)}

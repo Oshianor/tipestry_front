@@ -68,7 +68,7 @@ class Report extends React.Component {
         </FormControl>
 				<div style={{ display: 'flex', margin: '0px 4px 10px' }} >
 					<div style={{ flexGrow: 1 }} />
-					<Button>Send</Button>
+					<Button onClick={() => handleReportClose()} >Send</Button>
 				</div>
       </Dialog>
     );

@@ -47,7 +47,7 @@ class Compose extends React.Component {
   
 
   async handleAddComment() {
-    const { data, token, getSiteTopic } = this.props;
+    const { data, token, getSiteTopic, handleUpdate } = this.props;
     const { comment } = this.state;
     
 
@@ -77,6 +77,8 @@ class Compose extends React.Component {
           comment: ''
         })
         getSiteTopic(comment.data.content);
+        handleUpdate(comment.data.content[0].comment);
+
       }
     } catch (error) {
       console.log("ERROR : ", error);
