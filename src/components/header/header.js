@@ -24,7 +24,6 @@ import Thumbnails from '../reuseable/thumbnails';
 import Grid from '@material-ui/core/Grid';
 import Link from "next/link";
 import Notification from './notification';
-// import NotificationsIcon from '@material-ui/icons/Notifications';
 import Logout from '@material-ui/icons/ExitToAppRounded';
 import Tooltip from '@material-ui/core/Tooltip';
 import axios from 'axios';
@@ -294,7 +293,7 @@ class Header extends React.Component {
 				<Collapse in={!hide} timeout="auto" unmountOnExit>
 					<Grid container spacing={24} style={{ position: 'absolute', width: '100%', marginTop: 35 }} >
 						<Grid item  className={classes.left} >
-							<Link href={''} >
+							<Link href={'/tip/report/' + data.user._id} >
 								<a style={{ textDecoration: 'none' }} >
 									<Typography style={{ color: "white" }} className={classes.but} >
 										<img src="/static/icons/moneybag.svg"  width='20' height="20" />
@@ -423,10 +422,11 @@ class Header extends React.Component {
 	displayBody = () => {
 		const { hide } = this.state;
 		const { router } = this.props;
-
+		// console.log('router', router);
+		
 		if (router.pathname == "/") {
 			return this.displayHome()
-		} else if (router.pathname == "/profile" || router.pathname == "/checkout") {
+		} else if (router.pathname == "/profile" || router.pathname == "/tipreport") {
 			return this.displayProfile();
 		}
 	}
@@ -460,9 +460,6 @@ class Header extends React.Component {
 						</React.Fragment>
 					:
 						<React.Fragment>
-							<Link href="/about">
-								<Button color="inherit">About</Button>
-							</Link>
 							<Link href="/faq">
 								<Button color="inherit">Faq</Button>
 							</Link>
@@ -485,7 +482,7 @@ class Header extends React.Component {
 		const { router } = this.props;
 
 		if (!hide) {
-			if (router.pathname == "/profile" || router.pathname == "/checkout") {
+			if (router.pathname == "/profile" || router.pathname == "/tipreport") {
 				return 200;
 			} else if (router.pathname == "/") {
 				return 300;
@@ -500,6 +497,8 @@ class Header extends React.Component {
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
+
+		// onClick={this.handleProfileMenuOpen}
     const renderMobileMenu = (
       <Menu
         anchorEl={mobileMoreAnchorEl}
@@ -511,38 +510,24 @@ class Header extends React.Component {
 				{
 					!token ?
 						<React.Fragment>
-							<MenuItem onClick={this.handleProfileMenuOpen}>
-								<IconButton color="inherit">
-									{/* <AccountCircle /> */}
-								</IconButton>
-								<p>Login</p>
-							</MenuItem>
-							<MenuItem onClick={this.handleProfileMenuOpen}>
-								<IconButton color="inherit">
-									{/* <AccountCircle /> */}
-								</IconButton>
-								<p>Register</p>
-							</MenuItem>
-							<MenuItem onClick={this.handleProfileMenuOpen}>
-								<IconButton color="inherit">
-									{/* <AccountCircle /> */}
-								</IconButton>
-								<p>Faq</p>
-							</MenuItem>
-							<MenuItem onClick={this.handleProfileMenuOpen}>
-								<IconButton color="inherit">
-									{/* <AccountCircle /> */}
-								</IconButton>
-								<p>About</p>
-							</MenuItem>
+							<Link href="/faq">
+								<MenuItem >
+									Faq
+								</MenuItem>
+							</Link>
+							<Link href="/login" prefetch>
+								<MenuItem >Login</MenuItem>
+							</Link>
+							<Link href="/register" prefetch >
+								<MenuItem >
+									Register
+								</MenuItem>
+							</Link>
 						</React.Fragment>
 					:
 						<React.Fragment>
-							<MenuItem onClick={this.handleProfileMenuOpen}>
-								<IconButton
-									onClick={this.handleLogout}
-									color="inherit"
-								>
+							<MenuItem onClick={this.handleLogout} >
+								<IconButton color="inherit" >
 									<Logout />
 								</IconButton>
 								<p>Logout</p>

@@ -170,11 +170,14 @@ class Post extends React.Component {
                         {this.displayTitle(topic.title)}
                       </Link>
                       <br />
-                      <Link href={"/sites?s=" + topic.sites[0].url} >
-                        <a >
-                          {topic.sites[0].url.length > 50 ? topic.sites[0].url.substr(0, 40) + "..." : topic.sites[0].url}
-                        </a>
-                      </Link>
+                      {
+                        typeof topic.sites[0] !== "undefined" &&
+                          <Link href={"/sites?s=" + topic.sites[0].url} >
+                            <a >
+                              {topic.sites[0].url.length > 50 ? topic.sites[0].url.substr(0, 40) + "..." : topic.sites[0].url}
+                            </a>
+                          </Link>
+                      }
                     </Typography>
                   </CardContent>
 

@@ -80,3 +80,12 @@ export const getFollowing = (arg) => {
     payload: arg
   }
 }
+
+
+export const getTipHistory = (arg) => {
+  // console.log("getFollowing", arg);
+  return {
+    type: "GET_TIP_HISTORY",
+    payload: arg
+  }
+}

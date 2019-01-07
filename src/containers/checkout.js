@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import Header from '../components/header/header';
+import Header from '../components/header/header';
 import Coindetails from '../components/checkout/coindetails';
 // import
 
@@ -7,7 +7,7 @@ class Checkout extends Component {
 	render() {
 		return (
 			<div>
-				{/* <Header /> */}
+				<Header />
 				<Coindetails />
 			</div>
 		);

@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Thumbnails from '../reuseable/thumbnails';
 import Link from 'next/link';
 import Moment from "moment";
+import { config } from "../../../config";
 
 const styles = theme => ({
   card: {

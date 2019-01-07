@@ -9,9 +9,6 @@ import { connect } from 'react-redux';
 const styles = theme => ({
   root: {
     backgroundImage: "url('/static/homepage/headerBackground.svg')", 
-    // minHeight: 300,
-    // backgroundAttachment: 'fixed',
-    // backgroundPosition: 'inherit',
     width: "100%",
     height: "50vh",
     backgroundRepeat: 'no-repeat',

@@ -8,7 +8,8 @@ const initialstate = {
   followers: [],
   following: [],
   comment: [],
-  site: []
+  site: [],
+  history: []
 }
 export default (state = initialstate, action) => {
   switch (action.type) {
@@ -51,6 +52,10 @@ export default (state = initialstate, action) => {
     case "GET_PROFILE_FOLLOWING":
       return Object.assign({}, state, {
         following: action.payload
+      });
+    case "GET_TIP_HISTORY":
+      return Object.assign({}, state, {
+        history: action.payload
       });
     default:
       return state
