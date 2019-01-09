@@ -9,14 +9,13 @@ import Grid from '@material-ui/core/Grid';
 import isEmail from 'validator/lib/isEmail';
 import isEmpty from 'validator/lib/isEmpty';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { getToken } from "../../actions/data";
 import Router from 'next/router';
 
 import green from '@material-ui/core/colors/green';
 import Axios from 'axios';
-
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 import { config } from '../../../config';
 
 const styles = theme => ({
@@ -98,16 +97,12 @@ const styles = theme => ({
   },
 });
 
-class LoginPath extends Component {
+class ForgotPath extends Component {
   state = {
-    loading: false,
+		loading: false,
+		open: false,
     email: "",
     emailHelper: {
-      msg: "",
-      err: false
-    },
-    password: "",
-    passwordHelper: {
       msg: "",
       err: false
     },
@@ -117,16 +112,16 @@ class LoginPath extends Component {
     }
   }
 
-  async handleLogin() {
-    const { email, password, emailHelper, passwordHelper } = this.state;
-    if (!this.handleEmail() || !this.handlePassword()) {
+  async handleForgot() {
+    const { email } = this.state;
+    if (!this.handleEmail()) {
       return false;
     }
     this.setState({
       loading: true
     });
     let data = {
-      email, password
+      email
     };
     
     console.log(data);
@@ -137,42 +132,43 @@ class LoginPath extends Component {
         'Access-Control-Allow-Origin': '*',
       },
       data: JSON.stringify(data),
-      url: config.api + "/auth",
+      url: config.api + "/auth/reset",
     };
     
 
     try {
-      let login = await Axios(options);
-      console.log("LOGIN", login);
+      let forgot = await Axios(options);
+      console.log("forgot", forgot);
       
-      if (login.data.error) {
-        this.setState({
-          res: login.data,
-          password: ''
-        });
-      } else {
-        this.setState({
-          res: {
-            error: false,
-            msg: ''
-          },
-          password: ""
-        });
-        localStorage.setItem('token', login.headers['x-auth-token']);
-        this.props.getToken(login.headers['x-auth-token']);
-        Router.push('/');
-        
+      if (!forgot.data.error) {
+      //   this.setState({
+      //     res: { error: true, msg: forgot.data.msg },
+      //   });
+      // } else {
+				this.setState({
+					open: true
+				})
+        setTimeout(() => {
+        	Router.push('/login');					
+				}, 6000);        
       }
     } catch (error) {
       console.log("ERROR : ", error);
       
     }
     this.setState({
-      loading: false,
-      password: ''
+      loading: false
     });
     
-  }
+	}
+	
+	handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    this.setState({ open: false });
+  };
 
   handleEmail = () => {
     const { email } = this.state;
@@ -203,35 +199,6 @@ class LoginPath extends Component {
     return true
   }
 
-  handlePassword = () => {
-    const { password } = this.state;
-    if (isEmpty(password)) {
-      this.setState({
-        passwordHelper: {
-          msg: "Password is required",
-          err: true
-        }
-      });
-      return false;
-    }
-    if (password.length <= 4) {
-      this.setState({
-        passwordHelper: {
-          msg: "A minimum of 4 characters are required for your password",
-          err: true
-        }
-      });
-      return false;
-    }
-    this.setState({
-      passwordHelper: {
-        msg: "",
-        err: false
-      }
-    });
-    return true;
-  }
-
   onchnage = (event) => {
     this.setState({
       [event.target.name]: event.target.value
@@ -241,7 +208,7 @@ class LoginPath extends Component {
   render(){
     
     const { classes } = this.props;
-    const { password, passwordHelper, email, emailHelper, loading, res } = this.state;
+    const { email, emailHelper, loading, res } = this.state;
     return (
       <div className={classes.root}>
         {/* <Typography variant="h2" gutterBottom style={{ margin: '4% 8%' }} >Tipestry</Typography> */}
@@ -254,7 +221,7 @@ class LoginPath extends Component {
         </Link>
 
         <Typography variant="overline" gutterBottom style={{ margin: '2% 8%', marginTop: "15%", fontSize: 20 }}> 
-          Welcome, Login to your Account
+          Can't Sign into your Account?
         </Typography>
         <form className={classes.container} noValidate autoComplete="off">
           {
@@ -279,92 +246,57 @@ class LoginPath extends Component {
             variant="outlined"
           />
 
-          <TextField
-            error={passwordHelper.err}
-            required
-            name="password"
-            label="Password"
-            style={{ margin: '2% 8%' }}
-            value={password}
-            onBlur={this.handlePassword}
-            onChange={this.onchnage}
-            type="password"
-            helperText={passwordHelper.msg}
-            fullWidth
-            margin="normal"
-            variant="outlined"
-          />
-
           <Grid container spacing={24} style={{ margin: '0 8%' }} >
             <Grid item xs={6} sm={6} style={{ paddingLeft: 0 }}>
                 <Button variant="outlined" color="secondary" 
                 disabled={loading}
-                onClick={this.handleLogin.bind(this)}
+                onClick={this.handleForgot.bind(this)}
                 className={classes.button}>
-                {loading ? <CircularProgress size={24} className={classes.buttonProgress} /> : "Log In"}
+                {loading ? <CircularProgress size={24} className={classes.buttonProgress} /> : "Reset"}
               </Button>
               
             </Grid>
             <Grid item xs={6} sm={6} style={{ paddingRight: 0 }} >
               <Typography variant="overline" gutterBottom className={classes.forgot}> 
-                <Link href="/forgotpassword">
-                  <a>Forgot Password</a>
+                <Link href="/login">
+                  <a>Log In</a>
                 </Link>
               </Typography>
             </Grid>
           </Grid>
 
-          <Typography variant="overline" gutterBottom style={{ margin: '0 8%' }} > 
-            Don't have and account? &nbsp;
-            <Link href="/register">
-              <a>Sign Up</a>
-            </Link>
-          </Typography>
-              
-
-          {/* <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
-          <Typography variant="caption" gutterBottom style={{ margin: '0 8%' }} > 
-            <Link href="/register">
-              <a className={classes.bottom}>Terms and Conditions</a>
-            </Link>
-            <Link href="/register">
-              <a className={classes.bottom}>Support</a>
-            </Link>
-            <Link href="/register">
-              <a className={classes.bottom}>FAQ</a>
-            </Link>
-            <Link href="/register">
-              <a className={classes.bottomend}>Privacy Policy</a>
-            </Link>
-          </Typography>
-          </div>
-         */}
         </form>
+				<Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          open={this.state.open}
+          autoHideDuration={6000}
+          onClose={this.handleClose}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">Password Resetted. Check your email</span>}
+          action={[
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="inherit"
+              className={classes.close}
+              onClick={this.handleClose}
+            >
+              <CloseIcon />
+            </IconButton>,
+          ]}
+        />
       </div>
     );
   }
 }
 
-LoginPath.propTypes = {
+ForgotPath.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-const LoginPaths = withStyles(styles)(LoginPath);
-function mapStateToProps(state) {
-  return {
-    data: state.data,
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    getToken: getToken,
-  }, dispatch)
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPaths);
-
-// export default compose(
-//   withStyles(styles),
-//   withWidth(),
-// )(LoginPath);
+export default withStyles(styles)(ForgotPath);

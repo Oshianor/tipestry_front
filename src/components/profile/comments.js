@@ -86,9 +86,12 @@ class Comments extends React.Component {
 								</CardContent>
 								<CardActions className={classes.actions} disableActionSpacing>
 									<div style={{ flexGrow: 1 }} />
-									<Link href={encodeURI("/topics/" + val.topic[0]._id + "/" + val.topic[0].title)} >
-										<a style={{ color: '1F7BD8' }}>View Post</a>
-									</Link>
+									{
+										typeof val.topic[0] !== "undefined" &&
+											<Link href={encodeURI("/topics/" + val.topic[0]._id + "/" + val.topic[0].title)} >
+												<a style={{ color: '1F7BD8' }}>View Post</a>
+											</Link>
+									}
 								</CardActions>
 							</Card>
 						))

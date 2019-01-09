@@ -126,13 +126,6 @@ class Coin extends React.Component {
 
 	async componentDidMount() {
 		const { data } = this.props;
-		// this.setState({
-		// 	doge: data.user.doge[0].doge_balance,
-		// 	eth: data.user.eth[0].ethapibalance,
-		// 	tipc: data.user.eth[0].tipcapibalance,
-		// 	tip: data.user.eth[0].tipapibalance,
-		// 	xth: data.user.eth[0].xrtapibalance
-		// })
 
 		let token = localStorage.getItem('token');
 
@@ -192,27 +185,27 @@ class Coin extends React.Component {
     }
 
     // set the balance of the currenlty selected coin
-		if (name === "btc") {
+		if (name === "bitcoin") {
 			this.setState({
 			  currentCoin: this.state.btc
 			})
-		} else if(name === 'doge') {
+		} else if (name === 'dogecoin') {
 			this.setState({
         currentCoin: data.user.doge[0].doge_balance
       })	
-		} else if(name === 'eth') {
+		} else if (name === 'ethcoin') {
 			this.setState({
         currentCoin: data.user.eth[0].ethapibalance
       })	
-		} else if (name === 'tipc') {
+		} else if (name === 'ethtipc') {
 			this.setState({
         currentCoin: data.user.eth[0].tipcapibalance
       })		
-		} else if(name === 'tip') {
+		} else if (name === 'ethtipcoin') {
 			this.setState({
         currentCoin: data.user.eth[0].tipapibalance
       })	
-		} else if(name === 'xth') {
+		} else if (name === 'ethxrtcoin') {
 			this.setState({
         currentCoin: data.user.eth[0].xrtapibalance
       })		
@@ -267,22 +260,22 @@ class Coin extends React.Component {
         >
           {arrow ? <span className={classes.arrow} ref={this.handleArrowRef} /> : null}
           <Paper className={classes.paper}>
-            <a className={classes.lin}  onClick={this.handleGift.bind(this, 'bit.svg', 'btc')} >
+            <a className={classes.lin}  onClick={this.handleGift.bind(this, 'bit.svg', 'bitcoin')} >
               <img src="/static/tipcoins/bit.svg" width="25" height="25" />
             </a>
-            <a className={classes.lin} onClick={this.handleGift.bind(this, 'doge.svg', 'doge')} >
+            <a className={classes.lin} onClick={this.handleGift.bind(this, 'doge.svg', 'dogecoin')} >
               <img src="/static/tipcoins/doge.svg" width="25" height="25" />
             </a>
-            <a className={classes.lin} onClick={this.handleGift.bind(this, 'eth.svg', 'eth')} >
+            <a className={classes.lin} onClick={this.handleGift.bind(this, 'eth.svg', 'ethcoin')} >
               <img src="/static/tipcoins/eth.svg" width="25" height="25" />
             </a>
-            <a className={classes.lin} onClick={this.handleGift.bind(this, 'Tip-1.png', 'tipc')} >
+            <a className={classes.lin} onClick={this.handleGift.bind(this, 'Tip-1.png', 'ethtipc')} >
               <img src="/static/tipcoins/Tip-1.png" width="25" height="25" />
             </a>
-						<a className={classes.lin}  onClick={this.handleGift.bind(this, 'Tip-2.png', 'tip')} >
+						<a className={classes.lin}  onClick={this.handleGift.bind(this, 'Tip-2.png', 'ethtipcoin')} >
               <img src="/static/tipcoins/Tip-2.png" width="25" height="25" />
             </a>
-						<a className={classes.lin}  onClick={this.handleGift.bind(this, 'Tip-3.png', 'xth')} >
+						<a className={classes.lin}  onClick={this.handleGift.bind(this, 'Tip-3.png', 'ethxrtcoin')} >
               <img src="/static/tipcoins/Tip-3.png" width="25" height="25" />
             </a>
           </Paper>

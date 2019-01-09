@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getUser, getProfile, getTipHistory } from "../src/actions/data";
 import CheckoutContainer from "../src/containers/checkout";
+import Router from "next/router"
 
 class Checkout extends React.Component {
   state = {
@@ -39,16 +40,19 @@ class Checkout extends React.Component {
         url: config.api + '/users/me'
       }
       let user = await axios(options);
-      if (user._id !== userProfile._id) {
+      if (user.data[0]._id !== JSON.parse(userProfile)._id) {
+        console.log(user.data[0]._id, "why cn", JSON.parse(userProfile)._id);
+        
+        // if the current profile is not the logged in user then redirect the user
         Router.push('/');
+      }else{
+        getUser(user.data[0]);
+        getProfile(JSON.parse(userProfile));
+        getTipHistory(JSON.parse(history))
+        this.setState({
+          loading: false
+        })
       }
-      getUser(user.data[0]);
-      getProfile(JSON.parse(userProfile));
-      getTipHistory(JSON.parse(history))
-			this.setState({
-				loading: false
-      })
-      
     } else {
 			Router.push('/');
 		}

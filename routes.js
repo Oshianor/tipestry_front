@@ -4,6 +4,7 @@ const routes = module.exports = nextRoutes();
 routes.add('index', '/')
 routes.add('login', '/login')
 routes.add('register', '/register')
+routes.add('forgotPassword', '/forgotpassword')
 routes.add('faq', '/faq')
 routes.add('topic', '/topics/:topicObjId/:topicName')
 routes.add('profile', '/profile/:userObjId/:username')

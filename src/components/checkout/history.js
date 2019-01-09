@@ -13,7 +13,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-
+import moment from "moment";
 
 
 
@@ -28,28 +28,13 @@ const styles = theme => ({
 	},
 });
 
-let id = 0;
-function createData(name, calories, fat, carbs, protein) {
-  id += 1;
-  return { id, name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
-
 class History extends React.Component {
   state = {
     scroll: 'paper',
   };
 
   render() {
-		const { classes, open, handleClose } = this.props;
+		const { classes, open, handleClose, history } = this.props;
     return (
       <div>
         <Dialog
@@ -72,16 +57,20 @@ class History extends React.Component {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{rows.map(row => {
+									{history.map(row => {
 										return (
 											<TableRow key={row.id}>
 												<TableCell component="th" scope="row">
-													{row.name}
+													{typeof row.user[0].name !== "undefined" ? row.user[0].name : row.user[0].username}
 												</TableCell>
-												<TableCell align="right">{row.calories}</TableCell>
-												<TableCell align="right">{row.fat}</TableCell>
-												<TableCell align="right">{row.carbs}</TableCell>
-												<TableCell align="right">{row.protein}</TableCell>
+												<TableCell 
+													align="right"
+													style={ row.transactiontype === "gifted" ? { color: 'green' } : row.transactiontype === "withdrawal" ? { color: "orange" } : { color: 'red' } }>
+													{row.transactiontype}
+												</TableCell>
+												<TableCell align="right" >{row.wallettype}</TableCell>
+												<TableCell align="right">{row.amount}</TableCell>
+												<TableCell align="right">{moment(row.created_at).format('ddd MMM YYYY')}</TableCell>
 											</TableRow>
 										);
 									})}

@@ -5,11 +5,15 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import Link from "next/link";
 import RefreshRounded from '@material-ui/icons/RefreshRounded';
 import IconButton from '@material-ui/core/IconButton';
 import History from './history';
 import { connect } from 'react-redux';
+import { config } from "../../../config";
+import Axios from 'axios';
+import { getUser } from "../../actions/data";
+import { bindActionCreators } from 'redux';
+import Withdrawal from './withdrawal';
 
 const styles = theme => ({
   root: {
@@ -74,9 +78,84 @@ const styles = theme => ({
 
 class CoinDetails extends React.Component{
 	state = {
-		open: false
+		open: false,
+		btc: 0.00,
+		withdraw: false
 	}
 
+	async componentDidMount() {
+		let token = localStorage.getItem('token');
+    if (token) {
+      const options = {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'x-auth-token': token
+        },
+        url: config.api + "/crypto/btc/balance",
+      };
+			let btc = await Axios(options);
+			console.log(btc);
+      this.setState({
+				btc: btc.data.result
+			})
+    }
+	}
+
+	handleGenerateBtc = async () => {
+		const { getUser } = this.props;
+		let token = localStorage.getItem('token');
+    if (token) {
+      const options = {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'x-auth-token': token
+        },
+        url: config.api + "/crypto/generate/btc",
+      };
+			let user = await Axios(options);
+			getUser(user.data[0])
+    }
+	}
+
+	handleGenerateDoge = async () => {
+		const { getUser } = this.props;
+		let token = localStorage.getItem('token');
+    if (token) {
+      const options = {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'x-auth-token': token
+        },
+        url: config.api + "/crypto/generate/doge",
+      };
+			let user = await Axios(options);
+			getUser(user.data[0])
+    }
+	}
+
+	handleGenerateEth = async () => {
+		const { getUser } = this.props;
+		let token = localStorage.getItem('token');
+    if (token) {
+      const options = {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'x-auth-token': token
+        },
+        url: config.api + "/crypto/generate/eth",
+      };
+			let user = await Axios(options);
+			getUser(user.data[0])
+    }
+	}
 
 	handleOpen = () => {
 		this.setState({
@@ -89,9 +168,22 @@ class CoinDetails extends React.Component{
 			open: false
 		})
 	}
+
+	handleOpenWithdraw = () => {
+		this.setState({
+			withdraw: true
+		})
+	}
+
+	handleCloseWithdraw = () => {
+		this.setState({
+			withdraw: false
+		})
+	}
+
 	
 	render() {
-		const { open } = this.state;
+		const { open, btc, withdraw } = this.state;
 		const { classes, data } = this.props;
 		return (
 			<div className={classes.root} >
@@ -106,14 +198,14 @@ class CoinDetails extends React.Component{
 								<div className={classes.sec} >
 									<img src="/static/tipcoins/bit.svg" alt="btc"className={classes.img} />
 									<div style={{ flexGrow: 1 }} />
-									<Typography variant="button" >0.0000</Typography>
+									<Typography variant="button" >{btc}</Typography>
 								</div>
 								<div className={classes.sec}>
 									<Typography variant="button" className={classes.address} >
 										{data.user.btc[0].address}
 									</Typography>
 									<div style={{ flexGrow: 1 }} />
-									<IconButton>
+									<IconButton onClick={this.handleGenerateBtc} >
 										<RefreshRounded />
 									</IconButton>
 								</div>
@@ -134,7 +226,7 @@ class CoinDetails extends React.Component{
 										{data.user.doge[0].address}
 									</Typography>
 									<div style={{ flexGrow: 1 }} />
-									<IconButton>
+									<IconButton onClick={this.handleGenerateDoge} >
 										<RefreshRounded />
 									</IconButton>
 								</div>
@@ -155,7 +247,7 @@ class CoinDetails extends React.Component{
 										{data.user.eth[0].address}
 									</Typography>
 									<div style={{ flexGrow: 1 }} />
-									<IconButton>
+									<IconButton onClick={this.handleGenerateEth} > 
 										<RefreshRounded />
 									</IconButton>
 								</div>
@@ -176,7 +268,7 @@ class CoinDetails extends React.Component{
 										{data.user.eth[0].address}
 									</Typography>
 									<div style={{ flexGrow: 1 }} />
-									<IconButton>
+									<IconButton onClick={this.handleGenerateEth}>
 										<RefreshRounded />
 									</IconButton>
 								</div>
@@ -197,7 +289,7 @@ class CoinDetails extends React.Component{
 										{data.user.eth[0].address}
 									</Typography>
 									<div style={{ flexGrow: 1 }} />
-									<IconButton>
+									<IconButton onClick={this.handleGenerateEth}>
 										<RefreshRounded />
 									</IconButton>
 								</div>
@@ -218,7 +310,7 @@ class CoinDetails extends React.Component{
 										{data.user.eth[0].address}
 									</Typography>
 									<div style={{ flexGrow: 1 }} />
-									<IconButton>
+									<IconButton onClick={this.handleGenerateEth}>
 										<RefreshRounded />
 									</IconButton>
 								</div>
@@ -226,14 +318,26 @@ class CoinDetails extends React.Component{
 						</Grid>
 					</Grid>
 					
-					<Typography onClick={this.handleOpen} className={classes.rooty} variant="subtitle2" style={{ fontSize: 12, textAlign: "left", marginTop: 5, cursor: "pointer" }} >
+					<Typography 
+						onClick={this.handleOpen} 
+						className={classes.rooty} 
+						variant="subtitle2" 
+						style={{ fontSize: 12, textDecoration: 'underline', textAlign: "left", marginTop: 5, cursor: "pointer", color: '#1F7BD8' }} 
+					>
 						View Tips History
 					</Typography>
 				</div>
 
 
-				<Button variant="contained" color="primary">Withdraw</Button>
-				<History open={open} handleClose={this.handleClose} />
+				<Button 
+					variant="contained"
+					onClick={this.handleOpenWithdraw} 
+					color="primary"
+				>
+					Withdraw
+				</Button>
+				<Withdrawal open={withdraw} handleClose={this.handleCloseWithdraw} />
+				<History open={open} handleClose={this.handleClose} history={data.history} />
 			</div>
 		);
 	}
@@ -250,4 +354,10 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps, )(withStyles(styles)(CoinDetails));
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({
+		getUser: getUser,
+	}, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(CoinDetails));

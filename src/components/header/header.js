@@ -293,14 +293,18 @@ class Header extends React.Component {
 				<Collapse in={!hide} timeout="auto" unmountOnExit>
 					<Grid container spacing={24} style={{ position: 'absolute', width: '100%', marginTop: 35 }} >
 						<Grid item  className={classes.left} >
-							<Link href={'/tip/report/' + data.user._id} >
-								<a style={{ textDecoration: 'none' }} >
-									<Typography style={{ color: "white" }} className={classes.but} >
-										<img src="/static/icons/moneybag.svg"  width='20' height="20" />
-										Tip report
-									</Typography>
-								</a>
-							</Link>
+							{
+								token &&
+									data.profile._id === data.user._id &&
+										<Link href={'/tip/report/' + data.user._id} >
+											<a style={{ textDecoration: 'none' }} >
+												<Typography style={{ color: "white" }} className={classes.but} >
+													<img src="/static/icons/moneybag.svg"  width='20' height="20" />
+													Tip report
+												</Typography>
+											</a>
+										</Link>
+							}
 						</Grid>
 
 						<div style={{ flexGrow: 1 }} />

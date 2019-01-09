@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-
+import { connect } from 'react-redux';
 
 const styles = theme => ({
   root: {
@@ -35,106 +35,124 @@ const styles = theme => ({
   },
 });
 
-function FullWidthGrid(props) {
-  const { classes } = props;
-
-  return (
-    <div className={classes.root}>
-		
-			<Paper className={classes.paperRoot}>
-			<Typography variant="subtitle2" style={{ fontSize: 18, textAlign: "left", marginTop: -13 }} >Total Tips</Typography>
-				<Grid container spacing={24}>
-					<Grid item xs={6} sm={3}>
-						<Paper className={classes.paper} >
-							<img src="/static/tipcoins/bit.svg"
-								alt="comments"
-								width='50'
-								height='50'
-								style={
-									{
-										borderRight: "1px solid gray",
-										paddingRight: "10%",
+class TipCoin extends React.Component {
+	render() {
+		const { classes, data } = this.props;
+		return (
+			<div className={classes.root}>
+				<Paper className={classes.paperRoot}>
+				<Typography variant="subtitle2" style={{ fontSize: 18, textAlign: "left", marginTop: -13 }} >Total Tips for the Month</Typography>
+					<Grid container spacing={24}>
+						<Grid item xs={6} sm={3}>
+							<Paper className={classes.paper} >
+								<img src="/static/tipcoins/bit.svg"
+									alt="comments"
+									width='50'
+									height='50'
+									style={
+										{
+											borderRight: "1px solid gray",
+											paddingRight: "10%",
+										}
 									}
-								}
-							/>
-							<div style={{ flexGrow: 1 }} />
-							<Typography variant="button" >0.00000</Typography>
-						</Paper>
+								/>
+								<div style={{ flexGrow: 1 }} />
+								<Typography variant="button" >
+									{typeof data.topics.tip.btc[0] !== "undefined" ? parseFloat(data.topics.tip.btc[0].amt).toFixed(2) : 0.01}
+								</Typography>
+							</Paper>
+						</Grid>
+						<Grid item xs={6} sm={3}>
+							<Paper className={classes.paper}>
+								<img src="/static/tipcoins/eth.svg" alt="comments" width='50' height='50' 
+									style={
+										{
+											borderRight: "1px solid gray",
+											paddingRight: "10%",
+										}
+									} 
+								/>
+								<div style={{ flexGrow: 1 }} />
+								<Typography variant="button" >
+									{typeof data.topics.tip.eth[0] !== "undefined" ? parseFloat(data.topics.tip.eth[0].amt).toFixed(2) : 0.01}
+								</Typography>
+							</Paper>
+						</Grid>
+						<Grid item xs={6} sm={3}>
+							<Paper className={classes.paper}>
+								<img src="/static/tipcoins/doge.svg" alt="comments" width='50' height='50' style={
+										{
+											borderRight: "1px solid gray",
+											paddingRight: "10%",
+										}
+									} 
+								/>
+								<div style={{ flexGrow: 1 }} />
+								<Typography variant="button" >
+									{typeof data.topics.tip.doge[0] !== "undefined" ? parseFloat(data.topics.tip.doge[0].amt).toFixed(2) : 0.01}
+								</Typography>
+							</Paper>
+						</Grid>
+						<Grid item xs={6} sm={3}>
+							<Paper className={classes.paper}>
+								<img src="/static/tipcoins/Tip-1.png" alt="comments" width='50' height='50' style={
+										{
+											borderRight: "1px solid gray",
+											paddingRight: "10%",
+										}
+									} 
+								/>
+								<div style={{ flexGrow: 1 }} />
+								<Typography variant="button" >
+									{typeof data.topics.tip.tipc[0] !== "undefined" ? parseFloat(data.topics.tip.tipc[0].amt).toFixed(2) : 0.01}
+								</Typography>
+							</Paper>
+						</Grid>
+						<Grid item xs={6} sm={3}>
+							<Paper className={classes.paper}>
+								<img src="/static/tipcoins/Tip-2.png" alt="comments" width='50' height='50' style={
+										{
+											borderRight: "1px solid gray",
+											paddingRight: "10%",
+										}
+									} 
+								/>
+								<div style={{ flexGrow: 1 }} />
+								<Typography variant="button" >
+									{typeof data.topics.tip.tip[0] !== "undefined" ? parseFloat(data.topics.tip.tip[0].amt).toFixed(2) : 0.01}
+								</Typography>
+							</Paper>
+						</Grid>
+						<Grid item xs={6} sm={3}>
+							<Paper className={classes.paper}>
+								<img src="/static/tipcoins/Tip-3.png" alt="comments" width='50' height='50' style={
+										{
+											borderRight: "1px solid gray",
+											paddingRight: "10%",
+										}
+									} 
+								/>
+								<div style={{ flexGrow: 1 }} />
+								<Typography variant="button" >
+									{typeof data.topics.tip.xth[0] !== "undefined" ? parseFloat(data.topics.tip.xth[0].amt).toFixed(2) : 0.01}
+								</Typography>
+							</Paper>
+						</Grid>
 					</Grid>
-					<Grid item xs={6} sm={3}>
-						<Paper className={classes.paper}>
-							<img src="/static/tipcoins/eth.svg" alt="comments" width='50' height='50' 
-								style={
-									{
-										borderRight: "1px solid gray",
-										paddingRight: "10%",
-									}
-								} 
-							/>
-							<div style={{ flexGrow: 1 }} />
-							<Typography variant="button" >0.00000</Typography>
-						</Paper>
-					</Grid>
-					<Grid item xs={6} sm={3}>
-						<Paper className={classes.paper}>
-							<img src="/static/tipcoins/doge.svg" alt="comments" width='50' height='50' style={
-									{
-										borderRight: "1px solid gray",
-										paddingRight: "10%",
-									}
-								} 
-							/>
-							<div style={{ flexGrow: 1 }} />
-							<Typography variant="button" >0.00000</Typography>
-						</Paper>
-					</Grid>
-					<Grid item xs={6} sm={3}>
-						<Paper className={classes.paper}>
-							<img src="/static/tipcoins/Tip-1.png" alt="comments" width='50' height='50' style={
-									{
-										borderRight: "1px solid gray",
-										paddingRight: "10%",
-									}
-								} 
-							/>
-							<div style={{ flexGrow: 1 }} />
-							<Typography variant="button" >0.00000</Typography>
-						</Paper>
-					</Grid>
-					<Grid item xs={6} sm={3}>
-						<Paper className={classes.paper}>
-							<img src="/static/tipcoins/Tip-2.png" alt="comments" width='50' height='50' style={
-									{
-										borderRight: "1px solid gray",
-										paddingRight: "10%",
-									}
-								} 
-							/>
-							<div style={{ flexGrow: 1 }} />
-							<Typography variant="button" >0.00000</Typography>
-						</Paper>
-					</Grid>
-					<Grid item xs={6} sm={3}>
-						<Paper className={classes.paper}>
-							<img src="/static/tipcoins/Tip-3.png" alt="comments" width='50' height='50' style={
-									{
-										borderRight: "1px solid gray",
-										paddingRight: "10%",
-									}
-								} 
-							/>
-							<div style={{ flexGrow: 1 }} />
-							<Typography variant="button" >0.00000</Typography>
-						</Paper>
-					</Grid>
-				</Grid>
-			</Paper>
-    </div>
-  );
+				</Paper>
+			</div>
+		);
+	}
 }
 
-FullWidthGrid.propTypes = {
+TipCoin.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(FullWidthGrid);
+function mapStateToProps(state) {
+	return {
+		data: state.data,
+	}
+}
+
+export default connect(mapStateToProps, )(withStyles(styles)(TipCoin));

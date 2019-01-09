@@ -99,19 +99,19 @@ class CoinGift extends React.Component {
 				</DialogTitle>
 				<DialogContent>
 					<TextField
-					error={error !== ""}
-          id="outlined-adornment-amount"
-          className={classNames(classes.margin, classes.textField)}
-          variant="outlined"
-					label="Amount"
-					type='number'
-					helperText={error}
-          value={amount}
-          onChange={this.handleChange('amount')}
-          InputProps={{
-            startAdornment: <InputAdornment position="start">$</InputAdornment>,
-          }}
-        />
+						error={error !== ""}
+						id="outlined-adornment-amount"
+						className={classNames(classes.margin, classes.textField)}
+						variant="outlined"
+						label="Amount"
+						type='number'
+						helperText={error}
+						value={amount}
+						onChange={this.handleChange('amount')}
+						InputProps={{
+							startAdornment: <InputAdornment position="start">$</InputAdornment>,
+						}}
+					/>
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={() => handleClose()} color='secondary' >
