@@ -14,6 +14,11 @@ import Axios from 'axios';
 import { getUser } from "../../actions/data";
 import { bindActionCreators } from 'redux';
 import Withdrawal from './withdrawal';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import FileCopy from '@material-ui/icons/FileCopyOutlined';
+import Snackbar from '@material-ui/core/Snackbar';
+import CloseIcon from '@material-ui/icons/Close';
+
 
 const styles = theme => ({
   root: {
@@ -80,7 +85,8 @@ class CoinDetails extends React.Component{
 	state = {
 		open: false,
 		btc: 0.00,
-		withdraw: false
+		withdraw: false,
+		copied: false
 	}
 
 	async componentDidMount() {
@@ -169,6 +175,13 @@ class CoinDetails extends React.Component{
 		})
 	}
 
+
+	handleSnackbarClose = () => {
+		this.setState({
+			copied: false
+		})
+	}
+
 	handleOpenWithdraw = () => {
 		this.setState({
 			withdraw: true
@@ -183,7 +196,7 @@ class CoinDetails extends React.Component{
 
 	
 	render() {
-		const { open, btc, withdraw } = this.state;
+		const { open, btc, withdraw, copied } = this.state;
 		const { classes, data } = this.props;
 		return (
 			<div className={classes.root} >
@@ -203,6 +216,13 @@ class CoinDetails extends React.Component{
 								<div className={classes.sec}>
 									<Typography variant="button" className={classes.address} >
 										{data.user.btc[0].address}
+										&nbsp;&nbsp;
+										<CopyToClipboard
+											text={data.user.btc[0].address}
+											onCopy={() => this.setState({ copied: true })}
+										>
+											<FileCopy style={{ cursor: 'pointer', fontSize: 12, marginBottom: -3 }} />
+										</CopyToClipboard>
 									</Typography>
 									<div style={{ flexGrow: 1 }} />
 									<IconButton onClick={this.handleGenerateBtc} >
@@ -224,6 +244,13 @@ class CoinDetails extends React.Component{
 								<div className={classes.sec}>
 									<Typography variant="button" className={classes.address} >
 										{data.user.doge[0].address}
+										&nbsp;&nbsp;
+										<CopyToClipboard
+											text={data.user.doge[0].address}
+											onCopy={() => this.setState({ copied: true })}
+										>
+											<FileCopy style={{ cursor: 'pointer', fontSize: 12, marginBottom: -3 }} />
+										</CopyToClipboard>
 									</Typography>
 									<div style={{ flexGrow: 1 }} />
 									<IconButton onClick={this.handleGenerateDoge} >
@@ -245,6 +272,13 @@ class CoinDetails extends React.Component{
 								<div className={classes.sec}>
 									<Typography variant="button" className={classes.address} >
 										{data.user.eth[0].address}
+										&nbsp;&nbsp;
+										<CopyToClipboard
+											text={data.user.eth[0].address}
+											onCopy={() => this.setState({ copied: true })}
+										>
+											<FileCopy style={{ cursor: 'pointer', fontSize: 12, marginBottom: -3 }} />
+										</CopyToClipboard>
 									</Typography>
 									<div style={{ flexGrow: 1 }} />
 									<IconButton onClick={this.handleGenerateEth} > 
@@ -266,6 +300,13 @@ class CoinDetails extends React.Component{
 								<div className={classes.sec}>
 									<Typography variant="button" className={classes.address} >
 										{data.user.eth[0].address}
+										&nbsp;&nbsp;
+										<CopyToClipboard
+											text={data.user.eth[0].address}
+											onCopy={() => this.setState({ copied: true })}
+										>
+											<FileCopy style={{ cursor: 'pointer', fontSize: 12, marginBottom: -3 }} />
+										</CopyToClipboard>
 									</Typography>
 									<div style={{ flexGrow: 1 }} />
 									<IconButton onClick={this.handleGenerateEth}>
@@ -287,6 +328,13 @@ class CoinDetails extends React.Component{
 								<div className={classes.sec}>
 									<Typography variant="button" className={classes.address} >
 										{data.user.eth[0].address}
+										&nbsp;&nbsp;
+										<CopyToClipboard
+											text={data.user.eth[0].address}
+											onCopy={() => this.setState({ copied: true })}
+										>
+											<FileCopy style={{ cursor: 'pointer', fontSize: 12, marginBottom: -3 }} />
+										</CopyToClipboard>
 									</Typography>
 									<div style={{ flexGrow: 1 }} />
 									<IconButton onClick={this.handleGenerateEth}>
@@ -308,6 +356,13 @@ class CoinDetails extends React.Component{
 								<div className={classes.sec}>
 									<Typography variant="button" className={classes.address} >
 										{data.user.eth[0].address}
+										&nbsp;&nbsp;
+										<CopyToClipboard
+											text={data.user.eth[0].address}
+											onCopy={() => this.setState({ copied: true })}
+										>
+											<FileCopy style={{ cursor: 'pointer', fontSize: 12, marginBottom: -3 }} />
+										</CopyToClipboard>
 									</Typography>
 									<div style={{ flexGrow: 1 }} />
 									<IconButton onClick={this.handleGenerateEth}>
@@ -336,8 +391,36 @@ class CoinDetails extends React.Component{
 				>
 					Withdraw
 				</Button>
+
 				<Withdrawal open={withdraw} handleClose={this.handleCloseWithdraw} />
+
 				<History open={open} handleClose={this.handleClose} history={data.history} />
+
+				<Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }}
+          open={copied}
+          autoHideDuration={6000}
+          onClose={this.handleSnackbarClose}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+					message={<span id="message-id">Successfully copied!</span>}
+					action={[
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="inherit"
+              className={classes.close}
+              onClick={this.handleSnackbarClose}
+            >
+              <CloseIcon />
+            </IconButton>,
+          ]}
+        />
+
 			</div>
 		);
 	}

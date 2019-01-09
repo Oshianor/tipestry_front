@@ -117,7 +117,7 @@ class Withdrawal extends React.Component {
           <DialogTitle id="scroll-dialog-title" style={{ textAlign: 'center' }}  >Withdraw</DialogTitle>
           <DialogContent>
             <Grid container spacing="24" >
-              <Grid item xs={12} sm={8} md={8} lg={8} xl={8} >
+              <Grid item xs="12" sm="8" md="8" lg='8' xl='8' >
                 <Typography>Choose Currency</Typography>
                 <div style={{ display: 'flex' }}>
                   <img 
@@ -163,23 +163,34 @@ class Withdrawal extends React.Component {
                     style={ coin === "ethxrtcoin" ? bac : nobac } 
                   />
                 </div>
-                
-                <TextField
-                  error={error !== ""}
-                  id="outlined-adornment-amount"  
-                  variant="outlined"
-                  label="Wallet Address"
-                  helperText={error}
-                  fullWidth
-                  className={classes.margin}
-                  value={address}
-                  onChange={this.handleAddress}
-                  InputProps={{
-                    startAdornment: <InputAdornment position="start">
-                      xyz
-                    </InputAdornment>,
-                  }}
-                />
+                <Typography style={{ fontSize: 12 }} >
+                  I want to provide my own wallet address
+                  <Checkbox
+                    checked={show === "false" ? false : true}
+                    onChange={this.handleChange(show === "false" ? "true" : 'false')}
+                    value={show === "false" ? "true" : 'false'}
+                  />
+                </Typography>
+
+                {
+                  show === "true" &&
+                    <TextField
+                      error={error !== ""}
+                      id="outlined-adornment-amount"  
+                      variant="outlined"
+                      label="Wallet Address"
+                      helperText={error}
+                      fullWidth
+                      className={classes.margin}
+                      value={address}
+                      onChange={this.handleAddress}
+                      InputProps={{
+                        startAdornment: <InputAdornment position="start">
+                          xyz
+                        </InputAdornment>,
+                      }}
+                    />
+                }
                 
                 <TextField
                   error={error !== ""}
@@ -199,7 +210,7 @@ class Withdrawal extends React.Component {
                   }}
                 />
               </Grid>
-              <Grid item xs={12} sm={4} md={4} lg={4} xl={4} >
+              <Grid item xs="12" sm="4" md="4" lg='4' xl="4" >
 							  <img src="/static/icons/colormoneybag.svg" className={classes.icon} />              
               </Grid>
               <Button onClick={() => handleClose()} style={{ marginLeft: '35%' }} color="secondary">

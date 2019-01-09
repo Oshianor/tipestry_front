@@ -31,7 +31,21 @@ const styles = theme => ({
 class History extends React.Component {
   state = {
     scroll: 'paper',
-  };
+	};
+	
+	renderMoney(amount, type) {
+		// console.log('amount', amount === 0);
+		
+		if (amount !== 0 && String(amount).length < 3 && type === 'bitcoin') {
+			return amount / 10000
+		} else if (String(amount).length > 3) {
+			return amount
+		} else if (amount == 0) {
+			return 0.0000
+		} else {
+			return amount / 1000
+		}
+	}
 
   render() {
 		const { classes, open, handleClose, history } = this.props;
@@ -69,7 +83,16 @@ class History extends React.Component {
 													{row.transactiontype}
 												</TableCell>
 												<TableCell align="right" >{row.wallettype}</TableCell>
-												<TableCell align="right">{row.amount}</TableCell>
+												<TableCell align="right">
+													{/* {row.amount} */}
+													{/* {
+														row.wallettype === 'bitcoin' ?
+															row.amount / 100000
+														:
+															row.amount / 1000
+													} */}
+													{this.renderMoney(row.amount, row.wallettype )}
+												</TableCell>
 												<TableCell align="right">{moment(row.created_at).format('ddd MMM YYYY')}</TableCell>
 											</TableRow>
 										);

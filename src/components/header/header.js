@@ -300,7 +300,7 @@ class Header extends React.Component {
 											<a style={{ textDecoration: 'none' }} >
 												<Typography style={{ color: "white" }} className={classes.but} >
 													<img src="/static/icons/moneybag.svg"  width='20' height="20" />
-													Tip report
+													Wallet activities
 												</Typography>
 											</a>
 										</Link>
