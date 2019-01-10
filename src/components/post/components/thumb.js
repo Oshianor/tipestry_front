@@ -72,7 +72,7 @@ class Thumb extends React.Component {
   }
 
   async handleVote(votes) {
-    const { topicObjId } = this.props;
+    const { topicObjId, handleOpen } = this.props;
     let token = localStorage.getItem('token');
 
     if (token) {
@@ -96,6 +96,8 @@ class Thumb extends React.Component {
         })
       }
       
+    } else {
+      handleOpen();
     }
   }
 
@@ -133,7 +135,7 @@ class Thumb extends React.Component {
   
   render() {
     const { num, iconspacing } = this.props;
-    const { count } = this.state;
+    const { count, open } = this.state;
     
     return (
       <React.Fragment>

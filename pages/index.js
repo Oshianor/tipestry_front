@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { getTopics, getUser, getToken } from "../src/actions/data";
 // import Bottom from '../src/components/reuseable/bottom';
 import BottomScrollListerer from 'react-bottom-scroll-listener'
-import CircularProgress from '@material-ui/core/CircularProgress';
+// import CircularProgress from '@material-ui/core/CircularProgress';
 
 class Index extends React.Component {
   state = {

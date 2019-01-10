@@ -18,6 +18,7 @@ import Thumb from './thumb';
 import Axios from 'axios';
 import { config } from "../../../../config";
 import Coin from './coin';
+import Warning from '../../reuseable/warning';
 
 const styles = theme => ({
   button: {
@@ -51,6 +52,21 @@ const styles = theme => ({
 });
 
 class CardActionIcons extends React.Component {
+  state = {
+    open: false
+  }
+
+  handleOpen = () => {
+    this.setState({
+      open: true
+    })
+  }
+
+  handleClose = () => {
+    this.setState({
+      open: false
+    })
+  }
 
   handleFavourite = async () => {
     let token = localStorage.getItem('token');
@@ -73,6 +89,11 @@ class CardActionIcons extends React.Component {
       console.log('user', user);
       
       getUser(user.data.content);
+    } else {
+      // if the user isn't logged in
+      this.setState({
+        open: true
+      })
     }
   }
 
@@ -102,9 +123,18 @@ class CardActionIcons extends React.Component {
   }
 
   render() {
-    const { token, classes, topicUserId, votes, comment, topicObjId, link } = this.props;
+    const {
+      token,
+      classes,
+      topicUserId,
+      votes,
+      comment,
+      topicObjId,
+      link,
+      topicId
+    } = this.props;
     // console.log('votes.length,', votes.length);
-    
+    const { open } = this.state;
     return (
       <CardActions className={classes.actions} >
 
@@ -114,13 +144,12 @@ class CardActionIcons extends React.Component {
           topicObjId={topicObjId} 
           iconspacing={classes.iconspacing} 
           num={classes.num} 
+          handleOpen={this.handleOpen}
         />
-
 
 
         {/*  */}
         {this.displayFavour()}
-
 
 
         {/*  */}
@@ -138,11 +167,13 @@ class CardActionIcons extends React.Component {
 
         {/*  */}
         <Tooltip title="Share Post" aria-label="Share">
-          <SharePopover link={link} />
+          <SharePopover link={link} handleOpen={this.handleOpen} />
         </Tooltip>
 
         {/* tips coin icons */}
-        <Coin topicUserId={topicUserId} />
+        <Coin topicUserId={topicUserId} topicId={topicId} handleOpen={this.handleOpen} handleClose={this.handleClose} />
+
+        <Warning open={open} handleClose={this.handleClose} />
       </CardActions>
     );
   }
@@ -151,10 +182,10 @@ class CardActionIcons extends React.Component {
 CardActionIcons.propTypes = {
   classes: PropTypes.object.isRequired,
   votes: PropTypes.array.isRequired,
-  comment: PropTypes.string.isRequired,
+  comment: PropTypes.number.isRequired,
   topicId: PropTypes.number.isRequired,
   topicObjId: PropTypes.string.isRequired,
-  topicUserId: PropTypes.string.isRequired,
+  topicUserId: PropTypes.number.isRequired,
   token: PropTypes.string,
 };
 

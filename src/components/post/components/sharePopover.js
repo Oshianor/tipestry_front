@@ -121,10 +121,20 @@ class AnchorPlayground extends React.Component {
   };
 
   handleClickButton = node => event => {
-    this.setState(state => ({
-      open: !state.open,
-      arrowRef: node,
-    }));
+    // this.setState(state => ({
+    //   open: !state.open,
+    //   arrowRef: node,
+    // }));
+    const { handleOpen } = this.props;
+    let token = localStorage.getItem('token');
+    if (token) {
+      this.setState(state => ({
+        open: !state.open,
+        arrowRef: node,
+      }));
+    } else {
+      handleOpen();
+    }
   };
 
   handleClose = (event, reason) => {

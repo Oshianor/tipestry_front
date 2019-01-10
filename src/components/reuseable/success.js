@@ -6,19 +6,18 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
-function Transition(props) {
-  return <Slide direction="up" {...props} />;
-}
+// function Transition(props) {
+//   return <Slide direction="up" {...props} />;
+// }
 
 class Success extends React.Component {
   render() {
-		const { open, image, handleClose, text } = this.props;
+		const { open, handleClose, text, buttonText } = this.props;
     return (
 			<Dialog
 				open={open}
-				TransitionComponent={Transition}
+				// TransitionComponent={Transition}
 				keepMounted
 				onClose={() => handleClose()}
 				aria-labelledby="alert-dialog-slide-title"
@@ -34,7 +33,7 @@ class Success extends React.Component {
 
 				<DialogActions>
 					<Button onClick={() => handleClose()} color='secondary' >
-						I'm Done
+						{buttonText}
 					</Button>
 				</DialogActions>
 			</Dialog>
@@ -43,13 +42,7 @@ class Success extends React.Component {
 }
 
 Success.propTypes = {
-	classes: PropTypes.object.isRequired,
+	text: PropTypes.string.isRequired,
 };
 
-function mapStateToProps(state) {
-	return {
-		data: state.data,
-	}
-}
-
-export default connect(mapStateToProps, )(uccess);
+export default Success;

@@ -11,14 +11,15 @@ import Grid from '@material-ui/core/Grid';
 import Link from 'next/link';
 import { connect } from 'react-redux';
 import Moment from "moment";
-
 // components
 import Thumbnails from '../reuseable/thumbnails';
 import CardActionsIcons from './components/CardActionIcons';
+import TopicCoin from "./components/topicCoins";
 
 // static icons svg
 import Options from "./components/options";
 import { config } from '../../../config';
+
 
 const styles = theme => ({
   card: {
@@ -190,6 +191,9 @@ class Post extends React.Component {
                     token={token}
                     topicObjId={topic._id}
                     link={encodeURI("/public/topics/" + topic._id + "/" + topic.title)}
+                  />
+                  <TopicCoin 
+                    gift={topic.gift}
                   />
                 </Card>
               </Grid>

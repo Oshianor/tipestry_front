@@ -160,16 +160,22 @@ class Coin extends React.Component {
   };
 
   handleClickButton = node => event => {
-    this.setState(state => ({
-      open: !state.open,
-      arrowRef: node,
-    }));
+    const { handleOpen } = this.props;
+    let token = localStorage.getItem('token');
+    if (token) {
+      this.setState(state => ({
+        open: !state.open,
+        arrowRef: node,
+      }));
+    } else {
+      handleOpen();
+    }
   };
 
   handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
+    // if (reason === 'clickaway') {
+    //   return;
+    // }
 
     this.setState({ open: false });
   };
@@ -219,7 +225,7 @@ class Coin extends React.Component {
   }
 
   render() {
-    const { classes, link, topicUserId } = this.props;
+    const { classes, topicId, topicUserId } = this.props;
     const { currentCoin, open, placement, disablePortal, flip, preventOverflow, arrow, arrowRef, gift, img, type } = this.state;
 
     const id = open ? 'Share' : null;
@@ -284,6 +290,7 @@ class Coin extends React.Component {
           open={gift}
           image={img}
           type={type}
+          topicId={topicId}
           currentCoin={currentCoin}
           topicUserId={topicUserId}
           handleClose={this.handleGiftClose}
@@ -295,7 +302,8 @@ class Coin extends React.Component {
 
 Coin.propTypes = {
   classes: PropTypes.object.isRequired,
-  topicUserObjId: PropTypes.string.isRequired
+  topicUserObjId: PropTypes.string.isRequired,
+  topicId: PropTypes.number.isRequired
 };
 
 function mapStateToProps(state) {

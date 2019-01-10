@@ -14,6 +14,11 @@ import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { config } from "../../../../config";
+import { getTopics } from "../../../actions/data";
+import { bindActionCreators } from 'redux';
+// import Router from "next/router";
+import Router from 'next-routes';
+
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
@@ -40,13 +45,18 @@ class CoinGift extends React.Component {
 
 	handleGift = async () => {
 		const { amount } = this.state;
-		const { topicUserId, type, handleClose } = this.props;
+		const { topicUserId, type, handleClose, topicId, getTopics } = this.props;
 		let token = localStorage.getItem('token');
 
 		if (token) {
       const options = {
         method: 'POST',
-        data: JSON.stringify({ amount, coinType: type, userId: topicUserId }),
+        data: JSON.stringify({
+        	amount,
+        	coinType: type,
+        	userId: topicUserId,
+        	topicId
+        }),
         headers: {
           'content-type': 'application/json',
           'Access-Control-Allow-Origin': '*',
@@ -55,8 +65,11 @@ class CoinGift extends React.Component {
         url: config.api + '/crypto'
       }
 
-      let completed = await axios(options);
-      // console.log("Gifting", completed);
+			let completed = await axios(options);
+			getTopics(completed.data.content);
+			// Router.push('/');
+			Router.pushRoute('/')
+
       handleClose()
     }
 	}
@@ -140,58 +153,10 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps, )(withStyles(styles)(CoinGift));
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({
+		getTopics: getTopics
+	}, dispatch)
+}
 
-
-
-// getBalance = () => {
-// 	const { type, data } = this.props;
-// 	const { btc } = this.state;
-// 	if (type === "btc") {
-// 		return (<React.Fragment>{btc}</React.Fragment>);
-// 	} else if(type === 'doge') {
-// 		return (<React.Fragment>{data.user.doge[0].doge_balance}</React.Fragment>);		
-// 	} else if(type === 'eth') {
-// 		return (<React.Fragment>{data.user.eth[0].ethapibalance}</React.Fragment>);		
-// 	} else if (type === 'tipc') {
-// 		return (<React.Fragment>{data.user.eth[0].tipcapibalance}</React.Fragment>);		
-// 	} else if(type === 'tip') {
-// 		return (<React.Fragment>{data.user.eth[0].tipapibalance}</React.Fragment>);		
-// 	} else if(type === 'xth') {
-// 		return (<React.Fragment>{data.user.eth[0].xrtapibalance}</React.Fragment>);		
-// 	}
-// }
-
-
-
-
-	// async componentDidMount() {
-	// 	const { type, data } = this.props;
-	// 	this.setState({
-	// 		doge: data.user.doge[0].doge_balance,
-	// 		eth: data.user.eth[0].ethapibalance,
-	// 		tipc: data.user.eth[0].tipcapibalance,
-	// 		tip: data.user.eth[0].tipapibalance,
-	// 		xth: data.user.eth[0].xrtapibalance
-	// 	})
-
-	// 	let token = localStorage.getItem('token');
-
-	//   if (token) {
-	//     const options = {
-	//       method: 'GET',
-	//       headers: {
-	//         'content-type': 'application/json',
-	//         'Access-Control-Allow-Origin': '*',
-	//         'x-auth-token': token
-	//       },
-	//       url: config.api + "/crypto/btc/balance",
-	//     };
-	// 		let btc = await Axios(options);
-	// 		console.log(btc);
-
-	//     this.setState({
-	// 			btc: btc.data.result
-	// 		})
-	//   }
-	// }
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(CoinGift));
