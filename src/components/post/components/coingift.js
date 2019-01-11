@@ -17,7 +17,7 @@ import { config } from "../../../../config";
 import { getTopics } from "../../../actions/data";
 import { bindActionCreators } from 'redux';
 // import Router from "next/router";
-import Router from 'next-routes';
+// import Router from 'next-routes';
 
 
 function Transition(props) {
@@ -47,7 +47,7 @@ class CoinGift extends React.Component {
 		const { amount } = this.state;
 		const { topicUserId, type, handleClose, topicId, getTopics } = this.props;
 		let token = localStorage.getItem('token');
-
+		
 		if (token) {
       const options = {
         method: 'POST',
@@ -68,16 +68,15 @@ class CoinGift extends React.Component {
 			let completed = await axios(options);
 			getTopics(completed.data.content);
 			// Router.push('/');
-			Router.pushRoute('/')
-
-      handleClose()
-    }
+			// Router.pushRoute('/')
+			handleClose();
+		}
 	}
 
 
 	handleChange = prop => event => {
 		const { currentCoin } = this.props;
-		if (currentCoin > event.target.value) {
+		if (currentCoin >= event.target.value) {
 			this.setState({
 				[prop]: event.target.value,
 				error: ""

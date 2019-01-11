@@ -182,40 +182,48 @@ class Coin extends React.Component {
 
   handleGift(img, name) {
     const { data, topicUserObjId } = this.props;
-    if (data.user._id !== topicUserObjId) {
-      this.setState({
-        img: '/static/tipcoins/' + img,
-        type: name,
-        gift: true
-      })
-    }
+    // make this check just in case the user info didn't come back soon
+    if (typeof data.user.id !== "undefined") {
+
+      if (data.user._id !== topicUserObjId) {
+        this.setState({
+          img: '/static/tipcoins/' + img,
+          type: name,
+          gift: true
+        })
+      }
 
     // set the balance of the currenlty selected coin
-		if (name === "bitcoin") {
-			this.setState({
-			  currentCoin: this.state.btc
-			})
-		} else if (name === 'dogecoin') {
-			this.setState({
-        currentCoin: data.user.doge[0].doge_balance
-      })	
-		} else if (name === 'ethcoin') {
-			this.setState({
-        currentCoin: data.user.eth[0].ethapibalance
-      })	
-		} else if (name === 'ethtipc') {
-			this.setState({
-        currentCoin: data.user.eth[0].tipcapibalance
-      })		
-		} else if (name === 'ethtipcoin') {
-			this.setState({
-        currentCoin: data.user.eth[0].tipapibalance
-      })	
-		} else if (name === 'ethxrtcoin') {
-			this.setState({
-        currentCoin: data.user.eth[0].xrtapibalance
-      })		
-		}
+    
+      
+    
+      if (name === "bitcoin") {
+        this.setState({
+          currentCoin: this.state.btc
+        })
+      } else if (name === 'dogecoin') {
+        this.setState({
+          currentCoin: typeof data.user.doge[0] !== "undefined" && data.user.doge[0].doge_balance
+        })	
+      } else if (name === 'ethcoin') {
+        this.setState({
+          currentCoin: typeof data.user.eth[0] !== "undefined" && data.user.eth[0].ethapibalance
+        })	
+      } else if (name === 'ethtipc') {
+        this.setState({
+          currentCoin: typeof data.user.eth[0] !== "undefined" && data.user.eth[0].tipcapibalance
+        })		
+      } else if (name === 'ethtipcoin') {
+        this.setState({
+          currentCoin: typeof data.user.eth[0] !== "undefined" && data.user.eth[0].tipapibalance
+        })	
+      } else if (name === 'ethxrtcoin') {
+        this.setState({
+          currentCoin: typeof data.user.eth[0] !== "undefined" && data.user.eth[0].xrtapibalance
+        })		
+      }
+    
+    }
   }
 
   handleGiftClose = () => {

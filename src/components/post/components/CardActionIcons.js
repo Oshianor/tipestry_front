@@ -131,7 +131,8 @@ class CardActionIcons extends React.Component {
       comment,
       topicObjId,
       link,
-      topicId
+      topicId,
+      data
     } = this.props;
     // console.log('votes.length,', votes.length);
     const { open } = this.state;
@@ -171,7 +172,10 @@ class CardActionIcons extends React.Component {
         </Tooltip>
 
         {/* tips coin icons */}
-        <Coin topicUserId={topicUserId} topicId={topicId} handleOpen={this.handleOpen} handleClose={this.handleClose} />
+        {
+          typeof data.user.id !== "undefined" && topicUserId !== data.user.id &&
+            <Coin topicUserId={topicUserId} topicId={topicId} handleOpen={this.handleOpen} handleClose={this.handleClose} />
+        }
 
         <Warning open={open} handleClose={this.handleClose} />
       </CardActions>
