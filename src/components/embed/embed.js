@@ -12,11 +12,10 @@ import Preloader from '../preloader/preloader';
     const { url } = this.props;
     let sim = await Axios.get(config.api + '/topic/verify?s=' + url);
     console.log("YES", sim);
-    if (!sim.data) {
+
       this.setState({
-        load: true
+        load: sim.data
       })
-    }
     // if (typeof sim.data['x-frame-options'] !== "undefined") {
     //   if (sim.data['x-frame-options'] !== "DENY" && sim.data['x-frame-options'] !== "SAMEORIGIN") {
     //     this.setState({
@@ -37,6 +36,8 @@ import Preloader from '../preloader/preloader';
 	render() {
     const { height, top, img } = this.props;
     const { load } = this.state;
+    console.log(this.state);
+    
 		return (
       <div>
         {

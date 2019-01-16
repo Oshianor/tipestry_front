@@ -154,6 +154,7 @@ class Post extends React.Component {
                   />
                   <CardMedia
                     className={classes.media}
+                    style={{ backgroundPosition: 'top' }}
                     image={
                       topic.screenshot.length > 200 ?
                         config.base64 + topic.screenshot
