@@ -130,12 +130,14 @@ class TopicList extends React.Component {
 			};
 
 			let site = await Axios(options);
+			console.log(site, "nnn");
+			
 			if(!site.data.error) return Router.push('/');
 			
 			this.setState({
 				loading: false,
 				open: true,
-				msg: "Something Went wrong. Please try again"
+				msg: site.data.msg
 			})
 		}
 		

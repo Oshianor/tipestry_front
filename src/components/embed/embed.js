@@ -59,7 +59,7 @@ import Preloader from '../preloader/preloader';
             <p>Your browser does not support iframes.</p>
             </iframe>
           :
-            typeof img !== "undefined" &&
+            typeof img !== "undefined" ?
               <img 
                 src={
                   img.length > 200 ?
@@ -71,6 +71,16 @@ import Preloader from '../preloader/preloader';
                   borderRight: "10px solid gray",
                   width: "100%",
                   // height: height ? height : "70vh",
+                  marginTop: top ? top : 0
+                }}
+              />
+            :
+              <img 
+                src='/static/images/default.png'
+                style={{ 
+                  borderRight: "10px solid gray",
+                  width: "100%",
+                  height: height ? height : "70vh",
                   marginTop: top ? top : 0
                 }}
               />
