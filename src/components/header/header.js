@@ -294,12 +294,12 @@ class Header extends React.Component {
 					<Grid container spacing={24} style={{ position: 'absolute', width: '100%', marginTop: 35 }} >
 						<Grid item  className={classes.left} >
 							{
-								token &&
-									data.profile._id === data.user._id &&
+								// token &&
+								// 	data.profile._id === data.user._id &&
 										<Link href={'/tip/report/' + data.user._id} >
-											<a style={{ textDecoration: 'none' }} >
-												<Typography style={{ color: "white" }} className={classes.but} >
-													<img src="/static/icons/moneybag.svg"  width='20' height="20" />
+											<a>
+												<Typography style={{ color: "white", textDecoration: 'underline' }} className={classes.but} >
+													{/* <img src="/static/icons/moneybag.svg"  width='20' height="20" /> */}
 													Wallet activities
 												</Typography>
 											</a>
@@ -309,14 +309,15 @@ class Header extends React.Component {
 
 						<div style={{ flexGrow: 1 }} />
 
-						<Grid item style={{ marginLeft: '4.5%' }} >
+						{/* <Grid item style={{ marginLeft: '4.5%' }} > */}
+						<Grid item style={{ marginLeft: '0.5%' }} >
 							<div style={{ marginTop: 15 }} onMouseEnter={this.hoverOn} onMouseLeave={this.hoverOff} >
 								<Thumbnails 
 									size="xl" 
 									borderWidth={4} 
 									borderColor="white" 
 									color="purple" 
-									name={data.profile.username}
+									name={typeof data.profile.username !== 'undefined' ? data.profile.username : ''}
 									url = {
 										data.profile.profileimage === "" || !data.profile.profileimage ?
 											null 
@@ -350,7 +351,7 @@ class Header extends React.Component {
 									data.profile._id === data.user._id ?
 										<Link href={'/edit/' + data.user._id + "/@" + data.user.username} >
 											<a style={{ textDecoration: 'none' }} >
-												<Typography style={{ color: "white" }} className={classes.but} >
+												<Typography style={{ color: "white", textDecoration: 'underline' }} className={classes.but} >
 													<Create style={{ fontSize: 17 }} />
 													Edit profile
 												</Typography>
@@ -400,7 +401,7 @@ class Header extends React.Component {
 						variant="outlined" 
 						onClick={this.handleFollow}
 						className={classes.but} 
-						style={{ color: "white", borderColor: "white", padding: "0px 6px", fontSize: 10 }} 
+						// style={{ color: "white", borderColor: "white", padding: "0px 6px", fontSize: 10 }} 
 					>
 						<Add style={{ fontSize: 17 }} />
 						Follow
@@ -414,7 +415,7 @@ class Header extends React.Component {
 					onClick={this.handleFollow}
 					className={classes.but} 
 					color='primary'
-					style={{ padding: "0px 6px", fontSize: 10 }} 
+					// style={{ padding: "0px 6px", fontSize: 10 }} 
 				>
 					<Remove style={{ fontSize: 17 }} />
 					Following
@@ -430,7 +431,7 @@ class Header extends React.Component {
 		
 		if (router.pathname == "/") {
 			return this.displayHome()
-		} else if (router.pathname == "/profile" || router.pathname == "/tipreport") {
+		} else if (router.pathname == "/profile" || router.pathname == "/tipreport" || router.pathname == "/invite") {
 			return this.displayProfile();
 		}
 	}
@@ -486,7 +487,7 @@ class Header extends React.Component {
 		const { router } = this.props;
 
 		if (!hide) {
-			if (router.pathname == "/profile" || router.pathname == "/tipreport") {
+			if (router.pathname == "/profile" || router.pathname == "/tipreport" || router.pathname == "/invite") {
 				return 200;
 			} else if (router.pathname == "/") {
 				return 300;

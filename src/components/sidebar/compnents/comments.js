@@ -30,7 +30,8 @@ const styles = theme => ({
   actions: {
 		display: 'flex',
 		padding: "0px 25px",
-		borderBottom: '2px solid gray'
+		// borderBottom: '2px solid gray'
+		borderBottom: '1px solid #d8d6d6'
   }
 });
 

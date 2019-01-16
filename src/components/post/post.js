@@ -156,9 +156,9 @@ class Post extends React.Component {
                     className={classes.media}
                     image={
                       topic.screenshot.length > 200 ?
-                        'data:image/png;base64,' + topic.screenshot
+                        config.base64 + topic.screenshot
                       :
-                        config.url + topic.screenshot
+                        config.topic + topic.screenshot
                     }
                     title={topic.title}
                     component="a"

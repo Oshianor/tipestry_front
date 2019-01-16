@@ -1,9 +1,7 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -12,6 +10,10 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Checkbox from '@material-ui/core/Checkbox';
+import Axios from 'axios';
+import { config } from "../../../config";
+import Alert from '../reuseable/alert';
+
 
 const styles = theme => ({
 	root: {
@@ -45,7 +47,13 @@ class Withdrawal extends React.Component {
     amount: '',
     currentCoin: 0,
     show: 'false',
-    address: ''
+    address: '',
+    withdraw: {
+      error: false,
+      msg: ""
+    },
+    opener: false,
+    msg: ''
   }
 
   onChnage(name) {
@@ -55,17 +63,10 @@ class Withdrawal extends React.Component {
   }
 
   handleChangeText = prop => event => {
-		const { currentCoin } = this.state;
-		if (currentCoin > event.target.value) {
-			this.setState({
-				[prop]: event.target.value,
-				error: ""
-			});
-		} else {
-			this.setState({
-				error: "You have insuficient balance to handle this transaction"
-			});
-		}
+    this.setState({
+      [prop]: (event.target.value),
+      error: ""
+    });
   };
 
   handleAddress = event => {
@@ -80,26 +81,72 @@ class Withdrawal extends React.Component {
       return <img src="/static/tipcoins/bit.svg" alt="doge" style={{ width: 15, height: 15 }} />      
     } else if(coin === "dogecoin") {
       return <img src="/static/tipcoins/doge.svg" alt="doge" style={{ width: 15, height: 15 }} />
-    } else if (coin === 'ethcoin') {
-      return <img src="/static/tipcoins/eth.svg" alt="doge" style={{ width: 15, height: 15 }} />      
-    } else if(coin === 'ethtipc') {
-      return <img src="/static/tipcoins/Tip-1.png" alt="doge" style={{ width: 15, height: 15 }} />
-    } else if (coin === 'ethtipcoin') {
-      return <img src="/static/tipcoins/Tip-2.png" alt="doge" style={{ width: 15, height: 15 }} />
-    } else if (coin === 'ethxrtcoin') {
-      return <img src="/static/tipcoins/Tip-3.png" alt="doge" style={{ width: 15, height: 15 }} />
+    // } else if (coin === 'ethcoin') {
+    //   return <img src="/static/tipcoins/eth.svg" alt="doge" style={{ width: 15, height: 15 }} />      
+    // } else if(coin === 'ethtipc') {
+    //   return <img src="/static/tipcoins/Tip-1.png" alt="doge" style={{ width: 15, height: 15 }} />
+    // } else if (coin === 'ethtipcoin') {
+    //   return <img src="/static/tipcoins/Tip-2.png" alt="doge" style={{ width: 15, height: 15 }} />
+    // } else if (coin === 'ethxrtcoin') {
+    //   return <img src="/static/tipcoins/Tip-3.png" alt="doge" style={{ width: 15, height: 15 }} />
     }
+  }
+
+  handleAlertClose = () => {
+    this.setState({
+      opener: false
+    })
   }
 
   handleChange = name => event => {
     this.setState({ show: name });
+  }
+
+  handleWithdrawal = async () => {
+    const { coin, amount, address, handleClose } = this.state;
+    let token = localStorage.getItem('token');
+    let obj = {
+      coinType: coin,
+      amount,
+      address,
+    }
+    if (token) {
+      const options = {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'x-auth-token': token
+        },
+        data: JSON.stringify(obj),
+        url: config.api + "/crypto/withdrawal"
+      };
+      let withh = await Axios(options);
+      console.log('withdraw,', withh);
+
+      if (!withh.data.error) {
+        this.setState({
+          withdraw: withh.data,
+          opener: true,
+          msg: withh.data.msg
+        });
+        handleClose();
+      } else {
+        this.setState({
+          opener: true,
+          msg: withh.data.msg
+        })
+      }
+
+
+    }
   }
   
   render() {
     console.log(this.state);
     
     const { classes, open, handleClose } = this.props;
-    const { coin, error, amount, show, address } = this.state;
+    const { opener, msg, coin, error, amount, show, address, withdraw } = this.state;
     let bac = {
       backgroundColor: '#50557b'      
     }
@@ -115,6 +162,10 @@ class Withdrawal extends React.Component {
           aria-labelledby="scroll-dialog-title"
         >
           <DialogTitle id="scroll-dialog-title" style={{ textAlign: 'center' }}  >Withdraw</DialogTitle>
+          {
+            withdraw.error &&
+              <Typography style={{ color: 'red', textAlign: 'center' }} >{withdraw.msg}</Typography>
+          }
           <DialogContent>
             <Grid container spacing="24" >
               <Grid item xs={12} sm={8} md={8} lg={8} xl={8} >
@@ -134,7 +185,7 @@ class Withdrawal extends React.Component {
                     className={classes.img} 
                     style={ coin === "dogecoin" ? bac : nobac } 
                   />
-                  <img 
+                  {/* <img 
                     src="/static/tipcoins/eth.svg" 
                     alt="eth" 
                     onClick={this.onChnage.bind(this, 'ethcoin')}
@@ -161,14 +212,14 @@ class Withdrawal extends React.Component {
                     onClick={this.onChnage.bind(this, 'ethxrtcoin')}
                     className={classes.img} 
                     style={ coin === "ethxrtcoin" ? bac : nobac } 
-                  />
+                  /> */}
                 </div>
                 
                 <TextField
                   error={error !== ""}
                   id="outlined-adornment-amount"  
                   variant="outlined"
-                  label="Wallet Address"
+                  label="Wallet Address (optional)"
                   helperText={error}
                   fullWidth
                   className={classes.margin}
@@ -183,6 +234,7 @@ class Withdrawal extends React.Component {
                 
                 <TextField
                   error={error !== ""}
+                  required
                   id="outlined-adornment-amount"  
                   variant="outlined"
                   label="Amount"
@@ -202,14 +254,12 @@ class Withdrawal extends React.Component {
               <Grid item xs={12} sm={4} md={4} lg={4} xl={4} >
 							  <img src="/static/icons/colormoneybag.svg" className={classes.icon} />              
               </Grid>
-              <Button onClick={() => handleClose()} style={{ marginLeft: '35%' }} color="secondary">
+              <Button onClick={this.handleWithdrawal} style={{ marginLeft: '35%' }} color="secondary">
                 Cash Out
               </Button>
             </Grid>						
           </DialogContent>
-          {/* <DialogActions>
-            
-          </DialogActions> */}
+          <Alert open={opener} message={msg} handleClose={this.handleAlertClose} />
         </Dialog>
       </div>
     );

@@ -108,8 +108,8 @@ class Thumbnails extends Component {
     }
     const xl = {
       backgroundColor: color !== "" ? color : this.colorRan(),
-      width: 125,
-      height: 125,
+      width: 115,
+      height: 115,
       fontSize: 90,
       border: `${borderWidth}px solid ${borderColor}`
     }

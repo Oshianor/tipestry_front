@@ -16,6 +16,7 @@ import Axios from 'axios';
 import Router from "next/router";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import green from '@material-ui/core/colors/green';
+import Alert from '../reuseable/alert';
 
 const styles = theme => ({
   root: {
@@ -51,7 +52,16 @@ class TopicList extends React.Component {
 			err: false,
 			msg: ""
 		},
-		loading: false
+		loading: false,
+		open: false,
+		msg: ''
+	}
+
+
+	handleClose = () => {
+		this.setState({
+			open: false
+		})
 	}
 
 	handleChange = name => event => {
@@ -123,7 +133,9 @@ class TopicList extends React.Component {
 			if(!site.data.error) return Router.push('/');
 			
 			this.setState({
-				loading: false
+				loading: false,
+				open: true,
+				msg: "Something Went wrong. Please try again"
 			})
 		}
 		
@@ -178,7 +190,8 @@ class TopicList extends React.Component {
 
 	render() {
 			const { classes, topics } = this.props;
-		console.log("TOPICLIST", topics);
+			const { open, msg } = this.state;
+		// console.log("TOPICLIST", topics);
 		
 		return (
 			<div style={{ marginTop: 80 }} >
@@ -198,7 +211,12 @@ class TopicList extends React.Component {
 													<ListItemAvatar>
 														<Link href={encodeURI("/topics/" + topic._id + "/" + topic.title)} >
 															<a  >
-																<Avatar style={{ borderRadius: 0 }} src={'data:image/png;base64,' + topic.screenshot} />
+																<Avatar style={{ borderRadius: 0 }} src={
+																	topic.screenshot.length > 200 ?
+																		config.base64 + topic.screenshot :
+																		config.topic + topic.screenshot
+																	}
+																/>
 															</a>
 														</Link>
 													</ListItemAvatar>
@@ -235,6 +253,7 @@ class TopicList extends React.Component {
 							{this.displayAddTopicForm()}
 						</React.Fragment>
 				}
+				<Alert open={open} message={msg} handleClose={this.handleClose} />
 			</div>
 		);
 	}

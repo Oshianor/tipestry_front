@@ -79,7 +79,7 @@ class History extends React.Component {
 												</TableCell>
 												<TableCell 
 													align="right"
-													style={ row.transactiontype === "gifted" ? { color: 'green' } : row.transactiontype === "withdrawal" ? { color: "orange" } : { color: 'red' } }>
+													style={ row.transactiontype === "received" ? { color: 'green' } : row.transactiontype === "withdrawal" ? { color: "orange" } : { color: 'red' } }>
 													{row.transactiontype}
 												</TableCell>
 												<TableCell align="right" >{row.wallettype}</TableCell>

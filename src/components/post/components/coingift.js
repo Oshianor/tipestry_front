@@ -16,6 +16,7 @@ import axios from 'axios';
 import { config } from "../../../../config";
 import { getTopics } from "../../../actions/data";
 import { bindActionCreators } from 'redux';
+import Alert from '../../reuseable/alert';
 // import Router from "next/router";
 // import Router from 'next-routes';
 
@@ -40,8 +41,16 @@ const styles = theme => ({
 class CoinGift extends React.Component {
 	state = {
 		amount: "",
-		error: ""
+		error: "",
+		msgOpen: false,
+		msg: ''
 	};
+
+	handleMsgClose = () => {
+		this.setState({
+			msgOpen: true
+		})
+	}
 
 	handleGift = async () => {
 		const { amount } = this.state;
@@ -66,7 +75,23 @@ class CoinGift extends React.Component {
       }
 
 			let completed = await axios(options);
-			getTopics(completed.data.content);
+			console.log('completed', completed);
+			
+			if (!completed.data.error) {
+				getTopics({topic: [], total: 0});
+				getTopics(completed.data.content);
+				this.setState({
+					error: '',
+					msgOpen: true,
+					msg: 'Successfully tipped post'
+				})
+			} else {
+				this.setState({
+					error: completed.data.message,
+					msgOpen: true,
+					msg: 'Something went wrong...'
+				})
+			}
 			// Router.push('/');
 			// Router.pushRoute('/')
 			handleClose();
@@ -91,7 +116,7 @@ class CoinGift extends React.Component {
 
   render() {
 		const { classes, open, image, handleClose, currentCoin } = this.props;
-		const { error, amount } = this.state;
+		const { error, amount, msgOpen, msg } = this.state;
     return (
 			<Dialog
 				open={open}
@@ -137,6 +162,11 @@ class CoinGift extends React.Component {
 						Gift
 					</Button>
 				</DialogActions>
+				<Alert 
+					handleClose={this.handleMsgClose} 
+					open={msgOpen} 
+					message={msg} 
+				/>
 			</Dialog>
     );
   }
