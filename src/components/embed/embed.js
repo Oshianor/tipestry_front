@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 import { config } from '../../../config';
-
+import Preloader from '../preloader/preloader';
 
  class Embed extends Component {
   state = {
@@ -59,20 +59,21 @@ import { config } from '../../../config';
             <p>Your browser does not support iframes.</p>
             </iframe>
           :
-            <img 
-              src={
-                img.length > 200 ?
-                  config.base64 + img
-                :
-                  config.topic + img
-              }
-              style={{ 
-                borderRight: "10px solid gray",
-                width: "100%",
-                // height: height ? height : "70vh",
-                marginTop: top ? top : 0
-              }}
-            />
+            typeof img !== "undefined" &&
+              <img 
+                src={
+                  img.length > 200 ?
+                    config.base64 + img
+                  :
+                    config.topic + img
+                }
+                style={{ 
+                  borderRight: "10px solid gray",
+                  width: "100%",
+                  // height: height ? height : "70vh",
+                  marginTop: top ? top : 0
+                }}
+              />
         }
         
       </div>
