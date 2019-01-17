@@ -22,7 +22,7 @@ const styles = theme => ({
   root: {
     width: '100%',
 		// maxWidth: 360,
-		margin: "0px 10% 0px 5%",
+		margin: "0px 10% 0px 0px",
 		padding: 0,
     // backgroundColor: theme.palette.background.paper,
   },
@@ -203,9 +203,14 @@ class TopicList extends React.Component {
 					:
 						<React.Fragment>
 							<Typography variant="h5" style={{ textAlign: 'center' }} >Topics</Typography>
-							<div style={{ margin: "0 5%" }}>
-								<div style={{ height: 400, backgroundColor: 'white', width: "100%" }}>
-									<div style={{ height: 400, width: "100%", overflow: "auto" }}>
+							<div style={{ margin: "0 10%" }}>
+								<div style={{ 
+									// height: 400, 
+									backgroundColor: 'white', width: "100%" }}>
+									<div style={{ 
+										// height: 400,
+										maxHeight: 400,
+										width: "100%", overflow: "auto" }}>
 									{
 										topics.map((topic) => (
 											<List className={classes.root} key={topic._id} >

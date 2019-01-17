@@ -34,6 +34,7 @@ class Topic extends Component {
 							url={data.siteTopic[0].sites[0].url} 
 							img={data.siteTopic[0].screenshot}
 							height="70vh" 
+							top={0}
 						/>
 						<Siteabout token={token} />
 					</Grid>

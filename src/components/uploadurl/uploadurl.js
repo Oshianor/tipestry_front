@@ -15,7 +15,8 @@ import Axios from 'axios';
 
 class UploadUrl extends React.Component {
 	state = {
-		msg: ""
+		msg: "",
+		err: true
 	}
 
 	handleURLPost = async () => {
@@ -23,7 +24,6 @@ class UploadUrl extends React.Component {
 		const { url } = this.state
 
 
-		// let improved = url.replace(/^(?:https?:\/\/)?(?:www\.)?/i, "");
 		Router.push("/sites?s=" + url);
 		
 		handleClose();
@@ -31,18 +31,21 @@ class UploadUrl extends React.Component {
 
 	handleURL = (event) => {
 		
-		if (!isURL(event.target.value)) {
+		if (!isURL(event.target.value, {require_valid_protocol: true, protocols: ['http','https','ftp'], require_protocol: true})) {
 			this.setState({ msg: 'You need to provided a valid web url' })
+			this.setState({ err: true })
 			return false;
 		} 
 
 		this.setState({
-			url: event.target.value
+			url: event.target.value,
+			err: false,
+			msg: ''
 		})
 	}
   render() {
 		const { uploadStatus, handleClose } = this.props;
-		const { msg } = this.state;
+		const { msg, err } = this.state;
     return (
 			<Dialog
 				open={uploadStatus}
@@ -70,7 +73,7 @@ class UploadUrl extends React.Component {
 					<Button onClick={() => handleClose()} color="secondary">
 						No, Thanks
 					</Button>
-					<Button onClick={this.handleURLPost} color="primary">
+					<Button onClick={this.handleURLPost} color="primary" disabled={err} >
 						Upload
 					</Button>
 				</DialogActions>
