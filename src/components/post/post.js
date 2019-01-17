@@ -65,6 +65,14 @@ class Post extends React.Component {
     token: null,
     textId: null
   }
+
+  checkForGif = (filename) => {
+    var ext = /.+\.(.+)$/.exec(filename);
+    console.log('r ? r[1] ',ext ? ext[1] : null);
+    
+    return ext ? ext[1] : null;
+  }
+
   componentDidMount() {
     let token = localStorage.getItem('token');
     this.setState({
@@ -156,10 +164,16 @@ class Post extends React.Component {
                     className={classes.media}
                     style={{ backgroundPosition: 'top' }}
                     image={
-                      topic.screenshot.length > 200 ?
-                        config.base64 + topic.screenshot
+                      // if the link is a gif then show that
+                      this.checkForGif(topic.sites[0].url) == 'gif' ?
+                        topic.sites[0].url
                       :
-                        config.topic + topic.screenshot
+                        // check to see if it the old data of base64
+                        // by using the lenght of the screenshot field
+                        topic.screenshot.length > 200 ?
+                          config.base64 + topic.screenshot
+                        :
+                          config.topic + topic.screenshot
                     }
                     title={topic.title}
                     component="a"

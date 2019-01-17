@@ -12,8 +12,8 @@ import YouTube from 'react-youtube';
   }
 
   async componentDidMount() {
-    const { url, img } = this.props;
-    console.log(this.getQuery('v', url));
+    const { url, screenshot } = this.props;
+    // console.log(this.getQuery('v', url));
     
     
     if(this.checkIfItYouTube(url) == "youtube.com" && this.getQuery('v', url) != null) {
@@ -23,21 +23,25 @@ import YouTube from 'react-youtube';
       })
 
     } else {
-      let sim = await Axios.get(config.api + '/topic/verify?s=' + url);
-      console.log(sim, "sim");
+      console.log(screenshot != null, typeof screenshot);
       
-      this.setState({
-        load: sim.data === "open" ? "open" : typeof img !== "undefined" ? sim.data : 'img'
-      })
+      if (screenshot != null) {
+        this.setState({
+          load: 'close'
+        })
+      } else{
+        this.setState({
+          load: 'open'
+        })
+      }
+      
     }
-    
   }
 
 
   checkIfItYouTube = (url) => {
      var pathname = new URL(url).hostname;
      let improved = pathname.replace(/^(?:https?:\/\/)?(?:www\.)?/i, "");
-
      return improved;
   }
 
@@ -102,16 +106,21 @@ import YouTube from 'react-youtube';
   }
 
   displayImg = () => {
-    const { height, top, img } = this.props;
+    // screen shot are for creating a site 
+    // whilte img are for viewing a topic
+    const { height, top, img, screenshot } = this.props;
     const { load } = this.state;
-    if(load === 'close' && typeof img !== "undefined") {
+    if(load === 'close') {
       return (
         <img 
           src={
-            img.length > 200 ?
-              config.base64 + img
+            typeof img !== "undefined" ?
+              img.length > 200 ?
+                config.base64 + img
+              :
+                config.topic + img
             :
-              config.topic + img
+              config.topic + "/trash/" + screenshot
           }
           style={{ 
             borderRight: "10px solid gray",
@@ -175,3 +184,13 @@ export default Embed;
 // const myParam = urlParams.get('watch');
 // this.getQuery('v', url);
 // console.log(this.getQuery('v', url));
+
+
+
+
+        // let sim = await Axios.get(config.api + '/topic/verify?s=' + url);
+        // console.log(sim, "sim");
+
+        // this.setState({
+        //   load: sim.data === "open" ? "open" : typeof img !== "undefined" ? sim.data : 'img'
+        // })

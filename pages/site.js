@@ -25,11 +25,15 @@ class Sites extends Component {
 			url: config.api + "/topic/get",
 		};
 
-		let site = await axios(options);
-    let dataTopic = JSON.stringify(site.data.content);
+    let site = await axios(options);
+    // console.log('site', site);
+    
+    let dataTopic = JSON.stringify(site.data.content.data);
+    let screenshot = JSON.stringify(site.data.content.screenshot);
 
     return {
-      dataTopic
+      dataTopic,
+      screenshot
     }
   }
 
@@ -52,6 +56,7 @@ class Sites extends Component {
       let user = await axios(options);
       getUser(user.data[0]);
     }
+    console.log('dataTopic', dataTopic);
     
     if (dataTopic) {
       getSiteTopicList(JSON.parse(dataTopic));
@@ -65,6 +70,8 @@ class Sites extends Component {
 
 	render() {
     const { loading } = this.state;
+    const { screenshot } = this.props;
+
     // console.log("SITE TOPIC", this.props);
     
 		return (
@@ -73,7 +80,7 @@ class Sites extends Component {
           loading ? 
             <Preloader />
           :
-				    <SiteContainer />
+				    <SiteContainer screenshot={JSON.parse(screenshot)} />
         }
 			</div>
 		)
