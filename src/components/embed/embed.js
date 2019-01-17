@@ -25,7 +25,7 @@ import YouTube from 'react-youtube';
     } else {
       console.log(screenshot != null, typeof screenshot);
       
-      if (screenshot != null) {
+      if (screenshot != null || typeof img !== "undefined") {
         this.setState({
           load: 'close'
         })
