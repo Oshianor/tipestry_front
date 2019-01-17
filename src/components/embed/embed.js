@@ -125,7 +125,7 @@ import YouTube from 'react-youtube';
           style={{ 
             borderRight: "10px solid gray",
             width: "100%",
-            height: height ? height : "70vh",
+            // height: height ? height : "70vh",
             // marginTop: 70,
             marginTop: top ? top : 0
           }}
