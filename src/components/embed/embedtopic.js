@@ -82,7 +82,6 @@ import YouTube from 'react-youtube';
             width="300"
             height="200"
             src={this.props.url}
-            onLoad={this.error}
             allow="fullscreen"
           >
             <p>Your browser does not support iframes.</p>
