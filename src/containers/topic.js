@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Embed from '../components/embed/embed';
+import Embed from '../components/embed/embedtopic';
 import Grid from '@material-ui/core/Grid';
 import Sidebar from '../components/sidebar/sidebar';
 import Header from "../components/header/header";
@@ -35,6 +35,7 @@ class Topic extends Component {
 							img={data.siteTopic[0].screenshot}
 							height="70vh" 
 							top={0}
+							site={data.siteTopic[0].sites[0]}
 						/>
 						<Siteabout token={token} />
 					</Grid>

@@ -7,34 +7,19 @@ import YouTube from 'react-youtube';
 
  class Embed extends Component {
   state = {
-    load: 'img', //img, youtube, open, close
+    load: 'open', //img, youtube, open, close
     videoId: ''
   }
 
   async componentDidMount() {
     const { url, screenshot } = this.props;
     // console.log(this.getQuery('v', url));
-    
-    
     if(this.checkIfItYouTube(url) == "youtube.com" && this.getQuery('v', url) != null) {
       this.setState({
         load: "youtube",
         videoId: this.getQuery('v', url)
       })
 
-    } else {
-      console.log(screenshot != null, typeof screenshot);
-      
-      if (screenshot != null || typeof img !== "undefined") {
-        this.setState({
-          load: 'close'
-        })
-      } else{
-        this.setState({
-          load: 'open'
-        })
-      }
-      
     }
   }
 
@@ -80,9 +65,44 @@ import YouTube from 'react-youtube';
   }
 
   displayIframe = () => {
-    const { height, top, img } = this.props;
+    const { height, top, site } = this.props;
     const { load } = this.state;
-    if (load === 'open') {
+    if (site != null) {
+      if(site.screen_path === "") {
+        return (
+          <iframe 
+            id="frame"
+            style={{ 
+              borderRight: "10px solid gray",
+              width: "100%",
+              height: height ? height : "70vh",
+              marginTop: top ? top : 0
+            }}
+            // title="Inline Frame Example"
+            width="300"
+            height="200"
+            src={this.props.url}
+            onLoad={this.error}
+            allow="fullscreen"
+          >
+            <p>Your browser does not support iframes.</p>
+          </iframe>
+        )
+      } else {
+        return (
+          <img 
+            src={config.topic + "/captures/" + site.screen_path}
+            style={{ 
+              borderRight: "10px solid gray",
+              width: "100%",
+              // height: height ? height : "70vh",
+              // marginTop: 70,
+              marginTop: top ? top : 0
+            }}
+          />
+        )
+      }
+    } else {
       return (
         <iframe 
           id="frame"
@@ -92,7 +112,7 @@ import YouTube from 'react-youtube';
             height: height ? height : "70vh",
             marginTop: top ? top : 0
           }}
-          title="Inline Frame Example"
+          // title="Inline Frame Example"
           width="300"
           height="200"
           src={this.props.url}
@@ -105,54 +125,6 @@ import YouTube from 'react-youtube';
     }
   }
 
-  displayImg = () => {
-    // screen shot are for creating a site 
-    // whilte img are for viewing a topic
-    const { height, top, img, screenshot } = this.props;
-    const { load } = this.state;
-    if(load === 'close') {
-      return (
-        <img 
-          src={
-            typeof img !== "undefined" ?
-              img.length > 200 ?
-                config.base64 + img
-              :
-                config.topic + img
-            :
-              config.topic + "/trash/" + screenshot
-          }
-          style={{ 
-            borderRight: "10px solid gray",
-            width: "100%",
-            // height: height ? height : "70vh",
-            // marginTop: 70,
-            marginTop: top ? top : 0
-          }}
-        />
-      )
-    }
-  }
-
-  displayDef = () => {
-    const { height, top, img } = this.props;
-    const { load } = this.state;
-    if (load === 'img') {
-      return (
-        <img 
-          src='/static/images/default.png'
-          style={{ 
-            borderRight: "10px solid gray",
-            width: "100%",
-            height: height ? height : "70vh",
-            // marginTop: 70,
-            marginTop: top ? top : 0
-          }}
-        />
-      )
-    }
-  }
- 
   _onReady(event) {
     // access to player in all event handlers via event.target
     event.target.pauseVideo();
@@ -166,9 +138,7 @@ import YouTube from 'react-youtube';
 		return (
       <div>
         {this.displayYoutube()}
-        {this.displayIframe()}   
-        {this.displayImg()}
-        {this.displayDef()}    
+        {this.displayIframe()}    
       </div>
 		)
 	}

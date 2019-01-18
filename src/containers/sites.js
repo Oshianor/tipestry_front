@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Embed from '../components/embed/embed';
+import Embed from '../components/embed/embedsite';
 import Grid from '@material-ui/core/Grid';
 import Header from "../components/header/header";
 import {
@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 
 class Topic extends Component {
 	render() {
-	const { router, data, screenshot }  = this.props;
+	const { router, data }  = this.props;
 		console.log("SITES", router.query.s);
 		
 		return (
@@ -18,9 +18,9 @@ class Topic extends Component {
 				<Header />
 				<Grid container spacing={24}>
 					<Grid item xs={12} sm={12} md={6} lg={7} xl={7} >
-						<Embed url={router.query.s} height="95vh" screenshot={screenshot} top={70} />
+						<Embed url={router.query.s} site={data.site.site} height="95vh" top={70} />
 					</Grid>
-					<Grid item xs={12} sm={12} md={6} lg={5} xl={5} >
+					<Grid item xs={12} sm={12} md={6} lg={5} xl={5}>
 						<TopicsList topics={data.site.topics} url={router.query.s} />
 					</Grid>
 				</Grid>

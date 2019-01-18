@@ -28,12 +28,10 @@ class Sites extends Component {
     let site = await axios(options);
     // console.log('site', site);
     
-    let dataTopic = JSON.stringify(site.data.content.data);
-    let screenshot = JSON.stringify(site.data.content.screenshot);
+    let dataTopic = JSON.stringify(site.data.content);
 
     return {
-      dataTopic,
-      screenshot
+      dataTopic
     }
   }
 
@@ -70,7 +68,6 @@ class Sites extends Component {
 
 	render() {
     const { loading } = this.state;
-    const { screenshot } = this.props;
 
     // console.log("SITE TOPIC", this.props);
     
@@ -80,7 +77,7 @@ class Sites extends Component {
           loading ? 
             <Preloader />
           :
-				    <SiteContainer screenshot={JSON.parse(screenshot)} />
+				    <SiteContainer />
         }
 			</div>
 		)
