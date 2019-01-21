@@ -133,7 +133,7 @@ class Large extends React.Component {
 			}
 			reader.readAsDataURL(e.target.files[0]);
 		}
-		console.log(this.imgUp.files[0])
+		// console.log(this.imgUp.files[0])
 	}
 
 

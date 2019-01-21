@@ -152,7 +152,7 @@ class Edit extends React.Component {
   render() {
     const { classes } = this.props;
     const { first, firstHelper, last, lastHelper, bio, loading } = this.state;
-    console.log(this.state);
+    // console.log(this.state);
     
 
     return (

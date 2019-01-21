@@ -41,7 +41,7 @@ class Checkout extends React.Component {
       }
       let user = await axios(options);
       if (user.data[0]._id !== JSON.parse(userProfile)._id) {
-        console.log(user.data[0]._id, "why cn", JSON.parse(userProfile)._id);
+        // console.log(user.data[0]._id, "why cn", JSON.parse(userProfile)._id);
         
         // if the current profile is not the logged in user then redirect the user
         Router.push('/');

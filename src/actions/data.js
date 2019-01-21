@@ -66,7 +66,7 @@ export const getComment = (arg) => {
 }
 
 export const getFollowers = (arg) => {
-  console.log("followers", arg);
+  // console.log("followers", arg);
   return {
     type: "GET_PROFILE_FOLLOWERS",
     payload: arg
@@ -74,7 +74,7 @@ export const getFollowers = (arg) => {
 }
 
 export const getFollowing = (arg) => {
-  console.log("getFollowing", arg);
+  // console.log("getFollowing", arg);
   return {
     type: "GET_PROFILE_FOLLOWING",
     payload: arg

@@ -96,7 +96,7 @@ class Withdrawal extends React.Component {
   }
   
   render() {
-    console.log(this.state);
+    // console.log(this.state);
     
     const { classes, open, handleClose } = this.props;
     const { coin, error, amount, show, address } = this.state;

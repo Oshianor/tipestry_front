@@ -122,7 +122,7 @@ class Withdrawal extends React.Component {
         url: config.api + "/crypto/withdrawal"
       };
       let withh = await Axios(options);
-      console.log('withdraw,', withh);
+      // console.log('withdraw,', withh);
 
       if (!withh.data.error) {
         this.setState({
@@ -143,7 +143,7 @@ class Withdrawal extends React.Component {
   }
   
   render() {
-    console.log(this.state);
+    // console.log(this.state);
     
     const { classes, open, handleClose } = this.props;
     const { opener, msg, coin, error, amount, show, address, withdraw } = this.state;

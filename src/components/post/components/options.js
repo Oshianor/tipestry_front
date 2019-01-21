@@ -68,7 +68,7 @@ class Options extends React.Component {
       }
 
       let follow = await axios(options);
-      console.log("ADDING FOLLOWING", follow);
+      // console.log("ADDING FOLLOWING", follow);
       if (follow.data.error === false) {
         this.setState({
           userFollowing: follow.data.content.following,
@@ -131,7 +131,7 @@ class Options extends React.Component {
       }
 
       let follow = await axios(options);
-      console.log("topic FOLLOWING", follow);
+      // console.log("topic FOLLOWING", follow);
       if (follow.data.error === false) {
         this.setState({
           topicFollowing: follow.data.content.following

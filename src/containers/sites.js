@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 class Topic extends Component {
 	render() {
 	const { router, data }  = this.props;
-		console.log("SITES", router.query.s);
+		// console.log("SITES", router.query.s);
 		
 		return (
 			<div>

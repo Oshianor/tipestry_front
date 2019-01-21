@@ -54,7 +54,7 @@ class Sites extends Component {
       let user = await axios(options);
       getUser(user.data[0]);
     }
-    console.log('dataTopic', dataTopic);
+    // console.log('dataTopic', dataTopic);
     
     if (dataTopic) {
       getSiteTopicList(JSON.parse(dataTopic));

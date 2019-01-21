@@ -30,9 +30,16 @@ class MyApp extends App {
     const { Component, pageProps } = this.props;
     return (
       <Container>
-        {/* <Head>
-          <title>My page</title>
-        </Head> */}
+        <Head>
+          <title>Tipestry | Home</title>
+          <meta charset="UTF-8" />
+          <meta name="description" content="Comment cryptocurrency on any website and get tipped" />
+          <meta name="keywords" content="Tipestry, Cryptocurrency" />
+          <meta name="author" content="Abundance" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <meta name="application-name" content="Tipestry." />
+          <link rel="icon" type="image/png" href="/static/favicon.png" />
+        </Head>
         {/* Wrap every page in Jss and Theme providers */}
         <Provider store={store}>
         
@@ -61,6 +68,6 @@ class MyApp extends App {
 
 export default MyApp;
 
-store.subscribe(() => {
-  console.log("Store Changed, ", store.getState());
-});
+// store.subscribe(() => {
+//   console.log("Store Changed, ", store.getState());
+// });

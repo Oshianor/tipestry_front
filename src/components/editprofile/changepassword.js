@@ -73,7 +73,7 @@ class Changepassword extends React.Component {
   handlePasswordChange = async () => {
     const { password, newPassword } = this.state;
     const { router } = this.props;
-    console.log('router', router);
+    // console.log('router', router);
     
     if (!this.handleCurrentPassword() || !this.handleNewPassword() || !this.handleConfirmPassword()) {
       return false;
@@ -101,7 +101,7 @@ class Changepassword extends React.Component {
 
 			try {
 				let register = await Axios(options);
-				console.log("register  ===>>>> ", register);
+				// console.log("register  ===>>>> ", register);
 				if (register.data.error) {
 					this.setState({
 						res: register.data
@@ -227,7 +227,7 @@ class Changepassword extends React.Component {
   render() {
     const { classes } = this.props;
     const { newPassword, res, newPasswordHelper, password, passwordHelper, confirmPassword, confirmPasswordHelper, loading } = this.state;
-    console.log(this.state);
+    // console.log(this.state);
     
     return (
       <div className={classes.root}>

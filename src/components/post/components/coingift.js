@@ -75,7 +75,7 @@ class CoinGift extends React.Component {
       }
 
 			let completed = await axios(options);
-			console.log('completed', completed);
+			// console.log('completed', completed);
 			
 			if (!completed.data.error) {
 				getTopics({topic: [], total: 0});

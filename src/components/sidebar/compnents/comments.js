@@ -88,7 +88,7 @@ class Comments extends React.Component {
       }
 
       let comment = await axios(options);
-      console.log("CHANGEING VOTES", comment);
+      // console.log("CHANGEING VOTES", comment);
       if (comment.data.error === false) {
 				getSiteTopic(comment.data.content);
         this.setState({
@@ -121,7 +121,7 @@ class Comments extends React.Component {
       }
 
       let comment = await axios(options);
-      console.log("CHANGEING VOTES", comment);
+      // console.log("CHANGEING VOTES", comment);
       if (comment.data.error === false) {
 				getSiteTopic(comment.data.content);
         this.setState({
@@ -144,7 +144,7 @@ class Comments extends React.Component {
   render() {
 		const { classes, data } = this.props;
 		const { comments, edit, content } = this.state;
-		console.log(this.state.content);
+		// console.log(this.state.content);
 		
     return (
 			<React.Fragment>

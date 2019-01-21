@@ -61,7 +61,7 @@ class TipCoin extends React.Component {
 		}
 		
 		let user = await axios(options);
-		console.log("USER", user);
+		// console.log("USER", user);
 		
 		this.setState({
 			tip: user.data

@@ -110,7 +110,7 @@ class RegisterPath extends Component {
   handleRegister = async () => {
     const { email, password, username } = this.state;
     const { router } = this.props;
-    console.log('router', router);
+    // console.log('router', router);
     
     if (!this.handleEmail() || !this.handlePassword() || !this.handleConfirmPassword() || !this.handleUsername()) {
       return false;
@@ -136,7 +136,7 @@ class RegisterPath extends Component {
 
     try {
       let register = await Axios(options);
-      console.log("register  ===>>>> ", register);
+      // console.log("register  ===>>>> ", register);
       if (register.data.error) {
         this.setState({
           res: register.data
@@ -290,7 +290,7 @@ class RegisterPath extends Component {
 
 
   render(){
-    console.log(this.state);
+    // console.log(this.state);
     
     const { res, password, passwordHelper, email, emailHelper, loading, username, usernameHelper, confirmPassword, confirmPasswordHelper } = this.state;
     const { classes } = this.props;
