@@ -7,10 +7,13 @@ import Report from '@material-ui/icons/Report';
 import Add from '@material-ui/icons/Add';
 import Remove from '@material-ui/icons/Remove';
 import IconButton from '@material-ui/core/IconButton';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { getTopics } from "../../../actions/data";
 import { config } from '../../../../config';
 import axios from 'axios';
 import ReportComponent from './report';
+import Delete from "@material-ui/icons/DeleteForever";
 
 class Options extends React.Component {
   state = {
@@ -138,9 +141,35 @@ class Options extends React.Component {
     }
   }
 
+  handleDeletePost = async () => {
+    const { token, topicUser, data, getTopics, topicObjId } = this.props;
+    if (token) {
+      // check if the user is logged in
+      if (topicUser.id === data.user.id) {
+      // check if the owner of the post is the same with the logged in user
+        const options = {
+          method: 'GET',
+          headers: {
+            'content-type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'x-auth-token': token
+          },
+          url: config.api + '/topic/delete/' + topicObjId
+        }
+
+        try {
+          let del = await axios(options);
+          getTopics(del.data.content);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
+  }
+
   render() {
     const { anchorEl, topicFollowing, report } = this.state;
-    const { data } = this.props;
+    const { data, topicUser } = this.props;
     // console.log(this.state);
     
     return (
@@ -173,13 +202,16 @@ class Options extends React.Component {
                 </React.Fragment>
             }
           </MenuItem>
-          {/* <MenuItem style={{ fontSize: 12, padding: "5px 16px" }} onClick={this.handleClose}>
-            <img src="/static/icons/moneybag.svg" alt="comments" width='15' height="15" />
-            &nbsp;Gift Coin
-          </MenuItem> */}
           <MenuItem style={{ fontSize: 12, padding: "5px 16px" }} onClick={this.handleReportOpen}>
             <Report style={{ fontSize: 15 }} /> &nbsp;Report post
           </MenuItem>
+          {
+            topicUser.id === data.user.id &&
+              <MenuItem style={{ fontSize: 12, padding: "5px 16px" }} onClick={this.handleDeletePost}>
+                <Delete style={{ fontSize: 15 }} />
+                &nbsp;Delete
+              </MenuItem>
+          }
         </Menu>
         <ReportComponent 
           open={report}
@@ -197,4 +229,9 @@ function mapStateToProps(state) {
     data: state.data,
   }
 }
-export default connect(mapStateToProps, )(Options);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    getTopics: getTopics
+  }, dispatch)
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Options);
