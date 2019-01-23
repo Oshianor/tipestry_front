@@ -191,13 +191,13 @@ class Post extends React.Component {
                     }
                     title={topic.title}
                     component="a"
-                    href={encodeURI("/topics/" + topic._id + "/" + topic.title)}
+                    href={encodeURI("/topics/" + topic._id + "/" + topic.title.replace(/[.*+?^$/{}()|[\]\\]/g, '-'))}
                   />
 
                   <CardContent>
                     <Typography component="p">
                       {/* post title */}
-                      <Link href={encodeURI("/topics/" + topic._id + "/" + topic.title)} >
+                      <Link href={encodeURI("/topics/" + topic._id + "/" + topic.title.replace(/[.*+?^$/{}()|[\]\\]/g, '-'))} >
                         {this.displayTitle(topic.title)}
                       </Link>
                       <br />
@@ -224,7 +224,7 @@ class Post extends React.Component {
                     token={token}
                     topicObjId={topic._id}
                     // link for the topic
-                    link={encodeURI("/topics/" + topic._id + "/" + topic.title)}
+                    link={encodeURI("/topics/" + topic._id + "/" + topic.title.replace(/[.*+?^$/{}()|[\]\\]/g, '-'))}
                   />
                   
                   {/* coin details */}

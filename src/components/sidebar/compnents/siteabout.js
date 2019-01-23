@@ -85,7 +85,7 @@ class SiteAbout extends React.Component {
               </Link>
             }
             title={
-              <Link href={"/profile/@" + data.siteTopic[0].user[0].username} >
+              <Link href={"/profile/"+ data.siteTopic[0].user[0]._id +"/@" + data.siteTopic[0].user[0].username} >
                 <a style={{ color: '#1F7BD8', textDecoration: 'none' }}>
                   <strong style={{ color: 'gray' }}>@</strong>
                   {typeof data.siteTopic[0].user[0] !== "undefined" ? `${data.siteTopic[0].user[0].username}` : "@No name"}
@@ -111,7 +111,7 @@ class SiteAbout extends React.Component {
             token={token}
             topicUserId={data.siteTopic[0].user[0].id}
             topicObjId={data.siteTopic[0]._id}
-            link={encodeURI("/topics/" + data.siteTopic[0]._id + "/" + data.siteTopic[0].title)}
+            link={encodeURI("/topics/" + data.siteTopic[0]._id + "/" + data.siteTopic[0].title.replace(/[.*+?^$/{}()|[\]\\]/g, '-'))}
           />
         </Card>
       );
