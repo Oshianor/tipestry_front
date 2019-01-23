@@ -25,6 +25,9 @@ const styles = {
     alignItems: 'baseline',
     padding: 10,
   },
+  pos: {
+    // position: "absolute"
+  }
 };
 
 class Profile extends React.Component {
@@ -193,10 +196,10 @@ class Profile extends React.Component {
         <Grid container justify="center">
           <Grid style={value === 0 ? curr : not} >
             <Button className={classes.tab} onClick={this.handleChange.bind(this, 0)}  >
-              <Typography style={{ position: 'absolute'}} >
-                {data.topics.length}
+              <Typography className={classes.pos} >
+                { data.topics.length === 0 ? "" : data.topics.length }
+                &nbsp;
               </Typography>
-              <br />
               Post
             </Button>
           </Grid>
@@ -205,45 +208,45 @@ class Profile extends React.Component {
               data.profile._id === data.user._id &&
               <Grid style={value === 1 ? curr : not} >
                 <Button className={classes.tab} onClick={this.handleChange.bind(this, 1)}  >
-                  <Typography style={{ position: 'absolute'}} >
-                    {data.favourite.length}
+                  <Typography className={classes.pos} >
+                    { data.favourite.length === 0 ? "" : data.favourite.length }
+                    &nbsp;
                   </Typography>
-                  <br />
                   Favourites
                 </Button>
               </Grid>
           }
           <Grid style={value === 2 ? curr : not} >
             <Button className={classes.tab} onClick={this.handleChange.bind(this, 2)}  >
-              <Typography style={{ position: 'absolute'}} >
-                {data.comment.length}
+              <Typography className={classes.pos} >
+                { data.comment.length === 0 ? "" : data.comment.length }
+                &nbsp;
               </Typography>
-              <br />
               Comments
             </Button>
           </Grid>
           {/* <Grid>
             <Button className={classes.tab} onClick={this.handleChange.bind(this, 3)}  >
-              <Typography style={{ position: 'absolute'}} >12</Typography>
+              <Typography className={classes.pos} >12</Typography>
               <br />
               Replies
             </Button>
           </Grid> */}
           <Grid style={value === 4 ? curr : not} >
             <Button className={classes.tab} onClick={this.handleChange.bind(this, 4)}  >
-              <Typography style={{ position: 'absolute'}} >
-                {data.following.length}
+              <Typography className={classes.pos} >
+                { data.following.length === 0 ? "" : data.following.length }
+                &nbsp;
               </Typography>
-              <br />
               Following
             </Button>
           </Grid>
           <Grid style={value === 5 ? curr : not} >
             <Button className={classes.tab} onClick={this.handleChange.bind(this, 5)}  >
-              <Typography style={{ position: 'absolute'}} >
-                {data.followers.length}
+              <Typography className={classes.pos} >
+                {data.followers.length === 0 ? "" : data.followers.length }
+                &nbsp;
               </Typography>
-              <br />
               Followers
             </Button>
           </Grid>

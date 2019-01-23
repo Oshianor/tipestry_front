@@ -224,9 +224,13 @@ class Header extends React.Component {
 		return false;
 	}
 
+	SignUp = () => {
+		const { router } = this.props;
+		router.push("/register");
+	}
 	  
   displayHome = () => {
-    const { hide } = this.state;
+    const { hide, token } = this.state;
     const { classes } = this.props;
     return (
 			<Collapse in={!hide} timeout="auto"  unmountOnExit>
@@ -243,7 +247,11 @@ class Header extends React.Component {
 								Comment on any website or physical location.Earn cryptocurrency tips
 								for your posts or website.
 							</Typography>
-							<Button size="medium" style={{ marginTop: 5 }} variant="outlined" >Get Started</Button>
+							{
+								// if user is logged in then don't show
+								!token &&
+									<Button onClick={this.SignUp} size="medium" style={{ marginTop: 5 }} variant="outlined" >Get Started</Button>
+							}
 						</Grid>
           </Grid>
         </div>
@@ -251,6 +259,7 @@ class Header extends React.Component {
     )
   }
 
+	// upload user profile image
 	async upload(e) {
 		const { token } = this.state;
 		const { getProfile } = this.props;
@@ -270,7 +279,7 @@ class Header extends React.Component {
 			}
 
 			let upload = await axios(options);
-			console.log('upload', upload);
+			// console.log('upload', upload);
 			
 			if (upload.status === 200) {
 				getProfile(upload.data);
@@ -367,6 +376,7 @@ class Header extends React.Component {
 		)
 	}
 
+	// handle following user or unfollowing
 	handleFollow = async () => {
 		const { data, getUser } = this.props;
 		const { token } = this.state;

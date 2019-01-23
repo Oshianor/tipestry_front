@@ -18,7 +18,8 @@ const styles = theme => ({
   card: {
 		margin: '2px 5%',
     boxShadow: "0px 0px 0px 0px",
-    backgroundColor: 'navajowhite'
+    // backgroundColor: 'navajowhite'
+    backgroundColor: '#fafafa'
   },
   actions: {
 		display: 'flex',
@@ -62,55 +63,61 @@ const styles = theme => ({
 class SiteAbout extends React.Component {
   render() {
     const { classes, data, token } = this.props;
-    return (
-      <Card className={classes.card}>
-        <CardHeader
-          avatar={
-            <Link href={"/profile/@" + data.siteTopic[0].user[0].username}>
-              <a style={{ textDecoration: 'none' }}>
-                <Thumbnails 
-                  borderColor="black" 
-                  borderWidth={2} 
-                  name={data.siteTopic[0].user[0].username}
-                  url={
-                    data.siteTopic[0].user[0].profileimage === "" || !data.siteTopic[0].user[0].profileimage ?
-                      null
-                    :
-                      config.profileimage + data.siteTopic[0].user[0].profileimage
-                  }
-                />
-              </a>
-            </Link>
-          }
-          title={
-            <Link href={"/profile/@" + data.siteTopic[0].user[0].username} >
-              <a style={{ color: '#1F7BD8', textDecoration: 'none' }}>
-                <strong style={{ color: 'gray' }}>@</strong>
-                {typeof data.siteTopic[0].user[0] !== "undefined" ? `${data.siteTopic[0].user[0].username}` : "@No name"}
-              </a>
-            </Link>
-          }
-          subheader={
-            <p style={{ fontSize: 10, margin: 0 }} >
-              {Moment(data.siteTopic[0].created_at).fromNow()}
-            </p>
-          }
-        />
-        <CardContent style={{ padding: "0px 25px" }}>
-          <Typography component="p" >
-            {data.siteTopic[0].message}
-          </Typography>
-        </CardContent>
+    if (typeof data.siteTopic[0] !== "undefined") {
+      return (
+        <Card className={classes.card}>
+          <CardHeader
+            avatar={
+              <Link href={"/profile/@" + data.siteTopic[0].user[0].username}>
+                <a style={{ textDecoration: 'none' }}>
+                  <Thumbnails 
+                    borderColor="black" 
+                    borderWidth={2} 
+                    name={data.siteTopic[0].user[0].username}
+                    url={
+                      data.siteTopic[0].user[0].profileimage === "" || !data.siteTopic[0].user[0].profileimage ?
+                        null
+                      :
+                        config.profileimage + data.siteTopic[0].user[0].profileimage
+                    }
+                  />
+                </a>
+              </Link>
+            }
+            title={
+              <Link href={"/profile/@" + data.siteTopic[0].user[0].username} >
+                <a style={{ color: '#1F7BD8', textDecoration: 'none' }}>
+                  <strong style={{ color: 'gray' }}>@</strong>
+                  {typeof data.siteTopic[0].user[0] !== "undefined" ? `${data.siteTopic[0].user[0].username}` : "@No name"}
+                </a>
+              </Link>
+            }
+            subheader={
+              <p style={{ fontSize: 10, margin: 0 }} >
+                {Moment(data.siteTopic[0].created_at).fromNow()}
+              </p>
+            }
+          />
+          <CardContent style={{ padding: "0px 25px" }}>
+            <Typography component="p" >
+              {data.siteTopic[0].message}
+            </Typography>
+          </CardContent>
 
-        <CardActionIcons
-          votes={data.siteTopic[0].votes}
-          comment={data.siteTopic[0].comment.length}
-          topicId={data.siteTopic[0].id}
-          token={token}
-          topicObjId={data.siteTopic[0]._id}
-        />
-      </Card>
-    );
+          <CardActionIcons
+            votes={data.siteTopic[0].votes}
+            comment={data.siteTopic[0].comment.length}
+            topicId={data.siteTopic[0].id}
+            token={token}
+            topicUserId={data.siteTopic[0].user[0].id}
+            topicObjId={data.siteTopic[0]._id}
+            link={encodeURI("/topics/" + data.siteTopic[0]._id + "/" + data.siteTopic[0].title)}
+          />
+        </Card>
+      );
+    } else {
+      return null
+    }
   }
 }
 

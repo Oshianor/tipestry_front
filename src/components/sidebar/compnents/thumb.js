@@ -44,7 +44,7 @@ class Thumb extends React.Component {
     let token = localStorage.getItem('token');
 
     this.setState({
-      count: typeof votes[0] !== "undefined" ? votes[0].count : 1
+      count: typeof votes[0] !== "undefined" ? votes[0].count : ""
     });
 
     if (token) {

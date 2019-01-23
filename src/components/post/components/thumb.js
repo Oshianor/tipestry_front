@@ -30,7 +30,7 @@ const styles = theme => ({
 
 class Thumb extends React.Component {
   state = {
-    count: 1,
+    count: "",
     res: {
       error: false,
       msg: '',
@@ -43,7 +43,7 @@ class Thumb extends React.Component {
     let token = localStorage.getItem('token');
 
     this.setState({
-      count: typeof votes[0] !== "undefined" ? votes[0].count : 1
+      count: typeof votes[0] !== "undefined" ? votes[0].count : ""
     });
 
     if (token) {
@@ -146,7 +146,8 @@ class Thumb extends React.Component {
           </IconButton>
         </Tooltip>
         <p className={num}>
-          {count}
+          {/* chek if the count is zero then show nothing else show count */}
+          {count === 0 ? "" : count}
         </p>
 				&nbsp;&nbsp;
 

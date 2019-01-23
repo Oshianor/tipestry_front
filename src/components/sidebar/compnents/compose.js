@@ -15,7 +15,8 @@ const styles = theme => ({
   container: {
     // display: 'flex',
     // flexWrap: 'wrap',
-    margin: "5%"
+    margin: "5%",
+    marginTop: -25
   },
   textField: {
     marginLeft: theme.spacing.unit,
@@ -92,11 +93,11 @@ class Compose extends React.Component {
     return (
       <React.Fragment>
         <form className={classes.container} noValidate autoComplete="off">
-          <Typography>
+          {/* <Typography>
             What are your thoughts?
-          </Typography>
+          </Typography> */}
           <TextField
-            label="Comment"
+            label="What are your thoughts?"
             multiline
             rows="3"
             name="comment"

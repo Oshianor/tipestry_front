@@ -20,6 +20,8 @@ import axios from 'axios';
 import { config } from '../../../../config';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import CommentCoin from './commentCoin';
+import TopicCoins from './topicCoins';
 
 
 const styles = theme => ({
@@ -220,6 +222,7 @@ class Comments extends React.Component {
 								/>
 
 								{
+									// only show them if the owner of the post and the logged in user are the same
 									data.user._id === comment.commentUser[0]._id &&
 										<IconButton aria-label="Edit" onClick={this.handleEdit.bind(this, comment._id, comment.content)} >
 											<Edit style={{ fontSize: 20 }} />
@@ -227,19 +230,25 @@ class Comments extends React.Component {
 								}
 
 								{
+									// only show them if the owner of the post and the logged in user are the same
 									data.user._id === comment.commentUser[0]._id &&
 										<IconButton aria-label="delete" onClick={this.handleCommentDelete.bind(this, comment._id)} >
 											<Remove style={{ fontSize: 20 }} />
 										</IconButton>
 								}
 								&nbsp;&nbsp;
-								<IconButton
-									className={classes.iconspacing}
-									aria-label="Show more"
-								>
-									<img src="/static/icons/moneybag.svg" alt="comments" width='20' height="20" />
-								</IconButton>
+								<CommentCoin 
+								// topic object id
+									topicObjId={data.siteTopic[0]._id}
+									// comment id
+									commentId={comment.id}
+									// comment owner id
+									commentUserId={comment.commentUser[0].id}
+								/>
 							</CardActions>
+
+							{/* tips for comment */}
+							<TopicCoins gift={comment.gifts} />
 
 						</Card>
 					))

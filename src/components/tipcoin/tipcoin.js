@@ -7,6 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { config } from '../../../config';
+import NumberFormat from 'react-number-format';
+
 
 
 const styles = theme => ({
@@ -50,6 +52,7 @@ class TipCoin extends React.Component {
 		}
 	}
 
+	// when the component mounts get all the tips 
 	async componentDidMount() {
 		const options = {
 			method: 'GET',
@@ -75,7 +78,7 @@ class TipCoin extends React.Component {
 		return (
 			<div className={classes.root}>
 				<Paper className={classes.paperRoot}>
-				<Typography variant="subtitle2" style={{ fontSize: 18, textAlign: "left", marginTop: -13 }} >Total Tips for the Month</Typography>
+				<Typography variant="subtitle2" style={{ fontSize: 18, textAlign: "left", marginTop: -13 }} >Recent Tips</Typography>
 					<Grid container spacing={24}>
 						<Grid item xs={6} sm={3}>
 							<Paper className={classes.paper} >
@@ -83,92 +86,116 @@ class TipCoin extends React.Component {
 									alt="comments"
 									width='50'
 									height='50'
-									style={
-										{
-											borderRight: "1px solid gray",
-											paddingRight: "10%",
-										}
-									}
-								/>
+									style={{ borderRight: "1px solid gray", paddingRight: "10%" }} />
 								<div style={{ flexGrow: 1 }} />
 								<Typography variant="button" >
-									{typeof tip.btc[0] !== "undefined" ? parseFloat(tip.btc[0].amt).toFixed(2) : 0.01}
+									{
+										typeof tip.btc[0] !== "undefined" ? 
+											// parseFloat(tip.btc[0].amt).toFixed(2) 
+											<NumberFormat value={parseFloat(tip.btc[0].amt).toFixed(2)} displayType="text" thousandSeparator={true} />
+										: 
+											0.00
+									}
 								</Typography>
 							</Paper>
 						</Grid>
 						<Grid item xs={6} sm={3}>
 							<Paper className={classes.paper}>
 								<img src="/static/tipcoins/eth.svg" alt="comments" width='50' height='50' 
-									style={
-										{
-											borderRight: "1px solid gray",
-											paddingRight: "10%",
-										}
-									} 
-								/>
+									style={{ borderRight: "1px solid gray", paddingRight: "10%" }} />
 								<div style={{ flexGrow: 1 }} />
 								<Typography variant="button" >
-									{typeof tip.eth[0] !== "undefined" ? parseFloat(tip.eth[0].amt).toFixed(2) : 0.01}
+									{
+										typeof tip.eth[0] !== "undefined" ? 
+											// parseFloat(tip.eth[0].amt).toFixed(2) 
+											<NumberFormat value={parseFloat(tip.eth[0].amt).toFixed(2)} displayType="text" thousandSeparator={true} />
+										: 
+											0.00
+									}
 								</Typography>
 							</Paper>
 						</Grid>
 						<Grid item xs={6} sm={3}>
 							<Paper className={classes.paper}>
-								<img src="/static/tipcoins/doge.svg" alt="comments" width='50' height='50' style={
-										{
-											borderRight: "1px solid gray",
-											paddingRight: "10%",
-										}
-									} 
+								<img 
+									src="/static/tipcoins/doge.svg" 
+									alt="comments"
+									width='50' 
+									height='50' 
+									style={{ borderRight: "1px solid gray", paddingRight: "10%" } } 
 								/>
 								<div style={{ flexGrow: 1 }} />
 								<Typography variant="button" >
-									{typeof tip.doge[0] !== "undefined" ? parseFloat(tip.doge[0].amt).toFixed(2) : 0.01}
+									{
+										typeof tip.doge[0] !== "undefined" ? 
+											// parseFloat(tip.doge[0].amt).toFixed(2) 
+											<NumberFormat value={parseFloat(tip.doge[0].amt).toFixed(2)} displayType="text" thousandSeparator={true} />
+										: 
+											0.00
+									}
 								</Typography>
 							</Paper>
 						</Grid>
 						<Grid item xs={6} sm={3}>
 							<Paper className={classes.paper}>
-								<img src="/static/tipcoins/Tip-1.png" alt="comments" width='50' height='50' style={
-										{
-											borderRight: "1px solid gray",
-											paddingRight: "10%",
-										}
-									} 
+								<img 
+									src="/static/tipcoins/Tip-1.png" 
+									alt="comments" 
+									width='50' 
+									height='50' 
+									style={{ borderRight: "1px solid gray", paddingRight: "10%" }} 
 								/>
 								<div style={{ flexGrow: 1 }} />
 								<Typography variant="button" >
-									{typeof tip.tipc[0] !== "undefined" ? parseFloat(tip.tipc[0].amt).toFixed(2) : 0.01}
+									{
+										typeof tip.tipc[0] !== "undefined" ? 
+											// parseFloat(tip.tipc[0].amt).toFixed(2) 
+											<NumberFormat value={parseFloat(tip.tipc[0].amt).toFixed(2)} displayType="text" thousandSeparator={true} />
+										: 
+											0.00
+									}
 								</Typography>
 							</Paper>
 						</Grid>
 						<Grid item xs={6} sm={3}>
 							<Paper className={classes.paper}>
-								<img src="/static/tipcoins/Tip-2.png" alt="comments" width='50' height='50' style={
-										{
-											borderRight: "1px solid gray",
-											paddingRight: "10%",
-										}
-									} 
+								<img 
+									src="/static/tipcoins/Tip-2.png" 
+									alt="comments" 
+									width='50' 
+									height='50' 
+									style={{ borderRight: "1px solid gray", paddingRight: "10%" }} 
 								/>
 								<div style={{ flexGrow: 1 }} />
 								<Typography variant="button" >
-									{typeof tip.tip[0] !== "undefined" ? parseFloat(tip.tip[0].amt).toFixed(2) : 0.01}
+									{
+										typeof tip.tip[0] !== "undefined" ? 
+											// parseFloat(tip.tip[0].amt).toFixed(2) 
+											<NumberFormat value={parseFloat(tip.tip[0].amt).toFixed(2) } displayType="text" thousandSeparator={true} />
+										: 
+											0.00
+									}
 								</Typography>
 							</Paper>
 						</Grid>
 						<Grid item xs={6} sm={3}>
 							<Paper className={classes.paper}>
-								<img src="/static/tipcoins/Tip-3.png" alt="comments" width='50' height='50' style={
-										{
-											borderRight: "1px solid gray",
-											paddingRight: "10%",
-										}
-									} 
+								<img 
+									src="/static/tipcoins/Tip-3.png" 
+									alt="comments" 
+									width='50' 
+									height='50' 
+									style={{ borderRight: "1px solid gray", paddingRight: "10%" }} 
 								/>
 								<div style={{ flexGrow: 1 }} />
 								<Typography variant="button" >
-									{typeof tip.xth[0] !== "undefined" ? parseFloat(tip.xth[0].amt).toFixed(2) : 0.01}
+									{
+										typeof tip.xth[0] !== "undefined" ? 
+											// parseFloat(tip.xth[0].amt).toFixed(2) 
+											<NumberFormat value={parseFloat(tip.xth[0].amt).toFixed(2)} displayType="text" thousandSeparator={true} />
+										: 
+											0.00
+									}
 								</Typography>
 							</Paper>
 						</Grid>

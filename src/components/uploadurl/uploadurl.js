@@ -9,9 +9,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import isURL from 'validator/lib/isURL';
 import PropTypes from 'prop-types';
-import { config } from "../../../config";
 import Router from "next/router";
-import Axios from 'axios';
 
 class UploadUrl extends React.Component {
 	state = {
@@ -30,8 +28,9 @@ class UploadUrl extends React.Component {
 	}
 
 	handleURL = (event) => {
-		
-		if (!isURL(event.target.value, {require_valid_protocol: true, protocols: ['http','https','ftp'], require_protocol: true})) {
+		// {require_valid_protocol: true, protocols: ['http','https','ftp'], require_protocol: true}
+		// check if the url is valid
+		if (!isURL(event.target.value)) {
 			this.setState({ msg: 'You need to provided a valid web url' })
 			this.setState({ err: true })
 			return false;

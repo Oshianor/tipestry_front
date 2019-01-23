@@ -6,6 +6,8 @@ import { config } from '../config';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getSiteTopic, getUser } from "../src/actions/data";
+// import Head from 'next/head';
+import {Helmet} from "react-helmet";
 
 class Topic extends Component {
 	state = {
@@ -24,7 +26,7 @@ class Topic extends Component {
 
   async componentDidMount() {
     const { dataTopic, getSiteTopic, getUser } = this.props;
-    // console.log(data);
+    console.log(JSON.parse(dataTopic));
     let token = localStorage.getItem('token');
 
     if (token) {
@@ -55,10 +57,15 @@ class Topic extends Component {
 
 	render() {
     const { loading } = this.state;
+    const { dataTopic } = this.state;
     // console.log("SITE TOPIC", this.props);
     
 		return (
 			<div>
+        <Helmet>
+          <title>Tipestry | Topics 
+          </title>
+        </Helmet>
         {
           loading ? 
             <Preloader />

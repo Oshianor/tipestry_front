@@ -3,7 +3,8 @@ import Compose from './compnents/compose';
 import Container from './container';
 import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
-
+import SiteAbout from './compnents/siteabout';
+import Link from "next/link"
 
 class Sidebar extends Component {	
 	render() {
@@ -14,7 +15,19 @@ class Sidebar extends Component {
 					JOIN THE CONVERSATION TODAY
 				</Typography>
 				{
-					data.siteTopic[0].comment.length > 0 ?
+					typeof data.siteTopic[0] !== "undefined" &&
+						<Typography style={{ textAlign: 'center' }}>
+							<Link href={data.siteTopic[0].sites[0].url}>
+								<a style={{ marginLeft: "5%", marginRight: "5%" }}>
+									{data.siteTopic[0].sites[0].url}
+								</a>
+							</Link>
+						</Typography>
+						
+				}
+				<SiteAbout />
+				{
+					typeof data.siteTopic[0] !== "undefined" && data.siteTopic[0].comment.length > 0 ?
 						<Container token={token} />
 					:
 						<Typography variant='subtitle2' style={{ textAlign: 'left', margin: '5%' }}>

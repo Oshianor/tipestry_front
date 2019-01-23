@@ -150,6 +150,9 @@ class AnchorPlayground extends React.Component {
     const { open, placement, disablePortal, flip, preventOverflow, arrow, arrowRef, copied } = this.state;
 
     const id = open ? 'Share' : null;
+
+    console.log(link);
+    
     // console.log("ROYETR", this.props);
     let message = `Visit ${config.host + link} and join the conversation`;
     return (

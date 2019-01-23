@@ -28,16 +28,15 @@ class Topic extends Component {
 				<Grid container spacing={24}>
 					<Grid item xs={12} sm={12} md={6} lg={6} xl={6} >
 						<Typography variant="h6" style={{ margin: 5, marginTop: 80, textAlign: 'center', color: 'black' }} >
-							{data.siteTopic[0].title}
+							{typeof data.siteTopic[0] !== "undefined" && data.siteTopic[0].title}
 						</Typography>
 						<Embed 
-							url={data.siteTopic[0].sites[0].url} 
-							img={data.siteTopic[0].screenshot}
-							height="70vh" 
+							url={typeof data.siteTopic[0] !== "undefined" && data.siteTopic[0].sites[0].url} 
+							img={typeof data.siteTopic[0] !== "undefined" && data.siteTopic[0].screenshot}
+							height="85vh" 
 							top={0}
-							site={data.siteTopic[0].sites[0]}
+							site={typeof data.siteTopic[0] !== "undefined" && data.siteTopic[0].sites[0]}
 						/>
-						<Siteabout token={token} />
 					</Grid>
 					<Grid item xs={12} sm={12} md={6} lg={6} xl={6} >
 						<Sidebar token={token} />

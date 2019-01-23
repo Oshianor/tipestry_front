@@ -66,13 +66,16 @@ class Post extends React.Component {
     textId: null
   }
 
+  // check if the link if it is a gif so instead of the 
+  // displaying the image we use link and show the gif
   checkForGif = (filename) => {
     var ext = /.+\.(.+)$/.exec(filename);
-    console.log('r ? r[1] ',ext ? ext[1] : null);
+    // console.log('r ? r[1] ',ext ? ext[1] : null);
     
     return ext ? ext[1] : null;
   }
 
+  // when the component ount set the token to the state
   componentDidMount() {
     let token = localStorage.getItem('token');
     this.setState({
@@ -80,16 +83,19 @@ class Post extends React.Component {
     })
   }
 
+
+  // display the title based on the length
+  // truncate the title if it too long
   displayTitle = (title) => {
     if (title.length > 60) {
       return (
-        <a style={{ color: '#1F7BD8',cursor: 'pointer', textDecoration: 'none' }} >
+        <a style={{ color: '#1F7BD8',cursor: 'pointer', textDecoration: 'none', fontSize: 20, textTransform: "capitalize" }} >
           {title.substr(0, 40)}
         </a>
       )
     } else {
       return (
-        <a style={{ color: '#1F7BD8', textDecoration: 'none' }} >
+        <a style={{ color: '#1F7BD8', textDecoration: 'none', fontSize: 20, textTransform: "capitalize" }} >
           {title}
         </a>
       )
@@ -110,24 +116,29 @@ class Post extends React.Component {
           justify="center"
         >
           {
+            // check if topic value exist
             typeof topicValue[0] === "undefined" ?
               <Typography 
                 style={{ marginTop: "10%", textAlign: 'center' }} 
                 variant="h6" 
               >
+
                 {errMsg}
               </Typography>
             :
+            // it exist then display
               topicValue.map((topic, index) => (
                 <Grid item style={{ margin: "10px" }} key={index} >
                   <Card className={classes.card}>
                   <CardHeader
                     avatar={
+                      // link to the user profile
                       <Link href={encodeURI("/profile/" + topic.user[0]._id + "/@" + topic.user[0].username)} >
                         <a style={{ textDecoration: 'none' }}>
                           <Thumbnails 
                             name={topic.user[0].username}
                             url = {
+                              // check if user profile image exist
                               topic.user[0].profileimage === "" || !topic.user[0].profileimage ?
                                 null 
                               :
@@ -139,9 +150,12 @@ class Post extends React.Component {
                     }
                     action={
                       <Options 
+                      // sending token
                         token={token}
+                        // topic object id
                         topicObjId={topic._id}
                         following={topic.following}
+                        // topic owner details
                         topicUser={topic.user[0]}
                       />
                     }
@@ -164,16 +178,16 @@ class Post extends React.Component {
                     className={classes.media}
                     style={{ backgroundPosition: 'top' }}
                     image={
-                      // if the link is a gif then show that
-                      this.checkForGif(topic.sites[0].url) == 'gif' ?
-                        topic.sites[0].url
-                      :
-                        // check to see if it the old data of base64
-                        // by using the lenght of the screenshot field
-                        topic.screenshot.length > 200 ?
-                          config.base64 + topic.screenshot
+                        // if the link is a gif then show that
+                        typeof topic.sites[0] !== "undefined" && this.checkForGif(topic.sites[0].url) == 'gif' ?
+                          topic.sites[0].url
                         :
-                          config.topic + topic.screenshot
+                          // check to see if it the old data of base64
+                          // by using the lenght of the screenshot field
+                          topic.screenshot.length > 200 ?
+                            config.base64 + topic.screenshot
+                          :
+                            config.topic + topic.screenshot
                     }
                     title={topic.title}
                     component="a"
@@ -182,11 +196,13 @@ class Post extends React.Component {
 
                   <CardContent>
                     <Typography component="p">
+                      {/* post title */}
                       <Link href={encodeURI("/topics/" + topic._id + "/" + topic.title)} >
                         {this.displayTitle(topic.title)}
                       </Link>
                       <br />
                       {
+                        // post link
                         typeof topic.sites[0] !== "undefined" &&
                           <Link href={"/sites?s=" + topic.sites[0].url} >
                             <a >
@@ -199,14 +215,19 @@ class Post extends React.Component {
 
                   {/* card action icons */}
                   <CardActionsIcons 
+                  // topic votes 
                     votes={topic.votes}
+                    // topic comment
                     comment={typeof topic.comment[0] !== "undefined" ? topic.comment[0].count : ""}
                     topicId={topic.id}
                     topicUserId={topic.user[0].id}
                     token={token}
                     topicObjId={topic._id}
-                    link={encodeURI("/public/topics/" + topic._id + "/" + topic.title)}
+                    // link for the topic
+                    link={encodeURI("/topics/" + topic._id + "/" + topic.title)}
                   />
+                  
+                  {/* coin details */}
                   <TopicCoin 
                     gift={topic.gift}
                   />
