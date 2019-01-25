@@ -68,49 +68,51 @@ class TopicCoin extends React.Component {
 			let xth = 0;
 			gift.map((gif) => {
 				if (gif.currency === 'btc') {
-					btc = btc + Number(gif.amount)
+					btc = parseFloat(btc) + parseFloat(gif.amount)
 					this.setState({
-						btc: btc
+						btc: btc.toFixed(5)
 					})
 				}
 			})
 			gift.map((gif) => {
 				if (gif.currency === 'doge') {
-					doge = doge + Number(gif.amount)
+					// console.log("DOGE", gif.amount);
+					
+					doge = parseFloat(doge) + parseFloat(gif.amount)
 					this.setState({
-						doge: doge
+						doge: doge.toFixed(5)
 					})
 				}
 			})
 			gift.map((gif) => {
 				if (gif.currency === 'ethcoin') {
-					eth = eth + Number(gif.amount)
+					eth = parseFloat(eth) + parseFloat(gif.amount)
 					this.setState({
-						eth: eth
+						eth: eth.toFixed(5)
 					})
 				}
 			})
 			gift.map((gif) => {
 				if (gif.currency === 'ethtipc') {
-					tipc = tipc + Number(gif.amount)
+					tipc = parseFloat(tipc) + parseFloat(gif.amount)
 					this.setState({
-						tipc: tipc
+						tipc: tipc.toFixed(5)
 					})
 				}
 			})
 			gift.map((gif) => {
 				if (gif.currency === 'ethtipcoin') {
-					tip = tip + Number(gif.amount)
+					tip = parseFloat(tip) + parseFloat(gif.amount)
 					this.setState({
-						tip: tip
+						tip: tip.toFixed(5)
 					})
 				}
 			})
 			gift.map((gif) => {
 				if (gif.currency === 'ethxrtcoin') {
-					xth = xth + Number(gif.amount)
+					xth = parseFloat(xth) + parseFloat(gif.amount)
 					this.setState({
-						xth: xth
+						xth: xth.toFixed(5)
 					})
 				}
 			})
@@ -361,7 +363,7 @@ export default connect(mapStateToProps, )(withStyles(styles)(TopicCoin));
 // 		const { classes } = this.props;
 // 		let amt = 0;
 // 		if (currency === "ethtipc") {
-// 			amt = amt + Number(amount);
+// 			amt = amt + parseFloat(amount);
 // 		}
 // 		return (
 // 			<React.Fragment>
@@ -408,7 +410,7 @@ export default connect(mapStateToProps, )(withStyles(styles)(TopicCoin));
 // 										<React.Fragment>
 // 											<img src="/static/tipcoins/Tip-1.png" className={classes.img} />
 // 											<p className={classes.num} >
-// 												{amt = amt + Number(gif.amount)}
+// 												{amt = amt + parseFloat(gif.amount)}
 // 											</p>
 // 										</React.Fragment>
 // 								}

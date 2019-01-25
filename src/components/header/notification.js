@@ -254,7 +254,7 @@ class Notification extends React.Component {
                             not.img.length > 200 ?
                               config.base64 + not.img
                             :
-                              config.profileimage + not.img
+                              config.topic + not.img
                           :
                             null
                         }

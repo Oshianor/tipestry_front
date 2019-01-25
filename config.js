@@ -11,7 +11,7 @@ export const config = {
 	// api: "http://demo.tipestry.com/api",
 	// url: "http://demo.tipestry.com",
 	// host: "http://demo.tipestry.com",
-	// profileimage: "http://demo.tipestry.com/profile_images/",
+	// profileimage: "http://demo.tipestry.com/public/profile_images/",
 	// base64: 'data:image/jpeg;base64,',
 	// topic: "http://demo.tipestry.com/public",
 
