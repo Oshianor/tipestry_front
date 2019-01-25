@@ -12,7 +12,7 @@ import Moment from "moment";
 import Link from 'next/link';
 import CardActionIcons from "../../post/components/CardActionIcons";
 import { config } from "../../../../config";
-
+import TopicCoin from './topicCoins';
 
 const styles = theme => ({
   card: {
@@ -112,6 +112,10 @@ class SiteAbout extends React.Component {
             topicUserId={data.siteTopic[0].user[0].id}
             topicObjId={data.siteTopic[0]._id}
             link={encodeURI("/topics/" + data.siteTopic[0]._id + "/" + data.siteTopic[0].title.replace(/[.*+?^$/{}()|[\]\\]/g, '-'))}
+          />
+          {/* coin details */}
+          <TopicCoin 
+            gift={data.siteTopic[0].gift}
           />
         </Card>
       );

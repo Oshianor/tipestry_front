@@ -194,7 +194,20 @@ class Coin extends React.Component {
       }
 
     // set the balance of the currenlty selected coin
-    
+    // {
+    //   "_id": "5c48b3beac8a226514dd0595",
+    //   "transactionid": 1548268478844,
+    //   "network_fee": 0,
+    //   "amount": 1,
+    //   "site_id": 0,
+    //   "updated_at": "2019-01-23T18:34:38.845Z",
+    //   "created_at": "2019-01-23T18:34:38.845Z",
+    //   "userid": 4902,
+    //   "transactiontype": "gifted",
+    //   "wallettype": "dogecoin",
+    //   "id": 9,
+    //   "__v": 0
+    // }
       
     
       if (name === "bitcoin") {

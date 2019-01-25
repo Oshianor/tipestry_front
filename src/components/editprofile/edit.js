@@ -119,6 +119,7 @@ class Edit extends React.Component {
 
   async handleFormComplete() {
     const { first, last, bio } = this.state;
+    const { data } = this.props;
     this.setState({
       loading: true
     })
@@ -144,7 +145,8 @@ class Edit extends React.Component {
       }
       let user = await Axios(options);
       if (!user.data.error) {
-        Router.push('/')
+        // if update successfully then redirect to profile page
+        Router.push('/profile/' + data.user._id + "/@" + data.user.username)
       }
     }
   }

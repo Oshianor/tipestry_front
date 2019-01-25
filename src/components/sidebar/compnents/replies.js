@@ -15,7 +15,10 @@ import RemoveCircle from '@material-ui/icons/RemoveCircle';
 import Link from 'next/link';
 import { connect } from 'react-redux';
 import Moment from "moment";
-import Axios from 'axios';
+import axios from 'axios';
+import { config } from '../../../../config';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 
 
@@ -23,7 +26,8 @@ const styles = theme => ({
 	semicard: {
 		marginLeft: '10%',
 		marginTop: 5,
-		boxShadow: '0px 0px 0px 0px',
+		boxShadow: '0px 1px 2px -1px',
+		backgroundColor: "white"
 	},
   media: {
     height: 0,
@@ -56,13 +60,96 @@ const styles = theme => ({
 });
 
 class Repiles extends React.Component {
+	state = {
+		edit: null,
+		content: ''
+	}
+
+	handleReplyEdit = async () => {
+		const { commentId, commentObjId, handleUpdateReply } = this.props;
+		const { edit, content } = this.state;
+
+		let token = localStorage.getItem('token');
+		if (token) {
+      const options = {
+        method: 'POST',
+        data: JSON.stringify({
+        	commentId,
+					replyObjId: edit,
+					content
+        }),
+        headers: {
+          'content-type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'x-auth-token': token
+        },
+        url: config.api + '/commentReply/reply/edit'
+      }
+
+      let comment = await axios(options);
+      // console.log("CHANGEING VOTES", comment);
+      if (comment.data.error === false) {
+				handleUpdateReply(comment.data.content, commentObjId);
+				this.setState({
+					edit: null,
+					content: ''
+				})
+      }
+      
+    }
+	}
+
+	handleChange = (event) => {
+		this.setState({
+			content: event.target.value,
+		});
+	};
+
+
+	handleDeleteReply = async (replyObjId) => {
+		const { commentId, commentObjId, handleUpdateReply } = this.props;
+
+		let token = localStorage.getItem('token');
+		if (token) {
+      const options = {
+        method: 'POST',
+        data: JSON.stringify({
+					commentId,
+					replyObjId
+        }),
+        headers: {
+          'content-type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'x-auth-token': token
+        },
+        url: config.api + '/commentReply/reply/delete'
+      }
+
+      let comment = await axios(options);
+      // console.log("CHANGEING VOTES", comment);
+      if (comment.data.error === false) {
+				// update the reply state
+				handleUpdateReply(comment.data.content, commentObjId);
+      }
+      
+    }
+	}
+
+	enableEdit(ObjId, body) {
+		this.setState({
+			edit: ObjId,
+			content: body
+		})
+	}
+
   render() {
-		const { classes, replyValues } = this.props;
+		const { classes, replyValues, data } = this.props;
+		const { edit, content } = this.state;
 		console.log("PPPPPPPPP", replyValues);
 		
 
     return (
-			<React.Fragment>
+			<div style={{ backgroundColor: "#fafafa" }}>
 				{
 					replyValues.map((reply, index) => (
 						<Card className={classes.semicard} key={index} >
@@ -74,14 +161,42 @@ class Repiles extends React.Component {
 									}
 								}
 								avatar={
-									<Link href={"/profile/@" + reply.user[0].username}>
+									<Link href={"/profile/" + reply.user._id + "/@" + reply.user[0].username}>
 										<a style={{ textDecoration: 'none' }}>
-											<Thumbnails size="xs" borderColor="black" borderWidth={1} name={reply.user[0].username} />
+											<Thumbnails 
+												size="xs" borderColor="black" borderWidth={1}
+												name={reply.user[0].username}
+												url = {
+													// check if user profile image exist
+													reply.user[0].profileimage === "" || !reply.user[0].profileimage ?
+														null 
+													:
+														config.profileimage + reply.user[0].profileimage
+												}
+											/>
 										</a>
 									</Link>
 								}
 								titleTypographyProps={{ fontSize: 12 }}
 								style={{ padding: "2px 25px"  }}
+								action={
+									data.user._id === reply.user[0]._id &&
+									<CardActions className={classes.actions} disableActionSpacing>
+										<div style={{ flexGrow: 1 }} />
+										<IconButton 
+											aria-label="Thumbs Up" 
+											onClick={this.enableEdit.bind(this, reply._id, reply.content)} 
+											className={classes.iconspacing} >
+											<Edit style={{ fontSize: 14 }} /> 
+										</IconButton>
+										<IconButton 
+											aria-label="delete" 
+											onClick={this.handleDeleteReply.bind(this, reply._id)} 
+											className={classes.iconspacing} >
+											<RemoveCircle style={{ fontSize: 14 }} /> 
+										</IconButton>
+									</CardActions>
+								}
 								title={
 									<Link href={"/profile/@" + reply.user[0].username} >
 										<a style={{ color: '#1F7BD8', textDecoration: 'none' }}>
@@ -97,33 +212,37 @@ class Repiles extends React.Component {
 								}
 							/>
 							<CardContent style={{ padding: "2px 25px"  }}>
-								<Typography component="p" style={{ fontSize: 11 }}>
-									{reply.content}
-								</Typography>
+								{
+									edit && edit === reply._id ?
+										<form className={classes.container} noValidate autoComplete="off">
+											<TextField
+												label={<span style={{ fontSize: 12 }} >Edit Reply</span>}
+												style={{ margin: 8, marginTop: -5, fontSize: 12 }}
+												onChange={this.handleChange}
+												fullWidth
+												value={content}
+												margin="normal"
+												multiline
+											/>
+											<Button 
+												color="secondary" 
+												style={{ marginTop: 27, marginTop: -5 }} 
+												className={classes.button}
+												onClick={this.handleReplyEdit}
+											>
+												Save
+											</Button>
+										</form>
+									:
+										<Typography component="p" style={{ fontSize: 12, fontWeight: 'lighter' }}>
+											{reply.content}
+										</Typography>
+								}
 							</CardContent>
-							{/* <CardActions className={classes.actions} disableActionSpacing>
-								<div style={{ flexGrow: 1 }} />
-								<IconButton aria-label="Thumbs Up" className={classes.iconspacing} >
-									<ThumbUpAlt style={{ fontSize: 14 }} /> 
-								</IconButton>
-								<p style={{ fontSize: 12, marginLeft: -10, padding: 0 }} >12</p>
-								&nbsp;&nbsp;
-								<IconButton aria-label="Thumbs Down" className={classes.iconspacing} >
-									<ThumbDownAlt style={{ fontSize: 14 }} /> 
-								</IconButton>
-								<p style={{ fontSize: 12, marginLeft: -10, padding: 0 }} >12</p>
-								&nbsp;&nbsp;
-								<IconButton aria-label="Thumbs Up" className={classes.iconspacing} >
-									<Edit style={{ fontSize: 14 }} /> 
-								</IconButton>
-								<IconButton aria-label="Thumbs Down" className={classes.iconspacing} >
-									<RemoveCircle style={{ fontSize: 14 }} /> 
-								</IconButton>
-							</CardActions> */}
 						</Card>
 					))
 				}
-			</React.Fragment>
+			</div>
     );
   }
 }
@@ -132,4 +251,9 @@ Repiles.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Repiles);
+function mapStateToProps(state) {
+	return {
+		data: state.data,
+	}
+}
+export default connect(mapStateToProps, )(withStyles(styles)(Repiles));

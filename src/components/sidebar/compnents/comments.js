@@ -22,12 +22,16 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CommentCoin from './commentCoin';
 import TopicCoins from './topicCoins';
+import Reply from '@material-ui/icons/Reply';
+import Replies from './replies';
+import Replycompose from './replycompose';
 
 
 const styles = theme => ({
   card: {
 		maxWidth: "100%",
-		marginTop: 5
+		marginTop: 5,
+		boxShadow: '11px -1px 24px -4px'
 	},
   actions: {
 		display: 'flex',
@@ -41,7 +45,10 @@ class Comments extends React.Component {
 	state = {
 		// comments: [],
 		edit: null,
-		content: ''
+		content: '',
+		reply: null,
+		replyValues: [],
+		replyShow: null,
 	}
 
 
@@ -141,12 +148,61 @@ class Comments extends React.Component {
     this.setState({
       content: event.target.value,
     });
-  };
+	};
+	
+
+	// setstate to open the select replies for coment
+	handleDisplayReplyCompose(id) {
+		const { reply } = this.state;
+		if (id === reply) {
+			this.setState({
+				reply: null
+			})
+		} else {
+			this.setState({
+				reply: id
+			})
+		}
+	}
+
+	handleUpdateReply = (reply, commentObjId) => {
+		this.setState({
+			replyShow: commentObjId,
+			replyValues: reply
+		})
+	}
+
+	// fetch the replies for the opened comment
+	async handleFetchReply(commentObjId) {
+		const { replyShow } = this.state;
+		if (replyShow === commentObjId) {
+			this.setState({
+				replyShow: null
+			})
+		} else {
+			let getReply = await axios.get(config.api + "/commentReply/reply/" + commentObjId);
+			if (!getReply.data.error) {
+				this.setState({
+					replyShow: commentObjId,
+					replyValues: getReply.data.content[0].reply
+				})
+			}
+		}
+		
+	}
+
+
+	displayReplyForm(commentObjId, commentId, username) {
+		const { reply } = this.state;
+		if (reply === commentObjId) {
+			return <Replycompose commentObjId={commentObjId} commentId={commentId} username={username} handleUpdateReply={this.handleUpdateReply} /> ;
+		}
+	}
 
   render() {
 		const { classes, data } = this.props;
-		const { comments, edit, content } = this.state;
-		// console.log(this.state.content);
+		const { comments, edit, content, replyValues, replyShow } = this.state;
+		console.log(this.state);
 		
     return (
 			<React.Fragment>
@@ -221,6 +277,12 @@ class Comments extends React.Component {
 									votes={comment.votesCount}
 								/>
 
+								{/* reply icon */}
+								<IconButton aria-label="Reply" onClick={this.handleDisplayReplyCompose.bind(this, comment._id)} >
+									<Reply style={{ fontSize: 20 }} />
+								</IconButton>
+								&nbsp;&nbsp;
+
 								{
 									// only show them if the owner of the post and the logged in user are the same
 									data.user._id === comment.commentUser[0]._id &&
@@ -236,19 +298,47 @@ class Comments extends React.Component {
 											<Remove style={{ fontSize: 20 }} />
 										</IconButton>
 								}
-								&nbsp;&nbsp;
-								<CommentCoin 
-								// topic object id
-									topicObjId={data.siteTopic[0]._id}
-									// comment id
-									commentId={comment.id}
-									// comment owner id
-									commentUserId={comment.commentUser[0].id}
-								/>
-							</CardActions>
+
+								{ /* fetch replies for this comment */ } {
+								// if reply exist for this comment then show this 
+								// typeof comment.replyCount[0] !== "undefined" &&
+									<Typography 
+										onClick={this.handleFetchReply.bind(this, comment._id)} 
+										style={{ cursor: 'pointer', fontSize: 11 }}
+									>
+										Replies
+										&nbsp;
+										{typeof comment.replyCount[0] !== "undefined" ? comment.replyCount[0].count : ""}
+									</Typography> 
+							}
+							&nbsp;&nbsp;
+							<CommentCoin 
+							// topic object id
+								topicObjId={data.siteTopic[0]._id}
+								// comment id
+								commentId={comment.id}
+								// comment owner id
+								commentUserId={comment.commentUser[0].id}
+							/>
+						</CardActions>
+
 
 							{/* tips for comment */}
 							<TopicCoins gift={comment.gifts} />
+
+
+							{/* display reply form */}
+							{this.displayReplyForm(comment._id, comment.id, comment.commentUser[0].username)}
+							
+							{
+								replyShow === comment._id &&
+									<Replies 
+										replyValues={replyValues} 
+										commentId={comment.id} 
+										commentObjId={comment._id}
+										handleUpdateReply={this.handleUpdateReply}
+									/>
+							}
 
 						</Card>
 					))

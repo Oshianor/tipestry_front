@@ -14,7 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { config } from "../../../../config";
-import { getTopics } from "../../../actions/data";
+import { getTopics, getUser } from "../../../actions/data";
 import { bindActionCreators } from 'redux';
 import Alert from '../../reuseable/alert';
 // import Router from "next/router";
@@ -80,6 +80,17 @@ class CoinGift extends React.Component {
 			if (!completed.data.error) {
 				getTopics({topic: [], total: 0});
 				getTopics(completed.data.content);
+				const options = {
+					method: 'GET',
+					headers: {
+						'content-type': 'application/json',
+						'Access-Control-Allow-Origin': '*',
+						'x-auth-token': token
+					},
+					url: config.api + '/users/me'
+				}
+				let user = await axios(options);
+				getUser(user.data[0]);
 				this.setState({
 					error: '',
 					msgOpen: true,
@@ -184,7 +195,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({
-		getTopics: getTopics
+		getTopics: getTopics,
+		getUser: getUser
 	}, dispatch)
 }
 
