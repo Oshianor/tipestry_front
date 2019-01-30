@@ -13,7 +13,10 @@ import Replies from '../components/profile/replies';
 import Post from '../components/post/post';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import LinearProgress from '@material-ui/core/LinearProgress';
+import Progress from "../components/reuseable/progress"
+import { Lang } from '../../lang';
+import Drawer from '../components/header/drawer';
+// import LinearProgress from '@material-ui/core/LinearProgress';
 
 const styles = {
   root: {
@@ -33,9 +36,8 @@ const styles = {
 class Profile extends React.Component {
   state = {
     value: 0,
-    completed: 70,
-    buffer: 10,
-    color: 'secondary'
+    drawer: false,
+    stopScroll: false
   };
 
   handleChange(value) {
@@ -129,7 +131,8 @@ class Profile extends React.Component {
           }
         </Typography>
         <Typography variant="subtitle2">
-          Member Since: { moment(data.profile.created_at).format('YYYY') }
+          {/* Member Since:  */}
+          {Lang.d2}{moment(data.profile.created_at).locale(Lang.locale).format('YYYY')}
         </Typography>
 
         <div style={{ margin: "20px 20%" }}>
@@ -138,13 +141,14 @@ class Profile extends React.Component {
               {this.getCurrentLevel()}
             </Grid>
             <Grid item xs={10} >
-              <LinearProgress 
+              {/* <LinearProgress 
                 style={{ height: 17, borderRadius: 13, zIndex: 9999 }}
                 color="primary" 
                 variant="buffer" 
                 value={100 / 5 - (data.profile.user_level)}
                 valueBuffer={100 / 5 - (data.profile.user_level)} 
-              />
+              /> */}
+              <Progress percent={(data.profile.user_level / 4) * 100} />
             </Grid>
             <Grid item xs={1} >
               {this.getFutureLevel()}
@@ -200,7 +204,8 @@ class Profile extends React.Component {
                 { data.topics.length === 0 ? "" : data.topics.length }
                 &nbsp;
               </Typography>
-              Post
+              {/* Post */}
+              {Lang.e2}
             </Button>
           </Grid>
           {
@@ -212,7 +217,8 @@ class Profile extends React.Component {
                     { data.favourite.length === 0 ? "" : data.favourite.length }
                     &nbsp;
                   </Typography>
-                  Favourites
+                  {/* Favourites */}
+                  {Lang.f2}
                 </Button>
               </Grid>
           }
@@ -222,23 +228,18 @@ class Profile extends React.Component {
                 { data.comment.length === 0 ? "" : data.comment.length }
                 &nbsp;
               </Typography>
-              Comments
+              {/* Comments */}
+              {Lang.g2}
             </Button>
           </Grid>
-          {/* <Grid>
-            <Button className={classes.tab} onClick={this.handleChange.bind(this, 3)}  >
-              <Typography className={classes.pos} >12</Typography>
-              <br />
-              Replies
-            </Button>
-          </Grid> */}
           <Grid style={value === 4 ? curr : not} >
             <Button className={classes.tab} onClick={this.handleChange.bind(this, 4)}  >
               <Typography className={classes.pos} >
                 { data.following.length === 0 ? "" : data.following.length }
                 &nbsp;
               </Typography>
-              Following
+              {/* Following */}
+              {Lang.g}
             </Button>
           </Grid>
           <Grid style={value === 5 ? curr : not} >
@@ -247,7 +248,8 @@ class Profile extends React.Component {
                 {data.followers.length === 0 ? "" : data.followers.length }
                 &nbsp;
               </Typography>
-              Followers
+              {/* Followers */}
+              {Lang.x1}
             </Button>
           </Grid>
         </Grid>
@@ -255,13 +257,65 @@ class Profile extends React.Component {
     )
   }
 
+    // handle drawer open
+  handleDrawerOpen = () => {
+    this.setState({ drawer: true });
+  }
+
+    // handle close of drawer
+  handleDrawerClose = () => {
+    this.setState({ drawer: false });
+  }
+
+	componentWillUnmount() {
+		removeEventListener('scroll', this.trackScrolling);
+  }
+  
+  // track scroolling . when scroll amost to the header
+  trackScrolling = (e) => {
+    // console.log(window.scrollY, "vvv", window.scrollX);
+    
+    if (window.scrollY > 240) {
+      this.setState({
+        stopScroll: true
+      })
+      return false
+    }
+    this.setState({
+      stopScroll: false
+    })
+    return false;
+  }
+	
+  componentDidMount() {
+		addEventListener('scroll', this.trackScrolling);		
+	}
+
   render() {
+		const { stopScroll, drawer } = this.state;
     return (
       <div>
-        <Header />
-        {this.displayInfo()}
-        {this.displayTab()}
-        {this.displaySection()}
+        <Header 
+          drawer={drawer} 
+          handleDrawerOpen={this.handleDrawerOpen}  
+          handleDrawerClose={this.handleDrawerClose} 
+        />
+        <Drawer 
+					drawer={drawer} 
+					// this props is to check if overlay exisit 
+					// in that page an push the icons to the top.
+          overlay={true}
+          top={130}
+          stopScroll={stopScroll}
+          handleDrawerOpen={this.handleDrawerOpen}  
+          handleDrawerClose={this.handleDrawerClose} 
+        >
+          <div>
+            {this.displayInfo()}
+            {this.displayTab()}
+            {this.displaySection()}
+          </div>
+        </Drawer>
       </div>
     );
   }

@@ -9,7 +9,10 @@ const initialstate = {
   following: [],
   comment: [],
   site: [],
-  history: []
+  history: [],
+  trends: [],
+  leaderboard: [],
+  popular: []
 }
 export default (state = initialstate, action) => {
   switch (action.type) {
@@ -56,6 +59,18 @@ export default (state = initialstate, action) => {
     case "GET_TIP_HISTORY":
       return Object.assign({}, state, {
         history: action.payload
+      });
+    case "GET_TRENDS":
+      return Object.assign({}, state, {
+        trends: action.payload
+      });
+    case "GET_LEADER_BOARD":
+      return Object.assign({}, state, {
+        leaderboard: action.payload
+      });
+    case "GET_POPULAR":
+      return Object.assign({}, state, {
+        popular: action.payload
       });
     default:
       return state

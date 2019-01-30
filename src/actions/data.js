@@ -89,3 +89,27 @@ export const getTipHistory = (arg) => {
     payload: arg
   }
 }
+
+export const getTrends = (arg) => {
+  // console.log("getFollowing", arg);
+  return {
+    type: "GET_TRENDS",
+    payload: arg
+  }
+}
+
+export const getLeaderBoard = (arg) => {
+  // console.log("getFollowing", arg);
+  return {
+    type: "GET_LEADER_BOARD",
+    payload: arg
+  }
+}
+
+
+export const getPopular = (arg) => {
+  return {
+    type: "GET_POPULAR",
+    payload: arg
+  }
+}

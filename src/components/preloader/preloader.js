@@ -5,6 +5,7 @@ import {
 } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from "@material-ui/core/Typography";
+import { Lang } from "../../../lang";
 
 const styles = theme => ({
 	progress: {
@@ -14,19 +15,22 @@ const styles = theme => ({
 
 class Preloader extends Component{
 	state = {
-		msg: 'Give us a sec ☺️. We are getting things ready for you.'
+		msg: Lang.o1
+		// 'Give us a sec ☺️. We are getting things ready for you.' // 给我们一个☺️。我们正在为您做好准备。
 	}
 
 	componentDidMount() {
 		this.timer = setTimeout(() => {
 			this.setState({
-				msg: 'I know it been a while but we are working on it 🙏...'
+				msg: Lang.p1
+				// 'I know it been a while but we are working on it 🙏...' // 我知道已经有一段时间但我们正在研究它......
 			})
 		}, 20000);
 
 		this.timer = setTimeout(() => {
 			this.setState({
-				msg: 'It taking too long. Your network must me slow 🚶.'
+				msg: Lang.q1
+				// 'It taking too long. Your network must me slow 🚶.' // 这花了太长时间。你的网络必须让我慢一点。
 			})
 		}, 30000);
 	}

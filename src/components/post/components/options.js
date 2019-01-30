@@ -14,6 +14,7 @@ import { config } from '../../../../config';
 import axios from 'axios';
 import ReportComponent from './report';
 import Delete from "@material-ui/icons/DeleteForever";
+import { Lang } from '../../../../lang';
 
 class Options extends React.Component {
   state = {
@@ -94,7 +95,8 @@ class Options extends React.Component {
               onClick={this.handleFollow}
               style={{ padding: "5px", fontSize: 11 }} 
             >
-              Follow
+              {/* Follow */}
+              {Lang.f}
             </Button>
           )
         } else {
@@ -106,7 +108,8 @@ class Options extends React.Component {
               onClick={this.handleFollow}
               style={{ padding: "5px", fontSize: 11 }} 
             >
-              Following
+              {/* Following */}
+              {Lang.g}
             </Button>
           )
         } 
@@ -193,23 +196,27 @@ class Options extends React.Component {
               topicFollowing.indexOf(data.user._id) === -1 ?
                 <React.Fragment>
                   <Add style={{ fontSize: 15 }} />
-                  &nbsp;Follow Post
+                  &nbsp;{Lang.z1}
+                  {/* Follow Post */}
                 </React.Fragment>
               :
                 <React.Fragment>
                   <Remove style={{ fontSize: 15 }} />
-                  &nbsp;Following Post
+                  &nbsp;{Lang.a2}
+                  {/* Following Post */}
                 </React.Fragment>
             }
           </MenuItem>
           <MenuItem style={{ fontSize: 12, padding: "5px 16px" }} onClick={this.handleReportOpen}>
-            <Report style={{ fontSize: 15 }} /> &nbsp;Report post
+            <Report style={{ fontSize: 15 }} /> &nbsp;{Lang.b2}
+            {/* Report post */}
           </MenuItem>
           {
             topicUser.id === data.user.id &&
               <MenuItem style={{ fontSize: 12, padding: "5px 16px" }} onClick={this.handleDeletePost}>
                 <Delete style={{ fontSize: 15 }} />
-                &nbsp;Delete
+                &nbsp;{Lang.c2}
+                {/* Delete */}
               </MenuItem>
           }
         </Menu>

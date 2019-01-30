@@ -10,6 +10,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getSiteTopic } from "../../../actions/data";
 import Link from "next/link";
+import { Lang } from '../../../../lang';
 
 const styles = theme => ({
   container: {
@@ -93,11 +94,9 @@ class Compose extends React.Component {
     return (
       <React.Fragment>
         <form className={classes.container} noValidate autoComplete="off">
-          {/* <Typography>
-            What are your thoughts?
-          </Typography> */}
           <TextField
-            label="What are your thoughts?"
+            // label="What are your thoughts? // 你是什么想法"
+            label={Lang.a1}
             multiline
             rows="3"
             name="comment"
@@ -110,17 +109,24 @@ class Compose extends React.Component {
           {
             !token ? 
               <Typography variant="subtitle1" >
-                You have to be &nbsp;
+                {/* You have to be &nbsp; */}
+                {/* 你必须  */}
+                {Lang.x}&nbsp; 
                 <Link href="/login" >
                   <a>
-                    Logged In
+                    {/* Logged In */}
+                    {/* 登录 */}
+                    {Lang.y}
                   </a>
                 </Link>
-                &nbsp; comment
+                {/* &nbsp; to comment */}
+                &nbsp; {Lang.z}
+                {/* 评论 */}
               </Typography>
             :
               <Button variant="outlined" onClick={this.handleAddComment.bind(this)} color="primary" className={classes.button}>
-                Add Comment
+                {/* Add Comment // 添加评论 */}
+                {Lang.w}
               </Button>
           }
         </form>

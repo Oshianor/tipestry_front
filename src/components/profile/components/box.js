@@ -12,6 +12,7 @@ import { getFollowers, getFollowing, getUser } from "../../../actions/data";
 import PropTypes from 'prop-types';
 import Axios from 'axios';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { Lang } from '../../../../lang';
 
 class Box extends React.Component{
 	state = {
@@ -93,19 +94,22 @@ class Box extends React.Component{
 								data.user.following && data.user.following.indexOf(id) === -1 ?
 									<React.Fragment>
 										<Add style={{ fontSize: 15 }} />
-										Follow
+										{/* Follow */}
+										{Lang.f}
 									</React.Fragment>
 								:
 								// if the current user is only following him
 									<React.Fragment>
 										<Remove style={{ fontSize: 15 }} />
-										Unfollow
+										{/* Unfollow // 取消关注 */}
+										{Lang.n1}
 									</React.Fragment>
 							:
 								//followings 
 								<React.Fragment>
 									<Remove style={{ fontSize: 15 }} />
-									Unfollow
+									{/* Unfollow */}
+									{Lang.n1}
 								</React.Fragment>
 						}
 						

@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
 import SiteAbout from './compnents/siteabout';
 import Link from "next/link"
+import { Lang } from '../../../lang';
 
 class Sidebar extends Component {	
 	render() {
@@ -12,7 +13,8 @@ class Sidebar extends Component {
 		return (
 			<div style={{ marginTop: 80, height: "90vh" }}>
 				<Typography variant="title" style={{ textAlign: 'center' }}>
-					JOIN THE CONVERSATION TODAY
+					{ /* JOIN THE CONVERSATION TODAY /// 今天加入对话*/ }
+					{Lang.v}
 				</Typography>
 				{
 					typeof data.siteTopic[0] !== "undefined" &&
@@ -31,7 +33,10 @@ class Sidebar extends Component {
 						<Container token={token} />
 					:
 						<Typography variant='subtitle2' style={{ textAlign: 'left', margin: '5%' }}>
-							This post has <a style={{ color: '#1F7BD8' }}>0</a> comments. Be the first to post
+							{/* This post has <a style={{ color: '#1F7BD8' }}>0</a> comments. Be the first to post */}
+							{/* 这篇文章有 <a style={{ color: '#1F7BD8' }}>0</a> 条评论。 是第一个发帖的 */}
+							{Lang.t} <a style={{ color: '#1F7BD8' }}>0</a> {Lang.u}
+
 						</Typography>
 				}
 				<Compose token={token} />

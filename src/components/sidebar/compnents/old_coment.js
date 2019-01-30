@@ -20,6 +20,7 @@ import { connect } from 'react-redux';
 import Moment from "moment";
 import Axios from 'axios';
 import { config } from '../../../../config';
+import { Lang } from '../../../../lang';
 
 const styles = theme => ({
   card: {
@@ -181,7 +182,7 @@ class Comments extends React.Component {
 								}
 								subheader={
 									<p style={{ fontSize: 10, margin: 0 }} >
-										{Moment(comment.created_at).fromNow()}
+										{Moment(comment.created_at).locale(Lang.locale).fromNow()}
 									</p>
 								}
 							/>

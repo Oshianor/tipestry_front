@@ -6,6 +6,7 @@ export const config = {
 	// profileimage: "http://localhost:3000/profile_images/",
 	// base64: 'data:image/jpeg;base64,',
 	// topic: "http://localhost:3000",
+	// port: 8008
 
 	// demo
 	// api: "http://demo.tipestry.com/api",
@@ -14,6 +15,7 @@ export const config = {
 	// profileimage: "http://demo.tipestry.com/public/profile_images/",
 	// base64: 'data:image/jpeg;base64,',
 	// topic: "http://demo.tipestry.com/public",
+	// port: 8008
 
 	// live
 	api: "https://tipestry.com/api",
@@ -22,4 +24,5 @@ export const config = {
 	profileimage: "https://tipestry.com/public/profile_images/",
 	base64: 'data:image/jpeg;base64,',
 	topic: "https://tipestry.com/public",
+	port: 4001
 }

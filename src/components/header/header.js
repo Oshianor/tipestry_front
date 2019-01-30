@@ -8,13 +8,12 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import Button from '@material-ui/core/Button';
 import Camera from '@material-ui/icons/CameraAlt';
 import Create from '@material-ui/icons/Create';
 import Add from '@material-ui/icons/Add';
 import Remove from '@material-ui/icons/Remove';
-
+import { Lang } from "../../../lang"
 import Collapse from '@material-ui/core/Collapse';
 import {
 	withRouter
@@ -27,10 +26,16 @@ import Notification from './notification';
 import Logout from '@material-ui/icons/ExitToAppRounded';
 import Tooltip from '@material-ui/core/Tooltip';
 import axios from 'axios';
-import { config } from "../../../config"
+import { config } from "../../../config";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getProfile, getUser } from "../../actions/data";
+import Avatar from '@material-ui/core/Avatar';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import classNames from 'classnames';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+
+const drawerWidth = 240;
 
 
 const styles = theme => ({
@@ -42,10 +47,12 @@ const styles = theme => ({
 			margin: "0px 1%"
 		},
 		[theme.breakpoints.up('md')]: {
-			margin: "0px 5%"
+			margin: "0px 2%"
+			// margin: "0px 5%"
 		},
 		[theme.breakpoints.up('lg')]: {
-			margin: "0px 10%"
+			margin: "0px 6%"
+			// margin: "0px 10%"
 		},
 	},
 	left: {
@@ -136,6 +143,43 @@ const styles = theme => ({
 			fontSize: 11,
 			marginTop: 30
 		},
+	},
+	appBar: {
+		zIndex: theme.zIndex.drawer + 1,
+		backgroundImage: "url('/static/homepage/headerBackground.svg')",
+		backgroundColor: "transparent",
+		width: "100%",
+		backgroundRepeat: 'no-repeat',
+		backgroundSize: "cover",
+		boxShadow: '0 0 0 0',
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+  },
+  appBarShift: {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+	},
+	menuButton: {
+    marginLeft: 12,
+		marginRight: 36,
+		display: 'none',
+		[theme.breakpoints.between('xs', 'md')]: {
+			display: 'block',
+		},
+  },
+  hide: {
+    display: 'none',
+	},
+	hideonxs: {
+		[theme.breakpoints.only('xs')]: {
+			display: 'none',
+		},
 	}
 });
 
@@ -198,7 +242,6 @@ class Header extends React.Component {
     this.setState({ mobileMoreAnchorEl: null });
 	};
 
-
 	componentDidMount() {
 		let token = localStorage.getItem('token');
 		this.setState({
@@ -231,26 +274,42 @@ class Header extends React.Component {
 	  
   displayHome = () => {
     const { hide, token } = this.state;
-    const { classes } = this.props;
+    const { classes, data } = this.props;
     return (
 			<Collapse in={!hide} timeout="auto"  unmountOnExit>
         <div className={classes.rootGrow} >
           <Grid container spacing={24}>
-            <Grid item xs={6} sm={6} >
-              <img src="/static/homepage/layers.png" className={classes.img} />
+            <Grid item xs={12} sm={6} >
+							{/* check if user is logged in and that is profile image  exist  */}
+							{
+								!token ?
+									<img src="/static/homepage/layers.png" className={classes.img} />
+								:
+									data.user.profileimage === "" || !data.user.profileimage ?
+										<img src="/static/homepage/layers.png" className={classes.img} />
+									:
+										<Avatar
+											className={classes.img}
+											src = {
+												config.profileimage + data.user.profileimage
+											}
+										/>
+							}
             </Grid>
-						<Grid item xs={6} sm={6} style={{ textAlign: 'center' }}>
+						<Grid item className={classes.hideonxs} sm={6} style={{ textAlign: 'center' }}>
 							<Typography variant="h4" className={classes.hed} >
-								Comment anywhere
+								{Lang.a}
 							</Typography>
 							<Typography  variant='display4' className={classes.hedbody}>
-								Comment on any website or physical location.Earn cryptocurrency tips
-								for your posts or website.
+								{Lang.b}
 							</Typography>
 							{
 								// if user is logged in then don't show
 								!token &&
-									<Button onClick={this.SignUp} size="medium" style={{ marginTop: 5 }} variant="outlined" >Get Started</Button>
+									<Button onClick={this.SignUp} size="medium" style={{ marginTop: 5 }} variant="outlined" >
+										{Lang.c}
+										{/* get started */}
+									</Button>
 							}
 						</Grid>
           </Grid>
@@ -309,7 +368,8 @@ class Header extends React.Component {
 											<a>
 												<Typography style={{ color: "white", textDecoration: 'underline' }} className={classes.but} >
 													{/* <img src="/static/icons/moneybag.svg"  width='20' height="20" /> */}
-													Wallet activities
+													{Lang.d}
+													{/* wallet details */}
 												</Typography>
 											</a>
 										</Link>
@@ -362,7 +422,8 @@ class Header extends React.Component {
 											<a style={{ textDecoration: 'none' }} >
 												<Typography style={{ color: "white", textDecoration: 'underline' }} className={classes.but} >
 													<Create style={{ fontSize: 17 }} />
-													Edit profile
+													{Lang.e} 
+													{/* edit profile */}
 												</Typography>
 											</a>
 										</Link>
@@ -414,7 +475,8 @@ class Header extends React.Component {
 						// style={{ color: "white", borderColor: "white", padding: "0px 6px", fontSize: 10 }} 
 					>
 						<Add style={{ fontSize: 17 }} />
-						Follow
+						{Lang.f}
+						{/* Follow */}
 					</Button>
 				)
 			} 
@@ -428,7 +490,8 @@ class Header extends React.Component {
 					// style={{ padding: "0px 6px", fontSize: 10 }} 
 				>
 					<Remove style={{ fontSize: 17 }} />
-					Following
+					{Lang.g}
+					{/* Following */}
 				</Button>
 			)
 		}
@@ -462,7 +525,8 @@ class Header extends React.Component {
 								style={{ color: 'white', fontSize: 14, borderColor: 'white' }} 
 								size="small" 
 								color="secondary" className={classes.button}>
-								Upload Url
+								{Lang.h}
+								{/* Enter Url */}
 							</Button>
 							<Tooltip title="Log out" aria-label="logout">
 								<IconButton
@@ -476,14 +540,21 @@ class Header extends React.Component {
 					:
 						<React.Fragment>
 							<Link href="/faq">
-								<Button color="inherit">Faq</Button>
+								<Button color="inherit">
+									{Lang.i}
+									{/* Faq */}
+								</Button>
 							</Link>
 							<Link href="/login" prefetch>
-								<Button color="inherit">Login</Button>
+								<Button color="inherit">
+									{Lang.j}
+									{/* Login */}
+								</Button>
 							</Link>
 							<Link href="/register" prefetch >
 								<Button color="inherit">
-									Register
+									{Lang.k}
+									{/* Register */}
 								</Button>
 							</Link>
 						</React.Fragment>
@@ -508,7 +579,7 @@ class Header extends React.Component {
 
   render() {
     const { anchorEl, mobileMoreAnchorEl, uploadStatus, token } = this.state;
-    const { classes, data } = this.props;
+    const { classes, data, drawer, handleDrawerOpen } = this.props;
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -527,15 +598,17 @@ class Header extends React.Component {
 						<React.Fragment>
 							<Link href="/faq">
 								<MenuItem >
-									Faq
+									{Lang.i}
 								</MenuItem>
 							</Link>
 							<Link href="/login" prefetch>
-								<MenuItem >Login</MenuItem>
+								<MenuItem >
+									{Lang.j}
+								</MenuItem>
 							</Link>
 							<Link href="/register" prefetch >
 								<MenuItem >
-									Register
+									{Lang.k}
 								</MenuItem>
 							</Link>
 						</React.Fragment>
@@ -545,38 +618,56 @@ class Header extends React.Component {
 								<IconButton color="inherit" >
 									<Logout />
 								</IconButton>
-								<p>Logout</p>
+								<p>
+									{Lang.l}
+									{/* logout */}
+								</p>
 							</MenuItem>
 						</React.Fragment>
 				}
 				<MenuItem onClick={this.handleClickOpen}>
           <Button style={{ margin: "1% 1%" }} variant="outlined" size="small" color="secondary" className={classes.button}>
-						Upload Url
+						{Lang.h}
+						{/* Enter Url */}
 					</Button>
         </MenuItem>
       </Menu>
     );
 
 		// console.log(this.state);
-		
+		const back = {
+			// backgroundImage: "url('/static/homepage/headerBackground.svg')",
+			// backgroundColor: "transparent",
+			// width: "100%",
+			// only show the profile image and the upload link if logged in or if the route is profile or edit profile
+			height: this.displayHeight(),
+			// backgroundRepeat: 'no-repeat',
+			// backgroundSize: "cover",
+			// boxShadow: '0 0 0 0'
+		}
 
     return (
       <div className={classes.root}>
+				<CssBaseline />
         <AppBar position="fixed"
-					style={
-						{
-							backgroundImage: "url('/static/homepage/headerBackground.svg')",
-							backgroundColor: "transparent",
-							width: "100%",
-							// only show the profile image and the upload link if logged in or if the route is profile or edit profile
-							height: this.displayHeight(),
-							backgroundRepeat: 'no-repeat',
-							backgroundSize: "cover",
-							boxShadow: '0 0 0 0'
-						}
-					}
+					style={back}
+					className={classNames(classes.appBar, {
+            [classes.appBarShift]: drawer,
+          })}
 				>
-          <Toolbar className={classes.rootGrow}>
+          <Toolbar className={classes.rootGrow} disableGutters={!drawer} >
+						{/* tigger for drawer */}
+						<IconButton
+              color="inherit"
+              aria-label="Open drawer"
+              onClick={() => handleDrawerOpen()}
+              className={classNames(classes.menuButton, {
+                [classes.hide]: drawer,
+              })}
+            >
+              <MenuIcon />
+            </IconButton>
+
 						<Link href="/" prefetch>
 							<a>
 								<Typography variant="h2" gutterBottom style={{ margin: '0px 3%' }} >
@@ -606,7 +697,12 @@ class Header extends React.Component {
 										</Link>
 										<Link href={"/profile/" + data.user._id + "/" + data.user.username} >
 											<a style={{ color: 'white', textDecoration: 'none' }}>
-												<p>&nbsp;Hi, {data.user.username}</p>
+												<p style={{ textTransform: 'capitalize' }} >
+													&nbsp;
+													{Lang.m},
+													{/* Hi,  */}
+													{data.user.username}
+												</p>
 											</a>
 										</Link>
 										&nbsp;
@@ -616,7 +712,7 @@ class Header extends React.Component {
 						{this.displayDesktop()}
             <div className={classes.sectionMobile}>
               <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
-								<MenuIcon />
+								<MoreVertIcon />
               </IconButton>
             </div>
           </Toolbar>

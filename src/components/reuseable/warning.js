@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import Grid from "@material-ui/core/Grid";
 import Link from 'next/link';
 import { Typography } from '@material-ui/core';
+import { Lang } from '../../../lang';
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
@@ -27,7 +28,8 @@ class Warning extends React.Component {
 				aria-describedby="alert-dialog-slide-description"
 			>
 				<DialogTitle id="alert-dialog-slide-title">
-					You need to be logged in to perform this operation.
+					{/* You need to be logged in to perform this operation. // 您需要登录才能执行此操作。 */}
+					{Lang.d1}
 				</DialogTitle>
 
 				<DialogContent>
@@ -38,7 +40,8 @@ class Warning extends React.Component {
 						<Typography>
 							<Link href="/login">
 								<a style={{ marginTop: 13 }} >
-									Login
+									{/* Login */}
+									{Lang.j}
 								</a>
 							</Link>
 						</Typography>
@@ -48,11 +51,13 @@ class Warning extends React.Component {
 				<DialogActions>
 					<Grid container justify='center' alignItems='center' >
 						<Typography>
-							Don't have an Account? 
+							{/* Don't have an Account?  */}
+							{Lang.e1}
 							&nbsp;
 							<Link href="/register">
 								<a>
-									Sign Up
+									{/* Sign Up // 注册 */}
+									{Lang.f1}
 								</a>
 						</Link>
 						</Typography>

@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Box from './components/box';
 import { config } from '../../../config';
 import Typography from '@material-ui/core/Typography';
+import { Lang } from '../../../lang';
 
 
 const styles = theme => ({
@@ -37,12 +38,14 @@ class Following extends React.Component {
           >
 						{
               typeof value[0] === "undefined" ?
-                <Typography 
-                  style={{ marginTop: "10%", textAlign: 'center' }} 
-                  variant="h6" 
-                >
-                  YOU CURRENTLY FOLLOWING NO ONE!
-                </Typography>
+                // <Typography 
+                //   style={{ marginTop: "10%", textAlign: 'center' }} 
+                //   variant="h6" 
+                // >
+                //   {/* YOU CURRENTLY FOLLOWING NO ONE! // 你目前没有任何人！ */}
+                //   {Lang.n1}
+                // </Typography>
+                <img src="/static/images/sadface.svg" style={{  marginTop: 40 }} />
               :
                 value.map((val) => (
                   <Grid items key={val._id} >

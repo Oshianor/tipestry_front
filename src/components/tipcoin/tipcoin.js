@@ -8,24 +8,26 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { config } from '../../../config';
 import NumberFormat from 'react-number-format';
-
+import { Lang } from '../../../lang';
+import Add from "@material-ui/icons/AddCircleOutlineRounded"
+import Button from '@material-ui/core/Button';
 
 
 const styles = theme => ({
   root: {
 		flexGrow: 1,
-		[theme.breakpoints.up('xs')]: {
-			margin: "0px 1%",
-			marginTop: 320,
-		},
-		[theme.breakpoints.up('md')]: {
-			margin: "0px 15%",
-			marginTop: 320,
-		},
-		[theme.breakpoints.up('lg')]: {
-			margin: "0px 25%",
-			marginTop: 320,
-		},
+		// [theme.breakpoints.up('xs')]: {
+		// 	margin: "0px 1%",
+		// 	marginTop: 320,
+		// },
+		// [theme.breakpoints.up('md')]: {
+		// 	// margin: "0px 15%",
+		// 	marginTop: 320,
+		// },
+		// [theme.breakpoints.up('lg')]: {
+		// 	// margin: "0px 25%",
+		// 	marginTop: 320,
+		// },
 	},
 	paperRoot: {
 		padding: theme.spacing.unit * 2,
@@ -78,9 +80,12 @@ class TipCoin extends React.Component {
 		return (
 			<div className={classes.root}>
 				<Paper className={classes.paperRoot}>
-				<Typography variant="subtitle2" style={{ fontSize: 18, textAlign: "left", marginTop: -13 }} >Recent Tips</Typography>
-					<Grid container spacing={24}>
-						<Grid item xs={6} sm={3}>
+				<Typography variant="subtitle2" style={{ fontSize: 18, textAlign: "left", marginTop: -13 }} >
+					{/* Recent Tips */}
+					{Lang.n}
+				</Typography>
+					<Grid container spacing={8}>
+						<Grid item xs={6} sm={6} md={4} lg={6} xl={6}>
 							<Paper className={classes.paper} >
 								<img src="/static/tipcoins/bit.svg"
 									alt="comments"
@@ -99,7 +104,7 @@ class TipCoin extends React.Component {
 								</Typography>
 							</Paper>
 						</Grid>
-						<Grid item xs={6} sm={3}>
+						<Grid item xs={6} sm={3} md={4} lg={6} xl={4}>
 							<Paper className={classes.paper}>
 								<img src="/static/tipcoins/eth.svg" alt="comments" width='50' height='50' 
 									style={{ borderRight: "1px solid gray", paddingRight: "10%" }} />
@@ -115,7 +120,7 @@ class TipCoin extends React.Component {
 								</Typography>
 							</Paper>
 						</Grid>
-						<Grid item xs={6} sm={3}>
+						<Grid item xs={6} sm={3} md={4} lg={6} xl={4}>
 							<Paper className={classes.paper}>
 								<img 
 									src="/static/tipcoins/doge.svg" 
@@ -136,7 +141,7 @@ class TipCoin extends React.Component {
 								</Typography>
 							</Paper>
 						</Grid>
-						<Grid item xs={6} sm={3}>
+						<Grid item xs={6} sm={3} md={4} lg={6} xl={4}>
 							<Paper className={classes.paper}>
 								<img 
 									src="/static/tipcoins/Tip-1.png" 
@@ -157,7 +162,7 @@ class TipCoin extends React.Component {
 								</Typography>
 							</Paper>
 						</Grid>
-						<Grid item xs={6} sm={3}>
+						<Grid item xs={6} sm={3} md={4} lg={6} xl={4}>
 							<Paper className={classes.paper}>
 								<img 
 									src="/static/tipcoins/Tip-2.png" 
@@ -178,7 +183,7 @@ class TipCoin extends React.Component {
 								</Typography>
 							</Paper>
 						</Grid>
-						<Grid item xs={6} sm={3}>
+						<Grid item xs={6} sm={3} md={4} lg={6} xl={4}>
 							<Paper className={classes.paper}>
 								<img 
 									src="/static/tipcoins/Tip-3.png" 
@@ -197,6 +202,21 @@ class TipCoin extends React.Component {
 											0.00
 									}
 								</Typography>
+							</Paper>
+						</Grid>
+
+						{/* add coin  */}
+						<Grid item xs={6} sm={3} md={4} lg={6} xl={4}>
+							<Paper className={classes.paper}>
+								<Button style={{ padding: 0 }} >
+									<div style={{ borderRight: "1px solid gray", paddingRight: "10%" }}>
+										<Add style={{ width: 50, height: 45 }} />
+									</div>
+									<div style={{ flexGrow: 1 }} />
+									<Typography variant="button" >
+										{Lang.t1}
+									</Typography>
+								</Button>
 							</Paper>
 						</Grid>
 					</Grid>

@@ -14,6 +14,7 @@ import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import moment from "moment";
+import { Lang } from '../../../lang';
 
 
 
@@ -57,17 +58,35 @@ class History extends React.Component {
           scroll="paper"
           aria-labelledby="scroll-dialog-title"
         >
-          <DialogTitle id="scroll-dialog-title">Tip's History</DialogTitle>
+          <DialogTitle id="scroll-dialog-title">
+						{/* Tip's History */}
+						{Lang.r2}
+					</DialogTitle>
           <DialogContent>
             <Paper className={classes.root}>
 							<Table className={classes.table}>
 								<TableHead>
 									<TableRow>
-										<TableCell>Discription</TableCell>
-										<TableCell align="right">Tip Status</TableCell>
-										<TableCell align="right">Currency</TableCell>
-										<TableCell align="right">Amount</TableCell>
-										<TableCell align="right">Date</TableCell>
+										<TableCell>
+											{/* Discription */}
+											{Lang.s2}
+										</TableCell>
+										<TableCell align="right">
+											{/* Tip Status */}
+											{Lang.t2}
+										</TableCell>
+										<TableCell align="right">
+											{/* Currency */}
+											{Lang.u2}
+										</TableCell>
+										<TableCell align="right">
+											{/* Amount */}
+											{Lang.v2}
+										</TableCell>
+										<TableCell align="right">
+											{/* Date */}
+											{Lang.w2}
+										</TableCell>
 									</TableRow>
 								</TableHead>
 								<TableBody>
@@ -93,7 +112,7 @@ class History extends React.Component {
 													} */}
 													{this.renderMoney(row.amount, row.wallettype )}
 												</TableCell>
-												<TableCell align="right">{moment(row.created_at).format('ddd MMM YYYY')}</TableCell>
+												<TableCell align="right">{moment(row.created_at).locale(Lang.locale).format('ddd MMM YYYY')}</TableCell>
 											</TableRow>
 										);
 									})}
@@ -103,7 +122,8 @@ class History extends React.Component {
           </DialogContent>
           <DialogActions>
             <Button onClick={() => handleClose()} color="secondary">
-              Close
+							{/* Close */}
+							{Lang.q2}
             </Button>
           </DialogActions>
         </Dialog>

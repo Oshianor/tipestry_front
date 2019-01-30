@@ -19,15 +19,16 @@ import TopicCoin from "./components/topicCoins";
 // static icons svg
 import Options from "./components/options";
 import { config } from '../../../config';
+import { Lang } from '../../../lang';
 
 
 const styles = theme => ({
   card: {
     [theme.breakpoints.only('xs')]: {
-      width: 320,
+      width: 320
     },
     [theme.breakpoints.only('sm')]: {
-      width: 400,
+      width: 400
     },
     [theme.breakpoints.between('md', 'xl')]: {
       width: 450
@@ -43,6 +44,7 @@ const styles = theme => ({
   },
   media: {
     height: 0,
+    // minHeight: 400,
     paddingTop: '56.25%', // 16:9
   },
   button: {
@@ -109,134 +111,131 @@ class Post extends React.Component {
     
     return (
       <Grid container justify="center">
-        <Grid
+      {/* // <React.Fragment> */}
+        {/* <Grid
           container
           className={classes.demo}
           alignItems="center"
           justify="center"
-        >
+        > */}
           {
             // check if topic value exist
             typeof topicValue[0] === "undefined" ?
-              <Typography 
-                style={{ marginTop: "10%", textAlign: 'center' }} 
-                variant="h6" 
-              >
-
-                {errMsg}
-              </Typography>
+              <img src="/static/images/sadface.svg" style={{  marginTop: 20 }} />
             :
-            // it exist then display
+              // it exist then display
               topicValue.map((topic, index) => (
-                <Grid item style={{ margin: "10px" }} key={index} >
-                  <Card className={classes.card}>
-                  <CardHeader
-                    avatar={
-                      // link to the user profile
-                      <Link href={encodeURI("/profile/" + topic.user[0]._id + "/@" + topic.user[0].username)} >
-                        <a style={{ textDecoration: 'none' }}>
-                          <Thumbnails 
-                            name={topic.user[0].username}
-                            url = {
-                              // check if user profile image exist
-                              topic.user[0].profileimage === "" || !topic.user[0].profileimage ?
-                                null 
-                              :
-                                config.profileimage + topic.user[0].profileimage
-                            }
-                          />
-                        </a>
-                      </Link>
-                    }
-                    action={
-                      <Options 
-                      // sending token
-                        token={token}
-                        // topic object id
-                        topicObjId={topic._id}
-                        following={topic.following}
-                        // topic owner details
-                        topicUser={topic.user[0]}
-                      />
-                    }
-                    component="div"
-                    title={
-                      <Link href={encodeURI("/profile/" + topic.user[0]._id + "/@" + topic.user[0].username)} >
-                        <a style={{ color: '#1F7BD8', textDecoration: 'none' }}>
-                          <strong style={{ color: 'gray' }}>@</strong>
-                          {typeof topic.user[0] !== "undefined" ? `${topic.user[0].username}` : "@No name"}
-                        </a>
-                      </Link>
-                    }
-                    subheader={
-                      <p style={{ fontSize: 10, margin: 0 }} >
-                        {Moment(topic.created_at).fromNow()}
-                      </p>
-                    }
-                  />
-                  <CardMedia
-                    className={classes.media}
-                    style={{ backgroundPosition: 'top' }}
-                    image={
-                        // if the link is a gif then show that
-                        typeof topic.sites[0] !== "undefined" && this.checkForGif(topic.sites[0].url) == 'gif' ?
-                          topic.sites[0].url
-                        :
-                          // check to see if it the old data of base64
-                          // by using the lenght of the screenshot field
-                          topic.screenshot.length > 200 ?
-                            config.base64 + topic.screenshot
-                          :
-                            config.topic + topic.screenshot
-                    }
-                    title={topic.title}
-                    component="a"
-                    href={encodeURI("/topics/" + topic._id + "/" + topic.title.replace(/[.*+?^$/{}()|[\]\\]/g, '-'))}
-                  />
-
-                  <CardContent>
-                    <Typography component="p">
-                      {/* post title */}
-                      <Link href={encodeURI("/topics/" + topic._id + "/" + topic.title.replace(/[.*+?^$/{}()|[\]\\]/g, '-'))} >
-                        {this.displayTitle(topic.title)}
-                      </Link>
-                      <br />
-                      {
-                        // post link
-                        typeof topic.sites[0] !== "undefined" &&
-                          <Link href={"/sites?s=" + topic.sites[0].url} >
-                            <a >
-                              {topic.sites[0].url.length > 50 ? topic.sites[0].url.substr(0, 40) + "..." : topic.sites[0].url}
-                            </a>
-                          </Link>
+                <Grid item key={index} >
+                  <Card className={classes.card} key={index} style={{ margin: "10px" }}>
+                    <CardHeader
+                      avatar={
+                        // link to the user profile
+                        <Link href={encodeURI("/profile/" + topic.user[0]._id + "/@" + topic.user[0].username)} >
+                          <a style={{ textDecoration: 'none' }}>
+                            <Thumbnails 
+                              name={topic.user[0].username}
+                              url = {
+                                // check if user profile image exist
+                                topic.user[0].profileimage === "" || !topic.user[0].profileimage ?
+                                  null 
+                                :
+                                  config.profileimage + topic.user[0].profileimage
+                              }
+                            />
+                          </a>
+                        </Link>
                       }
-                    </Typography>
-                  </CardContent>
+                      action={
+                        <Options 
+                        // sending token
+                          token={token}
+                          // topic object id
+                          topicObjId={topic._id}
+                          following={topic.following}
+                          // topic owner details
+                          topicUser={topic.user[0]}
+                        />
+                      }
+                      component="div"
+                      title={
+                        <Link href={encodeURI("/profile/" + topic.user[0]._id + "/@" + topic.user[0].username)} >
+                          <a style={{ color: '#1F7BD8', textDecoration: 'none' }}>
+                            <strong style={{ color: 'gray' }}>@</strong>
+                            {typeof topic.user[0] !== "undefined" ? `${topic.user[0].username}` : "@No name"}
+                          </a>
+                        </Link>
+                      }
+                      subheader={
+                        <p style={{ fontSize: 10, margin: 0 }} >
+                          {/* {Moment(topic.created_at).fromNow()} */}
+                          {Moment(topic.created_at).locale(Lang.locale).fromNow()}
+                        </p>
+                      }
+                    />
+                    <CardMedia
+                      className={classes.media}
+                      style={{ backgroundPosition: 'top' }}
+                      image={
+                          // if the link is a gif then show that
+                          typeof topic.sites[0] !== "undefined" && this.checkForGif(topic.sites[0].url) == 'gif' ?
+                            topic.sites[0].url
+                          :
+                            // check to see if it the old data of base64
+                            // by using the lenght of the screenshot field
+                            topic.screenshot.length > 200 ?
+                              config.base64 + topic.screenshot
+                            :
+                              config.topic + topic.screenshot
+                      }
+                      title={topic.title}
+                      component="a"
+                      href={encodeURI("/topics/" + topic._id + "/" + topic.title.replace(/[.*+?^$/{}()|[\]\\]/g, '-'))}
+                    />
 
-                  {/* card action icons */}
-                  <CardActionsIcons 
-                  // topic votes 
-                    votes={topic.votes}
-                    // topic comment
-                    comment={typeof topic.comment[0] !== "undefined" ? topic.comment[0].count : ""}
-                    topicId={topic.id}
-                    topicUserId={topic.user[0].id}
-                    token={token}
-                    topicObjId={topic._id}
-                    // link for the topic
-                    link={encodeURI("/topics/" + topic._id + "/" + topic.title.replace(/[.*+?^$/{}()|[\]\\]/g, '-'))}
-                  />
-                  
-                  {/* coin details */}
-                  <TopicCoin 
-                    gift={topic.gift}
-                  />
-                </Card>
-              </Grid>
+                    <CardContent>
+                      <Typography component="p">
+                        {/* post title */}
+                        <Link href={encodeURI("/topics/" + topic._id + "/" + topic.title.replace(/[.*+?^$/{}()|[\]\\]/g, '-'))} >
+                          {this.displayTitle(topic.title)}
+                        </Link>
+                        <br />
+                        {
+                          // post link
+                          typeof topic.sites[0] !== "undefined" &&
+                            <Link href={"/sites?s=" + topic.sites[0].url} >
+                              <a >
+                                {topic.sites[0].url.length > 50 ? topic.sites[0].url.substr(0, 40) + "..." : topic.sites[0].url}
+                              </a>
+                            </Link>
+                        }
+                      </Typography>
+                    </CardContent>
+
+                    {/* card action icons */}
+                    <CardActionsIcons 
+                    // topic votes 
+                      votes={topic.votes}
+                      // topic comment
+                      comment={typeof topic.comment[0] !== "undefined" ? topic.comment[0].count : ""}
+                      topicId={topic.id}
+                      topicUserId={topic.user[0].id}
+                      token={token}
+                      topicObjId={topic._id}
+                      // link for the topic
+                      link={encodeURI("/topics/" + topic._id + "/" + topic.title.replace(/[.*+?^$/{}()|[\]\\]/g, '-'))}
+                    />
+                    
+                    {/* coin details */}
+                    <TopicCoin 
+                      gift={topic.gift}
+                    />
+                  </Card>
+                </Grid>
             ))
           }
-        </Grid>
+        {/* </Grid> */}
       </Grid>
+      // </React.Fragment>
     );
   }
 }

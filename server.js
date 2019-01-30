@@ -1,6 +1,6 @@
 const { createServer } = require('http')
 const next = require('next')
-const routes = require('./routes')
+const routes = require('./routes');
 
 const port = parseInt(process.env.PORT, 10) || 4001
 const dev = process.env.NODE_ENV !== 'production'

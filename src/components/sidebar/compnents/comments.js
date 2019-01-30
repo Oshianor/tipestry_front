@@ -25,6 +25,7 @@ import TopicCoins from './topicCoins';
 import Reply from '@material-ui/icons/Reply';
 import Replies from './replies';
 import Replycompose from './replycompose';
+import { Lang } from '../../../../lang';
 
 
 const styles = theme => ({
@@ -237,7 +238,7 @@ class Comments extends React.Component {
 								}
 								subheader={
 									<p style={{ fontSize: 10, margin: 0 }} >
-										{Moment(comment.created_at).fromNow()}
+										{Moment(comment.created_at).locale(Lang.locale).fromNow()}
 									</p>
 								}
 							/>

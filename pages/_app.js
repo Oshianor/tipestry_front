@@ -9,6 +9,7 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import appReducer from '../src/reducers/index';
+import { Lang } from '../lang';
 
 const store = createStore(appReducer, applyMiddleware(thunk));
 
@@ -31,9 +32,14 @@ class MyApp extends App {
     return (
       <Container>
         <Head>
-          <title>Tipestry | Home</title>
+          <title>
+            Tipestry | {Lang.c1}
+            { /* Home // 家 */ }
+            
+          </title>
           <meta charset="UTF-8" />
-          <meta name="description" content="Comment cryptocurrency on any website and get tipped" />
+          { /* <meta name="description" content="Comment cryptocurrency on any website and get tipped" />  // 在任何网站上评论加密货币并获得提示 */ }
+          <meta name="description" content={Lang.b1} />
           <meta name="keywords" content="Tipestry, Cryptocurrency" />
           <meta name="author" content="Abundance" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />

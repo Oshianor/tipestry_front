@@ -19,6 +19,7 @@ import axios from 'axios';
 import { config } from '../../../../config';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import { Lang } from '../../../../lang';
 
 
 
@@ -207,7 +208,7 @@ class Repiles extends React.Component {
 								}
 								subheader={
 									<p style={{ fontSize: 10, margin: 0 }} >
-										{Moment(reply.created_at).fromNow()}
+										{Moment(reply.created_at).locale(Lang.locale).fromNow()}
 									</p>
 								}
 							/>

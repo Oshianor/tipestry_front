@@ -17,7 +17,6 @@ import Router from "next/router";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import green from '@material-ui/core/colors/green';
 import Alert from '../reuseable/alert';
-import { Lang } from '../../../lang';
 
 const styles = theme => ({
   root: {
@@ -70,23 +69,15 @@ class TopicList extends React.Component {
 
 	handleChange = name => event => {
 		if(name === 'title') {
-			console.log(event.target.value.length <= 30);
-			
-			if(event.target.value.length <= 30) {
+			if(event.target.value !== "") {
 				this.setState({
-					[name]: event.target.value
+					[name]: event.target.value,
 				});
 				return;
 			}
-			this.setState({
-				open: true,
-				msg: Lang.p
-				// "Title field can only contain 30 characters" // 标题字段只能包含30个字符
-			})
-			return;
 		}
 		this.setState({
-			message: event.target.value,
+			[name]: event.target.value,
 		});
 		return;
 	};
@@ -103,21 +94,21 @@ class TopicList extends React.Component {
 						<div>
 							<Typography variant="h4" >
 								{/* There currently no topics for this site */}
-								{Lang.l2}
+								目前没有此网站的主题
 							</Typography>
 							<Typography variant="h6" >
 								{/* Please  */}
-								{Lang.m2}
+								请
 								<Link href="/login" >
 									<a>
 										&nbsp;
 										{/* Login */}
-										{Lang.j}
+										登录
 										&nbsp;
 									</a>
 								</Link> 
 								{/* to create a topic and earn coin today */}
-								{Lang.n2}
+								创建一个主题，今天赚钱
 							</Typography>
 							
 						</div>
@@ -135,7 +126,7 @@ class TopicList extends React.Component {
 		const { title, message } = this.state;
 		const { url } = this.props;
 		let token = localStorage.getItem('token');
-		if (token && title !== "") {
+		if (token) {
 			const options = {
 				method: 'POST',
 				headers: {
@@ -163,12 +154,6 @@ class TopicList extends React.Component {
 				open: true,
 				msg: site.data.msg
 			})
-		} else {
-			this.setState({
-				open: true,
-				msg: Lang.q
-				// // "Title field can't be empty" // 标题字段不能为空
-			})
 		}
 		
 	}
@@ -178,16 +163,16 @@ class TopicList extends React.Component {
 		const { classes } = this.props;
 		const { title, titleHelper, message, loading } = this.state;
 		return (
-			<div className={classes.container} noValidate autoComplete="off">
-				<Typography style={{ textAlign: 'center' }} variant='subtitle1' >
-					{/* ADD A TOPIC AND MAKE A DIFFERENCE */}
-					{Lang.o}
-				</Typography>
+			<form className={classes.container} noValidate autoComplete="off">
+			<Typography style={{ textAlign: 'center' }} variant='subtitle1' >
+				{/* ADD A TOPIC AND MAKE A DIFFERENCE */}
+				添加一个话题并使之有所不同
+			</Typography>
         <TextField
 					required
           id="outlined-name"
 					// label="Title"
-					label={Lang.o2}
+					label="标题"
 					error={titleHelper.err}
           className={classes.textField}
           value={title}
@@ -198,7 +183,7 @@ class TopicList extends React.Component {
 					helperText={titleHelper.msg}
           variant="outlined"
         />
-				<div style={{ display: 'flex', marginTop: -15 }} >
+				<div style={{ display: 'flex', marginTop: -9 }} >
 					<p style={30 - title.length < 10 ? { color: "red"} : { color: "black" }} className={classes.cnt}>
 						{30 - title.length}
 					</p>
@@ -207,7 +192,7 @@ class TopicList extends React.Component {
         <TextField
           id="outlined-required"
 					// label="Message"
-					label={Lang.p2}
+					label="信息留言"
 					value={message}
 					fullWidth
 					className={classes.textField}
@@ -220,9 +205,9 @@ class TopicList extends React.Component {
 				<Button disabled={loading} variant="contained" color='primary' onClick={this.handleAddTopic.bind(this)} >
 					
 					{/* {!loading ? "Add Topic" : <CircularProgress size={24} className={classes.buttonProgress} />} */}
-					{!loading ? Lang.r : <CircularProgress size={24} className={classes.buttonProgress} />}
+					{!loading ? "添加话题" : <CircularProgress size={24} className={classes.buttonProgress} />}
 				</Button>
-			</div>
+			</form>
 		)
 	}
 
@@ -245,8 +230,8 @@ class TopicList extends React.Component {
 					:
 						<React.Fragment>
 							<Typography variant="h5" style={{ textAlign: 'center' }} >
-								{ /* Topics // 话题*/ }
-								{Lang.s}
+								{/* Topics */}
+								话题
 							</Typography>
 							<div style={{ margin: "0 10%" }}>
 								<div style={{ 
@@ -290,7 +275,7 @@ class TopicList extends React.Component {
 																			{topic.user[0].username}															
 																		</a>
 																	</Link>
-																	&nbsp; {moment(topic.created_at).locale(Lang.locale).fromNow()}
+																	&nbsp; {moment(topic.created_at).locale('zh_cn').fromNow()}
 																</Typography>
 															</React.Fragment>
 														}

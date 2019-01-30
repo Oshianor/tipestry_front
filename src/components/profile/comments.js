@@ -10,6 +10,7 @@ import Thumbnails from '../reuseable/thumbnails';
 import Link from 'next/link';
 import Moment from "moment";
 import { config } from "../../../config";
+import { Lang } from '../../../lang';
 
 const styles = theme => ({
   card: {
@@ -41,12 +42,15 @@ class Comments extends React.Component {
 			<React.Fragment>
 				{
 					typeof value[0] === "undefined" ?
-						<Typography 
-							style={{ marginTop: "10%", textAlign: 'center' }} 
-							variant="h6" 
-						>
-							YOU CURRENTLY HAVE NO COMMENTS
-						</Typography>
+						// <Typography 
+						// 	style={{ marginTop: "10%", textAlign: 'center' }} 
+						// 	variant="h6" 
+						// >
+						// 	YOU CURRENTLY HAVE NO COMMENTS
+						// </Typography>
+						<div style={{ display: "flex", justifyContent: "center" }} >
+							<img src="/static/images/sadface.svg" style={{  marginTop: 40, width: 150 }} />
+						</div>
 					:
 						value.map((val) => (
 							<Card className={classes.card} key={val._id} >
@@ -75,7 +79,9 @@ class Comments extends React.Component {
                   }
                   subheader={
                     <p style={{ fontSize: 10, margin: 0 }} >
-                      {Moment(val.created_at).fromNow()}
+                      {
+                      	Moment(val.created_at).locale(Lang.locale).fromNow()
+                      }
                     </p>
                   }
 								/>

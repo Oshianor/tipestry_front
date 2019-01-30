@@ -18,6 +18,7 @@ import green from '@material-ui/core/colors/green';
 import Axios from 'axios';
 
 import { config } from '../../../config';
+import { Lang } from '../../../lang';
 
 const styles = theme => ({
   root: {
@@ -254,7 +255,8 @@ class LoginPath extends Component {
         </Link>
 
         <Typography variant="overline" gutterBottom style={{ margin: '2% 8%', marginTop: "15%", fontSize: 20 }}> 
-          Welcome, Login to your Account
+          {/* Welcome, Login to your Account */}
+          {Lang.s1}
         </Typography>
         <form className={classes.container} noValidate autoComplete="off">
           {
@@ -267,7 +269,7 @@ class LoginPath extends Component {
             error={emailHelper.err}
             name="email"
             value={email}
-            label="Email"
+            label={Lang.h1}
             type="email"
             required
             style={{ margin: '2% 8%' }}
@@ -283,7 +285,7 @@ class LoginPath extends Component {
             error={passwordHelper.err}
             required
             name="password"
-            label="Password"
+            label={Lang.i1}
             style={{ margin: '2% 8%' }}
             value={password}
             onBlur={this.handlePassword}
@@ -301,23 +303,29 @@ class LoginPath extends Component {
                 disabled={loading}
                 onClick={this.handleLogin.bind(this)}
                 className={classes.button}>
-                {loading ? <CircularProgress size={24} className={classes.buttonProgress} /> : "Log In"}
+                {loading ? <CircularProgress size={24} className={classes.buttonProgress} /> : Lang.k1}
               </Button>
               
             </Grid>
             <Grid item xs={6} sm={6} style={{ paddingRight: 0 }} >
               <Typography variant="overline" gutterBottom className={classes.forgot}> 
                 <Link href="/forgotpassword">
-                  <a>Forgot Password</a>
+                  <a>
+                    {/* Forgot Password // 忘记密码 */}
+                  </a>
                 </Link>
               </Typography>
             </Grid>
           </Grid>
 
           <Typography variant="overline" gutterBottom style={{ margin: '0 8%' }} > 
-            Don't have and account? &nbsp;
+            {/* Don't have and account?  */}
+            {Lang.e1}&nbsp;
             <Link href="/register">
-              <a>Sign Up</a>
+              <a>
+                {/* Sign Up */}
+                {Lang.f1}
+              </a>
             </Link>
           </Typography>
               

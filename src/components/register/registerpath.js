@@ -17,6 +17,7 @@ import Axios from 'axios';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getToken } from "../../actions/data";
+import { Lang } from '../../../lang';
 
 
 const styles = theme => ({
@@ -306,7 +307,8 @@ class RegisterPath extends Component {
         </Link>
 
         <Typography variant="overline" gutterBottom style={{ margin: '2% 8%', marginTop: "15%", fontSize: 20 }}> 
-          New Here? Create an Account...
+          {/* New Here? Create an Account... */}
+          {Lang.m1}
         </Typography>
         <form className={classes.container} noValidate autoComplete="off">
           {
@@ -319,7 +321,8 @@ class RegisterPath extends Component {
             error={usernameHelper.err}
             name="username"
             value={username}
-            label="Username"
+            // label="Username" // 用户名
+            label={Lang.g1}
             style={{ margin: '2% 8%' }}
             onBlur={this.handleUsername}
             onChange={this.onchnage}
@@ -333,7 +336,7 @@ class RegisterPath extends Component {
             error={emailHelper.err}
             name="email"
             value={email}
-            label="Email"
+            label={Lang.h1} //"Email"
             style={{ margin: '2% 8%' }}
             onBlur={this.handleEmail}
             helperText={emailHelper.msg}
@@ -346,7 +349,7 @@ class RegisterPath extends Component {
          <TextField
             error={passwordHelper.err}
             name="password"
-            label="Password"
+            label={Lang.i1}  //"Password" //   //密码
             style={{ margin: '2% 8%' }}
             value={password}
             type="password"
@@ -361,7 +364,7 @@ class RegisterPath extends Component {
           <TextField
             error={confirmPasswordHelper.err}
             name="confirmPassword"
-            label="Confirm Password"
+            label={Lang.j1}  //"Confirm Password" 确认密码
             style={{ margin: '2% 8%' }}
             value={confirmPassword}
             onChange={this.onchnage}
@@ -376,14 +379,18 @@ class RegisterPath extends Component {
           <Grid container spacing={24} style={{ margin: '0 8%' }} >
             <Grid item xs={6} sm={6} style={{ paddingLeft: 0 }}>
               <Button variant="outlined" color="secondary" onClick={this.handleRegister} className={classes.button}>
-                {loading ? <CircularProgress size={24} className={classes.buttonProgress} /> : "Sign Up"}
+                {loading ? <CircularProgress size={24} className={classes.buttonProgress} /> : Lang.f1}
               </Button>
             </Grid>
             <Grid item xs={6} sm={6} style={{ paddingRight: 0 }} >
               <Typography variant="overline" gutterBottom className={classes.forgot} > 
-                Have an account? &nbsp;
+                {/* Have an account? &nbsp; // 有一个账户？ */}
+                {Lang.l1} &nbsp;
                 <Link href="/login">
-                  <a>Log In</a>
+                  <a>
+                    {Lang.k1}
+                    {/* Log In */}
+                  </a> 
                 </Link>
               </Typography>
             </Grid>

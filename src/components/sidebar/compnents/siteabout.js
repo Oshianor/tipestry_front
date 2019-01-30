@@ -13,6 +13,7 @@ import Link from 'next/link';
 import CardActionIcons from "../../post/components/CardActionIcons";
 import { config } from "../../../../config";
 import TopicCoin from './topicCoins';
+import { Lang } from '../../../../lang';
 
 const styles = theme => ({
   card: {
@@ -94,7 +95,7 @@ class SiteAbout extends React.Component {
             }
             subheader={
               <p style={{ fontSize: 10, margin: 0 }} >
-                {Moment(data.siteTopic[0].created_at).fromNow()}
+                {Moment(data.siteTopic[0].created_at).locale(Lang.locale).fromNow()}
               </p>
             }
           />

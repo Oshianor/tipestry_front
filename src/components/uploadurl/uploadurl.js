@@ -10,6 +10,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import isURL from 'validator/lib/isURL';
 import PropTypes from 'prop-types';
 import Router from "next/router";
+import { Lang } from '../../../lang';
 
 class UploadUrl extends React.Component {
 	state = {
@@ -51,16 +52,20 @@ class UploadUrl extends React.Component {
 				onClose={() => handleClose()}
 				aria-labelledby="form-dialog-title"
 			>
-				<DialogTitle id="form-dialog-title">Upload A Post</DialogTitle>
+				<DialogTitle id="form-dialog-title">
+					{/* Enter a Url */}
+					{Lang.h2}
+				</DialogTitle>
 				<DialogContent>
 					<DialogContentText>
-						Enter a url of your choice and create a post.
+						{/* Enter a url of your choice and create a post. */}
+						{Lang.i2}
 					</DialogContentText>
 					<TextField
 						autoFocus
 						margin="dense"
 						id="name"
-						label="Enter a Url"
+						label={Lang.h2}
 						type="url"
 						variant="outlined"
 						fullWidth
@@ -70,10 +75,12 @@ class UploadUrl extends React.Component {
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={() => handleClose()} color="secondary">
-						No, Thanks
+						{/* No, Thanks */}
+						{Lang.k2}
 					</Button>
 					<Button onClick={this.handleURLPost} color="primary" disabled={err} >
-						Upload
+						{/* Upload */}
+						{Lang.j2}
 					</Button>
 				</DialogActions>
 			</Dialog>

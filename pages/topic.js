@@ -44,6 +44,9 @@ class Topic extends Component {
       let user = await axios(options);
       getUser(user.data[0]);
     }
+
+    // send request to the server to save the user ip
+    this.recordViews(JSON.parse(dataTopic));
     
     if (dataTopic) {
       getSiteTopic(JSON.parse(dataTopic));
@@ -52,7 +55,20 @@ class Topic extends Component {
         loading: false
       })
     }
-	}
+  }
+  
+  recordViews = async (topic) => {
+    const options = {
+      method: 'POST',
+      data: JSON.stringify({ topicObjId: topic[0]._id }),
+      headers: {
+        'content-type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      },
+      url: config.api + '/topic/views'
+    }
+    await axios(options);
+  }
 	
 
 	render() {
