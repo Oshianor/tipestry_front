@@ -162,7 +162,7 @@ class Repiles extends React.Component {
 									}
 								}
 								avatar={
-									<Link href={"/profile/" + reply.user._id + "/@" + reply.user[0].username}>
+									<Link href={"/profile/" + reply.user[0]._id + "/@" + reply.user[0].username}>
 										<a style={{ textDecoration: 'none' }}>
 											<Thumbnails 
 												size="xs" borderColor="black" borderWidth={1}
@@ -199,7 +199,7 @@ class Repiles extends React.Component {
 									</CardActions>
 								}
 								title={
-									<Link href={"/profile/@" + reply.user[0].username} >
+									<Link href={"/profile/" + reply.user[0]._id + "/@" + reply.user[0].username} >
 										<a style={{ color: '#1F7BD8', textDecoration: 'none' }}>
 											<strong style={{ color: 'gray' }}>@</strong>
 											{reply.user[0].username}
