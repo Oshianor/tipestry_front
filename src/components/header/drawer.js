@@ -98,7 +98,8 @@ class MiniDrawer extends React.Component {
 		score: false,
 		star: false,
 		stage: false,
-		userinfo: false
+		userinfo: false,
+		token: null
 	}
 
 	componentDidMount = () => {

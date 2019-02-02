@@ -29,6 +29,9 @@ const styles = (theme) => ({
 
 
 class Stages extends Component {
+	state = {
+		token: null
+	}
 	displayCoin = (coin) => {
 		const sty = {
 			marginBottom: -5
@@ -42,69 +45,81 @@ class Stages extends Component {
 		}
 	}
 
+	componentDidMount = () => {
+		let token = localStorage.getItem('token');
+		this.setState({
+			token
+		})
+	}
+
 
 	render() {
 		const { data, classes } = this.props;
+		const { token } = this.state;
 		return (
 			<div className={classes.root} >
 				<Typography variant="button" style={{ fontSize: 25, borderBottom: "1px solid darkgray" }}>
 					{Lang.b3}
 				</Typography>
-				<span>
-						{/*Level {the level}  */}
-					<Typography style={{ marginTop: 15 }} >
-						{Lang.z2}&nbsp;
-						<strong>{typeof data.user.stage !== "undefined" ? data.user.stage : 1}</strong>
-					</Typography>
-						<Progress 
-							percent={
-								typeof data.user.stage !== "undefined" ? 
-									(data.user.stage / 10) * 100 
-								:
-									1 / 10 * 100
-							}
-						/>
-				</span>
-
-				<br />
-				
-				{/* REward for level {the level} */}
-				<Typography>
-					{Lang.a3}&nbsp;{Lang.z2}&nbsp;
-					<strong>{typeof data.user.stage !== "undefined" ? data.user.stage + 1 : 2}:</strong>
-					&nbsp;
-					{
-						// typeof data.user.levels.reward !== "undefined" ? 
-							this.displayCoin(data.user.levels.reward.coin) 
-							// : ""
-					}
-					{
-						// typeof data.user.levels.reward !== "undefined" ? 
-							data.user.levels.reward.amt 
-							// : ""
-					}
-				</Typography>
-
-				<br />
 				{
-					// typeof data.user.levels.data !== "undefined" &&
-					data.user.levels.data.map((stage, index) => (
-						<Grid container spacing={8} key={index} >
-							<Grid item xs={7} >
-								<Typography>{stage.text}</Typography>
-							</Grid>
-							<Grid item xs={5} >
-								<Progress percent={stage.val} />
-							</Grid>
-						</Grid>
-					))
-				}
+					token &&
+						<div>
+							{/*Level {the level}  */}
+							<Typography style={{ marginTop: 15 }} >
+								{Lang.z2}&nbsp;
+								<strong>{typeof data.user.stage !== "undefined" ? data.user.stage : 1}</strong>
+							</Typography>
+								<Progress 
+									percent={
+										typeof data.user.stage !== "undefined" ? 
+											(data.user.stage / 10) * 100 
+										:
+											1 / 10 * 100
+									}
+								/>
+						
 
-				<Typography variant='caption' style={{ margin: '10% 2% 0%', color: 'gray' }} >
-					<strong>Warning: </strong>
-					Using multiple accounts to give yourself upvotes or tips can result in a ban and the 
-					loss of all coins in the account.
-				</Typography>
+						<br />
+				
+							{/* REward for level {the level} */}
+							<Typography>
+								{Lang.a3}&nbsp;{Lang.z2}&nbsp;
+								<strong>{typeof data.user.stage !== "undefined" ? data.user.stage + 1 : 2}:</strong>
+								&nbsp;
+								{
+									typeof data.user.levels.reward !== "undefined" ? 
+										this.displayCoin(data.user.levels.reward.coin) 
+										: ""
+								}
+								{
+									typeof data.user.levels.reward !== "undefined" ? 
+										data.user.levels.reward.amt 
+										: ""
+								}
+							</Typography>
+
+							<br />
+							{
+								// typeof data.user.levels.data !== "undefined" &&
+								data.user.levels.data.map((stage, index) => (
+									<Grid container spacing={8} key={index} >
+										<Grid item xs={7} >
+											<Typography>{stage.text}</Typography>
+										</Grid>
+										<Grid item xs={5} >
+											<Progress percent={stage.val} />
+										</Grid>
+									</Grid>
+								))
+							}
+
+							<Typography variant='caption' style={{ margin: '10% 2% 0%', color: 'gray' }} >
+								<strong>Warning: </strong>
+								Using multiple accounts to give yourself upvotes or tips can result in a ban and the 
+								loss of all coins in the account.
+							</Typography>
+						</div>
+				}
 			</div>
 		);
 	}

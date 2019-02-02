@@ -31,10 +31,14 @@ const styles = {
 
 
 class Userinfo extends Component {
-		displayCoin = (coin) => {
+	state = {
+		token: null
+	}
+
+	displayCoin = (coin) => {
 		const sty = {
 			marginBottom: -37,
-    	marginLeft: -40
+    	// marginLeft: -40
 		}
 		if (coin === "XRT") {
 			return <img src="/static/tipcoins/Tip-3.png" alt="comments" width='25' height="25" style={sty} />;
@@ -45,74 +49,88 @@ class Userinfo extends Component {
 		}
 	}
 
+	componentDidMount = () => {
+		let token = localStorage.getItem('token');
+		this.setState({
+			token
+		})
+	}
+	
+
 	
 	render() {
+		const { token } = this.state;
 		const { classes, data } = this.props;
+		
 		return (
 			<div className={classes.root} >
-				<Grid container justify="center" style={{ margin: "0px 0px 30px 0px" }} >
-					<Grid item className={classes.tab} >
-						<Typography variant="h6" style={{ fontSize: 15 }} >
-							{/* votes */}
-							{Lang.v1}
-						</Typography>
-						<Typography variant="button" className={classes.pos} >
-							{data.user.votes}
-						</Typography>
-					</Grid>
-					<Grid item className={classes.tab} >
-						<Typography variant="h6" style={{ fontSize: 15 }} >
-							{/* TIPS */}
-							{Lang.w1}
-						</Typography>
-						<Typography variant="button" className={classes.pos} >
-							{data.user.tips}
-						</Typography>
-					</Grid>
-					<Grid item className={classes.tab} >
-						<Typography variant="h6" style={{ fontSize: 15 }} >
-							{/* FOLLOWERS */}
-							{Lang.x1}
-						</Typography>
-						<Typography variant="button" className={classes.pos} >
-							{typeof data.user.followers !== "undefined" ? data.user.followers.length : 0}
-						</Typography>
-					</Grid>
-				</Grid>
-
-				<Grid container justify="center" style={{ margin: "0px 0px 30px 0px" }} >
-					<Grid item lg={4} xl={4} >
-						<div style={{ width: 75, height: 75 }} >
-							<CircularProgressbar
-								percentage={
-									typeof data.user.stage !== "undefined" ? 
-										(data.user.stage / 10) * 100
-									:
-										(1 / 10 * 100) + " %" 
-								}
-								text={
-									typeof data.user.stage !== "undefined" ? 
-										`${(data.user.stage / 10) * 100}%`
-									:
-										1 / 10 * 100 + " %"
-								}
-								styles={{
-									path: { stroke: `rgba(62, 152, 199, 50)` },
-									text: { fill: '#f88', fontSize: '16px' },
-								}}
-							/>
-						</div>
-					</Grid>
-					<Grid item lg={3} xl={3} >
-						<Typography variant="h6" style={{ fontSize: 15, padding: "10%" }} >
-							 {/* NEXT REWARD: */}
-							{Lang.y1}
-						</Typography>
-					</Grid>
-					<Grid item lg={5} xl={5} >
-						{this.displayCoin(data.user.levels.reward.coin)}
-					</Grid>
-				</Grid>
+				{
+					token &&
+						<React.Fragment>
+							<Grid container justify="center" style={{ margin: "0px 0px 30px 0px" }} >
+								<Grid item className={classes.tab} >
+									<Typography variant="h6" style={{ fontSize: 15 }} >
+										{/* votes */}
+										{Lang.v1}
+									</Typography>
+									<Typography variant="button" className={classes.pos} >
+										{data.user.votes}
+									</Typography>
+								</Grid>
+								<Grid item className={classes.tab} >
+									<Typography variant="h6" style={{ fontSize: 15 }} >
+										{/* TIPS */}
+										{Lang.w1}
+									</Typography>
+									<Typography variant="button" className={classes.pos} >
+										{data.user.tips}
+									</Typography>
+								</Grid>
+								<Grid item className={classes.tab} >
+									<Typography variant="h6" style={{ fontSize: 15 }} >
+										{/* FOLLOWERS */}
+										{Lang.x1}
+									</Typography>
+									<Typography variant="button" className={classes.pos} >
+										{typeof data.user.followers !== "undefined" ? data.user.followers.length : 0}
+									</Typography>
+								</Grid>
+							</Grid>
+							<Grid container justify="center" style={{ margin: "0px 0px 30px 0px" }} >
+								<Grid item xl={4} >
+									<div style={{ width: 75, height: 75 }} >
+										<CircularProgressbar
+											percentage={
+												typeof data.user.stage !== "undefined" ? 
+													(data.user.stage / 10) * 100
+												:
+													(1 / 10) * 100
+											}
+											text={
+												typeof data.user.stage !== "undefined" ? 
+													`${(data.user.stage / 10) * 100}%`
+												:
+													`${(1 / 10) * 100}%`
+											}
+											styles={{
+												path: { stroke: `rgba(62, 152, 199, 50)` },
+												text: { fill: '#f88', fontSize: '16px' },
+											}}
+										/>
+									</div>
+								</Grid>
+								<Grid item xl={4} >
+									<Typography variant="h6" style={{ fontSize: 15, padding: "10%" }} >
+										{/* NEXT REWARD: */}
+										{Lang.y1}
+									</Typography>
+								</Grid>
+								<Grid item xl={4} >
+									{this.displayCoin(data.user.levels.reward.coin)}
+								</Grid>
+							</Grid>
+						</React.Fragment>
+				}
 			</div>
 		);
 	}
