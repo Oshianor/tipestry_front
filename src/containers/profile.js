@@ -13,12 +13,20 @@ import Replies from '../components/profile/replies';
 import Post from '../components/post/post';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import Progress from "../components/reuseable/progress"
+import Progress from "../components/reuseable/progress";
 import { Lang } from '../../lang';
 import Drawer from '../components/header/drawer';
-// import LinearProgress from '@material-ui/core/LinearProgress';
+import ExpandMore from "@material-ui/icons/ExpandMore";
+import IconButton from '@material-ui/core/IconButton';
+import BottomScrollListerer from 'react-bottom-scroll-listener';
+import axios from 'axios';
+import { config } from '../../config';
+import { withRouter } from 'next/router';
+import { bindActionCreators } from 'redux';
+import { getTopics, getFavourite } from "../actions/data";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-const styles = {
+const styles = (theme) => ({
   root: {
     flexGrow: 1,
     marginTop: 100,
@@ -30,14 +38,20 @@ const styles = {
   },
   pos: {
     // position: "absolute"
-  }
-};
+  },
+  progress: {
+    margin: theme.spacing.unit * 2,
+  },
+});
 
 class Profile extends React.Component {
   state = {
     value: 0,
     drawer: false,
-    stopScroll: false
+    stopScroll: false,
+    userTopicPageNum: 2,
+    favouritePageNum: 2, 
+    loading: false
   };
 
   handleChange(value) {
@@ -164,13 +178,80 @@ class Profile extends React.Component {
     )
   }
 
+  handleFetchMoreUserPost = async () => {
+    const { router, getTopics, data } = this.props;
+    const { userTopicPageNum, loading } = this.state;
+    
+    if (!loading) {
+      try {
+        this.setState({ loading: true });
+        let profile = await axios.get(config.api + '/users/profile/' + router.query.userObjId + "?userPageTopic=" + userTopicPageNum);
+        console.log(profile);
+        
+        if (profile.data.userTopics) {
+          this.setState({
+            userTopicPageNum: userTopicPageNum + 1,
+            loading: false
+          })
+          // get the new updated data and push to the end of the array topics
+          profile.data.userTopics.forEach(obj => {
+            data.topics.push(obj);
+          })
+          getTopics(data.topics);
+        }
+
+      } catch (err) {
+        console.log(err);
+
+      }
+    }
+  }
+
+  handleFetchMoreUserFavouritePost = async () => {
+    const { router, getFavourite, data } = this.props;
+    const { favouritePageNum, loading } = this.state;
+    
+    if (!loading) {
+      try {
+        this.setState({ loading: true });
+        let favor = await axios.get(config.api + '/users/profile/' + router.query.userObjId + "?userFavouritePageTopic=" + favouritePageNum)
+        console.log(favor);
+        
+        if (favor.data.favourite) {
+          this.setState({
+            favouritePageNum: favouritePageNum + 1,
+            loading: false
+          })
+          // get the new updated data and push to the end of the array topics
+          favor.data.favourite.forEach(obj => {
+            data.favourite.push(obj);
+          })
+          getFavourite(data.favourite);
+        }
+
+      } catch (err) {
+        console.log(err);
+
+      }
+    }
+    
+  }
+
   displaySection = () => {
     const { value } = this.state;
     const { data } = this.props;
     if (value === 0) {
-      return <Post topicValue={data.topics} source="usertopics" errMsg="YOU CURRENTLY HAVE NO POST" />;
+      return (
+        <BottomScrollListerer onBottom={this.handleFetchMoreUserPost} >
+          <Post topicValue={data.topics} source="usertopics" />
+        </BottomScrollListerer>
+      );
     } else if (value === 1) {
-      return <Post topicValue={data.favourite} source="favourite" errMsg="YOU CURRENTLY HAVE NO FAVOURITE POST" />;
+      return (
+        <BottomScrollListerer onBottom={this.handleFetchMoreUserFavouritePost} >
+          <Post topicValue={data.favourite} source="favourite" />
+        </BottomScrollListerer>
+      )
     } else if (value === 2) {
       return <Comments value={data.comment} />;
     } else if (value === 3) {
@@ -292,7 +373,9 @@ class Profile extends React.Component {
 	}
 
   render() {
-		const { stopScroll, drawer } = this.state;
+    const { stopScroll, drawer, loading, value } = this.state;
+    const { classes } = this.props;
+    // console.log(router);
     return (
       <div>
         <Header 
@@ -314,6 +397,18 @@ class Profile extends React.Component {
             {this.displayInfo()}
             {this.displayTab()}
             {this.displaySection()}
+            {
+              // show a preloader sign for user post and user favourite post
+              value === 0 || value === 1 &&
+                <IconButton style={{ display: "contents" }} >
+                  {
+                    loading ?
+                      <CircularProgress className={classes.progress} color="secondary" />
+                    : 
+                      <ExpandMore />
+                  }
+                </IconButton>
+            }
           </div>
         </Drawer>
       </div>
@@ -331,7 +426,14 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, )(withStyles(styles)(Profile));
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    getTopics: getTopics,
+    getFavourite: getFavourite
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withStyles(styles)(Profile)));
 
 
 {/* <div style={{ margin: "20px 20%" }}>

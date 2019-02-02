@@ -124,7 +124,7 @@ class ForgotPath extends Component {
       email
     };
     
-    console.log(data);
+    // console.log(data);
     const options = {
       method: 'POST',
       headers: {
@@ -138,7 +138,7 @@ class ForgotPath extends Component {
 
     try {
       let forgot = await Axios(options);
-      console.log("forgot", forgot);
+      // console.log("forgot", forgot);
       
       if (!forgot.data.error) {
       //   this.setState({

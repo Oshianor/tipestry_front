@@ -12,6 +12,8 @@ import { getSiteTopic } from "../../../actions/data";
 import Link from "next/link";
 import { Lang } from '../../../../lang';
 
+
+
 const styles = theme => ({
   container: {
     // display: 'flex',
@@ -29,11 +31,13 @@ const styles = theme => ({
   },
 });
 
+
 class Compose extends React.Component {
   state = {
     comment: '',
     token: null
   }
+
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value,

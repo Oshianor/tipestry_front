@@ -49,7 +49,7 @@ class Popular extends React.Component {
 		};
 		let res = await axios(options)
 			if (!res.data.error) {
-				console.log('res.data.content', res.data.content);
+				// console.log('res.data.content', res.data.content);
 				
 				getPopular(res.data.content)
 			}

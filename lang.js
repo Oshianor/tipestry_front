@@ -77,7 +77,10 @@ export const Lang = {
 	w2: 'Date',
 	x2: "Leaderboard",
 	y2: "Popular",
-	// z2: ,
+	z2: "Level",
+	a3: "Reward for",
+	b3: "Progress",
+	c3: 'User Info',
 	locale: "en",
 
 	// CHINESE
@@ -158,6 +161,9 @@ export const Lang = {
 	// w2: '约会',
 	// x2: "排行榜",
 	// y2: "流行",
-	// // z2: ,
+	// z2: "水平",
+	// a3: "奖励",
+	// b3: "进展",
+	// c3: '用户信息'
 	// locale: "zh_cn",
 }

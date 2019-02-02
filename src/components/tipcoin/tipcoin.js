@@ -74,7 +74,7 @@ class TipCoin extends React.Component {
 	}
 	
 	render() {
-		console.log('tip', this.state)
+		// console.log('tip', this.state)
 		const { classes } = this.props;
 		const { tip } = this.state;
 		return (

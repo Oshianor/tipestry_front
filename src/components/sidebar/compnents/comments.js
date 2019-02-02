@@ -26,19 +26,21 @@ import Reply from '@material-ui/icons/Reply';
 import Replies from './replies';
 import Replycompose from './replycompose';
 import { Lang } from '../../../../lang';
-
+import Linkify from 'linkifyjs/react';
 
 const styles = theme => ({
   card: {
 		maxWidth: "100%",
 		marginTop: 5,
-		boxShadow: '11px -1px 24px -4px'
+		// boxShadow: '11px -1px 24px -4px'
+		boxShadow: "1px -1px 8px -4px",
+		borderRadius: 10
 	},
   actions: {
 		display: 'flex',
 		padding: "0px 25px",
 		// borderBottom: '2px solid gray'
-		borderBottom: '1px solid #d8d6d6'
+		// borderBottom: '1px solid #d8d6d6'
   }
 });
 
@@ -60,6 +62,7 @@ class Comments extends React.Component {
   //   });
 
 	// }
+
 
 	handleEdit(id, mesg) {
 		const { edit } = this.state;
@@ -203,7 +206,7 @@ class Comments extends React.Component {
   render() {
 		const { classes, data } = this.props;
 		const { comments, edit, content, replyValues, replyShow } = this.state;
-		console.log(this.state);
+		// console.log(this.state);
 		
     return (
 			<React.Fragment>
@@ -211,6 +214,7 @@ class Comments extends React.Component {
 					data.siteTopic[0].comment.map((comment, index) => (
 						<Card className={classes.card} key={index}>
 							<CardHeader
+								style={{ paddingTop: 5, paddingBottom: 7 }}
 								avatar={
 									<Link href={"/profile/" + comment.commentUser[0]._id + "/@" + comment.commentUser[0].username}>
 										<a style={{ textDecoration: 'none' }}>
@@ -266,8 +270,8 @@ class Comments extends React.Component {
 											</Button>
 										</form>
 									:
-										<Typography component="p">
-											{comment.content}
+										<Typography component="p" style={{ fontSize: 12, fontWeight: 'lighter' }} >
+											<Linkify tagName="p">{comment.content}</Linkify>
 										</Typography>
 								}
 							</CardContent>

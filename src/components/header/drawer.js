@@ -28,7 +28,10 @@ import Board from "@material-ui/icons/EventNote";
 import Star from "@material-ui/icons/Star";
 import LeaderBoard from "../leaderscoreboard/scoreboard";
 import Popular from '../popular/popular';
-
+import Stage from "../stage/stage";
+import SignalLevel from "@material-ui/icons/SignalCellularAltOutlined";
+import Userinfo from '../userinfo.js/userinfo';
+import Ballot from "@material-ui/icons/Ballot";
 
 const drawerWidth = 240;
 
@@ -93,8 +96,18 @@ class MiniDrawer extends React.Component {
 		tips: false,
 		trendings: false,
 		score: false,
-		star: false
+		star: false,
+		stage: false,
+		userinfo: false
 	}
+
+	componentDidMount = () => {
+		let token = localStorage.getItem('token')
+		this.setState({
+			token
+		})
+	}
+	
 
 	handleOpenRecentTips = () => {
 		this.setState({
@@ -143,8 +156,33 @@ class MiniDrawer extends React.Component {
 		})
 	}
 
+	handleOpenStage = () => {
+		this.setState({
+			stage: true
+		})
+	}
+
+	handleCloseStage = () => {
+		this.setState({
+			stage: false
+		})
+	}
+
+	handleOpenUserInfo = () => {
+		this.setState({
+			userinfo: true
+		})
+	}
+
+	handleCloseUserInfo = () => {
+		this.setState({
+			userinfo: false
+		})
+	}
+
 	displayDrawer = () => {
 		const { classes, top, theme, drawer, handleDrawerClose, stopScroll, overlay } = this.props;
+		const { token } = this.state;
 		return (
 			<Drawer
 						variant="permanent"
@@ -215,6 +253,26 @@ class MiniDrawer extends React.Component {
 								</ListItemIcon>
 								<ListItemText primary={Lang.y2} />
 							</ListItem>
+							{
+								token &&
+									<React.Fragment>
+										<Divider />
+										<ListItem button onClick={this.handleOpenStage}>
+											<ListItemIcon>
+												<SignalLevel />
+											</ListItemIcon>
+											<ListItemText primary={Lang.b3} />
+										</ListItem>
+										<Divider />
+										<ListItem button onClick={this.handleOpenUserInfo}>
+											<ListItemIcon>
+												<Ballot />
+											</ListItemIcon>
+											<ListItemText primary={Lang.c3} />
+										</ListItem>
+										<Divider />
+									</React.Fragment>
+							}
 						</List>
 					</Drawer>
 		)
@@ -222,7 +280,7 @@ class MiniDrawer extends React.Component {
 
   render() {
     const { classes, showOnLg } = this.props;
-		const { tips, trendings, score, star } = this.state;
+		const { tips, trendings, score, star, stage, userinfo } = this.state;
 		console.log(this.state)
     return (
       <div className={classes.root}>
@@ -258,6 +316,14 @@ class MiniDrawer extends React.Component {
 
 				<Dialog open={star} handleClose={this.handleClosePopular}>
 					<Popular />
+				</Dialog>
+
+				<Dialog open={stage} handleClose={this.handleCloseStage}>
+					<Stage />
+				</Dialog>
+
+				<Dialog open={userinfo} handleClose={this.handleCloseUserInfo}>
+					<Userinfo />
 				</Dialog>
       </div>
     );

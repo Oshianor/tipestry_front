@@ -102,7 +102,7 @@ class CoinDetails extends React.Component{
         url: config.api + "/crypto/btc/balance",
       };
 			let btc = await Axios(options);
-			console.log(btc);
+			// console.log(btc);
       this.setState({
 				btc: btc.data.result
 			})

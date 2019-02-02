@@ -48,7 +48,6 @@ class Thumb extends React.Component {
     });
 
     if (token) {
-      console.log('token', token);
       
       const options = {
         method: 'GET',
@@ -62,7 +61,7 @@ class Thumb extends React.Component {
       
       let vote = await axios(options);
       if (vote.data.error == false) {
-        console.log(vote.data, "9999999");
+        // console.log(vote.data, "9999999");
         this.setState({
           res: vote.data.content
         })

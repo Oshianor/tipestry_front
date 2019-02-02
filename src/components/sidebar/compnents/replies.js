@@ -20,15 +20,17 @@ import { config } from '../../../../config';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Lang } from '../../../../lang';
-
+import Linkify from 'linkifyjs/react';
 
 
 const styles = theme => ({
 	semicard: {
 		marginLeft: '10%',
 		marginTop: 5,
-		boxShadow: '0px 1px 2px -1px',
-		backgroundColor: "white"
+		// boxShadow: '0px 1px 2px -1px',
+		boxShadow: "1px 4px 0px -4px",
+		backgroundColor: "white",
+		borderRadius: 5
 	},
   media: {
     height: 0,
@@ -106,6 +108,11 @@ class Repiles extends React.Component {
 		});
 	};
 
+	identifyLinks(text) {
+		var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+		return ReactHtmlParser(text.replace(exp, "<a style='text-decoration: none;' href='$1'> $1 </a>"));
+	}
+
 
 	handleDeleteReply = async (replyObjId) => {
 		const { commentId, commentObjId, handleUpdateReply } = this.props;
@@ -146,7 +153,7 @@ class Repiles extends React.Component {
   render() {
 		const { classes, replyValues, data } = this.props;
 		const { edit, content } = this.state;
-		console.log("PPPPPPPPP", replyValues);
+		// console.log("PPPPPPPPP", replyValues);
 		
 
     return (
@@ -179,7 +186,7 @@ class Repiles extends React.Component {
 									</Link>
 								}
 								titleTypographyProps={{ fontSize: 12 }}
-								style={{ padding: "2px 25px"  }}
+								style={{ padding: "8px 25px"  }}
 								action={
 									data.user._id === reply.user[0]._id &&
 									<CardActions className={classes.actions} disableActionSpacing>
@@ -212,7 +219,7 @@ class Repiles extends React.Component {
 									</p>
 								}
 							/>
-							<CardContent style={{ padding: "2px 25px"  }}>
+							<CardContent style={{ paddingTop: 0, paddingBottom: 9, paddingLeft: 25, paddingRight: 25  }}>
 								{
 									edit && edit === reply._id ?
 										<form className={classes.container} noValidate autoComplete="off">
@@ -236,7 +243,7 @@ class Repiles extends React.Component {
 										</form>
 									:
 										<Typography component="p" style={{ fontSize: 12, fontWeight: 'lighter' }}>
-											{reply.content}
+											<Linkify tagName="p">{reply.content}</Linkify>
 										</Typography>
 								}
 							</CardContent>

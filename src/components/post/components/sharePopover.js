@@ -10,6 +10,8 @@ import { withRouter } from 'next/router';
 import { config } from '../../../../config';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Snackbar from '@material-ui/core/Snackbar';
+import axios from 'axios';
+
 
 const styles = theme => ({
   root: {
@@ -114,6 +116,25 @@ class AnchorPlayground extends React.Component {
     });
   };
 
+  async handleCounterForSocial(mode) {
+    let token = localStorage.getItem('token');
+    if (token) {
+      const options = {
+        method: 'POST',
+        data: JSON.stringify({ mode }),
+        headers: {
+          'content-type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'x-auth-token': token
+        },
+        url: config.api + '/users/share/topic'
+      }
+
+      let vote = await axios(options);
+      console.log("Adding count for share", vote);
+    }
+  }
+
   handleChangeTarget = key => event => {
     this.setState({
       [key]: event.target.value,
@@ -151,7 +172,7 @@ class AnchorPlayground extends React.Component {
 
     const id = open ? 'Share' : null;
 
-    console.log(link);
+    // console.log(link);
     
     // console.log("ROYETR", this.props);
     let message = `Visit ${config.host + link} and join the conversation`;
@@ -191,22 +212,13 @@ class AnchorPlayground extends React.Component {
         >
           {arrow ? <span className={classes.arrow} ref={this.handleArrowRef} /> : null}
           <Paper className={classes.paper}>
-            <a href={`https://www.facebook.com/sharer/sharer.php?u=${config.host + link}&t=${message}`}
-              target="_blank" className={classes.social} >
+            <a href={`https://www.facebook.com/sharer/sharer.php?u=${config.host + link}&t=${message}`} onClick={this.handleCounterForSocial.bind(this, 'fb')} target="_blank" className={classes.social} >
               <img src="/static/social/facebook.png" width="25" height="25" />
             </a>
-            < a href = {
-              `https://twitter.com/share?text=${message}&amp;url=${config.host + link}`
-            }
-            target="_blank"
-            className = {
-              classes.social
-            } >
+            <a href={`https://twitter.com/share?text=${message}&amp;url=${config.host + link}`} onClick={this.handleCounterForSocial.bind(this, 'tw')} target="_blank" className={classes.social} >
               <img src="/static/social/twitter.png" width="25" height="25" />
             </a>
-            <CopyToClipboard text={config.host + link}
-              onCopy={() => this.setState({ copied: true })}
-            >
+            <CopyToClipboard text={config.host + link}onCopy={() => this.setState({ copied: true })}>
               <FileCopy style={{ cursor: 'pointer', color: 'red' }} />
             </CopyToClipboard>
           </Paper>

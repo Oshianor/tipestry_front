@@ -130,7 +130,7 @@ class LoginPath extends Component {
       email, password
     };
     
-    console.log(data);
+    // console.log(data);
     const options = {
       method: 'POST',
       headers: {
@@ -144,7 +144,7 @@ class LoginPath extends Component {
 
     try {
       let login = await Axios(options);
-      console.log("LOGIN", login);
+      // console.log("LOGIN", login);
       
       if (login.data.error) {
         this.setState({

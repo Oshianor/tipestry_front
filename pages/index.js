@@ -9,7 +9,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getTopics, getUser, getToken } from "../src/actions/data";
 // import Bottom from '../src/components/reuseable/bottom';
-import BottomScrollListerer from 'react-bottom-scroll-listener'
+import BottomScrollListerer from 'react-bottom-scroll-listener';
 // import CircularProgress from '@material-ui/core/CircularProgress';
 
 class Index extends React.Component {
@@ -97,7 +97,7 @@ class Index extends React.Component {
 
   render() {
     const { loading, more } = this.state;
-    console.log(this.state);
+    // console.log(this.state);
     
     return (
       <div>

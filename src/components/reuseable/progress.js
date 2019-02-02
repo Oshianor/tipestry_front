@@ -28,12 +28,15 @@ const ProgressBar = (props) => {
 const Filler = (props) => {
 	const err = {
 		// background: "#1DA598",
-		background: "#1F7BD8",
+		background: props.percentage === 100 ? "rgb(25, 162, 23)" : "#1F7BD8",
 		height: "100%",
 		borderRadius: "inherit",
 		transition: "width .2s ease-in",
 		textAlign: 'center',
-		color: 'whitesmoke',
+		fontSize: 'smaller',
+		padding: '2px 0px',
+    fontWeight: 800,
+		color: props.percentage > 10 ? 'whitesmoke' : '#1F7BD8',
 		width: `${props.percentage}%`
 	}
   return <div style={err} > {props.percentage}% </div>

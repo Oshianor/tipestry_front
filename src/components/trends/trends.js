@@ -59,7 +59,7 @@ class Trends extends Component {
 		};
 		axios(options).then((res) => {
 			if (!res.data.error) {
-				console.log('res.data.content', res.data.content);
+				// console.log('res.data.content', res.data.content);
 				
 				getTrends(res.data.content)
 			}

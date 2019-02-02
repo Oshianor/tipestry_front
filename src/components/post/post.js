@@ -15,11 +15,13 @@ import Moment from "moment";
 import Thumbnails from '../reuseable/thumbnails';
 import CardActionsIcons from './components/CardActionIcons';
 import TopicCoin from "./components/topicCoins";
+import ReactHtmlParser from 'react-html-parser';
 
 // static icons svg
 import Options from "./components/options";
 import { config } from '../../../config';
 import { Lang } from '../../../lang';
+import Linkify from 'linkifyjs/react';
 
 
 const styles = theme => ({
@@ -85,20 +87,25 @@ class Post extends React.Component {
     })
   }
 
+  identifyLinks(text) {
+		var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+		return ReactHtmlParser(text.replace(exp, "<a style='text-decoration: none;' href='$1'> $1 </a>"));
+	}
+
 
   // display the title based on the length
   // truncate the title if it too long
   displayTitle = (title) => {
     if (title.length > 60) {
       return (
-        <a style={{ color: '#1F7BD8',cursor: 'pointer', textDecoration: 'none', fontSize: 20, textTransform: "capitalize" }} >
-          {title.substr(0, 40)}
+        <a style={{ color: '#1F7BD8',cursor: 'pointer', textDecoration: 'none', fontSize: 18, textTransform: "capitalize" }} >
+					<Linkify tagName="span">{title.substr(0, 40)}</Linkify>
         </a>
       )
     } else {
       return (
-        <a style={{ color: '#1F7BD8', textDecoration: 'none', fontSize: 20, textTransform: "capitalize" }} >
-          {title}
+        <a style={{ color: '#1F7BD8', textDecoration: 'none', fontSize: 18, textTransform: "capitalize" }} >
+					<Linkify tagName="span">{title}</Linkify>
         </a>
       )
     }
@@ -203,7 +210,7 @@ class Post extends React.Component {
                           // post link
                           typeof topic.sites[0] !== "undefined" &&
                             <Link href={"/sites?s=" + topic.sites[0].url} >
-                              <a >
+                              <a style={{ fontSize: 12 }} >
                                 {topic.sites[0].url.length > 50 ? topic.sites[0].url.substr(0, 40) + "..." : topic.sites[0].url}
                               </a>
                             </Link>

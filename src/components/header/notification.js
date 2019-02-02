@@ -110,10 +110,11 @@ class Notification extends React.Component {
   }
 
   async componentDidMount() {
+    this.farctNotification();
     this.note = setInterval(() => {
       this.farctNotification();
-    }, 30000);
-    
+    }, 60000);
+    // a min
   }
 
   componentWillUnmount = () => {

@@ -31,9 +31,23 @@ const styles = {
 
 
 class Userinfo extends Component {
+		displayCoin = (coin) => {
+		const sty = {
+			marginBottom: -37,
+    	marginLeft: -40
+		}
+		if (coin === "XRT") {
+			return <img src="/static/tipcoins/Tip-3.png" alt="comments" width='25' height="25" style={sty} />;
+		} else if (coin === "TIPC") {
+			return <img src="/static/tipcoins/Tip-2.png" alt="comments" width='25' height="25" style={sty} />;
+		} else if (coin === "DOGE") {
+			return <img src="/static/tipcoins/Dogecoin-Icon.svg" alt="comments" width='25' height="25" style={sty} />;
+		}
+	}
+
+	
 	render() {
 		const { classes, data } = this.props;
-		const per = 80;
 		return (
 			<div className={classes.root} >
 				<Grid container justify="center" style={{ margin: "0px 0px 30px 0px" }} >
@@ -66,29 +80,29 @@ class Userinfo extends Component {
 					</Grid>
 				</Grid>
 
-				{/* <Grid container justify="center" style={{ margin: "0px 0px 30px 0px" }} >
+				<Grid container justify="center" style={{ margin: "0px 0px 30px 0px" }} >
 					<Grid item lg={4} xl={4} >
 						<div style={{ width: 75, height: 75 }} >
 							<CircularProgressbar
-							percentage={per}
-							text={`${per}%`}
-							styles={{
-								path: { stroke: `rgba(62, 152, 199, 50)` },
-								text: { fill: '#f88', fontSize: '16px' },
-							}}
-						/>
+								percentage={(data.user.stage / 10) * 100}
+								text={`${(data.user.stage / 10) * 100}%`}
+								styles={{
+									path: { stroke: `rgba(62, 152, 199, 50)` },
+									text: { fill: '#f88', fontSize: '16px' },
+								}}
+							/>
 						</div>
 					</Grid>
 					<Grid item lg={3} xl={3} >
 						<Typography variant="h6" style={{ fontSize: 15, padding: "10%" }} >
-							 NEXT REWARD:
+							 {/* NEXT REWARD: */}
 							{Lang.y1}
 						</Typography>
 					</Grid>
 					<Grid item lg={5} xl={5} >
-						<img src="/static/tipcoins/Tip-2.png" width="45" style={{ margin: "15%" }} />
+						{this.displayCoin(data.user.levels.reward.coin)}
 					</Grid>
-				</Grid> */}
+				</Grid>
 			</div>
 		);
 	}
