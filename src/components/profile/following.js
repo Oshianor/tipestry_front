@@ -38,27 +38,17 @@ class Following extends React.Component {
           >
 						{
               typeof value[0] === "undefined" ?
-                // <Typography 
-                //   style={{ marginTop: "10%", textAlign: 'center' }} 
-                //   variant="h6" 
-                // >
-                //   {/* YOU CURRENTLY FOLLOWING NO ONE! // 你目前没有任何人！ */}
-                //   {Lang.n1}
-                // </Typography>
                 <img src="/static/images/sadface.svg" style={{  marginTop: 40 }} />
               :
                 value.map((val) => (
                   <Grid items key={val._id} >
                     <Box 
-                      name = {
-                        val.name ? val.name : "@" + val.username
-                      }
+                      name={val.name ? val.name : "@" + val.username }
                       img={
-                        val.profileimage &&
-                        val.profileimage.length > 100 ?
-                          'data:image/png;base64,' + val.profileimage
+                        val.profileimage === "" || !val.profileimage ?
+                          null 
                         :
-                          config.url + val.profileimage
+                          config.profileimage + val.profileimage
                       } 
                       id={val.id}
                       token={token}

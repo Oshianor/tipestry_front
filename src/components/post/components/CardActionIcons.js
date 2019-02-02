@@ -70,7 +70,7 @@ class CardActionIcons extends React.Component {
 
   handleFavourite = async () => {
     let token = localStorage.getItem('token');
-    const { topicId, getUser } = this.props;
+    const { topicId, getUser, data } = this.props;
 
     if (token) {
       const options = {
@@ -86,9 +86,9 @@ class CardActionIcons extends React.Component {
         url: config.api + "/users/favourite",
       };
       let user = await Axios(options);
-      // console.log('user', user);
-      
-      getUser(user.data.content);
+      console.log('favorite', user);
+      data.user.favourite = user.data.content.favourite;
+      getUser(data.user);
     } else {
       // if the user isn't logged in
       this.setState({

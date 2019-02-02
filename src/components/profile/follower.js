@@ -36,12 +36,6 @@ class Follower extends React.Component {
           >
 						{
               typeof value[0] === "undefined" ?
-                // <Typography 
-                //   style={{ marginTop: "10%", textAlign: 'center' }} 
-                //   variant="h6" 
-                // >
-                //   YOU CURRENTLY HAVE NO FOLLOWERS
-                // </Typography>
                 <img src="/static/images/sadface.svg" style={{  marginTop: 40 }} />
               :
                 value.map((val) => (

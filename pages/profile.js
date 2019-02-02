@@ -31,6 +31,7 @@ class Index extends React.Component {
     let userFavourite = JSON.stringify(profile.data.favourite);
     let userFollowers = JSON.stringify(profile.data.followers);
     let userFollowing = JSON.stringify(profile.data.following);
+    let total = JSON.stringify(profile.data.total);
 
     return {
       userProfile,
@@ -38,7 +39,8 @@ class Index extends React.Component {
       userComment,
       userFavourite,
       userFollowers,
-      userFollowing
+      userFollowing,
+      total
     }
   }
 
@@ -92,14 +94,14 @@ class Index extends React.Component {
 
   render() {
     const { loading } = this.state;
-    
+    const { total } = this.props;
     return (
       <div>
         {
           loading ? 
             <Preloader />
           :
-           <ProfileContainer />
+           <ProfileContainer userPostTotal={JSON.parse(total)} />
         }
       </div>
     );

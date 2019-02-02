@@ -155,13 +155,6 @@ class Profile extends React.Component {
               {this.getCurrentLevel()}
             </Grid>
             <Grid item xs={10} >
-              {/* <LinearProgress 
-                style={{ height: 17, borderRadius: 13, zIndex: 9999 }}
-                color="primary" 
-                variant="buffer" 
-                value={100 / 5 - (data.profile.user_level)}
-                valueBuffer={100 / 5 - (data.profile.user_level)} 
-              /> */}
               <Progress percent={(data.profile.user_level / 4) * 100} />
             </Grid>
             <Grid item xs={1} >
@@ -265,7 +258,7 @@ class Profile extends React.Component {
   }
 
   displayTab = () => {
-    const { classes, data } = this.props;
+    const { classes, data, userPostTotal } = this.props;
     const { value } = this.state;
     let token = localStorage.getItem('token')
     const curr = {
@@ -282,7 +275,7 @@ class Profile extends React.Component {
           <Grid style={value === 0 ? curr : not} >
             <Button className={classes.tab} onClick={this.handleChange.bind(this, 0)}  >
               <Typography className={classes.pos} >
-                { data.topics.length === 0 ? "" : data.topics.length }
+                {userPostTotal}
                 &nbsp;
               </Typography>
               {/* Post */}
@@ -295,7 +288,7 @@ class Profile extends React.Component {
               <Grid style={value === 1 ? curr : not} >
                 <Button className={classes.tab} onClick={this.handleChange.bind(this, 1)}  >
                   <Typography className={classes.pos} >
-                    { data.favourite.length === 0 ? "" : data.favourite.length }
+                    { data.profile.favourite.length === 0 ? "" : data.profile.favourite.length }
                     &nbsp;
                   </Typography>
                   {/* Favourites */}
@@ -375,7 +368,6 @@ class Profile extends React.Component {
   render() {
     const { stopScroll, drawer, loading, value } = this.state;
     const { classes } = this.props;
-    // console.log(router);
     return (
       <div>
         <Header 
@@ -399,7 +391,20 @@ class Profile extends React.Component {
             {this.displaySection()}
             {
               // show a preloader sign for user post and user favourite post
-              value === 0 || value === 1 &&
+              value === 0 &&
+                <IconButton style={{ display: "contents" }} >
+                  {
+                    loading ?
+                      <CircularProgress className={classes.progress} color="secondary" />
+                    : 
+                      <ExpandMore />
+                  }
+                </IconButton>
+            }
+
+            {
+              // show a preloader sign for user post and user favourite post
+              value === 1 &&
                 <IconButton style={{ display: "contents" }} >
                   {
                     loading ?
@@ -434,26 +439,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withStyles(styles)(Profile)));
-
-
-{/* <div style={{ margin: "20px 20%" }}>
-          <div style={{ float: 'left', marginTop: -5 }}>
-            <img src="/static/levels/newbie.png" width={15} height={15} />
-            <Typography variant='body2' style={{ fontSize: 10 }} >
-              Newbie
-            </Typography>
-          </div>
-          <LinearProgress 
-            style={{ height: 17, borderRadius: 13, marginRight: 22 }}
-            color="primary" 
-            variant="buffer" 
-            value={completed}
-            valueBuffer={buffer} 
-          />
-          <div style={{ float: 'right', marginTop: -20 }}>
-            <img src="/static/levels/newbie.png" width={15} height={15} />
-            <Typography variant='body2' style={{ fontSize: 10 }} >
-              Pro
-            </Typography>
-          </div>
-        </div> */}
