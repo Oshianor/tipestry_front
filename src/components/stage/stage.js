@@ -54,23 +54,40 @@ class Stages extends Component {
 						{/*Level {the level}  */}
 					<Typography style={{ marginTop: 15 }} >
 						{Lang.z2}&nbsp;
-						<strong>{data.user.stage}</strong>
+						<strong>{typeof data.user.stage !== "undefined" ? data.user.stage : 1}</strong>
 					</Typography>
-					<Progress percent={(data.user.stage / 10) * 100}  />
+						<Progress 
+							percent={
+								typeof data.user.stage !== "undefined" ? 
+									(data.user.stage / 10) * 100 
+								:
+									1 / 10 * 100
+							}
+						/>
 				</span>
 
 				<br />
+				
 				{/* REward for level {the level} */}
 				<Typography>
 					{Lang.a3}&nbsp;{Lang.z2}&nbsp;
-					<strong>{data.user.stage + 1}:</strong>
+					<strong>{typeof data.user.stage !== "undefined" ? data.user.stage + 1 : 2}:</strong>
 					&nbsp;
-					{this.displayCoin(data.user.levels.reward.coin)}
-					{data.user.levels.reward.amt}
+					{
+						// typeof data.user.levels.reward !== "undefined" ? 
+							this.displayCoin(data.user.levels.reward.coin) 
+							// : ""
+					}
+					{
+						// typeof data.user.levels.reward !== "undefined" ? 
+							data.user.levels.reward.amt 
+							// : ""
+					}
 				</Typography>
 
 				<br />
 				{
+					// typeof data.user.levels.data !== "undefined" &&
 					data.user.levels.data.map((stage, index) => (
 						<Grid container spacing={8} key={index} >
 							<Grid item xs={7} >

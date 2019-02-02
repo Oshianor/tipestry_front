@@ -36,7 +36,7 @@ const Filler = (props) => {
 		fontSize: 'smaller',
 		padding: '2px 0px',
     fontWeight: 800,
-		color: props.percentage > 10 ? 'whitesmoke' : '#1F7BD8',
+		color: props.percentage > 5 ? 'whitesmoke' : '#1F7BD8',
 		width: `${props.percentage}%`
 	}
   return <div style={err} > {props.percentage}% </div>

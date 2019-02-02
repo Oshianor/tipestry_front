@@ -84,8 +84,18 @@ class Userinfo extends Component {
 					<Grid item lg={4} xl={4} >
 						<div style={{ width: 75, height: 75 }} >
 							<CircularProgressbar
-								percentage={(data.user.stage / 10) * 100}
-								text={`${(data.user.stage / 10) * 100}%`}
+								percentage={
+									typeof data.user.stage !== "undefined" ? 
+										(data.user.stage / 10) * 100
+									:
+										(1 / 10 * 100) + " %" 
+								}
+								text={
+									typeof data.user.stage !== "undefined" ? 
+										`${(data.user.stage / 10) * 100}%`
+									:
+										1 / 10 * 100 + " %"
+								}
 								styles={{
 									path: { stroke: `rgba(62, 152, 199, 50)` },
 									text: { fill: '#f88', fontSize: '16px' },
