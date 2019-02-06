@@ -11,7 +11,7 @@ import { getTopics, getUser, getToken } from "../src/actions/data";
 // import Bottom from '../src/components/reuseable/bottom';
 import BottomScrollListerer from 'react-bottom-scroll-listener';
 // import CircularProgress from '@material-ui/core/CircularProgress';
-// import CookieConsent from "react-cookie-consent";
+import CookieConsent from "react-cookie-consent";
 
 
 
@@ -110,6 +110,13 @@ class Index extends React.Component {
           :
             <BottomScrollListerer onBottom={this.handleFetchMoreTopics} >
               <Homepage />
+              <CookieConsent
+                style={{ zIndex: 99999, background: 'rgb(146, 95, 126)' }}
+                buttonStyle={{ background: 'rgb(255, 255, 255)' }}
+              >
+                  This website uses cookies to enhance the user 
+                  experience and coins on tipestry not yours until you withdraw them.
+              </CookieConsent>
             </BottomScrollListerer>
         }
       </div>
@@ -117,7 +124,7 @@ class Index extends React.Component {
   }
 }
 
-{ email: "1904303852@qq.com" }
+// { email: "1904303852@qq.com" }
  
 // export default Index;
 function mapStateToProps(state) {
@@ -135,15 +142,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Index);
- {
-   /* <CookieConsent
-                   style={{ zIndex: 99999, background: 'rgb(146, 95, 126)' }}
-                   buttonStyle={{ background: 'rgb(255, 255, 255)' }}
-                 >
-                     This website uses cookies to enhance the user 
-                     experience and coins on tipestry not yours until you withdraw them.
-                 </CookieConsent> */
- }
 
 
         {/* {
