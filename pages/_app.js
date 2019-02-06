@@ -37,7 +37,7 @@ class MyApp extends App {
             { /* Home // 家 */ }
             
           </title>
-          <meta charset="UTF-8" />
+          <meta charSet="UTF-8" />
           { /* <meta name="description" content="Comment cryptocurrency on any website and get tipped" />  // 在任何网站上评论加密货币并获得提示 */ }
           <meta name="description" content={Lang.b1} />
           <meta name="keywords" content="Tipestry, Cryptocurrency" />
