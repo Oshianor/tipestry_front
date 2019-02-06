@@ -18,8 +18,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getToken } from "../../actions/data";
 import { Lang } from '../../../lang';
-// import FormControlLabel from '@material-ui/core/FormControlLabel';
-// import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 
 
 
@@ -396,7 +396,7 @@ class RegisterPath extends Component {
             variant="outlined"
           />
 
-          {/* <FormControlLabel
+          <FormControlLabel
             style={{ marginLeft: '5%' }}
             control={
               <Checkbox
@@ -412,7 +412,7 @@ class RegisterPath extends Component {
                 </a>
               </Link>
             }
-          /> */}
+          />
 
           <Grid container spacing={24} style={{ margin: '0 8%' }} >
             <Grid item xs={6} sm={6} style={{ paddingLeft: 0 }}>

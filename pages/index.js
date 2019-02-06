@@ -11,7 +11,7 @@ import { getTopics, getUser, getToken } from "../src/actions/data";
 // import Bottom from '../src/components/reuseable/bottom';
 import BottomScrollListerer from 'react-bottom-scroll-listener';
 // import CircularProgress from '@material-ui/core/CircularProgress';
-import CookieConsent from "react-cookie-consent";
+// import CookieConsent from "react-cookie-consent";
 
 
 
@@ -110,13 +110,13 @@ class Index extends React.Component {
           :
             <BottomScrollListerer onBottom={this.handleFetchMoreTopics} >
               <Homepage />
-              <CookieConsent
+              {/* <CookieConsent
                 style={{ zIndex: 99999, background: 'rgb(146, 95, 126)' }}
                 buttonStyle={{ background: 'rgb(255, 255, 255)' }}
               >
                   This website uses cookies to enhance the user 
                   experience and coins on tipestry not yours until you withdraw them.
-              </CookieConsent>
+              </CookieConsent> */}
             </BottomScrollListerer>
         }
       </div>
