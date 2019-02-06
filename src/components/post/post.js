@@ -20,7 +20,7 @@ import TopicCoin from "./components/topicCoins";
 import Options from "./components/options";
 import { config } from '../../../config';
 import { Lang } from '../../../lang';
-import Linkify from 'linkifyjs/react';
+// import Linkify from 'linkifyjs/react';
 
 
 const styles = theme => ({
@@ -92,13 +92,17 @@ class Post extends React.Component {
     if (title.length > 60) {
       return (
         <a style={{ color: '#1F7BD8',cursor: 'pointer', textDecoration: 'none', fontSize: 18, textTransform: "capitalize" }} >
-					<Linkify tagName="span">{title.substr(0, 40)}</Linkify>
+          {/* <Linkify tagName="span"> */}
+          {title.substr(0, 40)}
+          {/* </Linkify> */}
         </a>
       )
     } else {
       return (
         <a style={{ color: '#1F7BD8', textDecoration: 'none', fontSize: 18, textTransform: "capitalize" }} >
-					<Linkify tagName="span">{title}</Linkify>
+          {/* <Linkify tagName="span"> */}
+          {title}
+          {/* </Linkify> */}
         </a>
       )
     }
