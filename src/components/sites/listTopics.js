@@ -19,7 +19,7 @@ import green from '@material-ui/core/colors/green';
 // import Alert from '../reuseable/alert';
 import { Lang } from '../../../lang';
 import Addsite from './addsite';
-import Siteactions from './siteactions';
+// import Siteactions from './siteactions';
 
 const styles = theme => ({
   root: {
@@ -75,7 +75,7 @@ class TopicList extends React.Component {
 					token ? 
 					// if the user is logged in
 						<div>
-							<Siteactions url={url} />
+							{/* <Siteactions url={url} /> */}
 							<Addsite  url={url} />
 						</div>
 					:
@@ -163,7 +163,7 @@ class TopicList extends React.Component {
 						this.displayEmptyTopics()
 					:
 						<React.Fragment>
-							<Siteactions url={url} />
+							{/* <Siteactions url={url} /> */}
 							<Typography variant="h5" style={{ textAlign: 'center' }} >
 								{ /* Topics // 话题*/ }
 								{Lang.s}
