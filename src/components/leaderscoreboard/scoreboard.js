@@ -17,10 +17,13 @@ import Link from 'next/link';
 import ThumbDownAlt from '@material-ui/icons/ThumbDownAlt';
 import ThumbUpAlt from '@material-ui/icons/ThumbUpAlt';
 import Eye from "@material-ui/icons/RemoveRedEye";
+import NumberFormat from 'react-number-format';
+
 
 const styles = theme => ({
   root: {
-    maxWidth: 300,
+		maxWidth: 400,
+		padding: 5
   },
   inline: {
     display: 'inline',
@@ -61,13 +64,13 @@ class LeaderBoard extends Component {
 		const { classes, data } = this.props;
 		return (
 			<div className={classes.root} >
-				<Typography variant="button" style={{ fontSize: 25, marginLeft: 20, borderBottom: "1px solid darkgray" }}>
+				<Typography variant="button" style={{ fontSize: 25, borderBottom: "1px solid darkgray" }}>
 					{Lang.x2}
 				</Typography>
 				<List className={classes.root}>
 					{
 						data.leaderboard.map((score, index) => (
-							<ListItem key={score._id.userId} alignItems="flex-start" style={{ margin: "-10px 0px -10px 0px" }} >
+							<ListItem key={score._id.userId} alignItems="flex-start" style={{ margin: "-10px 0px -10px 0px", padding: '5px 5px' }} >
 								<ListItemIcon style={{ marginRight: -13, marginTop: 6 }} >
 									{index + 1}.
 								</ListItemIcon>
@@ -80,7 +83,12 @@ class LeaderBoard extends Component {
 													{typeof score.user[0] !== "undefined" ? `${score.user[0].username}` : "@No name"}
 												</a>
 											</Link>
-											<span style={{ fontSize: 13, padding: 3 }} >{score.count}</span>
+											<div style={{ fontSize: 13 }} >
+												<span><img src='/static/tipcoins/doge.svg' style={{ width: 15, height: 15, marginTop: 6 }} /></span>
+												<span style={{ marginTop: 4, position: 'absolute',padding: '0px 5px' }} >
+													<NumberFormat value={parseFloat(score.count).toFixed(2)} displayType="text" thousandSeparator={true} />
+												</span>
+											</div>
 										</span>
 									}
 								/>

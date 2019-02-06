@@ -172,7 +172,7 @@ class Coin extends React.Component {
     }
   };
 
-  handleClose = (event, reason) => {
+  handleClose = () => {
     // if (reason === 'clickaway') {
     //   return;
     // }

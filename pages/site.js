@@ -22,7 +22,7 @@ class Sites extends Component {
 				'Access-Control-Allow-Origin': '*',
 			},
 			data: JSON.stringify({ url: query.s }),
-			url: config.api + "/topic/get",
+			url: config.api + "/sites/get",
 		};
 
     let site = await axios(options);

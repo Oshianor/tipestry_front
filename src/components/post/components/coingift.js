@@ -54,7 +54,7 @@ class CoinGift extends React.Component {
 
 	handleGift = async () => {
 		const { amount } = this.state;
-		const { topicUserId, type, handleClose, topicId, getTopics } = this.props;
+		const { topicUserId, type, handleClose, topicId, getTopics, getUser } = this.props;
 		let token = localStorage.getItem('token');
 		
 		if (token) {
@@ -90,6 +90,7 @@ class CoinGift extends React.Component {
 					url: config.api + '/users/me'
 				}
 				let user = await axios(options);
+				console.log('user', user);
 				getUser(user.data[0]);
 				this.setState({
 					error: '',

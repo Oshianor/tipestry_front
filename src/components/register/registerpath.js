@@ -18,6 +18,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getToken } from "../../actions/data";
 import { Lang } from '../../../lang';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+
 
 
 const styles = theme => ({
@@ -104,7 +107,8 @@ class RegisterPath extends Component {
     res: {
       error: false,
       msg: ""
-    }
+    },
+    checked: null
   }
   
 
@@ -289,11 +293,27 @@ class RegisterPath extends Component {
     });
   }
 
+  handleChange = name => event => {
+    this.setState({ [name]: event.target.checked });
+  };
+
 
   render(){
     // console.log(this.state);
     
-    const { res, password, passwordHelper, email, emailHelper, loading, username, usernameHelper, confirmPassword, confirmPasswordHelper } = this.state;
+    const {
+      res,
+      password,
+      passwordHelper,
+      email,
+      emailHelper,
+      loading,
+      username,
+      usernameHelper,
+      confirmPassword,
+      confirmPasswordHelper,
+      checked
+    } = this.state;
     const { classes } = this.props;
     return (
       <div className={classes.root}>
@@ -376,9 +396,27 @@ class RegisterPath extends Component {
             variant="outlined"
           />
 
+          <FormControlLabel
+            style={{ marginLeft: '5%' }}
+            control={
+              <Checkbox
+                checked={checked}
+                onChange={this.handleChange('checked')}
+                value="checked"
+              />
+            }
+            label={
+              <Link href="/privacypolicy" >
+                <a>
+                  Accept our Privacy Policy
+                </a>
+              </Link>
+            }
+          />
+
           <Grid container spacing={24} style={{ margin: '0 8%' }} >
             <Grid item xs={6} sm={6} style={{ paddingLeft: 0 }}>
-              <Button variant="outlined" color="secondary" onClick={this.handleRegister} className={classes.button}>
+              <Button variant="outlined" disabled={!checked} color="secondary" onClick={this.handleRegister} className={classes.button}>
                 {loading ? <CircularProgress size={24} className={classes.buttonProgress} /> : Lang.f1}
               </Button>
             </Grid>

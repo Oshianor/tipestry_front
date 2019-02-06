@@ -105,7 +105,7 @@ class AnchorPlayground extends React.Component {
     disablePortal: false,
     flip: true,
     open: false,
-    placement: 'top',
+    // placement: 'top',
     preventOverflow: 'scrollParent',
     copied: false
   };
@@ -167,15 +167,15 @@ class AnchorPlayground extends React.Component {
   };
 
   render() {
-    const { classes, link } = this.props;
-    const { open, placement, disablePortal, flip, preventOverflow, arrow, arrowRef, copied } = this.state;
+    const { classes, link, placement } = this.props;
+    const { open, disablePortal, flip, preventOverflow, arrow, arrowRef, copied } = this.state;
 
     const id = open ? 'Share' : null;
 
     // console.log(link);
     
     // console.log("ROYETR", this.props);
-    let message = `Visit ${config.host + link} and join the conversation`;
+    let message = `Visit ${link} and join the conversation`;
     return (
       <div className={classes.iconspacing} >
         <IconButton
@@ -212,13 +212,13 @@ class AnchorPlayground extends React.Component {
         >
           {arrow ? <span className={classes.arrow} ref={this.handleArrowRef} /> : null}
           <Paper className={classes.paper}>
-            <a href={`https://www.facebook.com/sharer/sharer.php?u=${config.host + link}&t=${message}`} onClick={this.handleCounterForSocial.bind(this, 'fb')} target="_blank" className={classes.social} >
+            <a href={`https://www.facebook.com/sharer/sharer.php?u=${link}&t=${message}`} onClick={this.handleCounterForSocial.bind(this, 'fb')} target="_blank" className={classes.social} >
               <img src="/static/social/facebook.png" width="25" height="25" />
             </a>
-            <a href={`https://twitter.com/share?text=${message}&amp;url=${config.host + link}`} onClick={this.handleCounterForSocial.bind(this, 'tw')} target="_blank" className={classes.social} >
+            <a href={`https://twitter.com/share?text=${message}&amp;url=${link}`} onClick={this.handleCounterForSocial.bind(this, 'tw')} target="_blank" className={classes.social} >
               <img src="/static/social/twitter.png" width="25" height="25" />
             </a>
-            <CopyToClipboard text={config.host + link}onCopy={() => this.setState({ copied: true })}>
+            <CopyToClipboard text={link} onCopy={() => this.setState({ copied: true })}>
               <FileCopy style={{ cursor: 'pointer', color: 'red' }} />
             </CopyToClipboard>
           </Paper>
@@ -243,6 +243,7 @@ class AnchorPlayground extends React.Component {
 
 AnchorPlayground.propTypes = {
   classes: PropTypes.object.isRequired,
+  link: PropTypes.string.isRequired
 };
 
 export default withRouter(withStyles(styles)(AnchorPlayground));
