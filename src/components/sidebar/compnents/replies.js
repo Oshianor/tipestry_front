@@ -20,7 +20,7 @@ import { config } from '../../../../config';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Lang } from '../../../../lang';
-import Linkify from 'linkifyjs/react';
+// import Linkify from 'linkifyjs/react';
 
 
 const styles = theme => ({
@@ -243,7 +243,9 @@ class Repiles extends React.Component {
 										</form>
 									:
 										<Typography component="p" style={{ fontSize: 12, fontWeight: 'lighter' }}>
-											<Linkify tagName="p">{reply.content}</Linkify>
+											{/* <Linkify tagName="p"> */}
+											{reply.content}
+											{/* </Linkify> */}
 										</Typography>
 								}
 							</CardContent>
