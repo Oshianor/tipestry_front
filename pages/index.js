@@ -110,13 +110,6 @@ class Index extends React.Component {
           :
             <BottomScrollListerer onBottom={this.handleFetchMoreTopics} >
               <Homepage />
-              {/* <CookieConsent
-                style={{ zIndex: 99999, background: 'rgb(146, 95, 126)' }}
-                buttonStyle={{ background: 'rgb(255, 255, 255)' }}
-              >
-                  This website uses cookies to enhance the user 
-                  experience and coins on tipestry not yours until you withdraw them.
-              </CookieConsent> */}
             </BottomScrollListerer>
         }
       </div>
@@ -142,7 +135,15 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Index);
-
+ {
+   /* <CookieConsent
+                   style={{ zIndex: 99999, background: 'rgb(146, 95, 126)' }}
+                   buttonStyle={{ background: 'rgb(255, 255, 255)' }}
+                 >
+                     This website uses cookies to enhance the user 
+                     experience and coins on tipestry not yours until you withdraw them.
+                 </CookieConsent> */
+ }
 
 
         {/* {

@@ -14,6 +14,8 @@ import CardActionIcons from "../../post/components/CardActionIcons";
 import { config } from "../../../../config";
 import TopicCoin from './topicCoins';
 import { Lang } from '../../../../lang';
+import Linkify from 'linkifyjs/react';
+
 
 const styles = theme => ({
   card: {
@@ -101,7 +103,8 @@ class SiteAbout extends React.Component {
           />
           <CardContent style={{ padding: "0px 25px" }}>
             <Typography component="p" >
-              {data.siteTopic[0].message}
+            <Linkify tagName="span">{data.siteTopic[0].message}</Linkify>
+              {/* {data.siteTopic[0].message} */}
             </Typography>
           </CardContent>
 

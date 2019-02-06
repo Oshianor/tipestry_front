@@ -15,7 +15,6 @@ import Moment from "moment";
 import Thumbnails from '../reuseable/thumbnails';
 import CardActionsIcons from './components/CardActionIcons';
 import TopicCoin from "./components/topicCoins";
-import ReactHtmlParser from 'react-html-parser';
 
 // static icons svg
 import Options from "./components/options";
@@ -86,12 +85,6 @@ class Post extends React.Component {
       token
     })
   }
-
-  identifyLinks(text) {
-		var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-		return ReactHtmlParser(text.replace(exp, "<a style='text-decoration: none;' href='$1'> $1 </a>"));
-	}
-
 
   // display the title based on the length
   // truncate the title if it too long
