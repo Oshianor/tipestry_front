@@ -408,7 +408,7 @@ class RegisterPath extends Component {
             label={
               <Link href="/privacypolicy" >
                 <a>
-                  Accept our Privacy Policy
+                  I agree to the Terms and Conditions.
                 </a>
               </Link>
             }
