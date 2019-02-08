@@ -73,7 +73,7 @@ class Topic extends Component {
 							<Embed url={router.query.s} site={data.site.site} height="95vh" top={70} />
 						</Grid>
 						<Grid item xs={12} sm={12} md={6} lg={5} xl={5}>
-							<TopicsList topics={data.site.topics} url={router.query.s} />
+							<TopicsList topics={data.site.topics} site={data.site.site} gift={data.site.gift} url={router.query.s} />
 						</Grid>
 					</Grid>
 				</Drawer>

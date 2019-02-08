@@ -19,6 +19,7 @@ import { bindActionCreators } from 'redux';
 import Alert from '../../reuseable/alert';
 // import Router from "next/router";
 // import Router from 'next-routes';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 function Transition(props) {
@@ -43,7 +44,8 @@ class CoinGift extends React.Component {
 		amount: "",
 		error: "",
 		msgOpen: false,
-		msg: ''
+		msg: '',
+		loading: false
 	};
 
 	handleMsgClose = () => {
@@ -58,6 +60,9 @@ class CoinGift extends React.Component {
 		let token = localStorage.getItem('token');
 		
 		if (token) {
+			this.setState({
+				loading: true
+			});
       const options = {
         method: 'POST',
         data: JSON.stringify({
@@ -95,13 +100,15 @@ class CoinGift extends React.Component {
 				this.setState({
 					error: '',
 					msgOpen: true,
-					msg: 'Successfully tipped post'
+					msg: 'Successfully tipped post',
+					loading: false
 				})
 			} else {
 				this.setState({
 					error: completed.data.message,
 					msgOpen: true,
-					msg: 'Something went wrong...'
+					msg: 'Something went wrong...',
+					loading: false
 				})
 			}
 			// Router.push('/');
@@ -128,7 +135,7 @@ class CoinGift extends React.Component {
 
   render() {
 		const { classes, open, image, handleClose, currentCoin } = this.props;
-		const { error, amount, msgOpen, msg } = this.state;
+		const { error, amount, msgOpen, msg, loading } = this.state;
     return (
 			<Dialog
 				open={open}
@@ -167,11 +174,12 @@ class CoinGift extends React.Component {
 						Maybe later
 					</Button>
 					<Button 
-						disabled={error !== ""} 
+						disabled={error !== "" || loading} 
 						onClick={this.handleGift} 
 						color="primary"
 					>
-						Gift
+						{/* Gift */}
+						{!loading ? 'Gift' : <CircularProgress size={20} className={classes.buttonProgress} />}
 					</Button>
 				</DialogActions>
 				<Alert 

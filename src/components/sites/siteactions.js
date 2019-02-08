@@ -3,24 +3,34 @@ import Thumb from './components/thumb';
 import PropTypes from 'prop-types';
 import Follow from './components/follow';
 import SharePopover from '../post/components/sharePopover';
+import Coin from './components/coin';
+import Claim from './components/claim';
+import axios from 'axios';
+import { config } from "../../../config";
+import SiteCoins from './components/siteCoins';
 
 class Siteactions extends Component {
+
 	render() {
-		const { siteObjId, url } = this.props;
+		const { site, url, gift } = this.props;
 		return (
-			<div style={{ display: 'flex', margin: '8%' }} >
-				<Thumb siteObjId={siteObjId} />
-				<Follow />
-				<SharePopover link={url} placement='bottom' />
+			<div style={{ margin: '8%' }} >
+				<div style={{ display: 'flex' }} >
+					<Thumb siteObjId={site._id} />
+					<Follow />
+					<SharePopover link={url} placement='bottom' />
+					<Coin site={site} />
+				</div>
+				<SiteCoins gift={gift} />
+				<Claim site={site} />
 			</div>
 		);
 	}
 }
 
 Siteactions.propTypes = {
-	classes: PropTypes.object.isRequired,
 	votes: PropTypes.array.isRequired,
-	siteObjId: PropTypes.string.isRequired,
+	site: PropTypes.object.isRequired,
 	link: PropTypes.string.isRequired
 };
 

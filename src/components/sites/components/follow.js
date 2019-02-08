@@ -19,7 +19,7 @@ class Options extends React.Component {
 		const { data } = this.props;
 		let token = localStorage.getItem('token');
     this.setState({
-			siteFollowing: data.site.following ? data.site.following : [],
+			siteFollowing: data.site.site ? data.site.site.following : [],
 			token
     })
   }
@@ -36,11 +36,15 @@ class Options extends React.Component {
 	
 
   handleFollow = async () => {
-    const { siteObjId } = this.props;
+		const { siteFollowing, token } = this.state;
+    const { data } = this.props;
+    
     if (token) {
       const options = {
         method: 'POST',
-        data: JSON.stringify({ siteObjId }),
+        data: JSON.stringify({ 
+          siteObjId: data.site.site._id
+        }),
         headers: {
           'content-type': 'application/json',
           'Access-Control-Allow-Origin': '*',
@@ -50,7 +54,7 @@ class Options extends React.Component {
       }
 
       let follow = await axios(options);
-      // console.log("ADDING FOLLOWING", follow);
+      console.log("ADDING FOLLOWING", follow);
       if (follow.data.error === false) {
         this.setState({
           siteFollowing: follow.data.content.following,

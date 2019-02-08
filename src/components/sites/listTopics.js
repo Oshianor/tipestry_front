@@ -19,7 +19,7 @@ import green from '@material-ui/core/colors/green';
 // import Alert from '../reuseable/alert';
 import { Lang } from '../../../lang';
 import Addsite from './addsite';
-// import Siteactions from './siteactions';
+import Siteactions from './siteactions';
 
 const styles = theme => ({
   root: {
@@ -68,23 +68,26 @@ class TopicList extends React.Component {
 
 	displayEmptyTopics = () => {
 		let token = localStorage.getItem('token');
-		const { url } = this.props;
+		const { url, site, gift } = this.props;
 		return (
 			<div>
 				{
 					token ? 
 					// if the user is logged in
 						<div>
-							{/* <Siteactions url={url} /> */}
+							{
+								typeof site.id !== "undefined" &&
+									<Siteactions url={url} site={site} gift={gift} />
+							}
 							<Addsite  url={url} />
 						</div>
 					:
 						<div>
-							<Typography variant="h4" >
+							<Typography variant="button" style={{ fontSize: 20 }} >
 								{/* There currently no topics for this site */}
 								{Lang.l2}
 							</Typography>
-							<Typography variant="h6" >
+							<Typography variant="caption" style={{ fontSize: 17 }} >
 								{/* Please  */}
 								{Lang.m2}
 								<Link href="/login" >
@@ -113,7 +116,7 @@ class TopicList extends React.Component {
 					<ListItem alignItems="flex-start">
 						<ListItemAvatar>
 							<Link href={encodeURI("/topics/" + topic._id + "/" + topic.title)} >
-								<a  >
+								<a>
 									<Avatar style={{ borderRadius: 0 }} src={
 										topic.screenshot.length > 200 ?
 											config.base64 + topic.screenshot :
@@ -153,7 +156,7 @@ class TopicList extends React.Component {
 	}
 
 	render() {
-		const { classes, topics, url } = this.props;
+		const { site, topics, url, gift } = this.props;
 		const { open, msg } = this.state;
 		
 		return (
@@ -163,7 +166,12 @@ class TopicList extends React.Component {
 						this.displayEmptyTopics()
 					:
 						<React.Fragment>
-							{/* <Siteactions url={url} /> */}
+							{/* <Siteactions url={url} site={site} gift={gift} /> */}
+							{
+								// the reason for this code is to mount and unmount it when the data changes
+								typeof site.id !== "undefined" &&
+									<Siteactions url={url} site={site} gift={gift} />
+							}
 							<Typography variant="h5" style={{ textAlign: 'center' }} >
 								{ /* Topics // 话题*/ }
 								{Lang.s}
@@ -185,7 +193,8 @@ class TopicList extends React.Component {
 }
 
 TopicList.propTypes = {
-  classes: PropTypes.object.isRequired,
+	classes: PropTypes.object.isRequired,
+	site: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(TopicList);

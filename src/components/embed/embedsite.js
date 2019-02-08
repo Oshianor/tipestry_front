@@ -133,7 +133,7 @@ import YouTube from 'react-youtube';
 	render() {
     const { height, top, img } = this.props;
     const { load } = this.state;
-    console.log(this.state, "=======>", this.props);
+    // console.log(this.state, "=======>", this.props);
     
 		return (
       <div>
