@@ -165,7 +165,7 @@ class Post extends React.Component {
                         <Link href={encodeURI("/profile/" + topic.user[0]._id + "/@" + topic.user[0].username)} >
                           <a style={{ color: '#1F7BD8', textDecoration: 'none' }}>
                             <strong style={{ color: 'gray' }}>@</strong>
-                            {typeof topic.user[0] !== "undefined" ? `${topic.user[0].username}` : "@No name"}
+                            {typeof topic.user[0] !== "undefined" ? `${topic.user[0].username !== "" ? topic.user[0].username : topic.user[0].name}` : "@No name"}
                           </a>
                         </Link>
                       }
