@@ -219,20 +219,25 @@ class Post extends React.Component {
                             width: '100%'
                           }}
                           src={
-                            // if the link is a gif then show that
-                            typeof topic.sites[0] !== "undefined" && this.checkForGif(topic.sites[0].url) == 'gif' ?
+                            typeof topic.sites[0] !== "undefined" && this.checkForGif(topic.sites[0].url) == 'gif' || this.checkForGif(topic.sites[0].url) == 'gifv' ?
                               topic.sites[0].url
                             :
-                            // chec if it is a link
-                              this.checkIfUrl(topic.screenshot) ?
-                                topic.screenshot
-                              :
-                                // check to see if it the old data of base64
-                                // by using the lenght of the screenshot field
-                                topic.screenshot.length > 200 ?
-                                  config.base64 + topic.screenshot
-                                :
-                                  config.topic + topic.screenshot
+                              "https://image.thum.io/get/" + topic.sites[0].url
+                            // // if the link is a gif then show that
+                            // typeof topic.sites[0] !== "undefined" && this.checkForGif(topic.sites[0].url) == 'gif' ?
+                            //   topic.sites[0].url
+                            
+                            // :
+                            // // chec if it is a link
+                            //   this.checkIfUrl(topic.screenshot) ?
+                            //     topic.screenshot
+                            //   :
+                            //     // check to see if it the old data of base64
+                            //     // by using the lenght of the screenshot field
+                            //     topic.screenshot.length > 200 ?
+                            //       config.base64 + topic.screenshot
+                            //     :
+                            //       config.topic + topic.screenshot
                           }  
                         />
                       </a>
