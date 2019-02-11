@@ -214,7 +214,8 @@ class Post extends React.Component {
                         <img 
                           style={{ 
                             backgroundPosition: 'top',
-                            height: 'auto',
+                            // height: 'auto',
+                            maxHeight: '-webkit-fill-available',
                             width: '100%'
                           }}
                           src={
