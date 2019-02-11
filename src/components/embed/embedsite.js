@@ -3,6 +3,8 @@ import Axios from 'axios';
 import { config } from '../../../config';
 import Preloader from '../preloader/preloader';
 import YouTube from 'react-youtube';
+import isURL from 'validator/lib/isURL';
+
 
 
  class Embed extends Component {
@@ -23,6 +25,12 @@ import YouTube from 'react-youtube';
     }
   }
 
+  checkIfUrl = (url) => {
+    let yes = isURL(url, { protocols: ['http','https'], require_tld: true, require_protocol: false} );
+    // console.log('yes', yes);
+    
+    return yes ? yes : null
+  }
 
   checkIfItYouTube = (url) => {
      var pathname = new URL(url).hostname;
@@ -31,6 +39,7 @@ import YouTube from 'react-youtube';
   }
 
   getQuery(name, url) {
+    // gettting YouTube videoId
     // if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, '\\$&');
     var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
@@ -67,7 +76,7 @@ import YouTube from 'react-youtube';
   displayIframe = () => {
     const { height, top, site } = this.props;
     const { load } = this.state;
-    if (site != null) {
+    if (site) {
       if(site.screen_path === "") {
         return (
           <iframe 
@@ -91,11 +100,16 @@ import YouTube from 'react-youtube';
       } else {
         return (
           <img 
-            src={config.topic + "/captures/" + site.screen_path}
+            src={
+              this.checkIfUrl(site.screen_path) ?
+                site.screen_path
+              :
+                config.topic + "/captures/" + site.screen_path
+            }
             style={{ 
               borderRight: "10px solid gray",
               width: "100%",
-              // height: height ? height : "70vh",
+              height: "85vh",
               // marginTop: 70,
               marginTop: top ? top : 0
             }}

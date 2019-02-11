@@ -20,22 +20,22 @@ export const config = {
 	// port: 8008
 
 	// live
-	// api: "https://tipestry.com/api",
-	// url: "https://tipestry.com",
-	// host: "https://tipestry.com",
-	// profileimage: "https://tipestry.com/public/profile_images/",
-	// base64: 'data:image/jpeg;base64,',
-	// topic: "https://tipestry.com/public",
-	// download: 'https://tipestry.com/public/downloads/',
-	// port: 4001
+	api: "https://tipestry.com/api",
+	url: "https://tipestry.com",
+	host: "https://tipestry.com",
+	profileimage: "https://tipestry.com/public/profile_images/",
+	base64: 'data:image/jpeg;base64,',
+	topic: "https://tipestry.com/public",
+	download: 'https://tipestry.com/public/downloads/',
+	port: 4001
 
 	// cn
-	api: "http://cn.tipestry.com/api",
-	url: "http://cn.tipestry.com",
-	host: "http://cn.tipestry.com",
-	profileimage: "http://cn.tipestry.com/public/profile_images/",
-	base64: 'data:image/jpeg;base64,',
-	topic: "http://cn.tipestry.com/public",
-	download: 'http://cn.tipestry.com/public/downloads/',
-	port: 5001
+	// api: "http://cn.tipestry.com/api",
+	// url: "http://cn.tipestry.com",
+	// host: "http://cn.tipestry.com",
+	// profileimage: "http://cn.tipestry.com/public/profile_images/",
+	// base64: 'data:image/jpeg;base64,',
+	// topic: "http://cn.tipestry.com/public",
+	// download: 'http://cn.tipestry.com/public/downloads/',
+	// port: 5001
 }

@@ -20,7 +20,6 @@ import TopicCoin from "./components/topicCoins";
 import Options from "./components/options";
 import { config } from '../../../config';
 import { Lang } from '../../../lang';
-import isURL from 'validator/lib/isURL';
 // import Linkify from 'linkifyjs/react';
 
 
@@ -85,13 +84,6 @@ class Post extends React.Component {
     this.setState({
       token
     })
-  }
-
-  checkIfUrl = (url) => {
-    let yes = isURL(url, { protocols: ['http','https'], require_protocol: false} );
-    console.log('yes', yes, url);
-    
-    return yes ? yes : null
   }
 
   // display the title based on the length
@@ -184,7 +176,7 @@ class Post extends React.Component {
                         </p>
                       }
                     />
-                    {/* <CardMedia
+                    <CardMedia
                       className={classes.media}
                       style={{ backgroundPosition: 'top' }}
                       image={
@@ -202,40 +194,7 @@ class Post extends React.Component {
                       title={topic.title}
                       component="a"
                       href={encodeURI("/topics/" + topic._id + "/" + topic.title.replace(/[.*+?^$/{}()|[\]\\]/g, '-'))}
-                    /> */}
-                    <div>
-                      <a 
-                        href={encodeURI("/topics/" + topic._id + "/" + topic.title.replace(/[.*+?^$/{}()|[\]\\]/g, '-'))}
-                        style={{ 
-                          position: 'relative',
-                          display: 'block'
-                        }}
-                      >
-                        <img 
-                          style={{ 
-                            backgroundPosition: 'top',
-                            height: 'auto',
-                            width: '100%'
-                          }}
-                          src={
-                            // if the link is a gif then show that
-                            typeof topic.sites[0] !== "undefined" && this.checkForGif(topic.sites[0].url) == 'gif' ?
-                              topic.sites[0].url
-                            :
-                            // chec if it is a link
-                              this.checkIfUrl(topic.screenshot) ?
-                                topic.screenshot
-                              :
-                                // check to see if it the old data of base64
-                                // by using the lenght of the screenshot field
-                                topic.screenshot.length > 200 ?
-                                  config.base64 + topic.screenshot
-                                :
-                                  config.topic + topic.screenshot
-                          }  
-                        />
-                      </a>
-                    </div>
+                    />
 
                     <CardContent>
                       <Typography component="p">
