@@ -219,10 +219,10 @@ class Post extends React.Component {
                             width: '100%'
                           }}
                           src={
-                            typeof topic.sites[0] !== "undefined" && this.checkForGif(topic.sites[0].url) == 'gif' || this.checkForGif(topic.sites[0].url) == 'gifv' ?
+                            typeof topic.sites[0] !== "undefined" && this.checkForGif(topic.sites[0].url) == 'gif' ?
                               topic.sites[0].url
                             :
-                              "https://image.thum.io/get/" + topic.sites[0].url
+                              "//image.thum.io/get/auth/3228-www.tipestry.com/" + topic.sites[0].url
                             // // if the link is a gif then show that
                             // typeof topic.sites[0] !== "undefined" && this.checkForGif(topic.sites[0].url) == 'gif' ?
                             //   topic.sites[0].url

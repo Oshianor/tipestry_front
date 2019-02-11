@@ -98,12 +98,13 @@ import isURL from 'validator/lib/isURL';
       } else {
         return (
           <img 
-            src={
-              this.checkIfUrl(site.screen_path) ?
-                site.screen_path
-              :
-                config.topic + "/captures/" + site.screen_path
-            }
+            // src={
+            //   this.checkIfUrl(site.screen_path) ?
+            //     site.screen_path
+            //   :
+            //     config.topic + "/captures/" + site.screen_path
+            // }
+            src={"//image.thum.io/get/auth/3228-www.tipestry.com/" + site.url}
             style={{ 
               borderRight: "10px solid gray",
               width: "100%",
