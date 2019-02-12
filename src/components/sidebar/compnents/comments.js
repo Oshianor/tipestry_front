@@ -26,7 +26,7 @@ import Reply from '@material-ui/icons/Reply';
 import Replies from './replies';
 import Replycompose from './replycompose';
 import { Lang } from '../../../../lang';
-// import Linkify from 'linkifyjs/react';
+import Linkify from 'linkifyjs/react';
 
 const styles = theme => ({
   card: {
@@ -271,9 +271,9 @@ class Comments extends React.Component {
 										</form>
 									:
 										<Typography component="p" style={{ fontSize: 12, fontWeight: 'lighter' }} >
-											{/* <Linkify tagName="p"> */}
-											{comment.content}
-											{/* </Linkify> */}
+											<Linkify tagName="p">
+												{comment.content}
+											</Linkify>
 										</Typography>
 								}
 							</CardContent>

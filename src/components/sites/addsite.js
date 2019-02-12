@@ -71,9 +71,9 @@ class Addsite extends Component {
 
 	handleChange = name => event => {
 		if(name === 'title') {
-			console.log(event.target.value.length <= 30);
+			console.log(event.target.value.length <= 100);
 			
-			if(event.target.value.length <= 30) {
+			if(event.target.value.length <= 100) {
 				this.setState({
 					[name]: event.target.value
 				});
@@ -163,8 +163,8 @@ class Addsite extends Component {
           variant="outlined"
         />
 				<div style={{ display: 'flex', marginTop: -15 }} >
-					<p style={30 - title.length < 10 ? { color: "red"} : { color: "black" }} className={classes.cnt}>
-						{30 - title.length}
+					<p style={100 - title.length < 10 ? { color: "red"} : { color: "black" }} className={classes.cnt}>
+						{100 - title.length}
 					</p>
 				</div>
 				

@@ -20,6 +20,9 @@ import green from '@material-ui/core/colors/green';
 import { Lang } from '../../../lang';
 import Addsite from './addsite';
 import Siteactions from './siteactions';
+import Thumbnails from '../reuseable/thumbnails';
+
+
 
 const styles = theme => ({
   root: {
@@ -116,11 +119,16 @@ class TopicList extends React.Component {
 					<ListItem alignItems="flex-start">
 						<ListItemAvatar>
 							<Link href={encodeURI("/topics/" + topic._id + "/" + topic.title)} >
-								<a>
-									<Avatar style={{ borderRadius: 0 }} src={
-										topic.screenshot.length > 200 ?
-											config.base64 + topic.screenshot :
-											config.topic + topic.screenshot
+								<a style={{ textDecoration: 'none', margin: "6px -1px" }}>
+									<Thumbnails 
+										borderColor="black" 
+										borderWidth={2} 
+										name={topic.user[0].username} 
+										url={
+											topic.user[0].profileimage || topic.user[0].profileimage !== "" ?
+												config.profileimage + topic.user[0].profileimage
+											:
+												null
 										}
 									/>
 								</a>
