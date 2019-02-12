@@ -15,17 +15,20 @@ import isURL from 'validator/lib/isURL';
   async componentDidMount() {
     const { url, screenshot } = this.props;
     // console.log(this.getQuery('v', url));
-    if(this.checkIfItYouTube(url) == "youtube.com" && this.getQuery('v', url) != null) {
-      this.setState({
-        load: "youtube",
-        videoId: this.getQuery('v', url)
-      })
+    console.log(this.checkIfUrl(url));
+    if (this.checkIfUrl(url)) {
+      if(this.checkIfItYouTube(url) == "youtube.com" && this.getQuery('v', url) != null) {
+        this.setState({
+          load: "youtube",
+          videoId: this.getQuery('v', url)
+        })
 
+      }
     }
   }
 
   checkIfUrl = (url) => {
-    let yes = isURL(url, { protocols: ['http','https'], require_tld: true, require_protocol: false} );
+    let yes = isURL(url, { protocols: ['http','https'], require_valid_protocol: true, require_protocol: true} );
     // console.log('yes', yes);
     
     return yes ? yes : null
@@ -75,7 +78,7 @@ import isURL from 'validator/lib/isURL';
   displayIframe = () => {
     const { height, top, site } = this.props;
     const { load } = this.state;
-    if (site != null) {
+    if (site && load !== 'youtube') {
       if(site.screen_path === "") {
         return (
           <iframe 

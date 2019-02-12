@@ -29,9 +29,10 @@ class UploadUrl extends React.Component {
 	}
 
 	handleURL = (event) => {
-		// {require_valid_protocol: true, protocols: ['http','https','ftp'], require_protocol: true}
 		// check if the url is valid
-		if (!isURL(event.target.value, {require_valid_protocol: true, protocols: ['http','https','ftp'], require_protocol: true})) {
+		if (!isURL(event.target.value)) {
+			// {require_valid_protocol: true, protocols: ['http','https','ftp'], require_protocol: true}
+			
 			this.setState({ msg: 'You need to provided a valid web url' })
 			this.setState({ err: true })
 			return false;

@@ -184,25 +184,6 @@ class Post extends React.Component {
                         </p>
                       }
                     />
-                    {/* <CardMedia
-                      className={classes.media}
-                      style={{ backgroundPosition: 'top' }}
-                      image={
-                          // if the link is a gif then show that
-                          typeof topic.sites[0] !== "undefined" && this.checkForGif(topic.sites[0].url) == 'gif' ?
-                            topic.sites[0].url
-                          :
-                            // check to see if it the old data of base64
-                            // by using the lenght of the screenshot field
-                            topic.screenshot.length > 200 ?
-                              config.base64 + topic.screenshot
-                            :
-                              config.topic + topic.screenshot
-                      }
-                      title={topic.title}
-                      component="a"
-                      href={encodeURI("/topics/" + topic._id + "/" + topic.title.replace(/[.*+?^$/{}()|[\]\\]/g, '-'))}
-                    /> */}
                     <div>
                       <a 
                         href={encodeURI("/topics/" + topic._id + "/" + topic.title.replace(/[.*+?^$/{}()|[\]\\]/g, '-'))}
@@ -219,25 +200,10 @@ class Post extends React.Component {
                             width: '100%'
                           }}
                           src={
-                            typeof topic.sites[0] !== "undefined" && this.checkForGif(topic.sites[0].url) == 'gif' ?
+                            typeof topic.sites[0] !== "undefined" && this.checkForGif(topic.sites[0].url) == 'gif' || this.checkForGif(topic.sites[0].url) == 'png' || this.checkForGif(topic.sites[0].url) == 'jpg' ?
                               topic.sites[0].url
                             :
                               "//image.thum.io/get/auth/3228-www.tipestry.com/" + topic.sites[0].url
-                            // // if the link is a gif then show that
-                            // typeof topic.sites[0] !== "undefined" && this.checkForGif(topic.sites[0].url) == 'gif' ?
-                            //   topic.sites[0].url
-                            
-                            // :
-                            // // chec if it is a link
-                            //   this.checkIfUrl(topic.screenshot) ?
-                            //     topic.screenshot
-                            //   :
-                            //     // check to see if it the old data of base64
-                            //     // by using the lenght of the screenshot field
-                            //     topic.screenshot.length > 200 ?
-                            //       config.base64 + topic.screenshot
-                            //     :
-                            //       config.topic + topic.screenshot
                           }  
                         />
                       </a>
@@ -303,3 +269,44 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, )(Posts);
+
+
+
+{
+  /* <CardMedia
+                        className={classes.media}
+                        style={{ backgroundPosition: 'top' }}
+                        image={
+                            // if the link is a gif then show that
+                            typeof topic.sites[0] !== "undefined" && this.checkForGif(topic.sites[0].url) == 'gif' ?
+                              topic.sites[0].url
+                            :
+                              // check to see if it the old data of base64
+                              // by using the lenght of the screenshot field
+                              topic.screenshot.length > 200 ?
+                                config.base64 + topic.screenshot
+                              :
+                                config.topic + topic.screenshot
+                        }
+                        title={topic.title}
+                        component="a"
+                        href={encodeURI("/topics/" + topic._id + "/" + topic.title.replace(/[.*+?^$/{}()|[\]\\]/g, '-'))}
+                      /> */
+}
+
+
+ // // if the link is a gif then show that
+ // typeof topic.sites[0] !== "undefined" && this.checkForGif(topic.sites[0].url) == 'gif' ?
+ //   topic.sites[0].url
+
+ // :
+ // // chec if it is a link
+ //   this.checkIfUrl(topic.screenshot) ?
+ //     topic.screenshot
+ //   :
+ //     // check to see if it the old data of base64
+ //     // by using the lenght of the screenshot field
+ //     topic.screenshot.length > 200 ?
+ //       config.base64 + topic.screenshot
+ //     :
+ //       config.topic + topic.screenshot
