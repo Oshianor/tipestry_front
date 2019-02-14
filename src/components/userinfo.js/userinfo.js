@@ -14,9 +14,13 @@ const styles = {
 	root: {
 		flexGrow: 1,
 		maxWidth: 250,
-		marginLeft: "5%",
+		margin: "5%",
 		textAlign: 'center',
-		maHheight: 250,
+		marginTop: 10,
+		boxShadow: '0px 0px 1px 0px',
+		borderRadius: 0,
+		color: 'white'
+		// maHheight: 250,
 		// background: "linear-gradient(to right, rgba(8, 8, 8, 0.23), rgba(255, 255, 255, 0.24))"
 	},
 	tab: {
@@ -25,7 +29,7 @@ const styles = {
 	pos: {
 		textAlign: 'center',
 		color: "#406ac2",
-		fontSize: 20
+		fontSize: 12
 	}
 };
 
@@ -63,13 +67,13 @@ class Userinfo extends Component {
 		const { classes, data } = this.props;
 		
 		return (
-			<div className={classes.root} >
+			<Paper className={classes.root} >
 				{
 					token &&
 						<React.Fragment>
-							<Grid container justify="center" style={{ margin: "0px 0px 30px 0px" }} >
+							<Grid container justify="center" style={{ margin: "0px -12px 30px 0px" }} >
 								<Grid item className={classes.tab} >
-									<Typography variant="h6" style={{ fontSize: 15 }} >
+									<Typography variant="h6" style={{ fontSize: 12 }} >
 										{/* votes */}
 										{Lang.v1}
 									</Typography>
@@ -78,7 +82,7 @@ class Userinfo extends Component {
 									</Typography>
 								</Grid>
 								<Grid item className={classes.tab} >
-									<Typography variant="h6" style={{ fontSize: 15 }} >
+									<Typography variant="h6" style={{ fontSize: 12 }} >
 										{/* TIPS */}
 										{Lang.w1}
 									</Typography>
@@ -87,7 +91,7 @@ class Userinfo extends Component {
 									</Typography>
 								</Grid>
 								<Grid item className={classes.tab} >
-									<Typography variant="h6" style={{ fontSize: 15 }} >
+									<Typography variant="h6" style={{ fontSize: 12 }} >
 										{/* FOLLOWERS */}
 										{Lang.x1}
 									</Typography>
@@ -120,7 +124,7 @@ class Userinfo extends Component {
 									</div>
 								</Grid>
 								<Grid item xl={4} >
-									<Typography variant="h6" style={{ fontSize: 15, padding: "10%" }} >
+									<Typography variant="h6" style={{ fontSize: 12, padding: "10%" }} >
 										{/* NEXT REWARD: */}
 										{Lang.y1}
 									</Typography>
@@ -131,7 +135,7 @@ class Userinfo extends Component {
 							</Grid>
 						</React.Fragment>
 				}
-			</div>
+			</Paper>
 		);
 	}
 }

@@ -5,7 +5,6 @@ import Post from '../components/post/post';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import Tipcoin from '../components/tipcoin/tipcoin';
-import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import Trends from '../components/trends/trends';
 import Userinfo from '../components/userinfo.js/userinfo';
@@ -13,7 +12,8 @@ import Hidden from '@material-ui/core/Hidden';
 import withWidth from '@material-ui/core/withWidth';
 import compose from 'recompose/compose';
 import LeaderBoard from "../components/leaderscoreboard/scoreboard"
-import Popular from "../components/popular/popular"
+import Popular from "../components/popular/popular";
+import { connect } from 'react-redux';
 
 const styles = theme => ({
   root: {
@@ -37,11 +37,14 @@ const styles = theme => ({
     },
   },
 });
+
+
 class Homepage extends Component {
   state = {
     drawer: false,
     stopScroll: false,
-    token: null
+    token: null,
+    pageNumber: 2,
   }
 
   // handle drawer open
@@ -111,14 +114,14 @@ class Homepage extends Component {
                   >
                   <div style={stopScroll ? { position: 'fixed', top: "70px"} : { position: 'relative' }} >
                     { token && <Userinfo /> }
-                    <Trends />
+                    <Trends modal={false} />
                     <Popular />
                   </div>
                 </Grid>
               </Hidden>
 
               {/* post  */}
-              <Grid item lg={7} xl={7}  >
+              <Grid item lg={7} xl={7} md={12} sm={12} xs={12}  >
                 <Post topicValue={data.topics.topic} source="topics" />
               </Grid>
 

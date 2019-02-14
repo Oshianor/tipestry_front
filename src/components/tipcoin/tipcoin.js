@@ -16,6 +16,7 @@ import Button from '@material-ui/core/Button';
 const styles = theme => ({
   root: {
 		flexGrow: 1,
+		marginTop: 10
 		// [theme.breakpoints.up('xs')]: {
 		// 	margin: "0px 1%",
 		// 	marginTop: 320,
@@ -33,12 +34,16 @@ const styles = theme => ({
 		padding: theme.spacing.unit * 2,
 		textAlign: 'center',
 		color: theme.palette.text.secondary,
+		boxShadow: '0px 0px 1px 0px',
+		borderRadius: 0
 	},
   paper: {
     padding: theme.spacing.unit * 2,
     textAlign: 'center',
 		color: theme.palette.text.secondary,
-		display: "flex", alignItems: "center"
+		display: "flex", alignItems: "center",
+		boxShadow: '0px 0px 1px 0px',
+		borderRadius: 0
   },
 });
 

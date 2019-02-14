@@ -307,7 +307,7 @@ class MiniDrawer extends React.Component {
 
 				{/* open trendings ina dialog */}
 				<Dialog open={trendings} handleClose={this.handleCloseTrendings} >
-					<Trends />
+					<Trends modal={true} />
 				</Dialog>
 
 				{ /* handle LeaderBoard */ }
@@ -316,7 +316,7 @@ class MiniDrawer extends React.Component {
 				</Dialog>
 
 				<Dialog open={star} handleClose={this.handleClosePopular}>
-					<Popular />
+					<Popular  modal={true} />
 				</Dialog>
 
 				<Dialog open={stage} handleClose={this.handleCloseStage}>

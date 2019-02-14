@@ -21,8 +21,7 @@ import Options from "./components/options";
 import { config } from '../../../config';
 import { Lang } from '../../../lang';
 import isURL from 'validator/lib/isURL';
-import Linkify from 'linkifyjs/react';
-import Masonry from 'react-masonry-component';
+// import Linkify from 'linkifyjs/react';
 
 
 const styles = theme => ({
@@ -65,15 +64,6 @@ const styles = theme => ({
   }
 });
 
-
-const masonryOptions = {
-  transitionDuration: 0
-};
-
-const imagesLoadedOptions = {
-  background: '.my-bg-image-el'
-}
-
 class Post extends React.Component {
   state = {
     token: null,
@@ -110,33 +100,36 @@ class Post extends React.Component {
     if (title.length > 60) {
       return (
         <a style={{ color: '#1F7BD8',cursor: 'pointer', textDecoration: 'none', fontSize: 18, textTransform: "capitalize" }} >
-          <Linkify tagName="span">
+          {/* <Linkify tagName="span"> */}
           {title.substr(0, 40)}
-          </Linkify>
+          {/* </Linkify> */}
         </a>
       )
     } else {
       return (
         <a style={{ color: '#1F7BD8', textDecoration: 'none', fontSize: 18, textTransform: "capitalize" }} >
-          <Linkify tagName="span">
+          {/* <Linkify tagName="span"> */}
           {title}
-          </Linkify>
+          {/* </Linkify> */}
         </a>
       )
     }
   }
 
-  handleClick() {}
-
   render() {
     const { classes, topicValue, errMsg } = this.props;
     const { token } = this.state;
+    // console.log("POST", this.state);
     
     return (
-      <React.Fragment>
-        <Masonry
-          className={'my-gallery-class'}
-        >
+      <Grid container justify="center">
+      {/* // <React.Fragment> */}
+        {/* <Grid
+          container
+          className={classes.demo}
+          alignItems="center"
+          justify="center"
+        > */}
           {
             // check if topic value exist
             typeof topicValue[0] === "undefined" ?
@@ -144,8 +137,8 @@ class Post extends React.Component {
             :
               // it exist then display
               topicValue.map((topic, index) => (
-                
-                  <Card className={classes.card} key={index} style={{ margin: "10px", position: 'relative' }}>
+                <Grid item key={index} >
+                  <Card className={classes.card} key={index} style={{ margin: "10px" }}>
                     <CardHeader
                       avatar={
                         // link to the user profile
@@ -254,11 +247,12 @@ class Post extends React.Component {
                       gift={topic.gift}
                     />
                   </Card>
-                
+                </Grid>
             ))
           }
-        </Masonry>
-      </React.Fragment>
+        {/* </Grid> */}
+      </Grid>
+      // </React.Fragment>
     );
   }
 }

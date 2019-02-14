@@ -37,7 +37,10 @@ class LeaderBoard extends Component {
 
   async componentDidMount() {
 		this.getLeaderBoards();
-  }
+	}
+	
+
+	
   async getLeaderBoards() {
 		const { getLeaderBoard } = this.props;
 		const options = {
