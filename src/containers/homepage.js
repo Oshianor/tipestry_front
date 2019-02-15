@@ -14,6 +14,7 @@ import compose from 'recompose/compose';
 import LeaderBoard from "../components/leaderscoreboard/scoreboard"
 import Popular from "../components/popular/popular";
 import { connect } from 'react-redux';
+import SiteInfo from '../components/siteinfo/siteinfo';
 
 const styles = theme => ({
   root: {
@@ -132,6 +133,7 @@ class Homepage extends Component {
                   <div style={stopScroll ? { position: 'fixed', top: "70px"} : { position: 'relative' }} >
                     <Tipcoin />
                     <LeaderBoard />
+                    <SiteInfo />
                   </div>
                 </Grid>
               </Hidden>

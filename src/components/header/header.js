@@ -302,7 +302,6 @@ class Header extends React.Component {
 							</Typography>
 							<Typography  variant='display4' className={classes.hedbody}>
 								{Lang.b}
-								Check out our <a style={{ color: 'initial' }} href="/privacypolicy">privacy policy.</a>
 							</Typography>
 							{
 								// if user is logged in then don't show

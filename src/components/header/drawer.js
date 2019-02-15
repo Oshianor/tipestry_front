@@ -32,6 +32,7 @@ import Stage from "../stage/stage";
 import SignalLevel from "@material-ui/icons/SignalCellularAltOutlined";
 import Userinfo from '../userinfo.js/userinfo';
 import Ballot from "@material-ui/icons/Ballot";
+import SiteInfo from '../siteinfo/siteinfo';
 
 const drawerWidth = 240;
 
@@ -249,6 +250,7 @@ class MiniDrawer extends React.Component {
 								<Divider />
 							</React.Fragment>
 					}
+					<SiteInfo />
 				</List>
 			</Drawer>
 		)
