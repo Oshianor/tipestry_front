@@ -155,7 +155,7 @@ class Profile extends React.Component {
               {this.getCurrentLevel()}
             </Grid>
             <Grid item xs={10} >
-              <Progress percent={(data.profile.user_level / 4) * 100} />
+              <Progress percent={parseInt((data.profile.user_level / 6) * 100)} />
             </Grid>
             <Grid item xs={1} >
               {this.getFutureLevel()}

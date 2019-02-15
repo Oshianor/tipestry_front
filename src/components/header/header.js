@@ -158,7 +158,7 @@ const styles = theme => ({
     }),
   },
   appBarShift: {
-    marginLeft: drawerWidth,
+    // marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
@@ -302,6 +302,7 @@ class Header extends React.Component {
 							</Typography>
 							<Typography  variant='display4' className={classes.hedbody}>
 								{Lang.b}
+								Check out our <a style={{ color: 'initial' }} href="/privacypolicy">privacy policy.</a>
 							</Typography>
 							{
 								// if user is logged in then don't show

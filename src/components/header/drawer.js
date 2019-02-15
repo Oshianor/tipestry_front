@@ -36,59 +36,60 @@ import Ballot from "@material-ui/icons/Ballot";
 const drawerWidth = 240;
 
 const styles = theme => ({
-  root: {
-    display: 'flex',
-  },
-  menuButton: {
-    marginLeft: 12,
-    marginRight: 36,
-  },
-  hide: {
-    display: 'none',
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-		whiteSpace: 'nowrap',
-		
-  },
-  drawerOpen: {
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerClose: {
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    overflowX: 'hidden',
-    width: theme.spacing.unit * 7 + 1,
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing.unit * 9 + 1,
-    },
-  },
-  toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
-		...theme.mixins.toolbar
-		// boxShadow: '0 0 0 0',
-  },
-  content: {
-    flexGrow: 1,
-    // padding: theme.spacing.unit * 3,
-	},
-	body: {
-		// backgroundColor: "#5967ae",
-		// height: "100vh",
-		// width: "100%",
-		// backgroundRepeat: 'no-repeat',
-		// backgroundSize: "cover",
-	}
+ root: {
+ 		display: 'flex',
+ 	},
+ 	appBar: {
+ 		transition: theme.transitions.create(['margin', 'width'], {
+ 			easing: theme.transitions.easing.sharp,
+ 			duration: theme.transitions.duration.leavingScreen,
+ 		}),
+ 	},
+ 	appBarShift: {
+ 		width: `calc(100% - ${drawerWidth}px)`,
+ 		marginLeft: drawerWidth,
+ 		transition: theme.transitions.create(['margin', 'width'], {
+ 			easing: theme.transitions.easing.easeOut,
+ 			duration: theme.transitions.duration.enteringScreen,
+ 		}),
+ 	},
+ 	menuButton: {
+ 		marginLeft: 12,
+ 		marginRight: 20,
+ 	},
+ 	hide: {
+ 		display: 'none',
+ 	},
+ 	drawer: {
+ 		// width: drawerWidth,
+ 		flexShrink: 0,
+ 	},
+ 	drawerPaper: {
+ 		width: drawerWidth,
+ 	},
+ 	drawerHeader: {
+ 		display: 'flex',
+ 		alignItems: 'center',
+ 		padding: '0 8px',
+ 		...theme.mixins.toolbar,
+ 		justifyContent: 'flex-end',
+ 	},
+ 	content: {
+ 		flexGrow: 1,
+ 		// padding: theme.spacing.unit * 3,
+ 		transition: theme.transitions.create('margin', {
+ 			easing: theme.transitions.easing.sharp,
+ 			duration: theme.transitions.duration.leavingScreen,
+ 		}),
+ 		// marginLeft: -drawerWidth,
+ 	},
+ 	contentShift: {
+ 		transition: theme.transitions.create('margin', {
+ 			easing: theme.transitions.easing.easeOut,
+ 			duration: theme.transitions.duration.enteringScreen,
+ 		}),
+ 		// marginLeft: 0,
+ 	},
 });
 
 class MiniDrawer extends React.Component {
@@ -186,101 +187,75 @@ class MiniDrawer extends React.Component {
 		const { token } = this.state;
 		return (
 			<Drawer
-						variant="permanent"
-						className={classNames(classes.drawer, {
-							[classes.drawerOpen]: drawer,
-							[classes.drawerClose]: !drawer
-						})}
-						classes={{
-							paper: classNames({
-								[classes.drawerOpen]: drawer,
-								[classes.drawerClose]: !drawer
-							}),
-						}}
-						open={drawer}
-					>
-						<div className={classes.toolbar}>
-							<IconButton onClick={() => handleDrawerClose()}>
-								{theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-							</IconButton>
-						</div>
-						<List 
-							className={classes.body}
-							style={
-								// this means overlay isn't preset for this page
-								!overlay ?
-									{ marginTop: 0 }
-								:
-									// if the overlay is preset and the drawer is open
-									!stopScroll && drawer ? 
-										{ marginTop: 0 } 
-									: 
-										// if the overlay is hidden and drawer is open
-										stopScroll && drawer ? 
-											{ marginTop: 0 } 
-										:
-											// if overlay is hidden and drawer is not opened
-											stopScroll && !drawer ?
-												{ marginTop: 0 } 
-											:
-												{ marginTop: top }
-							}
-						>
-							<Divider />
-							<ListItem button onClick={this.handleOpenRecentTips}>
-								<ListItemIcon>
-									<img src='/static/icons/moneybag.svg' style={{ width: 25, height: 25 }} />
-								</ListItemIcon>
-								<ListItemText primary={Lang.n} />
-							</ListItem>
-							<Divider />
-							<ListItem button onClick={this.handleOpenTrendings} >
-								<ListItemIcon>
-									<Trend />
-								</ListItemIcon>
-								<ListItemText primary={Lang.u1} />
-							</ListItem>
-							<Divider />
-							<ListItem button onClick={this.handleOpenLeaderBoard}>
-								<ListItemIcon>
-									<Board />
-								</ListItemIcon>
-								<ListItemText primary={Lang.x2} />
-							</ListItem>
-							<Divider />
-							<ListItem button onClick={this.handleOpenPopular}>
-								<ListItemIcon>
-									<Star />
-								</ListItemIcon>
-								<ListItemText primary={Lang.y2} />
-							</ListItem>
-							{
-								token &&
-									<React.Fragment>
-										<Divider />
-										<ListItem button onClick={this.handleOpenStage}>
-											<ListItemIcon>
-												<SignalLevel />
-											</ListItemIcon>
-											<ListItemText primary={Lang.b3} />
-										</ListItem>
-										<Divider />
-										<ListItem button onClick={this.handleOpenUserInfo}>
-											<ListItemIcon>
-												<Ballot />
-											</ListItemIcon>
-											<ListItemText primary={Lang.c3} />
-										</ListItem>
-										<Divider />
-									</React.Fragment>
-							}
-						</List>
-					</Drawer>
+				className={classes.drawer}
+				variant="persistent"
+				anchor="left"
+				classes={{
+					paper: classes.drawerPaper,
+				}}
+				open={drawer}
+			>
+				<div className={classes.toolbar}>
+					<IconButton onClick={() => handleDrawerClose()}>
+						{theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+					</IconButton>
+				</div>
+				<List className={classes.body}>
+					<Divider />
+					<ListItem button onClick={this.handleOpenRecentTips}>
+						<ListItemIcon>
+							<img src='/static/icons/moneybag.svg' style={{ width: 25, height: 25 }} />
+						</ListItemIcon>
+						<ListItemText primary={Lang.n} />
+					</ListItem>
+					<Divider />
+					<ListItem button onClick={this.handleOpenTrendings} >
+						<ListItemIcon>
+							<Trend />
+						</ListItemIcon>
+						<ListItemText primary={Lang.u1} />
+					</ListItem>
+					<Divider />
+					<ListItem button onClick={this.handleOpenLeaderBoard}>
+						<ListItemIcon>
+							<Board />
+						</ListItemIcon>
+						<ListItemText primary={Lang.x2} />
+					</ListItem>
+					<Divider />
+					<ListItem button onClick={this.handleOpenPopular}>
+						<ListItemIcon>
+							<Star />
+						</ListItemIcon>
+						<ListItemText primary={Lang.y2} />
+					</ListItem>
+					{
+						token &&
+							<React.Fragment>
+								<Divider />
+								<ListItem button onClick={this.handleOpenStage}>
+									<ListItemIcon>
+										<SignalLevel />
+									</ListItemIcon>
+									<ListItemText primary={Lang.b3} />
+								</ListItem>
+								<Divider />
+								<ListItem button onClick={this.handleOpenUserInfo}>
+									<ListItemIcon>
+										<Ballot />
+									</ListItemIcon>
+									<ListItemText primary={Lang.c3} />
+								</ListItem>
+								<Divider />
+							</React.Fragment>
+					}
+				</List>
+			</Drawer>
 		)
 	}
 
   render() {
-    const { classes, showOnLg } = this.props;
+    const { classes, showOnLg, drawer } = this.props;
 		const { tips, trendings, score, star, stage, userinfo } = this.state;
 		console.log(this.state)
     return (
@@ -295,8 +270,12 @@ class MiniDrawer extends React.Component {
 						this.displayDrawer()
 				}
 
-        <main className={classes.content}>
-          {/* <div className={classes.toolbar} /> */}
+        <main 
+					className={classNames(classes.content, {
+            [classes.contentShift]: drawer,
+          })}
+				>
+					{/* <div className={classes.toolbar} /> */}
           {this.props.children}
         </main>
 

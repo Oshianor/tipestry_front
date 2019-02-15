@@ -19,7 +19,7 @@ const styles = {
 		marginTop: 10,
 		boxShadow: '0px 0px 1px 0px',
 		borderRadius: 0,
-		color: 'white'
+		color: '#c9c6c6'
 		// maHheight: 250,
 		// background: "linear-gradient(to right, rgba(8, 8, 8, 0.23), rgba(255, 255, 255, 0.24))"
 	},
