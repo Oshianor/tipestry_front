@@ -35,23 +35,20 @@ class SiteInfo extends Component {
 						<a className={classes.link} >Faq</a>
 					</Link>
 					&nbsp;&nbsp;
+					<br />
 					<Link href="/privacypolicy">
 						<a className={classes.link} >Privacy Policy</a>
-					</Link>
-					&nbsp;&nbsp;
-					<Link href="/terms">
-						<a className={classes.link} >Terms and Conditions</a>
 					</Link>
 					&nbsp;&nbsp;
 					<Link href="/contests">
 						<a className={classes.link} >Contests</a>
 					</Link>
+					<br />
+					&nbsp;&nbsp;
+					<Link href="/terms">
+						<a className={classes.link} style={{ whiteSpace: 'nowrap' }} >Terms and Conditions</a>
+					</Link>
 				</Typography>
-				<style jsx>{`
-					a: hover {
-						color: black;
-					}
-				`}</style>
 			</div>
 		)
 	}

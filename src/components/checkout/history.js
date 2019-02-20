@@ -37,15 +37,15 @@ class History extends React.Component {
 	renderMoney(amount, type) {
 		// console.log('amount', amount === 0);
 		
-		if (amount !== 0 && String(amount).length < 3 && type === 'bitcoin') {
-			return amount / 10000
-		} else if (String(amount).length > 3) {
-			return amount
-		} else if (amount == 0) {
-			return 0.0000
-		} else {
-			return amount / 1000
-		}
+		// if (amount !== 0 && String(amount).length < 3 && type === 'bitcoin') {
+		// 	return amount / 10000
+		// } else if (String(amount).length > 3) {
+			return amount;
+		// } else if (amount == 0) {
+		// 	return 0.0000
+		// } else {
+		// 	return amount / 1000
+		// }
 	}
 
   render() {

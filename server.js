@@ -14,4 +14,5 @@ app.prepare()
         if (err) throw err
         console.log(`> Ready on http://localhost:${port}`)
       })
-  })
+  });
+  
