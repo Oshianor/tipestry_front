@@ -109,12 +109,12 @@ class Faq extends Component {
 					>
 						<ExpansionPanelSummary>
 							<Typography>
-								Tipestry Go is a mobile app?							
+								How is Tipestry.com different than other sites with comment sections ?
 							</Typography>
 						</ExpansionPanelSummary>
 						<ExpansionPanelDetails>
 							<Typography variant="body2" style={{ textAlign: 'left', marginBottom: 10 }} >
-								How is Tipestry.com different than other sites with comment sections ?
+								
 									Although some sites feature comment sections or message boards, most do not.One of the goals of this project is to provide more places
 									for
 								people to interact and give feedback online, including the more obscure(or censored) corners of the web.
@@ -249,7 +249,7 @@ class Faq extends Component {
 							</Typography>
 						</ExpansionPanelDetails>
 					</ExpansionPanel>
-					<ExpansionPanel
+					{/* <ExpansionPanel
 						square
 						expanded={expanded === 'panel11'}
 						onChange={this.handleChange('panel11')}
@@ -267,7 +267,7 @@ class Faq extends Component {
 									for it to make sense.
 							</Typography>
 						</ExpansionPanelDetails>
-					</ExpansionPanel>
+					</ExpansionPanel> */}
 					<ExpansionPanel
 						square
 						expanded={expanded === 'panel12'}
