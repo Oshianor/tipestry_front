@@ -1,7 +1,7 @@
 export const Lang = {
 	// ENGLISH
 	a: "Comment anywhere",
-	b: "Comment on any website or physical location.Earn cryptocurrency tips for your posts or website.",
+	b: "Comment on any website or physical location. Earn cryptocurrency tips for your posts or website.",
 	c: "Get Started",
 	d: "Wallet activities",
 	e: "Edit profile",
@@ -14,7 +14,7 @@ export const Lang = {
 	l: "Logout",
 	m: "Hi",
 	n: "Recent Tips",
-	o: 'ADD A TOPIC AND MAKE A DIFFERENCE',
+	o: 'Add a topic and make a difference',
 	p: "Title field can only contain 100 characters",
 	q: "Title field can't be empty",
 	r: "Add Topic",

@@ -34,7 +34,7 @@ const styles = theme => ({
     boxShadow: "0px 0px 0px 0px"
   },
   fab: {
-    margin: 4,
+    margin: '-6px 4px',
     width: 36,
     boxShadow: "0px 0px 0px 0px"
   },
@@ -173,7 +173,7 @@ class claimDiaglog extends React.Component {
 		const { classes } = this.props;
 		const { option } = this.state;
 		return (
-			<div lassName={classes.rootForm}>
+			<div className={classes.rootForm}>
 				<FormControl component="fieldset" className={classes.formControl}>
           {/* <FormLabel component="legend">Gender</FormLabel> */}
           <RadioGroup
@@ -210,13 +210,11 @@ class claimDiaglog extends React.Component {
                 </a>
               </span>
           :
-            <div>
-              <Typography>
-                Generate one time token &nbsp;
-                <Fab color="secondary" size="small" onClick={this.generateClaim} aria-label="Add" className={classes.fab}>
-                  <Refresh style={{ fontSize: 18 }} />
-                </Fab>
-              </Typography>
+            <div style={{ display: 'flex' }} >
+              <Typography>Generate one time token &nbsp;</Typography>
+              <Fab color="secondary" size="small" onClick={this.generateClaim} aria-label="Add" className={classes.fab}>
+                <Refresh style={{ fontSize: 18 }} />
+              </Fab>
             </div>
         }
         
@@ -228,13 +226,13 @@ class claimDiaglog extends React.Component {
     return (
          <Typography variant='caption' style={{ fontSize: 13 }} >
           Click here to
-          <Button 
-          color="primary" 
-          style={{ textDecoration: 'underline' }} 
-          onClick={this.verifyClaim} 
-        >
-          verify
-        </Button>
+            <Button 
+            color="primary" 
+            style={{ textDecoration: 'underline' }} 
+            onClick={this.verifyClaim} 
+          >
+            verify
+          </Button>
         </Typography>
     )
   }

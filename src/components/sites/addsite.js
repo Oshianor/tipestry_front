@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
@@ -18,6 +13,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import green from '@material-ui/core/colors/green';
 import Alert from '../reuseable/alert';
 import { Lang } from '../../../lang';
+import Paper from '@material-ui/core/Paper';
 
 
 const styles = theme => ({
@@ -34,7 +30,10 @@ const styles = theme => ({
 	container: {
 		display: 'flex',
 		flexWrap: 'wrap',
-		margin: "5px 10%"
+		margin: "10px 8%", 
+		boxShadow: '0px 0px 1px 0px', 
+		color: 'lightslategray', 
+		borderRadius: 0
 	},
 	buttonProgress: {
 		color: green[500],
@@ -46,6 +45,9 @@ const styles = theme => ({
 	},
 	cnt: {
 		fontSize: 11
+	},
+	textField: {
+		margin: "1px 20px"
 	}
 });
 
@@ -142,8 +144,12 @@ class Addsite extends Component {
 		const { classes } = this.props;
 		const { title, titleHelper, message, loading, msg, open } = this.state;
 		return (
-			<div className={classes.container} noValidate autoComplete="off">
-				<Typography style={{ textAlign: 'center' }} variant='subtitle1' >
+			<Paper className={classes.container}>
+				<Typography 
+					style={{ textAlign: 'left', textTransform: 'capitalize', marginTop: 5, marginBottom: 5, fontWeight: '400' }} 
+					variant='h6' 
+					className={classes.textField} 
+				>
 					{/* ADD A TOPIC AND MAKE A DIFFERENCE */}
 					{Lang.o}
 				</Typography>
@@ -162,7 +168,7 @@ class Addsite extends Component {
 					helperText={titleHelper.msg}
           variant="outlined"
         />
-				<div style={{ display: 'flex', marginTop: -15 }} >
+				<div style={{ display: 'flex', marginTop: -10 }} className={classes.textField} >
 					<p style={100 - title.length < 10 ? { color: "red"} : { color: "black" }} className={classes.cnt}>
 						{100 - title.length}
 					</p>
@@ -181,13 +187,12 @@ class Addsite extends Component {
 					multiline
 					rows={3}
         />
-				<Button disabled={loading} variant="contained" color='primary' onClick={this.handleAddTopic.bind(this)} >
-					
+				<Button style={{ margin: '10px 20px' }} disabled={loading} variant="contained" color='primary' onClick={this.handleAddTopic.bind(this)} >
 					{/* {!loading ? "Add Topic" : <CircularProgress size={24} className={classes.buttonProgress} />} */}
 					{!loading ? Lang.r : <CircularProgress size={24} className={classes.buttonProgress} />}
 				</Button>
 				<Alert open={open} message={msg} handleClose={this.handleClose} />
-			</div>
+			</Paper>
 		)
 	}
 }

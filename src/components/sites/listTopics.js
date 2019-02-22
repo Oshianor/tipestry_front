@@ -4,23 +4,18 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
-// import TextField from '@material-ui/core/TextField';
-// import Button from '@material-ui/core/Button';
 import Link from "next/link";
 import moment from 'moment';
 import { config } from '../../../config';
-// import Axios from 'axios';
-// import Router from "next/router";
-// import CircularProgress from '@material-ui/core/CircularProgress';
 import green from '@material-ui/core/colors/green';
-// import Alert from '../reuseable/alert';
 import { Lang } from '../../../lang';
 import Addsite from './addsite';
 import Siteactions from './siteactions';
 import Thumbnails from '../reuseable/thumbnails';
+import Paper from '@material-ui/core/Paper';
+import Sitetopiccoin from './components/sitetopiccoin';
 
 
 
@@ -137,8 +132,9 @@ class TopicList extends React.Component {
 						<ListItemText
 							primary = {
 								<Link href={encodeURI("/topics/" + topic._id + "/" + topic.title)} >
-									<a style={{ color: '#1F7BD8', textDecoration: 'none', fontSize: 20 }} >
+									<a style={{ color: '#1F7BD8', textDecoration: 'none', fontSize: 18 }} >
 										{topic.title.length > 50 ? topic.title.substr(0, 40) + "..." : topic.title}
+										<Sitetopiccoin gift={topic.gift} />
 									</a>
 								</Link>
 							}
@@ -166,9 +162,19 @@ class TopicList extends React.Component {
 	render() {
 		const { site, topics, url, gift } = this.props;
 		const { open, msg } = this.state;
-		
+		console.log(site, 'wwwwww')
 		return (
 			<div style={{ marginTop: 80 }} >
+				{
+					typeof site.url !== "undefined" &&
+						<Typography style={{ textAlign: 'center', margin: "10px 8%", }}>
+							<Link href={site.url}>
+								<a>
+									{site.url}
+								</a>
+							</Link>
+						</Typography>
+				}
 				{
 					typeof topics === "undefined" ?
 						this.displayEmptyTopics()
@@ -180,17 +186,25 @@ class TopicList extends React.Component {
 								typeof site.id !== "undefined" &&
 									<Siteactions url={url} site={site} gift={gift} />
 							}
-							<Typography variant="h5" style={{ textAlign: 'center' }} >
-								{ /* Topics // 话题*/ }
-								{Lang.s}
-							</Typography>
-							<div style={{ margin: "0 10%" }}>
-								<div style={{ backgroundColor: 'white', width: "100%" }}>
-									<div style={{ maxHeight: 400, width: "100%", overflow: "auto" }}>
-									{this.displayTopics()}
+
+
+							{/* topic fot the site */}
+							<Paper style={{ margin: "10px 8%", boxShadow: '0px 0px 1px 0px', color: 'lightslategray', borderRadius: 0 }} >
+								<Typography variant="h6" style={{ padding: "5px 12px", fontWeight: '400' }} >
+									{ /* Topics // 话题*/ }
+									{Lang.s}
+								</Typography>
+								<div>
+									<div style={{ backgroundColor: 'white', width: "100%" }}>
+										<div style={{ maxHeight: 400, width: "100%", overflow: "auto" }}>
+										{this.displayTopics()}
+										</div>
 									</div>
 								</div>
-							</div>
+							</Paper>
+
+
+
 							{/* add url form */}
 							<Addsite url={url} />
 						</React.Fragment>

@@ -1,13 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import Moment from "moment";
 import { Lang } from '../../../lang';
 import { config } from '../../../config';
 import { bindActionCreators } from 'redux';
@@ -109,8 +103,8 @@ class Popular extends React.Component {
 					<ExpansionPanelDetails>
 						<div>
 						{
-							data.popular.map((topic) => (
-								<ul>
+							data.popular.map((topic, index) => (
+								<ul key={index} >
 									<li>
 										<img src={
 											typeof topic.topic[0].site[0] !== "undefined" && this.checkForGif(topic.topic[0].site[0].url) == 'gif' || this.checkForGif(topic.topic[0].site[0].url) == 'png' || this.checkForGif(topic.topic[0].site[0].url) == 'jpg' ?

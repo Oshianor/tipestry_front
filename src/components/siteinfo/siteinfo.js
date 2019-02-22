@@ -27,24 +27,23 @@ class SiteInfo extends Component {
 	render() {
 		const { classes } = this.props;
 		return (
-			<div style={{ margin: '20px 18px' }} >
+			<div style={{ margin: '10px 0px' }} >
 				<Typography style={{ color: 'rgba(0, 0, 0, 0.61)' }}>
 					© 2019 TIpestry 
+					&nbsp;&nbsp;
+					<Link href="/privacypolicy">
+						<a className={classes.link} style={{ whiteSpace: 'nowrap' }} >Privacy Policy</a>
+					</Link>
 					&nbsp;&nbsp;
 					<Link href="/faq">
 						<a className={classes.link} >Faq</a>
 					</Link>
 					&nbsp;&nbsp;
-					<br />
-					<Link href="/privacypolicy">
-						<a className={classes.link} >Privacy Policy</a>
-					</Link>
-					&nbsp;&nbsp;
 					<Link href="/contests">
 						<a className={classes.link} >Contests</a>
 					</Link>
-					<br />
 					&nbsp;&nbsp;
+					<br />
 					<Link href="/terms">
 						<a className={classes.link} style={{ whiteSpace: 'nowrap' }} >Terms and Conditions</a>
 					</Link>

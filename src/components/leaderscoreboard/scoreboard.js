@@ -18,12 +18,17 @@ import ThumbDownAlt from '@material-ui/icons/ThumbDownAlt';
 import ThumbUpAlt from '@material-ui/icons/ThumbUpAlt';
 import Eye from "@material-ui/icons/RemoveRedEye";
 import NumberFormat from 'react-number-format';
+import Paper from '@material-ui/core/Paper';
 
 
 const styles = theme => ({
   root: {
 		maxWidth: 400,
-		padding: 5
+		padding: 5,
+		marginTop: 10,
+		boxShadow: "0px 0px 1px 0px",
+    borderRadius: 0,
+    color: "rgba(0, 0, 0, 0.54)"
   },
   inline: {
     display: 'inline',
@@ -66,17 +71,17 @@ class LeaderBoard extends Component {
 	render() {
 		const { classes, data } = this.props;
 		return (
-			<div className={classes.root} >
-				<Typography variant="button" style={{ fontSize: 25, borderBottom: "1px solid darkgray" }}>
+			<Paper className={classes.root} >
+				<Typography variant="button" style={{ fontSize: 16, marginLeft: 15 }}>
 					{Lang.x2}
 				</Typography>
-				<List className={classes.root}>
+				<List style={{ marginLeft: 15 }} >
 					{
 						data.leaderboard.map((score, index) => (
-							<ListItem key={score._id.userId} alignItems="flex-start" style={{ margin: "-10px 0px -10px 0px", padding: '5px 5px' }} >
-								<ListItemIcon style={{ marginRight: -13, marginTop: 6 }} >
+							<ListItem key={score._id.userId} alignItems="flex-start" style={{ margin: "-10px 0px -10px -5px", padding: '5px 5px' }} >
+								{/* <ListItemIcon style={{ marginRight: -13, marginTop: 6 }} >
 									{index + 1}.
-								</ListItemIcon>
+								</ListItemIcon> */}
 								<ListItemText
 									primary={
 										<span style={{ display: 'flex' }} >
@@ -87,7 +92,7 @@ class LeaderBoard extends Component {
 												</a>
 											</Link>
 											<div style={{ fontSize: 13 }} >
-												<span><img src='/static/tipcoins/doge.svg' style={{ width: 15, height: 15, marginTop: 6 }} /></span>
+												<span><img src='/static/tipcoins/doge.svg' style={{ width: 30, height: 30, marginTop: 0 }} /></span>
 												<span style={{ marginTop: 4, position: 'absolute',padding: '0px 5px' }} >
 													<NumberFormat value={parseFloat(score.count).toFixed(2)} displayType="text" thousandSeparator={true} />
 												</span>
@@ -99,7 +104,7 @@ class LeaderBoard extends Component {
 						))
 					}
 				</List>
-			</div>
+			</Paper>
 		);
 	}
 }

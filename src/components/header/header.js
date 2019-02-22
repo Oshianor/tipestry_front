@@ -359,7 +359,7 @@ class Header extends React.Component {
 		const { data, classes } = this.props;
 		return (
 				<Collapse in={!hide} timeout="auto" unmountOnExit>
-					<Grid container spacing={24} style={{ position: 'absolute', width: '100%', marginTop: 35 }} >
+					<Grid container spacing={24} style={{ position: 'absolute', width: '100%', marginTop: 35, display: 'flex', justifyContent: 'space-between' }} >
 						<Grid item  className={classes.left} >
 							{
 								// token &&
@@ -376,7 +376,7 @@ class Header extends React.Component {
 							}
 						</Grid>
 
-						<div style={{ flexGrow: 1 }} />
+						{/* <div style={{ flexGrow: 1 }} /> */}
 
 						{/* <Grid item style={{ marginLeft: '4.5%' }} > */}
 						<Grid item style={{ marginLeft: '0.5%' }} >
@@ -412,7 +412,7 @@ class Header extends React.Component {
 							</div>
 						</Grid>
 						
-						<div style={{ flexGrow: 1 }} />
+						{/* <div style={{ flexGrow: 1 }} /> */}
 						
 						<Grid item className={classes.right} >
 							{

@@ -270,7 +270,7 @@ class Comments extends React.Component {
 											</Button>
 										</form>
 									:
-										<Typography component="p" style={{ fontSize: 12, fontWeight: 'lighter' }} >
+										<Typography component="p" style={{ fontSize: 15, fontWeight: 'lighter' }} >
 											<Linkify tagName="p">
 												{comment.content}
 											</Linkify>

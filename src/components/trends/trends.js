@@ -106,11 +106,11 @@ class Trends extends Component {
 						</Typography>
 					</ExpansionPanelSummary>
 					<ExpansionPanelDetails>
-						<Typography>
+						{/* <Typography> */}
 							{
-								data.trends.map(trend => (
+								data.trends.map((trend, index) => (
 									
-									<ul>
+									<ul key={index} >
 										<li>
 											<Link href={encodeURI("/topics/" + trend._id + "/" + trend.title.replace(/[.*+?^$/{}()|[\]\\]/g, '-'))} >
 												<a style={{ fontSize: 14, textTransform: 'capitalize' }} >{trend.title}</a>
@@ -202,7 +202,7 @@ class Trends extends Component {
 									</ul>
 								))
 							}
-						</Typography>
+						{/* </Typography> */}
 					</ExpansionPanelDetails>
 				</ExpansionPanel>
 			</Paper>
