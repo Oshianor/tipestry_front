@@ -148,8 +148,9 @@ class Options extends React.Component {
     const { token, topicUser, data, getTopics, topicObjId } = this.props;
     if (token) {
       // check if the user is logged in
-      if (topicUser.id === data.user.id) {
+      if (topicUser.id === data.user.id || data.user.is_admin === 1) {
       // check if the owner of the post is the same with the logged in user
+      // check also if the user is admin then enable delete
         const options = {
           method: 'GET',
           headers: {
@@ -163,6 +164,7 @@ class Options extends React.Component {
         try {
           let del = await axios(options);
           getTopics(del.data.content);
+          this.handleClose();
         } catch (error) {
           console.log(error);
         }
@@ -212,7 +214,7 @@ class Options extends React.Component {
             {/* Report post */}
           </MenuItem>
           {
-            topicUser.id === data.user.id &&
+            topicUser.id === data.user.id || data.user.is_admin === 1 &&
               <MenuItem style={{ fontSize: 12, padding: "5px 16px" }} onClick={this.handleDeletePost}>
                 <Delete style={{ fontSize: 15 }} />
                 &nbsp;{Lang.c2}

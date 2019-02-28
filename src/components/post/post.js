@@ -97,33 +97,18 @@ class Post extends React.Component {
     })
   }
 
-  checkIfUrl = (url) => {
-    let yes = isURL(url, { protocols: ['http','https'], require_protocol: false} );
-    console.log('yes', yes, url);
-    
-    return yes ? yes : null
-  }
+
 
   // display the title based on the length
   // truncate the title if it too long
   displayTitle = (title) => {
-    if (title.length > 60) {
-      return (
-        <a style={{ color: '#1F7BD8',cursor: 'pointer', textDecoration: 'none', fontSize: 18, textTransform: "capitalize" }} >
-          <Linkify tagName="span">
-          {title.substr(0, 40)}
-          </Linkify>
-        </a>
-      )
-    } else {
-      return (
-        <a style={{ color: '#1F7BD8', textDecoration: 'none', fontSize: 18, textTransform: "capitalize" }} >
-          <Linkify tagName="span">
-          {title}
-          </Linkify>
-        </a>
-      )
-    }
+    return (
+      <a style={{ color: '#1F7BD8', textDecoration: 'none', fontSize: 16, textTransform: "capitalize" }} >
+        <Linkify tagName="span">
+        {title}
+        </Linkify>
+      </a>
+    )
   }
 
   handleClick() {}
@@ -316,3 +301,11 @@ export default connect(mapStateToProps, )(Posts);
  //       config.base64 + topic.screenshot
  //     :
  //       config.topic + topic.screenshot
+
+
+  //  checkIfUrl = (url) => {
+  //   let yes = isURL(url, { protocols: ['http','https'], require_protocol: false} );
+  //   console.log('yes', yes, url);
+    
+  //   return yes ? yes : null
+  // }

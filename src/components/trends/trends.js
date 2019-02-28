@@ -41,6 +41,31 @@ const styles = theme => ({
 		fontWeight: theme.typography.fontWeightRegular,
 		display: 'flex'
 	},
+	rootlist: {
+		listStyleType: 'none',
+		// width: 200
+		marginLeft: -40
+	},
+	list: {
+		margin: 0,
+		// padding: 0,
+		padding: 10,
+		overflow: 'auto',
+		'&:hover': {
+			background: '#eee',
+			cursor: 'pointer'
+		}
+	},
+	link: {
+		font: 'bold 20px / 1.5 Helvetica, Verdana, sans-serif'
+	},
+	img: {
+		float: 'left',
+		margin: '0px 15px 0px 0px'
+	},
+	listSpan: {
+		font: '200 12px / 1.5 Georgia, Times New Roman, serif'
+	}, 
 });
 
 class Trends extends Component {
@@ -107,15 +132,14 @@ class Trends extends Component {
 					</ExpansionPanelSummary>
 					<ExpansionPanelDetails>
 						{/* <Typography> */}
-							{
-								data.trends.map((trend, index) => (
-									
-									<ul key={index} >
-										<li>
+							<ul className={classes.rootlist} >
+								{
+									data.trends.map((trend, index) => (
+										<li key={index} className={classes.list} >
 											<Link href={encodeURI("/topics/" + trend._id + "/" + trend.title.replace(/[.*+?^$/{}()|[\]\\]/g, '-'))} >
 												<a style={{ fontSize: 14, textTransform: 'capitalize' }} >{trend.title}</a>
 											</Link>
-											<span>
+											<span className={classes.listSpan}>
 												&nbsp;&nbsp;
 												<Link href={encodeURI("/profile/" + trend.user[0]._id + "/@" + trend.user[0].username)} >
 													<a style={{ color: '#1F7BD8', textDecoration: 'none', textTransform: "capitalize", fontSize: 10 }}>
@@ -127,24 +151,24 @@ class Trends extends Component {
 													{
 														trend.view > 0 &&
 															<span>
-																<Eye style={{ fontSize: 10 }} />
-																<span style={{ fontSize: 10 }}>{trend.view}</span>
+																<Eye style={{ fontSize: 10, color: 'gray' }} />
+																<span style={{ fontSize: 10, color: 'gray' }}>{trend.view}</span>
 															</span>
 													}
 													&nbsp;
 													{
 														typeof trend.likes[0] !== "undefined" &&
 															<span>
-																<ThumbUpAlt style={{ fontSize: 10 }} />
-																<span style={{ fontSize: 10 }} >{trend.likes[0].count}</span>
+																<ThumbUpAlt style={{ fontSize: 10, color: 'gray' }} />
+																<span style={{ fontSize: 10, color: 'gray' }} >{trend.likes[0].count}</span>
 															</span>
 													}
 													&nbsp;
 													{
 														typeof trend.dislikes[0] !== "undefined" &&
 															<span>
-																<ThumbDownAlt style={{ fontSize: 10 }} />
-																<span style={{ fontSize: 10 }} >{trend.dislikes[0].count}</span>
+																<ThumbDownAlt style={{ fontSize: 10, color: 'gray' }} />
+																<span style={{ fontSize: 10, color: 'gray' }} >{trend.dislikes[0].count}</span>
 															</span>
 													}
 													&nbsp;
@@ -156,14 +180,45 @@ class Trends extends Component {
 																	alt="comments"
 																	width='12'
 																	height="12" 
+																	className={classes.img}
 																/>
-																<span style={{ fontSize: 10 }} >{trend.comment[0].count}</span>
+																<span style={{ fontSize: 10, color: 'gray' }} >{trend.comment[0].count}</span>
 															</span>
 													}
 												</span>
 											</span>
 										</li>
-										<style jsx>{`
+									))
+								}
+							</ul>
+						{/* </Typography> */}
+					</ExpansionPanelDetails>
+				</ExpansionPanel>
+			</Paper>
+		);
+	}
+}
+
+Trends.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+function mapStateToProps(state) {
+	return {
+		data: state.data,
+	}
+}
+
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({
+		getTrends: getTrends
+	}, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Trends));
+
+
+{/* <style jsx>{`
 											*{
 												margin: 0;padding: 0;
 											}
@@ -198,37 +253,7 @@ class Trends extends Component {
 												background: #eee;
 												cursor: pointer;
 											}
-									`}</style>
-									</ul>
-								))
-							}
-						{/* </Typography> */}
-					</ExpansionPanelDetails>
-				</ExpansionPanel>
-			</Paper>
-		);
-	}
-}
-
-Trends.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-function mapStateToProps(state) {
-	return {
-		data: state.data,
-	}
-}
-
-function mapDispatchToProps(dispatch) {
-	return bindActionCreators({
-		getTrends: getTrends
-	}, dispatch)
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Trends));
-
-
+									`}</style> */}
 
 
 

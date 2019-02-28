@@ -113,8 +113,7 @@ class Index extends React.Component {
                 style={{ zIndex: 99999, background: 'rgb(146, 95, 126)' }}
                 buttonStyle={{ background: 'rgb(255, 255, 255)' }}
               >
-                  This website uses cookies to enhance the user 
-                  experience and coins on tipestry not yours until you withdraw them.
+                  This website uses cookies to enhance the user experience.It is your responsibility to keep the coins you earn safe by withdrawing them to your own wallet.
               </CookieConsent>
             </BottomScrollListerer>
         }
