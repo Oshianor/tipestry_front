@@ -15,13 +15,15 @@ import axios from 'axios';
 import ReportComponent from './report';
 import Delete from "@material-ui/icons/DeleteForever";
 import { Lang } from '../../../../lang';
+import DialogDeletePost from './dialogDeletePost';
 
 class Options extends React.Component {
   state = {
     anchorEl: null,
     userFollowing: [],
     topicFollowing: [],
-    report: false
+    report: false,
+    del: false
   };
 
   handleReportOpen = () => {
@@ -35,6 +37,19 @@ class Options extends React.Component {
       report: false
     })
     this.handleClose();
+  }
+
+
+  handleDeleteClose = () => {
+    this.setState({
+      del: false
+    })
+  }
+
+  handleDeleteOpen = () => {
+    this.setState({
+      del: true
+    })
   }
 
   componentDidMount() {
@@ -164,7 +179,10 @@ class Options extends React.Component {
         try {
           let del = await axios(options);
           getTopics(del.data.content);
+          // modal for more options like report post and follow post
           this.handleClose();
+          // modal for deleteion confirmation
+          this.handleDeleteClose();
         } catch (error) {
           console.log(error);
         }
@@ -173,7 +191,7 @@ class Options extends React.Component {
   }
 
   render() {
-    const { anchorEl, topicFollowing, report } = this.state;
+    const { anchorEl, topicFollowing, report, del } = this.state;
     const { data, topicUser } = this.props;
     // console.log(this.state);
     
@@ -214,18 +232,25 @@ class Options extends React.Component {
             {/* Report post */}
           </MenuItem>
           {
-            topicUser.id === data.user.id || data.user.is_admin === 1 &&
-              <MenuItem style={{ fontSize: 12, padding: "5px 16px" }} onClick={this.handleDeletePost}>
+            topicUser.id === data.user.id || data.user.is_admin === 1 ?
+              <MenuItem style={{ fontSize: 12, padding: "5px 16px" }} onClick={this.handleDeleteOpen}>
                 <Delete style={{ fontSize: 15 }} />
                 &nbsp;{Lang.c2}
                 {/* Delete */}
               </MenuItem>
+            :
+              ""
           }
         </Menu>
         <ReportComponent 
           open={report}
           handleReportOpen={this.handleReportOpen}
           handleReportClose={this.handleReportClose}
+        />
+        <DialogDeletePost 
+          open={del}
+          handleClose={this.handleDeleteClose}
+          handleDeletePost={this.handleDeletePost}
         />
       </div>
     );

@@ -92,6 +92,7 @@ class Popular extends React.Component {
 	render() {
 		const { expanded } = this.state;
 		const { classes, data } = this.props;
+
 		return (
 			<Paper className={classes.root} >
 				<ExpansionPanel expanded={expanded === 'panel1'} onChange={this.handleChange('panel1')}>
@@ -101,30 +102,30 @@ class Popular extends React.Component {
 						</Typography>
 					</ExpansionPanelSummary>
 					<ExpansionPanelDetails>
-						<div>
+						<ul >
 						{
 							data.popular.map((topic, index) => (
-								<ul key={index} >
-									<li>
-										<img src={
-											typeof topic.topic[0].site[0] !== "undefined" && this.checkForGif(topic.topic[0].site[0].url) == 'gif' || this.checkForGif(topic.topic[0].site[0].url) == 'png' || this.checkForGif(topic.topic[0].site[0].url) == 'jpg' ?
-												topic.topic[0].site[0].url 
-											:
-												"//image.thum.io/get/auth/3228-www.tipestry.com/" + topic.topic[0].site[0].url
-										} 
-										style={{ width: 45, height: 45 }}
-										/>
-										<Link href={encodeURI("/topics/" + topic.topic[0]._id + "/" + topic.topic[0].title.replace(/[.*+?^$/{}()|[\]\\]/g, '-'))} >
-											<a>{topic.topic[0].title}</a>
-										</Link>
-										{/* <Typography component="span" className={classes.inline} color="textPrimary">
-											{Moment(topic.topic[0].created_at).locale(Lang.locale).fromNow()}
-										</Typography> */}
-									</li>
-								</ul>
+								<li key={index}>
+									<img src={
+										typeof topic[0] !== "undefined" &&
+											typeof topic.topic[0].site[0] !== "undefined" && 
+												this.checkForGif(topic.topic[0].site[0].url) == 'gif' || this.checkForGif(topic.topic[0].site[0].url) == 'png' || this.checkForGif(topic.topic[0].site[0].url) == 'jpg' ?
+														topic.topic[0].site[0].url 
+													:
+														"//image.thum.io/get/width/100/crop/600/auth/3228-www.tipestry.com/" + topic.topic[0].site[0].url
+									} 
+									style={{ width: 45, height: 45 }}
+									/>
+									<Link href={encodeURI("/topics/" + topic.topic[0]._id + "/" + topic.topic[0].title.replace(/[.*+?^$/{}()|[\]\\]/g, '-'))} >
+										<a>{topic.topic[0].title}</a>
+									</Link>
+									{/* <Typography component="span" className={classes.inline} color="textPrimary">
+										{Moment(topic.topic[0].created_at).locale(Lang.locale).fromNow()}
+									</Typography> */}
+								</li>
 							))
 						}
-						</div>
+						</ul>
 						<style jsx>{`
 							*{
 								margin: 0;padding: 0;

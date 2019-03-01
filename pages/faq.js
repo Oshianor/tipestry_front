@@ -275,16 +275,15 @@ class Faq extends Component {
 					>
 						<ExpansionPanelSummary>
 							<Typography>
-								What are Tipcoin(TIPC) and the Tipestry Token(TIP)?
+								What are Tipcoins and Tipestry Tokens?
 							</Typography>
 						</ExpansionPanelSummary>
 						<ExpansionPanelDetails>
 							<Typography variant="body2" style={{ textAlign: 'left', marginBottom: 10 }} >
-								Tipcoins(TIPC) will give users proportional voting rights on the governance of the Tipestry platform, including moderator election and removal, moderation policy, and selecting Best Of content
-								for special recognition.Tipcoins will be earned by contributing to the Tipestry community;
-								we will not sell them.
-								Tipestry Token(TIP) will be used to purchase Tipestry Premium accounts and will entitle the owners to dividends of cryptocurrency earned on the platform in the future.Tipestry Tokens will be sold in our token sale to help cover the costs of growing and improving the platform.
-								TIPC and TIP are both ERC - 20 tokens.
+								Tipcoins(TIPC) are utility tokens that can be earned by contributing to the Tipestry community.They serve several purposes such as giving owners proportional voting rights on the platform governance including moderator election and removal, moderation policy, and selecting Best Of content
+								for special rewards and recognition.Tipcoins can also be used to purchase Tipestry Premium status and as a payment method
+								for listing other tokens on Tipestry.Tipestry Token(TIP) will be used
+								for our upcoming STO.
 							</Typography>
 						</ExpansionPanelDetails>
 					</ExpansionPanel>
@@ -300,11 +299,11 @@ class Faq extends Component {
 						</ExpansionPanelSummary>
 						<ExpansionPanelDetails>
 							<Typography variant="body2" style={{ textAlign: 'left', marginBottom: 10 }} >
-								Find out what people are saying about a particular website.Is the site legitimate– is it a scam, is its information up to date, is it fake news ? Sometimes it’ s hard to tell based just on a site’ s content or its search engine rankings.A quick look at what other people are saying can serve as a helpful guide.
+								Find out what people are saying about a particular website.Is the site legitimate  is it a scam, is its information up to date, is it fake news ? Sometimes it’ s hard to tell based just on a site’ s content or its search engine rankings.A quick look at what other people are saying can serve as a helpful guide.
 								Discuss sites where the comment sections have been removed.Many major news organizations have removed their comment sections in recent years.The justification often used is that the quality of the comments is generally too low to justify the cost of hosting them, and although that might be true in some cases, it also conveniently prevents readers from voicing contrary opinions.
 								Discuss topics where there’ s no obvious place to do so.For example,
-									if I
-								wanted to share my thoughts on rutabagas, but there’ s no message board dedicated to that subject in my language, I can enter www.rutabagas.com on Tipestry and talk about it there.
+								<br />
+								If i wanted to share my thoughts on rutabagas, but there’ s no message board dedicated to that subject in my language, I can enter www.rutabagas.com on Tipestry and talk about it there.
 								Discuss very specific topics.After watching a movie, you can sometimes find a forum to discuss it(although now with IMDB shutting down its message boards, even that can be difficult).However, what
 								if you want to discuss a specific episode, or a specific song ? With Tipestry you could go on the a Wikipedia page or summary
 								for a particular episode or the lyrics page
@@ -325,7 +324,9 @@ class Faq extends Component {
 						</ExpansionPanelSummary>
 						<ExpansionPanelDetails>
 							<Typography variant="body2" style={{ textAlign: 'left', marginBottom: 10 }} >
-								Moderation is an unfortunate necessity on sites that allow user - generated content.As important as free speech is, having no rules is impractical on a platform like Tipestry due to bad actors.Spam, illegal content(threats of violence, libel, etc.) and doxing all require moderation.What the exact rules are, however, is never easy to decide.
+								Moderation is an unfortunate necessity on sites that allow user-generated content. 
+								As important as free speech is, having no rules is impractical on a platform like Tipestry due to bad actors. 
+								Spam, illegal content(threats of violence, libel, etc.) and doxing all require moderation.What the exact rules are, however, is never easy to decide.
 
 								Rather than leave it up to us alone, our plan is to use blockchain to allow the community to transparently vote on moderation policies and elect moderators.Additionally, instead of relying on unpaid moderators to work out of the goodness of their hearts(or in order to put themselves in a position where they can push an agenda), elected moderators can be compensated
 								for their efforts with cryptocurrency.
@@ -344,10 +345,12 @@ class Faq extends Component {
 						</ExpansionPanelSummary>
 						<ExpansionPanelDetails>
 							<Typography variant="body2" style={{ textAlign: 'left', marginBottom: 10 }} >
-								Traditional social media companies rely on their users to generate most of the value on their platforms.Then then typically show their gratitude by selling their users’ personal information to third party corporations and government agencies.This model is unfair and is due
-								for a change.
+								Traditional social media companies rely on their users to generate most of the value on their platforms. 
+								Then then typically show their gratitude by selling their users’ personal information to third party corporations and government agencies. 
+								This model is unfair and is due for a change.
 
-								Tipestry’ s built - in cryptocurrency tipping is one way to address the problem.If someone posts something valuable, they can receive tips from us and from other users, allowing contributors to the platform to earn rewards
+								Tipestry’s built-in cryptocurrency tipping is one way to address the problem. 
+								If someone posts something valuable, they can receive tips from us and from other users, allowing contributors to the platform to earn rewards
 								for the value they create.Cryptocurrency also provides avenues
 								for us(such as issuing our own tokens) to cover the costs of running the platform
 								while respecting users’ privacy.
@@ -383,10 +386,22 @@ class Faq extends Component {
 						<ExpansionPanelDetails>
 							<Typography variant="body2" style={{ textAlign: 'left', marginBottom: 10 }} >
 								One of the main purposes of Tipestry is to create a business model
-								for social media that respects users’ privacy, which is one of the reasons cryptocurrency is built into the platform.Cryptocurrency is good
-								for privacy
-								for two reasons: first, it allows people to send and receive money without giving up personal information through a credit card or bank account, and second, it creates an opportunity
-								for us to cover our costs without resorting to invasive advertising.
+								<ul>
+									<li>
+										for social media that respects users’ privacy, which is one of the reasons cryptocurrency is built into the platform.Cryptocurrency is good
+									</li>
+									<li>
+										for privacy
+									</li>
+									<li>
+										for us to cover our costs without resorting to invasive advertising.
+									</li>
+									<li>
+										for two reasons: first, it allows people to send and receive money without giving up personal information through a credit card or bank account, and second, it creates an opportunity
+									</li>
+								</ul>
+								
+								
 							</Typography>
 						</ExpansionPanelDetails>
 					</ExpansionPanel>
