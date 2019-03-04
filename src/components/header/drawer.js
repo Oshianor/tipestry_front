@@ -259,7 +259,7 @@ class MiniDrawer extends React.Component {
   render() {
     const { classes, showOnLg, drawer } = this.props;
 		const { tips, trendings, score, star, stage, userinfo } = this.state;
-		console.log(this.state)
+		// console.log(this.state)
     return (
       <div className={classes.root}>
         <CssBaseline />

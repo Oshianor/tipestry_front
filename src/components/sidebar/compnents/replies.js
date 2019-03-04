@@ -8,8 +8,6 @@ import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import Thumbnails from '../../reuseable/thumbnails';
 import IconButton from '@material-ui/core/IconButton';
-import ThumbDownAlt from '@material-ui/icons/ThumbDownAlt';
-import ThumbUpAlt from '@material-ui/icons/ThumbUpAlt';
 import Edit from '@material-ui/icons/EditRounded';
 import RemoveCircle from '@material-ui/icons/RemoveCircle';
 import Link from 'next/link';
@@ -21,6 +19,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Lang } from '../../../../lang';
 import Linkify from 'linkifyjs/react';
+import Replycompose from './replycompose';
 
 
 const styles = theme => ({
@@ -65,7 +64,37 @@ const styles = theme => ({
 class Repiles extends React.Component {
 	state = {
 		edit: null,
-		content: ''
+		content: '',
+		replyValues: [],
+		replyTotal: 0
+	}
+
+	componentDidMount = async () => {
+		const { totalReplies, commentId } = this.props;
+		// we check if the comment as reply before we query for replies
+		if (totalReplies > 0) {
+			try {
+				let getReply = await axios.get(config.api + "/commentReply/reply/" + commentId + "/limit");
+				console.log('getReply.data.content[0].reply', getReply.data.content);
+
+				if (!getReply.data.error) {
+					// handleReply(getReply.data.content.total, getReply.data.content.replies)
+					this.setState({
+						replyTotal: getReply.data.content.total,
+						replyValues: getReply.data.content.replies
+					})
+				}
+			} catch (error) {
+				console.log(error);
+			}
+		}
+	}
+
+	handleUpdateReply = (val, total) => {
+		this.setState({
+			replyValues: val,
+			replyTotal: total
+		})
 	}
 
 	handleReplyEdit = async () => {
@@ -150,14 +179,70 @@ class Repiles extends React.Component {
 		})
 	}
 
+	displayReplyForm() {
+		const { reply, commentObjId, commentId, username } = this.props;
+		if (reply === commentObjId) {
+			return (
+				<Replycompose 
+					commentObjId={commentObjId} 
+					commentId={commentId} 
+					username={username} 
+					handleUpdateReply={this.handleUpdateReply} 
+				/>
+			)
+		}
+	}
+
+	handleLoadReply = async () => {
+		const { commentId } = this.props;
+		const { replyTotal } = this.state;
+		// we check if the comment as reply before we query for replies
+		if (replyTotal  > 0) {
+			try {
+				let getReply = await axios.get(config.api + "/commentReply/reply/" + commentId + "/all");
+				console.log('yes     getReply.data.content[0].reply', getReply.data.content);
+
+				if (!getReply.data.error) {
+					// handleReply(getReply.data.content.total, getReply.data.content.replies)
+					this.setState({
+						replyTotal: getReply.data.content.total,
+						replyValues: getReply.data.content.replies
+					})
+				}
+			} catch (error) {
+				console.log(error);
+			}
+		}
+	}
+
+	displayLoadMoreButton = () => {
+		const { replyTotal, replyValues } = this.state;
+		if (replyTotal !== replyValues.length) {
+			return (
+				<div style={{ display: 'flex', backgroundColor: '#fafafa' }}>
+					<div style={{ flexGrow: 1 }} />
+						<div style={{ backgroundColor: 'white', padding: '2px 20px' }}>
+							<Typography 
+								onClick={this.handleLoadReply}
+								style={{ color: '#78afe8', fontSize: 12, cursor: 'pointer' }} 
+							>
+								Load All
+							</Typography>
+						</div>
+				</div>
+			)
+		}
+	}
+
   render() {
-		const { classes, replyValues, data } = this.props;
-		const { edit, content } = this.state;
+		const { classes, data } = this.props;
+		const { edit, content, replyValues } = this.state;
 		// console.log("PPPPPPPPP", replyValues);
 		
 
     return (
 			<div style={{ backgroundColor: "#fafafa" }}>
+				{this.displayReplyForm()}
 				{
 					replyValues.map((reply, index) => (
 						<Card className={classes.semicard} key={index} >
@@ -252,6 +337,7 @@ class Repiles extends React.Component {
 						</Card>
 					))
 				}
+				{this.displayLoadMoreButton()}
 			</div>
     );
   }

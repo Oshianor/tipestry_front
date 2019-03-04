@@ -15,7 +15,7 @@ import isURL from 'validator/lib/isURL';
   async componentDidMount() {
     const { url, screenshot } = this.props;
     // console.log(this.getQuery('v', url));
-    console.log(this.checkIfUrl(url));
+    // console.log(this.checkIfUrl(url));
     if (this.checkIfUrl(url)) {
       if(this.checkIfItYouTube(url) == "youtube.com" && this.getQuery('v', url) != null) {
         this.setState({
@@ -149,7 +149,7 @@ import isURL from 'validator/lib/isURL';
 	render() {
     const { height, top, img } = this.props;
     const { load } = this.state;
-    console.log(this.state, "=======>", this.props);
+    // console.log(this.state, "=======>", this.props);
     
 		return (
       <div>

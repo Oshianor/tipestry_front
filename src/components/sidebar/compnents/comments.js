@@ -41,7 +41,10 @@ const styles = theme => ({
 		padding: "0px 25px",
 		// borderBottom: '2px solid gray'
 		// borderBottom: '1px solid #d8d6d6'
-  }
+	},
+	textLink: {
+		cursor: 'pointer',
+	}
 });
 
 class Comments extends React.Component {
@@ -49,20 +52,8 @@ class Comments extends React.Component {
 		// comments: [],
 		edit: null,
 		content: '',
-		reply: null,
-		replyValues: [],
-		replyShow: null,
+		reply: null
 	}
-
-
-	// async componentDidMount() {
-  //   const { data } = this.props;
-  //   this.setState({
-	// 		comments: data.siteTopic[0].comment
-  //   });
-
-	// }
-
 
 	handleEdit(id, mesg) {
 		const { edit } = this.state;
@@ -176,36 +167,19 @@ class Comments extends React.Component {
 		})
 	}
 
-	// fetch the replies for the opened comment
-	async handleFetchReply(commentObjId) {
-		const { replyShow } = this.state;
-		if (replyShow === commentObjId) {
-			this.setState({
-				replyShow: null
-			})
-		} else {
-			let getReply = await axios.get(config.api + "/commentReply/reply/" + commentObjId);
-			if (!getReply.data.error) {
-				this.setState({
-					replyShow: commentObjId,
-					replyValues: getReply.data.content[0].reply
-				})
-			}
-		}
-		
-	}
 
 
-	displayReplyForm(commentObjId, commentId, username) {
-		const { reply } = this.state;
-		if (reply === commentObjId) {
-			return <Replycompose commentObjId={commentObjId} commentId={commentId} username={username} handleUpdateReply={this.handleUpdateReply} /> ;
-		}
-	}
+
+	// displayReplyForm(commentObjId, commentId, username) {
+	// 	const { reply } = this.state;
+	// 	if (reply === commentObjId) {
+	// 		return <Replycompose commentObjId={commentObjId} commentId={commentId} username={username} handleUpdateReply={this.handleUpdateReply} /> ;
+	// 	}
+	// }
 
   render() {
 		const { classes, data } = this.props;
-		const { comments, edit, content, replyValues, replyShow } = this.state;
+		const { comments, edit, content, replyValues, reply } = this.state;
 		// console.log(this.state);
 		
     return (
@@ -306,47 +280,53 @@ class Comments extends React.Component {
 										</IconButton>
 								}
 
-								{ /* fetch replies for this comment */ } {
-								// if reply exist for this comment then show this 
-								// typeof comment.replyCount[0] !== "undefined" &&
+								
+								{
+									 //  fetch replies for this comment
+									 // if reply exist for this comment then show this
+								 typeof comment.replyCount[0] !== "undefined" &&
 									<Typography 
-										onClick={this.handleFetchReply.bind(this, comment._id)} 
-										style={{ cursor: 'pointer', fontSize: 11 }}
+										style={{ fontSize: 11 }}
 									>
 										Replies
 										&nbsp;
 										{typeof comment.replyCount[0] !== "undefined" ? comment.replyCount[0].count : ""}
 									</Typography> 
-							}
-							&nbsp;&nbsp;
-							<CommentCoin 
-							// topic object id
-								topicObjId={data.siteTopic[0]._id}
-								// comment id
-								commentId={comment.id}
-								// comment owner id
-								commentUserId={comment.commentUser[0].id}
-							/>
-						</CardActions>
+								}
+
+								&nbsp;&nbsp;
+								<CommentCoin 
+								// topic object id
+									topicObjId={data.siteTopic[0]._id}
+									// comment id
+									commentId={comment.id}
+									// comment owner id
+									commentUserId={comment.commentUser[0].id}
+								/>
+							</CardActions>
 
 
 							{/* tips for comment */}
 							<TopicCoins gift={comment.gifts} />
 
 
-							{/* display reply form */}
-							{this.displayReplyForm(comment._id, comment.id, comment.commentUser[0].username)}
-							
-							{
-								replyShow === comment._id &&
-									<Replies 
-										replyValues={replyValues} 
-										commentId={comment.id} 
-										commentObjId={comment._id}
-										handleUpdateReply={this.handleUpdateReply}
-									/>
-							}
 
+							{/* display reply form */}
+							{/* {this.displayReplyForm(comment._id, comment.id, comment.commentUser[0].username)} */}
+							
+
+							{/* display replies and it component */}
+							<Replies 
+								replyValues={replyValues} 
+								reply={reply}
+								username={comment.commentUser[0].username}
+								commentId={comment.id} 
+								handleReply={this.handleReply}
+								totalReplies={typeof comment.replyCount[0] !== "undefined" ? comment.replyCount[0].count : 0}
+								commentObjId={comment._id}
+								handleUpdateReply={this.handleUpdateReply}
+							/>
+							
 						</Card>
 					))
 				}
@@ -356,8 +336,7 @@ class Comments extends React.Component {
 }
 
 Comments.propTypes = {
-	classes: PropTypes.object.isRequired,
-	
+	classes: PropTypes.object.isRequired
 };
 
 // export default withStyles(styles)(Comments);

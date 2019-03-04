@@ -15,7 +15,7 @@ export const Lang = {
 	m: "Hi",
 	n: "Recent Tips",
 	o: 'Add a topic and make a difference',
-	p: "Title field can only contain 100 characters",
+	p: "Title field can only contain 140 characters",
 	q: "Title field can't be empty",
 	r: "Add Topic",
 	s: "Topics",

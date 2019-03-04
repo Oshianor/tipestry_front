@@ -58,7 +58,7 @@ class ReplyCompose extends React.Component {
         this.setState({
           reply: ""
         })
-        handleUpdateReply(comment.data.content, commentObjId);
+        handleUpdateReply(comment.data.content.replies, comment.data.content.total);
         
       }
       

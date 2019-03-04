@@ -73,9 +73,9 @@ class Addsite extends Component {
 
 	handleChange = name => event => {
 		if(name === 'title') {
-			console.log(event.target.value.length <= 100);
+			console.log(event.target.value.length <= 140);
 			
-			if(event.target.value.length <= 100) {
+			if(event.target.value.length <= 140) {
 				this.setState({
 					[name]: event.target.value
 				});
@@ -84,7 +84,7 @@ class Addsite extends Component {
 			this.setState({
 				open: true,
 				msg: Lang.p
-				// "Title field can only contain 30 characters" // 标题字段只能包含30个字符
+				// "Title field can only contain 140 characters" // 标题字段只能包含30个字符
 			})
 			return;
 		}
@@ -169,8 +169,8 @@ class Addsite extends Component {
           variant="outlined"
         />
 				<div style={{ display: 'flex', marginTop: -10 }} className={classes.textField} >
-					<p style={100 - title.length < 10 ? { color: "red"} : { color: "black" }} className={classes.cnt}>
-						{100 - title.length}
+					<p style={140 - title.length < 20 ? { color: "red", fontWeight: '600'} : { color: "black" }} className={classes.cnt}>
+						{140 - title.length}
 					</p>
 				</div>
 				
