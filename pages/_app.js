@@ -35,7 +35,6 @@ class MyApp extends App {
           <title>
             Tipestry | {Lang.c1}
             { /* Home // 家 */ }
-            
           </title>
           <meta charSet="UTF-8" />
           <meta name="description" content={Lang.b} />
@@ -44,8 +43,6 @@ class MyApp extends App {
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <meta name="application-name" content="Tipestry." />
           <link rel="icon" type="image/png" href="/static/favicon.png" />
-          {/* <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script> */}
-          {/* <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script> */}
         </Head>
         {/* Wrap every page in Jss and Theme providers */}
         <Provider store={store}>

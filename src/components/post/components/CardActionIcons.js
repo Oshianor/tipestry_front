@@ -26,10 +26,12 @@ const styles = theme => ({
   },
   actions: {
     display: 'flex',
+    justifyContent: 'space-evenly',
     borderTop: '.5px solid gray'
   },
   num: {
     fontSize: 15,
+    fontFamily: "monospace",
     fontWeight: '500',
     padding: 0,
     color: "#403d3d",
@@ -39,15 +41,15 @@ const styles = theme => ({
     },
   },
   iconspacing: {
-    [theme.breakpoints.only('xs')]: {
-      margin: '0 -3px',
-    },
-    [theme.breakpoints.only('sm')]: {
-      margin: '0 4px',
-    },
-    [theme.breakpoints.between('md', 'xl')]: {
-      margin: '0 10px',
-    },
+    // [theme.breakpoints.only('xs')]: {
+    //   margin: '0 -3px',
+    // },
+    // [theme.breakpoints.only('sm')]: {
+    //   margin: '0 4px',
+    // },
+    // [theme.breakpoints.between('md', 'xl')]: {
+    //   margin: '0 10px',
+    // },
   }
 });
 

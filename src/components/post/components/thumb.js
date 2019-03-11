@@ -23,7 +23,7 @@ const styles = theme => ({
     margin: theme.spacing.unit,
   },
   actions: {
-    display: 'flex',
+    // display: 'flex',
     borderTop: '.5px solid gray'
   },
 });
@@ -145,6 +145,7 @@ class Thumb extends React.Component {
             {this.thumbup()}
           </IconButton>
         </Tooltip>
+        &nbsp;
         <p className={num}>
           {/* chek if the count is zero then show nothing else show count */}
           {count === 0 ? "" : count}

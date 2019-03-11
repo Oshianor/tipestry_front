@@ -24,15 +24,15 @@ const styles = theme => ({
 
   },
   iconspacing: {
-    [theme.breakpoints.only('xs')]: {
-      margin: '0 1%',
-    },
-    [theme.breakpoints.only('sm')]: {
-      margin: '0 2%',
-    },
-    [theme.breakpoints.between('md', 'xl')]: {
-      margin: '0 4%',
-    },
+    // [theme.breakpoints.only('xs')]: {
+    //   margin: '0 1%',
+    // },
+    // [theme.breakpoints.only('sm')]: {
+    //   margin: '0 2%',
+    // },
+    // [theme.breakpoints.between('md', 'xl')]: {
+    //   margin: '0 4%',
+    // },
   },
   popper: {
     zIndex: 1,

@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -329,24 +331,6 @@ class LoginPath extends Component {
             </Link>
           </Typography>
               
-
-          {/* <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
-          <Typography variant="caption" gutterBottom style={{ margin: '0 8%' }} > 
-            <Link href="/register">
-              <a className={classes.bottom}>Terms and Conditions</a>
-            </Link>
-            <Link href="/register">
-              <a className={classes.bottom}>Support</a>
-            </Link>
-            <Link href="/register">
-              <a className={classes.bottom}>FAQ</a>
-            </Link>
-            <Link href="/register">
-              <a className={classes.bottomend}>Privacy Policy</a>
-            </Link>
-          </Typography>
-          </div>
-         */}
         </form>
       </div>
     );

@@ -119,13 +119,15 @@ class CoinGift extends React.Component {
 
 	handleChange = prop => event => {
 		const { currentCoin } = this.props;
-		if (currentCoin >= event.target.value) {
+		let amt = Math.abs(parseFloat(event.target.value));
+		if (currentCoin >= amt && amt !== 0) {
 			this.setState({
-				[prop]: event.target.value,
+				[prop]: amt,
 				error: ""
 			});
 		} else {
 			this.setState({
+				[prop]: amt,
 				error: "You have insuficient balance to handle this transaction"
 			});
 		}

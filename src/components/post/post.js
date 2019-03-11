@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
+// import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import red from '@material-ui/core/colors/red';
-import Grid from '@material-ui/core/Grid';
+// import Grid from '@material-ui/core/Grid';
 import Link from 'next/link';
 import { connect } from 'react-redux';
 import Moment from "moment";
@@ -20,22 +20,29 @@ import TopicCoin from "./components/topicCoins";
 import Options from "./components/options";
 import { config } from '../../../config';
 import { Lang } from '../../../lang';
-import isURL from 'validator/lib/isURL';
+// import isURL from 'validator/lib/isURL';
 import Linkify from 'linkifyjs/react';
 import Masonry from 'react-masonry-component';
-
+import withWidth from '@material-ui/core/withWidth';
 
 const styles = theme => ({
   card: {
     [theme.breakpoints.only('xs')]: {
-      width: 320
+      // width: 320
     },
     [theme.breakpoints.only('sm')]: {
-      width: 400
+      // width: 600
     },
-    [theme.breakpoints.between('md', 'xl')]: {
+    [theme.breakpoints.only('md')]: {
       width: 450
     },
+    [theme.breakpoints.only('lg')]: {
+      width: 350,
+      maxWidth: 400
+    },
+    // [theme.breakpoints.only('xl')]: {
+    //   width: 500
+    // },
   },
   demo: {
     // width: '100%',
@@ -62,6 +69,24 @@ const styles = theme => ({
   },
   avatar: {
     backgroundColor: red[500],
+  },
+  home: {
+    [theme.breakpoints.only('xs')]: {
+      margin: '0px 2%',
+      // width: 320
+    },
+    [theme.breakpoints.only('sm')]: {
+      margin: "0px 10%"
+    },
+    [theme.breakpoints.only('md')]: {
+      margin: '0px 10%',
+    },
+    // [theme.breakpoints.only('lg')]: {
+    //   // margin: '0px 1%',
+    // },
+    // [theme.breakpoints.only('xl')]: {
+    //   margin: '0px 5%',
+    // },
   }
 });
 
@@ -98,6 +123,11 @@ class Post extends React.Component {
   }
 
 
+  nutralizeTitle = (title) => {
+    return title.toLocaleLowerCase().split(" ").join("-").replace(/[.*+?^$/{}()|[\]\\]/g, '-');
+  }
+
+
 
   // display the title based on the length
   // truncate the title if it too long
@@ -111,7 +141,6 @@ class Post extends React.Component {
     )
   }
 
-  handleClick() {}
 
   render() {
     const { classes, topicValue, errMsg } = this.props;
@@ -119,17 +148,18 @@ class Post extends React.Component {
     
     return (
       <React.Fragment>
-        <Masonry
-          className={'my-gallery-class'}
-        >
-          {
-            // check if topic value exist
-            typeof topicValue[0] === "undefined" ?
-              <img src="/static/images/sadface.svg" style={{  marginTop: 20 }} />
-            :
-              // it exist then display
-              topicValue.map((topic, index) => (
-                
+        {
+          // check if topic value exist
+          typeof topicValue[0] === "undefined" ?
+            <img src="/static/images/sadface.svg" style={{  marginTop: 20 }} />
+          :
+            <Masonry
+            // it exist then display
+              elementType={'div'}
+              className={classes.home}
+            >
+              {
+                topicValue.map((topic, index) => (
                   <Card className={classes.card} key={index} style={{ margin: "10px", position: 'relative' }}>
                     <CardHeader
                       avatar={
@@ -204,7 +234,9 @@ class Post extends React.Component {
                     <CardContent>
                       <Typography component="p">
                         {/* post title */}
-                        <Link href={encodeURI("/topics/" + topic._id + "/" + topic.title.replace(/[.*+?^$/{}()|[\]\\]/g, '-'))} >
+                        <Link 
+                          href={"/topics/" + topic._id + "/" + this.nutralizeTitle(topic.title)} 
+                        >
                           {this.displayTitle(topic.title)}
                         </Link>
                         <br />
@@ -231,7 +263,7 @@ class Post extends React.Component {
                       token={token}
                       topicObjId={topic._id}
                       // link for the topic
-                      link={encodeURI("/topics/" + topic._id + "/" + topic.title.replace(/[.*+?^$/{}()|[\]\\]/g, '-'))}
+                      link={"/topics/" + topic._id + "/" + this.nutralizeTitle(topic.title)}
                     />
                     
                     {/* coin details */}
@@ -239,10 +271,10 @@ class Post extends React.Component {
                       gift={topic.gift}
                     />
                   </Card>
-                
-            ))
-          }
-        </Masonry>
+                ))
+              }
+            </Masonry>
+        }
       </React.Fragment>
     );
   }
