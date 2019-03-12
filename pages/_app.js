@@ -43,6 +43,7 @@ class MyApp extends App {
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <meta name="application-name" content="Tipestry." />
           <link rel="icon" type="image/png" href="/static/favicon.png" />
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500" />
         </Head>
         {/* Wrap every page in Jss and Theme providers */}
         <Provider store={store}>

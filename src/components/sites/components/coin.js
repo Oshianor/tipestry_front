@@ -120,32 +120,32 @@ class Coin extends React.Component {
     img: null,
     gift: false,
     type: "",
-    btc: "Getting balance...",
+    // btc: "Getting balance...",
 		currentCoin: 0
 	};
 
-	async componentDidMount() {
-		const { data } = this.props;
+	// async componentDidMount() {
+	// 	const { data } = this.props;
 
-		let token = localStorage.getItem('token');
+	// 	let token = localStorage.getItem('token');
 
-    if (token) {
-      const options = {
-        method: 'GET',
-        headers: {
-          'content-type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'x-auth-token': token
-        },
-        url: config.api + "/crypto/btc/balance",
-      };
-			let btc = await Axios(options);
-			// console.log(btc);
-      this.setState({
-				btc: btc.data.result
-			})
-    }
-  }
+  //   if (token) {
+  //     const options = {
+  //       method: 'GET',
+  //       headers: {
+  //         'content-type': 'application/json',
+  //         'Access-Control-Allow-Origin': '*',
+  //         'x-auth-token': token
+  //       },
+  //       url: config.api + "/crypto/btc/balance",
+  //     };
+	// 		let btc = await Axios(options);
+	// 		// console.log(btc);
+  //     this.setState({
+	// 			btc: btc.data.result
+	// 		})
+  //   }
+  // }
 
   handleChange = key => (event, value) => {
     this.setState({
@@ -212,7 +212,7 @@ class Coin extends React.Component {
     
       if (name === "bitcoin") {
         this.setState({
-          currentCoin: this.state.btc
+          currentCoin: typeof data.user.btc[0] !== "undefined" && data.user.btc[0].balance
         })
       } else if (name === 'dogecoin') {
         this.setState({

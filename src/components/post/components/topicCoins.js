@@ -11,7 +11,7 @@ const styles = theme => ({
   },
   actions: {
 		display: 'flex',
-		flexGrow: 'wrap',
+		flexWrap: 'wrap',
     borderTop: '.5px solid gray'
   },
   num: {
