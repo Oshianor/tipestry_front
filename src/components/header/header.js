@@ -34,6 +34,9 @@ import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import classNames from 'classnames';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import moment from 'moment';
+
+
 
 const drawerWidth = 240;
 
@@ -362,8 +365,8 @@ class Header extends React.Component {
 					<Grid container spacing={24} style={{ position: 'absolute', width: '100%', marginTop: 35, display: 'flex', justifyContent: 'space-between' }} >
 						<Grid item  className={classes.left} >
 							{
-								// token &&
-								// 	data.profile._id === data.user._id &&
+								token &&
+									data.profile._id === data.user._id ?
 										<Link href={'/tip/report/' + data.user._id} >
 											<a>
 												<Typography style={{ color: "white", textDecoration: 'underline' }} className={classes.but} >
@@ -373,6 +376,12 @@ class Header extends React.Component {
 												</Typography>
 											</a>
 										</Link>
+									:
+										<Typography style={{ color: "black" }} className={classes.but} >
+											{
+												"@" + data.profile.username + "   " + moment(data.profile.created_at).locale(Lang.locale).format('YYYY')
+											}
+										</Typography>
 							}
 						</Grid>
 
@@ -456,7 +465,8 @@ class Header extends React.Component {
       let follow = await axios(options);
       // console.log("ADDING FOLLOWING", follow);
       if (follow.data.error === false) {
-        getUser(follow.data.content)
+				data.user.following = follow.data.content.following;
+        getUser(data.user)
       }
       
     }

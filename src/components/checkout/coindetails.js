@@ -84,30 +84,30 @@ const styles = theme => ({
 class CoinDetails extends React.Component{
 	state = {
 		open: false,
-		btc: 0.00,
+		// btc: 0.00,
 		withdraw: false,
 		copied: false
 	}
 
-	async componentDidMount() {
-		let token = localStorage.getItem('token');
-    if (token) {
-      const options = {
-        method: 'GET',
-        headers: {
-          'content-type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'x-auth-token': token
-        },
-        url: config.api + "/crypto/btc/balance",
-      };
-			let btc = await Axios(options);
-			// console.log(btc);
-      this.setState({
-				btc: btc.data.result
-			})
-    }
-	}
+	// async componentDidMount() {
+	// 	let token = localStorage.getItem('token');
+  //   if (token) {
+  //     const options = {
+  //       method: 'GET',
+  //       headers: {
+  //         'content-type': 'application/json',
+  //         'Access-Control-Allow-Origin': '*',
+  //         'x-auth-token': token
+  //       },
+  //       url: config.api + "/crypto/btc/balance",
+  //     };
+	// 		let btc = await Axios(options);
+	// 		// console.log(btc);
+  //     this.setState({
+	// 			btc: btc.data.result
+	// 		})
+  //   }
+	// }
 
 	handleGenerateBtc = async () => {
 		const { getUser } = this.props;
@@ -211,7 +211,9 @@ class CoinDetails extends React.Component{
 								<div className={classes.sec} >
 									<img src="/static/tipcoins/bit.svg" alt="btc"className={classes.img} />
 									<div style={{ flexGrow: 1 }} />
-									<Typography variant="button" >{btc}</Typography>
+									<Typography variant="button" >
+										{data.user.btc[0].balance}
+									</Typography>
 								</div>
 								<div className={classes.sec}>
 									<Typography variant="button" className={classes.address} >
