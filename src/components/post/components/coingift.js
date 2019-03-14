@@ -16,7 +16,6 @@ import axios from 'axios';
 import { config } from "../../../../config";
 import { getTopics, getUser } from "../../../actions/data";
 import { bindActionCreators } from 'redux';
-import Alert from '../../reuseable/alert';
 // import Router from "next/router";
 // import Router from 'next-routes';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -43,10 +42,8 @@ class CoinGift extends React.Component {
 	state = {
 		amount: "",
 		error: "",
-		msgOpen: false,
-		msg: '',
 		loading: false
-	};
+	}
 
 	handleMsgClose = () => {
 		this.setState({
@@ -56,7 +53,15 @@ class CoinGift extends React.Component {
 
 	handleGift = async () => {
 		const { amount } = this.state;
-		const { topicUserId, type, handleClose, topicId, getTopics, getUser } = this.props;
+		const {
+			topicUserId,
+			type,
+			handleClose,
+			topicId,
+			getTopics,
+			getUser,
+			showAlert
+		} = this.props;
 		let token = localStorage.getItem('token');
 		
 		if (token) {
@@ -99,17 +104,15 @@ class CoinGift extends React.Component {
 				getUser(user.data[0]);
 				this.setState({
 					error: '',
-					msgOpen: true,
-					msg: 'Successfully tipped post',
 					loading: false
 				})
+				showAlert('Successfully tipped post');
 			} else {
 				this.setState({
 					error: completed.data.message,
-					msgOpen: true,
-					msg: 'Something went wrong...',
 					loading: false
 				})
+				showAlert('Something went wrong...');
 			}
 			// Router.push('/');
 			// Router.pushRoute('/')
@@ -138,7 +141,7 @@ class CoinGift extends React.Component {
 
   render() {
 		const { classes, open, image, handleClose, currentCoin } = this.props;
-		const { error, amount, msgOpen, msg, loading } = this.state;
+		const { error, amount, loading } = this.state;
     return (
 			<Dialog
 				open={open}
@@ -185,11 +188,6 @@ class CoinGift extends React.Component {
 						{!loading ? 'Gift' : <CircularProgress size={20} className={classes.buttonProgress} />}
 					</Button>
 				</DialogActions>
-				<Alert 
-					handleClose={this.handleMsgClose} 
-					open={msgOpen} 
-					message={msg} 
-				/>
 			</Dialog>
     );
   }

@@ -8,6 +8,7 @@ import CoinGift from './coingift';
 import { connect } from 'react-redux';
 import Axios from 'axios';
 import { config } from "../../../../config";
+import Alert from '../../reuseable/alert';
 
 
 
@@ -120,7 +121,8 @@ class Coin extends React.Component {
     img: null,
     gift: false,
     type: "",
-    // btc: "Getting balance...",
+    msgOpen: false,
+    msg: '',
 		currentCoin: 0
 	};
 
@@ -158,6 +160,18 @@ class Coin extends React.Component {
       [key]: event.target.value,
     });
   };
+
+  showAlert(msg) {
+    this.setState({
+      msgOpen: true, msg
+    })
+  }
+
+  hideAlert = () => {
+    this.setState({
+      msgOpen: false
+    })
+  }
 
   handleClickButton = node => event => {
     const { handleOpen } = this.props;
@@ -247,7 +261,7 @@ class Coin extends React.Component {
 
   render() {
     const { classes, topicId, topicUserId } = this.props;
-    const { currentCoin, open, placement, disablePortal, flip, preventOverflow, arrow, arrowRef, gift, img, type } = this.state;
+    const { currentCoin, open, placement, disablePortal, flip, preventOverflow, arrow, arrowRef, gift, img, type, msgOpen, msg } = this.state;
 
     const id = open ? 'Share' : null;
     return (
@@ -315,7 +329,13 @@ class Coin extends React.Component {
           currentCoin={currentCoin}
           topicUserId={topicUserId}
           handleClose={this.handleGiftClose}
+          showAlert={this.showAlert.bind(this)}
         />
+        <Alert 
+					handleClose={this.hideAlert} 
+					open={msgOpen} 
+					message={msg} 
+				/>
       </div>
     );
   }

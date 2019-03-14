@@ -9,7 +9,6 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import Checkbox from '@material-ui/core/Checkbox';
 import Axios from 'axios';
 import { config } from "../../../config";
 import Alert from '../reuseable/alert';
@@ -110,7 +109,8 @@ class Withdrawal extends React.Component {
       amount,
       address,
     }
-    if (token) {
+    let amt = coin === "bitcoin" ? parseFloat(amount) - 0.0005 : parseFloat(amount) - 2;
+    if (token && amt > 0) {
       const options = {
         method: 'POST',
         headers: {
@@ -139,13 +139,20 @@ class Withdrawal extends React.Component {
       }
 
 
+    } else {
+      this.setState({
+        withdraw: {
+          error: true,
+          msg: "You don't have sufficient amount for a withdrawal"
+        },
+      })
     }
   }
   
   render() {
     // console.log(this.state);
     
-    const { classes, open, handleClose } = this.props;
+    const { classes, open, handleClose, btc, doge } = this.props;
     const { opener, msg, coin, error, amount, show, address, withdraw } = this.state;
     let bac = {
       backgroundColor: '#50557b'      
@@ -215,6 +222,21 @@ class Withdrawal extends React.Component {
                   /> */}
                 </div>
                 
+                <Typography style={{ color: 'red', padding: '10px 0px' }}>
+                    Cannot withdraw funds without
+                  <strong>
+                    &nbsp;Network fee of 
+                    &nbsp;{coin === "bitcoin" ? 0.0005 : 2.00000000} 
+                    <strong style={{ textTransform: 'uppercase' }}>
+                    &nbsp;{coin}.
+                    </strong>
+                  </strong>
+                    &nbsp;Maximum withdrawable balance is {coin === "bitcoin" ? btc.balance - 0.0005 : doge.doge_balance - 2}
+                  <strong style={{ textTransform: 'uppercase' }}>
+                    &nbsp;{coin}
+                  </strong>
+                </Typography>
+
                 <TextField
                   error={error !== ""}
                   id="outlined-adornment-amount"  
@@ -250,6 +272,7 @@ class Withdrawal extends React.Component {
                     </InputAdornment>,
                   }}
                 />
+                
               </Grid>
               <Grid item xs={12} sm={4} md={4} lg={4} xl={4} >
 							  <img src="/static/icons/colormoneybag.svg" className={classes.icon} />              

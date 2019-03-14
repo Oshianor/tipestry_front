@@ -394,7 +394,7 @@ class CoinDetails extends React.Component{
 					Withdraw
 				</Button>
 
-				<Withdrawal open={withdraw} handleClose={this.handleCloseWithdraw} />
+				<Withdrawal open={withdraw} btc={data.user.btc[0]} doge={data.user.doge[0]} handleClose={this.handleCloseWithdraw} />
 
 				<History open={open} handleClose={this.handleClose} history={data.history} />
 
