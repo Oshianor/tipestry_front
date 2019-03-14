@@ -70,7 +70,7 @@ class SiteInfo extends Component {
 						White Paper
 					</a>
 					&nbsp;&nbsp;
-					<a href='https://chrome.google.com/webstore/detail/flaaoclnjndmbijdgmeehfmaacpclgca/publish-accepted?authuser=0&hl=en' target="_blank" className={classes.link} >
+					<a href='https://chrome.google.com/webstore/detail/tipestry-for-chrome/dcilamnkcogpeokfghapaloffjoemlhe' target="_blank" className={classes.link} >
 						Tipestry for Chrome
 					</a>
 					&nbsp;&nbsp;
