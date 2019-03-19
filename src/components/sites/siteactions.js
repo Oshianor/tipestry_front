@@ -30,7 +30,16 @@ class Siteactions extends Component {
 	render() {
 		const { site, url, gift } = this.props;
 		return (
-			<Paper style={{ display: 'flex', margin: '10px 8%', boxShadow: '0px 0px 1px 0px', color: 'lightslategray', borderRadius: 0 }} >
+			< Paper style = {
+				{
+					display: 'flex',
+					margin: '10px 8%',
+					boxShadow: '0px 0px 1px 0px',
+					// color: 'lightslategray',
+					color: '#d9dadc',
+					borderRadius: 0
+				}
+			} >
 				{/* <div style={{ display: 'flex' }} > */}
 					<Thumb siteObjId={site._id} />
 					<Follow />

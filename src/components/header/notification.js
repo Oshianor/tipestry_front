@@ -240,7 +240,7 @@ class Notification extends React.Component {
             },
           }}
         >
-          {arrow ? <span className={classes.arrow} ref={this.handleArrowRef} /> : null}
+          {/* {arrow ? <span className={classes.arrow} ref={this.handleArrowRef} /> : null} */}
           <Paper className={classes.paper}>
           {
             notify.map((not, index) => (

@@ -706,13 +706,14 @@ class Header extends React.Component {
 											</a>
 										</Link>
 										<Link href={"/profile/" + data.user._id + "/" + data.user.username} >
-											<a style={{ color: 'white', textDecoration: 'none' }}>
-												<p style={{ textTransform: 'capitalize' }} >
+											<a style={{ textDecoration: 'none' }}>
+												<Typography style={{ color: 'white', textTransform: 'capitalize' }} >
 													&nbsp;
 													{Lang.m},
 													{/* Hi,  */}
+													&nbsp;
 													{data.user.username}
-												</p>
+												</Typography>
 											</a>
 										</Link>
 										&nbsp;

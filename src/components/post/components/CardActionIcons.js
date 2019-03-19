@@ -26,7 +26,7 @@ const styles = theme => ({
   },
   actions: {
     display: 'flex',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-between',
     borderTop: '.5px solid gray'
   },
   num: {

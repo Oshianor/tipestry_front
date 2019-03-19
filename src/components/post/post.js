@@ -135,7 +135,7 @@ class Post extends React.Component {
     return (
       <a style={{ color: '#1F7BD8', textDecoration: 'none', fontSize: 16, textTransform: "capitalize" }} >
         <Linkify tagName="span">
-        {title}
+          {title}
         </Linkify>
       </a>
     )
@@ -206,6 +206,18 @@ class Post extends React.Component {
                         </p>
                       }
                     />
+                    <CardContent>
+                      <Typography component="p">
+                        {/* post title */}
+                        <Link 
+                          href={"/topics/" + topic._id + "/" + this.nutralizeTitle(topic.title)} 
+                        >
+                          {this.displayTitle(topic.title)}
+                        </Link>
+                        <br />
+                      </Typography>
+                    </CardContent>
+
                     <div>
                       <a 
                         href={encodeURI("/topics/" + topic._id + "/" + topic.title.replace(/[.*+?^$/{}()|[\]\\]/g, '-'))}
@@ -233,13 +245,6 @@ class Post extends React.Component {
 
                     <CardContent>
                       <Typography component="p">
-                        {/* post title */}
-                        <Link 
-                          href={"/topics/" + topic._id + "/" + this.nutralizeTitle(topic.title)} 
-                        >
-                          {this.displayTitle(topic.title)}
-                        </Link>
-                        <br />
                         {
                           // post link
                           typeof topic.sites[0] !== "undefined" &&

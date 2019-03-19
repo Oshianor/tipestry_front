@@ -189,7 +189,7 @@ class TopicList extends React.Component {
 
 
 							{/* topic fot the site */}
-							<Paper style={{ margin: "10px 8%", boxShadow: '0px 0px 1px 0px', color: 'lightslategray', borderRadius: 0 }} >
+							<Paper style={{ margin: "10px 8%", boxShadow: '0px 0px 1px 0px', color: '#d9dadc', borderRadius: 0 }} >
 								<Typography variant="h6" style={{ padding: "5px 12px", fontWeight: '400' }} >
 									{ /* Topics // 话题*/ }
 									{Lang.s}

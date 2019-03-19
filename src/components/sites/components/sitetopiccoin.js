@@ -61,7 +61,6 @@ class SiteTopicCoin extends React.Component {
 		if (typeof gift[0] !== "undefined") {
 			gift.map((gif) => {
 				if (gif.currency === 'btc') {
-					btc = parseFloat(btc) + parseFloat(gif.amount)
 					this.setState({
 						btc: true
 					})

@@ -32,7 +32,8 @@ const styles = theme => ({
 		flexWrap: 'wrap',
 		margin: "10px 8%", 
 		boxShadow: '0px 0px 1px 0px', 
-		color: 'lightslategray', 
+		// color: 'lightslategray', 
+		color: '#d9dadc',
 		borderRadius: 0
 	},
 	buttonProgress: {
