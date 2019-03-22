@@ -6,8 +6,8 @@ import { config } from '../config';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getSiteTopic, getUser } from "../src/actions/data";
-// import Head from 'next/head';
-import {Helmet} from "react-helmet";
+import Head from 'next/head';
+// import {Helmet} from "react-helmet";
 
 class Topic extends Component {
 	state = {
@@ -73,15 +73,18 @@ class Topic extends Component {
 
 	render() {
     const { loading } = this.state;
-    const { dataTopic } = this.state;
-    // console.log("SITE TOPIC", this.props);
-    
+    const { dataTopic } = this.props;
+    // console.log("SITE TOPIC dataTopic", );
+    const topic = JSON.parse(dataTopic);
 		return (
 			<div>
-        <Helmet>
-          <title>Tipestry | Topics 
+        <Head>
+          <title>
+            Tipestry | {topic[0].title} 
           </title>
-        </Helmet>
+          <meta charSet="UTF-8" />
+          <meta name="description" content={topic[0].title} />
+        </Head>
         {
           loading ? 
             <Preloader />

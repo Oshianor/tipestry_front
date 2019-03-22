@@ -15,6 +15,8 @@ const styles = theme => ({
 		color: 'rgba(0, 0, 0, 0.61)',
 		whiteSpace: 'nowrap',
 		fontWeight: '300',
+		fontFamily: 'poppins',
+		fontSize: 14,
 		'&:hover': {
 			textDecoration: 'none', 
 			color: 'rgba(0, 0, 0, 0.61)',

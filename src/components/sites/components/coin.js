@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Popper from '@material-ui/core/Popper';
 import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import CoinGift from './coingift';
 import { connect } from 'react-redux';
@@ -22,6 +23,8 @@ const styles = theme => ({
 
   },
 	iconspacing: {
+    display: 'flex',
+    alignItems: 'center',
 		[theme.breakpoints.only('xs')]: {
 			margin: '0 -3px',
 		},
@@ -257,7 +260,7 @@ class Coin extends React.Component {
           // ! check if the site is verified and if the owner of the site 
           // * is not the not logged in user before you show
           typeof site.claim !== "undefined" &&
-            site.claim.verified && site.claim.userId !== data.user.id &&
+            site.claim.verified && site.claim.userId !== data.user.id ?
               <IconButton
                 buttonRef={node => {
                   this.anchorEl = node;
@@ -268,6 +271,9 @@ class Coin extends React.Component {
               >
                 <img src="/static/icons/moneybag.svg" alt="comments" width='25' height="25" style={{ color: '#1F7BD8' }} />
               </IconButton>
+            :
+                site.claim.verified &&
+                  <Button color="secondary" disabled variant="contained" >Site Owner</Button>
         }
         <Popper
           id={id}

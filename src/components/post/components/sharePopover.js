@@ -167,7 +167,7 @@ class AnchorPlayground extends React.Component {
   };
 
   render() {
-    const { classes, link, placement } = this.props;
+    const { classes, link, placement, title } = this.props;
     const { open, disablePortal, flip, preventOverflow, arrow, arrowRef, copied } = this.state;
 
     const id = open ? 'Share' : null;
@@ -175,7 +175,8 @@ class AnchorPlayground extends React.Component {
     // console.log(link);
     
     // console.log("ROYETR", this.props);
-    let message = `Visit ${link} and join the conversation`;
+    // let message = `People are talking about: ${typeof title !== "undefined" ? title.charAt(0).toUpperCase() + title.slice(1) : title}. Join the conversation`;
+    let message = `People are talking about: ${title.charAt(0).toUpperCase() + title.slice(1)}. Join the conversation`;
     return (
       <div className={classes.iconspacing} >
         <IconButton
@@ -243,7 +244,8 @@ class AnchorPlayground extends React.Component {
 
 AnchorPlayground.propTypes = {
   classes: PropTypes.object.isRequired,
-  link: PropTypes.string.isRequired
+  link: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired
 };
 
 export default withRouter(withStyles(styles)(AnchorPlayground));

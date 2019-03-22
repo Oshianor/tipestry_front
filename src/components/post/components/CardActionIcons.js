@@ -26,7 +26,7 @@ const styles = theme => ({
   },
   actions: {
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     borderTop: '.5px solid gray'
   },
   num: {
@@ -134,7 +134,8 @@ class CardActionIcons extends React.Component {
       topicObjId,
       link,
       topicId,
-      data
+      data,
+      title
     } = this.props;
     // console.log('votes.length,', votes.length);
     const { open } = this.state;
@@ -170,7 +171,12 @@ class CardActionIcons extends React.Component {
 
         {/*  */}
         <Tooltip title="Share Post" aria-label="Share">
-          <SharePopover link={encodeURI(config.host + link)} handleOpen={this.handleOpen} placement='top' />
+          <SharePopover 
+            link={encodeURI(config.host + link)} 
+            handleOpen={this.handleOpen} 
+            placement='top' 
+            title={title}
+          />
         </Tooltip>
 
         {/* tips coin icons */}
@@ -193,6 +199,7 @@ CardActionIcons.propTypes = {
   topicObjId: PropTypes.string.isRequired,
   topicUserId: PropTypes.number.isRequired,
   token: PropTypes.string,
+  title: PropTypes.string.isRequired
 };
 
 function mapStateToProps(state) {

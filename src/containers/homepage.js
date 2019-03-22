@@ -25,11 +25,18 @@ const styles = theme => ({
     backgroundSize: "cover"
   },
   new: {
-    flexGrow: 1,
+    // flexGrow: 1,
     marginTop: 300,
     // [theme.breakpoints.between('lg', 'xl')]: {
     //   marginTop: 300
     // },
+  },
+  demo: {
+    // width: '100%',
+    marginTop: 300,
+    [theme.breakpoints.up("lg")]: {
+      width: 1170
+    }
   },
   top: {
     marginTop: 20,
@@ -37,6 +44,9 @@ const styles = theme => ({
       marginTop: 300
     },
   },
+  rela: {
+    position: "relative"
+  }
 });
 
 
@@ -95,7 +105,6 @@ class Homepage extends Component {
           handleDrawerOpen={this.handleDrawerOpen}  
           handleDrawerClose={this.handleDrawerClose} 
         />
-
         <Drawer 
           drawer={drawer} 
           stopScroll={stopScroll}
@@ -105,45 +114,54 @@ class Homepage extends Component {
           handleDrawerOpen={this.handleDrawerOpen}  
           handleDrawerClose={this.handleDrawerClose} 
         >
-          <div className={classes.new}>
-            <Grid container justify="center" spacing={8} >
-
+          <Grid container justify="center" spacing={8} >
+            <Grid container justify="space-evenly" alignItems='baseline' className={classes.demo} >
               {/* trends */}
               <Hidden mdDown>
-                <Grid item lg={2} xl={2} 
-                  style={{ position: "relative", background: "linear-gradient(to right, #b1b1b13b, rgba(255, 255, 255, 0.24))" }} 
+                <Grid item lg={2} xl={2} style={{ marginRight: 25 }} >
+                <div 
+                    style={{ position: 'absolute' }} 
                   >
-                  <div style={stopScroll ? { position: 'fixed', top: "70px"} : { position: 'relative' }} >
-                    { token && <Userinfo /> }
-                    <Trends modal={false} />
-                    <Popular />
+                    <div 
+                      style={stopScroll ? { position: 'fixed', top: 90} : { position: 'fixed' }} 
+                      // style={{ position: 'fixed' }} 
+                    >
+                      { token && <Userinfo /> }
+                      <Trends modal={false} />
+                      <Popular />
+                    </div>
                   </div>
                 </Grid>
               </Hidden>
 
               {/* post  */}
-              <Grid item lg={7} xl={7} md={12} sm={12} xs={12}  >
-                <Post topicValue={data.topics.topic} source="topics" />
+              <Grid item lg={6} xl={6} md={12} sm={12} xs={12}  >
+                <div className={classes.center}>
+                  <Post topicValue={data.topics.topic} source="topics" />
+                </div>
               </Grid>
 
 
               {/* coin details */}
               <Hidden mdDown>
-                <Grid item lg={3} xl={3} style={{ background: "linear-gradient(to left, #b1b1b13b, rgba(255, 255, 255, 0.24))" }}  >
-                  <div style={stopScroll ? { position: 'fixed', top: "70px"} : { position: 'relative' }} >
-                    <Tipcoin />
-                    <LeaderBoard />
-                    <SiteInfo />
+                <Grid item lg={3} xl={3} style={{ marginLeft: -25 }} >
+                  <div 
+                    style={{ position: 'absolute' }} 
+                  >
+                    <div 
+                    // style={{ position: 'fixed', maxWidth: 300 }} 
+                    style={stopScroll ? { position: 'fixed', top: 90, maxWidth: 300} : { position: 'fixed', maxWidth: 300 }} 
+                    >
+                      <Tipcoin />
+                      <LeaderBoard />
+                      <SiteInfo />
+                    </div>
                   </div>
                 </Grid>
               </Hidden>
-
             </Grid>
-          </div>
+          </Grid>
         </Drawer>
-
-        
-        
       </div>
     )
   }

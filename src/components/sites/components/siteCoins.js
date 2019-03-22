@@ -12,7 +12,7 @@ const styles = theme => ({
   actions: {
 		display: 'flex',
 		flexGrow: 'wrap',
-    borderTop: '.5px solid gray'
+    // borderTop: '.5px solid gray'
   },
   num: {
     fontSize: 15,
@@ -32,7 +32,8 @@ const styles = theme => ({
 	},
 	num: {
 		fontSize: 12,
-		marginLeft: -3
+		marginLeft: -3,
+		color: 'gray'
 	},
   iconspacing: {
     [theme.breakpoints.only('xs')]: {

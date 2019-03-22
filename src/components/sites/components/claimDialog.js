@@ -48,16 +48,20 @@ const styles = theme => ({
   resetContainer: {
     padding: theme.spacing.unit * 3,
   },
+  token: {
+    padding: 10,
+    background: '#d5d5d5'
+  }
 });
 
 function getSteps() {
-  return ['Select a verification method', 'Generate Token', 'Verify'];
+  return ['Generate Token', 'Verify'];
 }
 
 class claimDiaglog extends React.Component {
   state = {
 		activeStep: 0,
-    option: null, // add,  upload
+    option: 'add', // add,  upload
     token: null,
     open: false,
     msg: ''
@@ -168,47 +172,24 @@ class claimDiaglog extends React.Component {
       })
     }
   }
-	
-	options = () => {
-		const { classes } = this.props;
-		const { option } = this.state;
-		return (
-			<div className={classes.rootForm}>
-				<FormControl component="fieldset" className={classes.formControl}>
-          {/* <FormLabel component="legend">Gender</FormLabel> */}
-          <RadioGroup
-            aria-label="Claim website option"
-            name="gender1"
-            className={classes.group}
-            value={option}
-            onChange={this.handleChange}
-          >
-            <FormControlLabel value="add" control={<Radio />} label="Add HTML tag" />
-						<FormHelperText style={{ marginTop: -10 }} >Paste this tag into the head section of your site's index.html file</FormHelperText>
-            <FormControlLabel value="upload" control={<Radio />} label="Upload HTML file" />
-						<FormHelperText style={{ marginTop: -10 }} >Download this file and upload it to your website's root directory</FormHelperText>
-          </RadioGroup>
-        </FormControl>
-			</div>
-		)
-  }
-  
+
+
   download = () => {
     const { option, token } = this.state;
     const { classes } = this.props;
     return (
       <div>
+        <div>
+          <Typography variant="h6">Steps to verify a site</Typography>
+          <ul>
+            <li>Click on the button below to generate a one time token</li>
+            <li>Copy and Paste the meta tag with the token to the {"<head>"} portion of your entry site</li>
+            <li>Then upload the update to your server and maintain this current state.</li>
+          </ul>
+        </div>
         {
           token ?
-            option === 'add' ?
-              <div>{`<meta name="tipestry" content="${token}" />`}</div>
-            :
-              <span>
-                Download this file and upload to your root server directory &nbsp;
-                <a href={config.api + "/sites/download/" + token + ".html"} download>
-                  config.html
-                </a>
-              </span>
+            <div className={classes.token}>{`<meta name="author" content="${token}" />`}</div>
           :
             <div style={{ display: 'flex' }} >
               <Typography>Generate one time token &nbsp;</Typography>
@@ -227,23 +208,34 @@ class claimDiaglog extends React.Component {
          <Typography variant='caption' style={{ fontSize: 13 }} >
           Click here to
             <Button 
-            color="primary" 
-            style={{ textDecoration: 'underline' }} 
-            onClick={this.verifyClaim} 
-          >
-            verify
-          </Button>
+              color="primary" 
+              style={{ textDecoration: 'underline' }} 
+              onClick={this.verifyClaim} 
+            >
+              verify
+            </Button>
         </Typography>
     )
   }
 
-	getStepContent(step) {
+	// getStepContent(step) {
+	// 	switch (step) {
+	// 		case 0:
+	// 			return this.options();
+	// 		case 1:
+	// 			return this.download();
+	// 		case 2:
+	// 			return this.verify();
+	// 		default:
+	// 			return 'Unknown step';
+	// 	}
+  // }
+  
+  getStepContent(step) {
 		switch (step) {
 			case 0:
-				return this.options();
-			case 1:
 				return this.download();
-			case 2:
+			case 1:
 				return this.verify();
 			default:
 				return 'Unknown step';
@@ -284,7 +276,7 @@ class claimDiaglog extends React.Component {
                       variant="contained"
                       color="primary"
                       size="small"
-                      disabled={!option && activeStep === 0 || !token && activeStep === 1}
+                      disabled={!token && activeStep === 0}
                       onClick={this.handleNext}
                       className={classes.button}
                     >

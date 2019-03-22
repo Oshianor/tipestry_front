@@ -33,6 +33,8 @@ class Siteactions extends Component {
 			< Paper style = {
 				{
 					display: 'flex',
+					flexWrap: 'wrap',
+					alignItems: 'center',
 					margin: '10px 8%',
 					boxShadow: '0px 0px 1px 0px',
 					// color: 'lightslategray',
@@ -43,11 +45,12 @@ class Siteactions extends Component {
 				{/* <div style={{ display: 'flex' }} > */}
 					<Thumb siteObjId={site._id} />
 					<Follow />
-					<SharePopover link={url} placement='bottom'  handleOpen={this.handleOpen}  />
+					{/* <SharePopover link={url} title={} placement='bottom'  handleOpen={this.handleOpen}  /> */}
 					<Coin site={site} />
+					<Claim site={site} />
 				{/* </div> */}
+				<br />
 				<SiteCoins gift={gift} />
-				<Claim site={site} />
 			</Paper>
 		);
 	}

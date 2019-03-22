@@ -44,9 +44,7 @@ class Claim extends Component {
 				{
 					// ! check if the site is verified and if the owner of the site 
 					// * is not the not logged in user before you show
-					typeof site.claim !== "undefined" && site.claim.verified ?
-						<Typography>This site has been claimed</Typography>
-					:
+					typeof site.claim !== "undefined" && !site.claim.verified &&
 						<React.Fragment>
 							<Button
 								variant='contained'

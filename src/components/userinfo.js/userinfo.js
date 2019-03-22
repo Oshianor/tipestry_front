@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 const styles = {
 	root: {
 		flexGrow: 1,
-		maxWidth: 250,
+		maxWidth: 300,
 		margin: "5%",
 		textAlign: 'center',
 		marginTop: 10,

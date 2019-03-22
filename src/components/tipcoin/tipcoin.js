@@ -9,7 +9,7 @@ import axios from 'axios';
 import { config } from '../../../config';
 import NumberFormat from 'react-number-format';
 import { Lang } from '../../../lang';
-import Add from "@material-ui/icons/AddCircleOutlineRounded"
+import Add from "@material-ui/icons/AddCircle"
 import Button from '@material-ui/core/Button';
 
 
@@ -43,8 +43,20 @@ const styles = theme => ({
 		color: theme.palette.text.secondary,
 		display: "flex", alignItems: "center",
 		boxShadow: '0px 0px 1px 0px',
-		borderRadius: 0
-  },
+		borderRadius: 0,
+		width: 130,
+		height: 70
+	},
+	img: {
+		borderRight: "1px solid gray",
+		paddingRight: 6,
+		margin: -10,
+		width: 40,
+		// height: 25
+	},
+	num: {
+		fontSize: 12
+	}
 });
 
 class TipCoin extends React.Component {
@@ -92,13 +104,9 @@ class TipCoin extends React.Component {
 					<Grid container spacing={8}>
 						<Grid item xs={6} sm={6} md={4} lg={6} xl={6}>
 							<Paper className={classes.paper} >
-								<img src="/static/tipcoins/bit.svg"
-									alt="comments"
-									width='50'
-									height='50'
-									style={{ borderRight: "1px solid gray", paddingRight: "10%" }} />
+								<img src="/static/tipcoins/bit.svg" className={classes.img} />
 								<div style={{ flexGrow: 1 }} />
-								<Typography variant="button" >
+								<Typography variant="button" className={classes.num} >
 									{
 										typeof tip.btc[0] !== "undefined" ? 
 											// parseFloat(tip.btc[0].amt).toFixed(2) 
@@ -111,10 +119,9 @@ class TipCoin extends React.Component {
 						</Grid>
 						<Grid item xs={6} sm={3} md={4} lg={6} xl={4}>
 							<Paper className={classes.paper}>
-								<img src="/static/tipcoins/eth.svg" alt="comments" width='50' height='50' 
-									style={{ borderRight: "1px solid gray", paddingRight: "10%" }} />
+								<img src="/static/tipcoins/eth.svg" className={classes.img}  />
 								<div style={{ flexGrow: 1 }} />
-								<Typography variant="button" >
+								<Typography variant="button" className={classes.num} >
 									{
 										typeof tip.eth[0] !== "undefined" ? 
 											// parseFloat(tip.eth[0].amt).toFixed(2) 
@@ -127,15 +134,9 @@ class TipCoin extends React.Component {
 						</Grid>
 						<Grid item xs={6} sm={3} md={4} lg={6} xl={4}>
 							<Paper className={classes.paper}>
-								<img 
-									src="/static/tipcoins/doge.svg" 
-									alt="comments"
-									width='50' 
-									height='50' 
-									style={{ borderRight: "1px solid gray", paddingRight: "10%" } } 
-								/>
+								<img src="/static/tipcoins/doge.svg" className={classes.img}/>
 								<div style={{ flexGrow: 1 }} />
-								<Typography variant="button" >
+								<Typography variant="button" className={classes.num} >
 									{
 										typeof tip.doge[0] !== "undefined" ? 
 											// parseFloat(tip.doge[0].amt).toFixed(2) 
@@ -148,15 +149,9 @@ class TipCoin extends React.Component {
 						</Grid>
 						<Grid item xs={6} sm={3} md={4} lg={6} xl={4}>
 							<Paper className={classes.paper}>
-								<img 
-									src="/static/tipcoins/Tip-1.png" 
-									alt="comments" 
-									width='50' 
-									height='50' 
-									style={{ borderRight: "1px solid gray", paddingRight: "10%" }} 
-								/>
+								<img src="/static/tipcoins/Tip-1.png" className={classes.img}/>
 								<div style={{ flexGrow: 1 }} />
-								<Typography variant="button" >
+								<Typography variant="button" className={classes.num} >
 									{
 										typeof tip.tipc[0] !== "undefined" ? 
 											// parseFloat(tip.tipc[0].amt).toFixed(2) 
@@ -169,15 +164,9 @@ class TipCoin extends React.Component {
 						</Grid>
 						<Grid item xs={6} sm={3} md={4} lg={6} xl={4}>
 							<Paper className={classes.paper}>
-								<img 
-									src="/static/tipcoins/Tip-2.png" 
-									alt="comments" 
-									width='50' 
-									height='50' 
-									style={{ borderRight: "1px solid gray", paddingRight: "10%" }} 
-								/>
+								<img src="/static/tipcoins/Tip-2.png" className={classes.img}/>
 								<div style={{ flexGrow: 1 }} />
-								<Typography variant="button" >
+								<Typography variant="button" className={classes.num} >
 									{
 										typeof tip.tip[0] !== "undefined" ? 
 											// parseFloat(tip.tip[0].amt).toFixed(2) 
@@ -190,15 +179,9 @@ class TipCoin extends React.Component {
 						</Grid>
 						<Grid item xs={6} sm={3} md={4} lg={6} xl={4}>
 							<Paper className={classes.paper}>
-								<img 
-									src="/static/tipcoins/Tip-3.png" 
-									alt="comments" 
-									width='50' 
-									height='50' 
-									style={{ borderRight: "1px solid gray", paddingRight: "10%" }} 
-								/>
+								<img src="/static/tipcoins/Tip-3.png" className={classes.img}  />
 								<div style={{ flexGrow: 1 }} />
-								<Typography variant="button" >
+								<Typography variant="button" className={classes.num} >
 									{
 										typeof tip.xth[0] !== "undefined" ? 
 											// parseFloat(tip.xth[0].amt).toFixed(2) 
@@ -211,19 +194,21 @@ class TipCoin extends React.Component {
 						</Grid>
 
 						{/* add coin  */}
-						<Grid item xs={6} sm={3} md={4} lg={6} xl={4}>
-							<Paper className={classes.paper}>
-								<Button style={{ padding: 0 }} >
-									<div style={{ borderRight: "1px solid gray", paddingRight: "10%" }}>
-										<Add style={{ width: 50, height: 45 }} />
-									</div>
-									<div style={{ flexGrow: 1 }} />
+						<div>
+						{/* <Grid item xs={6} sm={3} md={4} lg={6} xl={4}> */}
+							{/* <Paper className={classes.paper}> */}
+								<Button style={{ borderRadius: 0, width: 130, marginLeft: 5, height: 45 }} variant="outlined" color="secondary" >
+									{/* <div style={{ borderRight: "1px solid gray", paddingRight: "10%" }}>
+									</div> */}
+									{/* <div style={{ flexGrow: 1 }} /> */}
+									<Add style={{ width: 25 }} />
 									<Typography variant="button" >
 										{Lang.t1}
 									</Typography>
 								</Button>
-							</Paper>
-						</Grid>
+							{/* </Paper> */}
+						{/* </Grid> */}
+						</div>
 					</Grid>
 				</Paper>
 			</div>

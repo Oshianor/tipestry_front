@@ -172,14 +172,14 @@ class Profile extends React.Component {
   }
 
   handleFetchMoreUserPost = async () => {
-    const { router, getTopics, data } = this.props;
+    const { router, getTopics, data, userPostTotal } = this.props;
     const { userTopicPageNum, loading } = this.state;
     
-    if (!loading) {
+    if (!loading && userPostTotal > data.topics.length) {
       try {
         this.setState({ loading: true });
         let profile = await axios.get(config.api + '/users/profile/' + router.query.userObjId + "?userPageTopic=" + userTopicPageNum);
-        console.log(profile);
+        console.log('profile =====>>>>', profile);
         
         if (profile.data.userTopics) {
           this.setState({
@@ -367,7 +367,9 @@ class Profile extends React.Component {
 
   render() {
     const { stopScroll, drawer, loading, value } = this.state;
-    const { classes } = this.props;
+    const { classes, userPostTotal, data } = this.props;
+    console.log('userPostTotal', userPostTotal, 'data.topics.length', data.topics.length);
+    
     return (
       <div>
         <Header 
@@ -391,7 +393,7 @@ class Profile extends React.Component {
             {this.displaySection()}
             {
               // show a preloader sign for user post and user favourite post
-              value === 0 &&
+              value === 0 && userPostTotal > data.topics.length &&
                 <IconButton style={{ display: "contents" }} >
                   {
                     loading ?
