@@ -95,12 +95,7 @@ const styles = theme => ({
 
 class MiniDrawer extends React.Component {
 	state = {
-		tips: false,
-		trendings: false,
-		score: false,
-		star: false,
-		stage: false,
-		userinfo: false,
+		open: null,
 		token: null
 	}
 
@@ -112,74 +107,15 @@ class MiniDrawer extends React.Component {
 	}
 	
 
-	handleOpenRecentTips = () => {
+	handleOpen = name => () => {
 		this.setState({
-			tips: true
+			open: name
 		})
 	}
 
-	handleCloseRecentTips = () => {
+	handleClose = () => {
 		this.setState({
-			tips: false
-		})
-	}
-
-	handleOpenTrendings = () => {
-		this.setState({
-			trendings: true
-		})
-	}
-
-	handleCloseTrendings = () => {
-		this.setState({
-			trendings: false
-		})
-	}
-
-	handleOpenLeaderBoard = () => {
-		this.setState({
-			score: true
-		})
-	}
-
-	handleCloseLeaderBoard = () => {
-		this.setState({
-			score: false
-		})
-	}
-	handleOpenPopular = () => {
-		this.setState({
-			star: true
-		})
-	}
-
-	handleClosePopular = () => {
-		this.setState({
-			star: false
-		})
-	}
-
-	handleOpenStage = () => {
-		this.setState({
-			stage: true
-		})
-	}
-
-	handleCloseStage = () => {
-		this.setState({
-			stage: false
-		})
-	}
-
-	handleOpenUserInfo = () => {
-		this.setState({
-			userinfo: true
-		})
-	}
-
-	handleCloseUserInfo = () => {
-		this.setState({
-			userinfo: false
+			open: null
 		})
 	}
 
@@ -203,28 +139,28 @@ class MiniDrawer extends React.Component {
 				</div>
 				<List className={classes.body}>
 					<Divider />
-					<ListItem button onClick={this.handleOpenRecentTips}>
+					<ListItem button onClick={this.handleOpen('tips')}>
 						<ListItemIcon>
 							<img src='/static/icons/moneybag.svg' style={{ width: 25, height: 25 }} />
 						</ListItemIcon>
 						<ListItemText primary={Lang.n} />
 					</ListItem>
 					<Divider />
-					<ListItem button onClick={this.handleOpenTrendings} >
+					<ListItem button onClick={this.handleOpen('trendings')} >
 						<ListItemIcon>
 							<Trend />
 						</ListItemIcon>
 						<ListItemText primary={Lang.u1} />
 					</ListItem>
 					<Divider />
-					<ListItem button onClick={this.handleOpenLeaderBoard}>
+					<ListItem button onClick={this.handleOpen('score')}>
 						<ListItemIcon>
 							<Board />
 						</ListItemIcon>
 						<ListItemText primary={Lang.x2} />
 					</ListItem>
 					<Divider />
-					<ListItem button onClick={this.handleOpenPopular}>
+					<ListItem button onClick={this.handleOpen('star')}>
 						<ListItemIcon>
 							<Star />
 						</ListItemIcon>
@@ -234,14 +170,14 @@ class MiniDrawer extends React.Component {
 						token &&
 							<React.Fragment>
 								<Divider />
-								<ListItem button onClick={this.handleOpenStage}>
+								<ListItem button onClick={this.handleOpen('stage')}>
 									<ListItemIcon>
 										<SignalLevel />
 									</ListItemIcon>
 									<ListItemText primary={Lang.b3} />
 								</ListItem>
 								<Divider />
-								<ListItem button onClick={this.handleOpenUserInfo}>
+								<ListItem button onClick={this.handleOpen('userinfo')}>
 									<ListItemIcon>
 										<Ballot />
 									</ListItemIcon>
@@ -258,7 +194,7 @@ class MiniDrawer extends React.Component {
 
   render() {
     const { classes, showOnLg, drawer } = this.props;
-		const { tips, trendings, score, star, stage, userinfo } = this.state;
+		const { open } = this.state;
 		// console.log(this.state)
     return (
       <div className={classes.root}>
@@ -282,29 +218,29 @@ class MiniDrawer extends React.Component {
         </main>
 
 				{/* open recent tips in a dislog */}
-				<Dialog open={tips} handleClose={this.handleCloseRecentTips} >
+				<Dialog open={open === "tips"} handleClose={this.handleClose} >
 					<Tipcoin />
 				</Dialog>
 
 				{/* open trendings ina dialog */}
-				<Dialog open={trendings} handleClose={this.handleCloseTrendings} >
+				<Dialog open={open === "trendings"} handleClose={this.handleClose} >
 					<Trends modal={true} />
 				</Dialog>
 
 				{ /* handle LeaderBoard */ }
-				<Dialog open={score} handleClose={this.handleCloseLeaderBoard} >
+				<Dialog open={open === "score"} handleClose={this.handleClose} >
 					<LeaderBoard />
 				</Dialog>
 
-				<Dialog open={star} handleClose={this.handleClosePopular}>
+				<Dialog open={open === "star"} handleClose={this.handleClose}>
 					<Popular  modal={true} />
 				</Dialog>
 
-				<Dialog open={stage} handleClose={this.handleCloseStage}>
+				<Dialog open={open === "stage"} handleClose={this.handleClose}>
 					<Stage />
 				</Dialog>
 
-				<Dialog open={userinfo} handleClose={this.handleCloseUserInfo}>
+				<Dialog open={open === "userinfo"} handleClose={this.handleClose}>
 					<Userinfo />
 				</Dialog>
       </div>

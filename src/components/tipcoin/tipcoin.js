@@ -101,8 +101,8 @@ class TipCoin extends React.Component {
 					{/* Recent Tips */}
 					{Lang.n}
 				</Typography>
-					<Grid container spacing={8}>
-						<Grid item xs={6} sm={6} md={4} lg={6} xl={6}>
+					<Grid container spacing={8} style={{ alignItems: 'center' }}>
+						<Grid item xs={6} sm={3} md={4} lg={6} xl={6}>
 							<Paper className={classes.paper} >
 								<img src="/static/tipcoins/bit.svg" className={classes.img} />
 								<div style={{ flexGrow: 1 }} />
@@ -117,7 +117,7 @@ class TipCoin extends React.Component {
 								</Typography>
 							</Paper>
 						</Grid>
-						<Grid item xs={6} sm={3} md={4} lg={6} xl={4}>
+						<Grid item xs={6} sm={3} md={4} lg={6} xl={6}>
 							<Paper className={classes.paper}>
 								<img src="/static/tipcoins/eth.svg" className={classes.img}  />
 								<div style={{ flexGrow: 1 }} />
@@ -132,7 +132,7 @@ class TipCoin extends React.Component {
 								</Typography>
 							</Paper>
 						</Grid>
-						<Grid item xs={6} sm={3} md={4} lg={6} xl={4}>
+						<Grid item xs={6} sm={3} md={4} lg={6} xl={6}>
 							<Paper className={classes.paper}>
 								<img src="/static/tipcoins/doge.svg" className={classes.img}/>
 								<div style={{ flexGrow: 1 }} />
@@ -147,7 +147,7 @@ class TipCoin extends React.Component {
 								</Typography>
 							</Paper>
 						</Grid>
-						<Grid item xs={6} sm={3} md={4} lg={6} xl={4}>
+						<Grid item xs={6} sm={3} md={4} lg={6} xl={6}>
 							<Paper className={classes.paper}>
 								<img src="/static/tipcoins/Tip-1.png" className={classes.img}/>
 								<div style={{ flexGrow: 1 }} />
@@ -162,7 +162,7 @@ class TipCoin extends React.Component {
 								</Typography>
 							</Paper>
 						</Grid>
-						<Grid item xs={6} sm={3} md={4} lg={6} xl={4}>
+						<Grid item xs={6} sm={3} md={4} lg={6} xl={6}>
 							<Paper className={classes.paper}>
 								<img src="/static/tipcoins/Tip-2.png" className={classes.img}/>
 								<div style={{ flexGrow: 1 }} />
@@ -177,7 +177,7 @@ class TipCoin extends React.Component {
 								</Typography>
 							</Paper>
 						</Grid>
-						<Grid item xs={6} sm={3} md={4} lg={6} xl={4}>
+						<Grid item xs={6} sm={3} md={4} lg={6} xl={6}>
 							<Paper className={classes.paper}>
 								<img src="/static/tipcoins/Tip-3.png" className={classes.img}  />
 								<div style={{ flexGrow: 1 }} />

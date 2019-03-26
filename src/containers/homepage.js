@@ -15,6 +15,10 @@ import LeaderBoard from "../components/leaderscoreboard/scoreboard"
 import Popular from "../components/popular/popular";
 import { connect } from 'react-redux';
 import SiteInfo from '../components/siteinfo/siteinfo';
+import Dialog from '../components/reuseable/dialog';
+import Stage from "../components/stage/stage";
+
+
 
 const styles = theme => ({
   root: {
@@ -56,6 +60,7 @@ class Homepage extends Component {
     stopScroll: false,
     token: null,
     pageNumber: 2,
+    open: false
   }
 
   // handle drawer open
@@ -95,9 +100,15 @@ class Homepage extends Component {
     return false;
   }
 
+  handleDialog = () => {
+    this.setState(state => ({
+      open: !state.open
+    }))
+  }
+
   render() {
     const { data, classes } = this.props;
-    const { stopScroll, drawer, token } = this.state;
+    const { stopScroll, drawer, token, open } = this.state;
     return (
       <div>
         <Header 
@@ -126,7 +137,7 @@ class Homepage extends Component {
                       style={stopScroll ? { position: 'fixed', top: 90} : { position: 'fixed' }} 
                       // style={{ position: 'fixed' }} 
                     >
-                      { token && <Userinfo /> }
+                      { token && <Userinfo handleOpen={this.handleDialog} /> }
                       <Trends modal={false} />
                       <Popular />
                     </div>
@@ -162,6 +173,9 @@ class Homepage extends Component {
             </Grid>
           </Grid>
         </Drawer>
+        <Dialog open={open} handleClose={this.handleDialog}>
+					<Stage />
+				</Dialog>
       </div>
     )
   }

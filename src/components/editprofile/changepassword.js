@@ -244,7 +244,7 @@ class Changepassword extends React.Component {
               <TextField
 								error={passwordHelper.err}
 								name="password"
-								label="Password"
+								label="Current Password"
 								className={classes.textField}
 								value={password}
 								type="password"
@@ -261,7 +261,7 @@ class Changepassword extends React.Component {
               <TextField
 								error={newPasswordHelper.err}
 								name="newPassword"
-								label="Password"
+								label="New Password"
 								className={classes.textField}
 								value={newPassword}
 								type="password"

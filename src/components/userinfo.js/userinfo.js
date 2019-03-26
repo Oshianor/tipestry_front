@@ -10,6 +10,9 @@ import CircularProgressbar from 'react-circular-progressbar';
 import { Lang } from '../../../lang';
 import { connect } from 'react-redux';
 
+
+
+
 const styles = {
 	root: {
 		flexGrow: 1,
@@ -19,7 +22,8 @@ const styles = {
 		marginTop: 10,
 		boxShadow: '0px 0px 1px 0px',
 		borderRadius: 0,
-		color: '#c9c6c6'
+		color: '#c9c6c6',
+		cursor: 'pointer'
 		// maHheight: 250,
 		// background: "linear-gradient(to right, rgba(8, 8, 8, 0.23), rgba(255, 255, 255, 0.24))"
 	},
@@ -59,15 +63,15 @@ class Userinfo extends Component {
 			token
 		})
 	}
-	
 
 	
 	render() {
+		console.log('opppppppp', this.state);
 		const { token } = this.state;
-		const { classes, data } = this.props;
+		const { classes, data, handleOpen } = this.props;
 		
 		return (
-			<Paper className={classes.root} >
+			<Paper className={classes.root} onClick={() => handleOpen()} >
 				{
 					token &&
 						<React.Fragment>

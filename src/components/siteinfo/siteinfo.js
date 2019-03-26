@@ -3,7 +3,6 @@ import Typography from '@material-ui/core/Typography';
 import Link from 'next/link';
 import { withStyles } from '@material-ui/core/styles';
 
-
 const styles = theme => ({
 	root: {
 		margin: '10px 20px',
@@ -16,11 +15,11 @@ const styles = theme => ({
 		whiteSpace: 'nowrap',
 		fontWeight: '300',
 		fontFamily: 'poppins',
-		fontSize: 14,
+		fontSize: 12,
 		'&:hover': {
 			textDecoration: 'none', 
 			color: 'rgba(0, 0, 0, 0.61)',
-			fontWeight: '600'
+			fontWeight: '500'
 		},
 		'&:active': {
 			textDecoration: 'underline', 
@@ -72,7 +71,7 @@ class SiteInfo extends Component {
 						White Paper
 					</a>
 					&nbsp;&nbsp;
-					<a href='https://chrome.google.com/webstore/detail/tipestry-for-chrome/dcilamnkcogpeokfghapaloffjoemlhe' target="_blank" className={classes.link} >
+					<a href='https://chrome.google.com/webstore/detail/tipestry-for-chrome/cedgeodmmkbpclcdomkojhmfgjiaiogo?brand=CHBD&gclid=CjwKCAjw1dzkBRBWEiwAROVDLPuzKR-abSIREVOOrY7JNB_i6jS8GFuv9DuFKCgV-XzSVCdeV2GCnRoCXpcQAvD_BwE&gclsrc=aw.ds' target="_blank" className={classes.link} >
 						Tipestry for Chrome
 					</a>
 					&nbsp;&nbsp;

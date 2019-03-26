@@ -50,6 +50,7 @@ class Edit extends React.Component {
     first: '',
     last: '',
     bio: '',
+    email: '',
     firstHelper: {
       err: false,
       msg: ''
@@ -64,8 +65,9 @@ class Edit extends React.Component {
   componentDidMount = () => {
     const { data } = this.props;
     this.setState({
-      first: data.user.name ? data.user.name.split(" ")[0] : "",
-      last: data.user.name ? data.user.name.split(" ")[1] : "",
+      email: data.user.email ? data.user.email : "",
+      first: data.user.name ? typeof data.user.name.split(" ")[0] !== "undefined" ? data.user.name.split(" ")[0] : "" : "",
+      last: data.user.name ? typeof data.user.name.split(" ")[1] !== "undefined" ? data.user.name.split(" ")[1] : "" : "",
       bio: data.user.bio ? data.user.bio : '',
     })
   }
@@ -153,8 +155,8 @@ class Edit extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { first, firstHelper, last, lastHelper, bio, loading } = this.state;
-    // console.log(this.state);
+    const { first, firstHelper, last, lastHelper, bio, loading, email } = this.state;
+    console.log(this.state);
     
 
     return (
@@ -162,6 +164,18 @@ class Edit extends React.Component {
         <Typography style={{ textAlign: 'center' }} variant="h6" >Personal Information</Typography>
         <Grid container justify="center" spacing={8}>
           <form className={classes.container} autoComplete="off">
+            <Grid item md={12}>
+              <TextField
+                id="outlined-name"
+                label="Email"
+                className={classes.textField}
+                value={email}
+                readOnly
+                disabled
+                margin="normal"
+                variant="outlined"
+              />
+            </Grid>
             <Grid item md={12}>
               <TextField
                 required

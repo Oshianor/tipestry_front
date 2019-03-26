@@ -170,14 +170,14 @@ class CardActionIcons extends React.Component {
 
 
         {/*  */}
-        <Tooltip title="Share Post" aria-label="Share">
+        {/* <Tooltip title="Share Post" aria-label="Share"> */}
           <SharePopover 
             link={encodeURI(config.host + link)} 
             handleOpen={this.handleOpen} 
             placement='top' 
             title={title}
           />
-        </Tooltip>
+        {/* </Tooltip> */}
 
         {/* tips coin icons */}
         {
