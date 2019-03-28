@@ -95,7 +95,7 @@ class Faq extends Component {
 						</ExpansionPanelSummary>
 						<ExpansionPanelDetails>
 							<Typography variant="body2" style={{ textAlign: 'left', marginBottom: 10 }} >
-								For iOS and Android that lets users leave a comment at any physical location.Comments can be placed either at the user 's 
+								Tipestry Go for iOS and Android that lets users leave a comment at any physical location.Comments can be placed either at the user 's 
 								current physical location or by selecting a spot on the map. Comments can be viewed through the map view, through a list of nearby 
 								posts within a selected range, in a section showing popular posts worldwide, or in Augmented Reality. Digital coins are also hidden 
 								around the world and can be collected through the app.								
@@ -157,7 +157,7 @@ class Faq extends Component {
 							</Typography>
 						</ExpansionPanelDetails>
 					</ExpansionPanel> */}
-					<ExpansionPanel
+					{/* <ExpansionPanel
 						square
 						expanded={expanded === 'panel6'}
 						onChange={this.handleChange('panel6')}
@@ -177,7 +177,7 @@ class Faq extends Component {
 								for normal people to speak up when organizations are misbehaving.To that end, we will adopt a set of rules determining which sites can opt out and which can 't. In general, private individuals and smaller organizations can opt out by default, but governments, mass media organizations, and publicly traded companies cannot. We plan to use a voting system to get input from the community on what the exact rules are and how they will change over time.
 							</Typography>
 						</ExpansionPanelDetails>
-					</ExpansionPanel>
+					</ExpansionPanel> */}
 					<ExpansionPanel
 						square
 						expanded={expanded === 'panel7'}
@@ -299,16 +299,35 @@ class Faq extends Component {
 						</ExpansionPanelSummary>
 						<ExpansionPanelDetails>
 							<Typography variant="body2" style={{ textAlign: 'left', marginBottom: 10 }} >
-								Find out what people are saying about a particular website.Is the site legitimate  is it a scam, is its information up to date, is it fake news ? Sometimes it’ s hard to tell based just on a site’ s content or its search engine rankings.A quick look at what other people are saying can serve as a helpful guide.
-								Discuss sites where the comment sections have been removed.Many major news organizations have removed their comment sections in recent years.The justification often used is that the quality of the comments is generally too low to justify the cost of hosting them, and although that might be true in some cases, it also conveniently prevents readers from voicing contrary opinions.
-								Discuss topics where there’ s no obvious place to do so.For example,
-								<br />
-								If i wanted to share my thoughts on rutabagas, but there’ s no message board dedicated to that subject in my language, I can enter www.rutabagas.com on Tipestry and talk about it there.
-								Discuss very specific topics.After watching a movie, you can sometimes find a forum to discuss it(although now with IMDB shutting down its message boards, even that can be difficult).However, what
-								if you want to discuss a specific episode, or a specific song ? With Tipestry you could go on the a Wikipedia page or summary
-								for a particular episode or the lyrics page
-								for a particular song and discuss is there.
-								Find and share information about new product releases.For example, when software is updated and you encounter a bug, it’ s often difficult to sift through years of forum posts about that software to find a discussion relevant to your problem.Going to that software’ s homepage through Tipestry is a way to find the latest and most relevant discussion.
+								<ul>
+									<li>
+										Find out what people are saying about a particular website.Is the site legitimate  is it a scam, is its information up to date, is it fake news? 
+									</li>
+									<li>
+										Sometimes it’ s hard to tell based just on a site’ s content or its search engine rankings. 
+										A quick look at what other people are saying can serve as a helpful guide.
+									</li>
+									<li>
+										Discuss sites where the comment sections have been removed.Many major news organizations have removed their comment sections in recent years.The justification often used is that the quality of the comments is generally too low to justify the cost of hosting them, and although that might be true in some cases, it also conveniently prevents readers from voicing contrary opinions.
+									</li>
+									<li>
+										Discuss topics where there’ s no obvious place to do so.
+										<Typography>For example,</Typography>
+										<Typography>
+											If i wanted to share my thoughts on rutabagas, but there’ s no message board dedicated to that subject in my language, I can enter 
+											<a href="www.rutabagas.com"> www.rutabagas.com </a> 
+											on Tipestry and talk about it there.
+											Discuss very specific topics.After watching a movie, you can sometimes find a forum to discuss it(although now with IMDB shutting down its message boards, even that can be difficult).However, what
+											if you want to discuss a specific episode, or a specific song ? With Tipestry you could go on the a Wikipedia page or summary
+											for a particular episode or the lyrics page
+											for a particular song and discuss is there.
+										</Typography>
+									</li>
+									<li>
+										Find and share information about new product releases.For example, when software is updated and you encounter a bug, it’ s often difficult to sift through years of forum posts about that software to find a discussion relevant to your problem.Going to that software’ s homepage through Tipestry is a way to find the latest and most relevant discussion.										
+									</li>
+								</ul>
+								
 							</Typography>
 						</ExpansionPanelDetails>
 					</ExpansionPanel>
@@ -386,22 +405,10 @@ class Faq extends Component {
 						<ExpansionPanelDetails>
 							<Typography variant="body2" style={{ textAlign: 'left', marginBottom: 10 }} >
 								One of the main purposes of Tipestry is to create a business model
-								<ul>
-									<li>
-										for social media that respects users’ privacy, which is one of the reasons cryptocurrency is built into the platform.Cryptocurrency is good
-									</li>
-									<li>
-										for privacy
-									</li>
-									<li>
-										for us to cover our costs without resorting to invasive advertising.
-									</li>
-									<li>
-										for two reasons: first, it allows people to send and receive money without giving up personal information through a credit card or bank account, and second, it creates an opportunity
-									</li>
-								</ul>
-								
-								
+								for social media that respects users’ privacy, which is one of the reasons cryptocurrency is built into the platform.Cryptocurrency is good
+								for privacy
+								for us to cover our costs without resorting to invasive advertising.
+								for two reasons: first, it allows people to send and receive money without giving up personal information through a credit card or bank account, and second, it creates an opportunity
 							</Typography>
 						</ExpansionPanelDetails>
 					</ExpansionPanel>

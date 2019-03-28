@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import { config } from '../../../../config';
 import Alert from '../../reuseable/alert';
+import Warning from "../../reuseable/warning";
 
 
 const styles = theme => ({
@@ -21,6 +22,7 @@ const styles = theme => ({
 
 class ReplyCompose extends React.Component {
   state = {
+    open: false,
     reply:''
   }
 
@@ -28,6 +30,12 @@ class ReplyCompose extends React.Component {
     this.setState({
       reply: event.target.value
     });
+  }
+
+  handleClose = () => {
+    this.setState({
+      open: false
+    })
   }
 
   handleReply = async () => {
@@ -62,12 +70,16 @@ class ReplyCompose extends React.Component {
         
       }
       
+    } else {
+      this.setState({
+        open: true
+      })
     }
   }
 
   render() {
     const { classes, username } = this.props;
-    const { reply } = this.state;
+    const { reply, open } = this.state;
     return (
       <form className={classes.container} noValidate autoComplete="off">
         <TextField
@@ -96,6 +108,7 @@ class ReplyCompose extends React.Component {
         >
 					Save
 				</Button>
+        <Warning open={open} handleClose={this.handleClose}/>
       </form>
     );
   }

@@ -27,6 +27,9 @@ import Replies from './replies';
 import Replycompose from './replycompose';
 import { Lang } from '../../../../lang';
 import Linkify from 'linkifyjs/react';
+import Warning from '../../reuseable/warning'
+
+
 
 const styles = theme => ({
   card: {
@@ -52,7 +55,14 @@ class Comments extends React.Component {
 		// comments: [],
 		edit: null,
 		content: '',
-		reply: null
+		reply: null,
+		open: false
+	}
+
+	handleNotLoggedIn = () => {
+		this.setState(state => ({
+			open: !state.open
+		}))
 	}
 
 	handleEdit(id, mesg) {
@@ -179,7 +189,7 @@ class Comments extends React.Component {
 
   render() {
 		const { classes, data } = this.props;
-		const { comments, edit, content, replyValues, reply } = this.state;
+		const { comments, edit, content, replyValues, reply, open } = this.state;
 		// console.log(this.state);
 		
     return (
@@ -222,6 +232,7 @@ class Comments extends React.Component {
 							/>
 							<CardContent style={{ padding: "0px 25px" }}>
 								{
+									// edit element
 									edit && edit === comment._id ?
 										<form className={classes.container} noValidate autoComplete="off">
 											<TextField
@@ -244,6 +255,7 @@ class Comments extends React.Component {
 											</Button>
 										</form>
 									:
+									// when edit state is null
 										<Typography component="p" style={{ fontSize: 15, fontWeight: 'lighter' }} >
 											<Linkify tagName="p">
 												{comment.content}
@@ -271,7 +283,6 @@ class Comments extends React.Component {
 											<Edit style={{ fontSize: 20 }} />
 										</IconButton>
 								}
-
 								{
 									// only show them if the owner of the post and the logged in user are the same
 									data.user._id === comment.commentUser[0]._id &&
@@ -280,7 +291,6 @@ class Comments extends React.Component {
 										</IconButton>
 								}
 
-								
 								{
 									 //  fetch replies for this comment
 									 // if reply exist for this comment then show this
@@ -296,10 +306,11 @@ class Comments extends React.Component {
 
 								&nbsp;&nbsp;
 								<CommentCoin 
-								// topic object id
+									// topic object id
 									topicObjId={data.siteTopic[0]._id}
 									// comment id
 									commentId={comment.id}
+									handleOpen={this.handleNotLoggedIn}
 									// comment owner id
 									commentUserId={comment.commentUser[0].id}
 								/>
@@ -330,6 +341,7 @@ class Comments extends React.Component {
 						</Card>
 					))
 				}
+        <Warning open={open} handleClose={this.handleNotLoggedIn}/>
 			</React.Fragment>
     );
   }

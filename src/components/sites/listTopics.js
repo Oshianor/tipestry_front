@@ -120,7 +120,7 @@ class TopicList extends React.Component {
 										borderWidth={2} 
 										name={topic.user[0].username} 
 										url={
-											topic.user[0].profileimage || topic.user[0].profileimage !== "" ?
+											topic.user[0].profileimage ?
 												config.profileimage + topic.user[0].profileimage
 											:
 												null
