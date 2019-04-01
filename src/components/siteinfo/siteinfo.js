@@ -58,6 +58,13 @@ class SiteInfo extends Component {
 						</a>
 					</Link>
 					&nbsp;&nbsp;
+					<a href="mailto:feedback@tipestry.com" className={classes.link} >
+						{Lang.k3}
+					</a>
+					<a  target="_blank" className={classes.link}  href="https://medium.com/@tipestry/introducing-the-tipestry-internet-meta-layer-comment-vote-and-earn-cryptocurrency-anywhere-7b94abb5918b" >
+						{Lang.d3}
+					</a>
+					&nbsp;&nbsp;
 					<Link href="/contests">
 						<a className={classes.link} >
 							{Lang.e3}

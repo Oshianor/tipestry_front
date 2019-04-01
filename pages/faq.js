@@ -7,6 +7,7 @@ import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import {
 	withStyles
 } from '@material-ui/core/styles';
+import { Lang } from '../lang';
 
 const ExpansionPanel = withStyles({
   root: {
@@ -60,13 +61,11 @@ class Faq extends Component {
       expanded: expanded ? panel : false,
     });
 	}
-	
-	render() {
+
+	displayENg = () => {
 		const { expanded } = this.state;
 		return (
-			<div>
-				<Header />
-				<div style={{ margin: "80px 10%" }} >
+			<div style={{ margin: "80px 10%" }} >
 					<ExpansionPanel
 						square
 						expanded={expanded === 'panel1'}
@@ -409,6 +408,194 @@ class Faq extends Component {
 						</ExpansionPanelDetails>
 					</ExpansionPanel>
 				</div>
+		)
+	}
+
+	displayCN = () => {
+		const { expanded } = this.state;
+		return (
+			<div style={{ margin: "80px 10%" }} >
+				<Typography>
+					Tipestry.com是一个人们可以对其它任何网站在线聊天及发表评论，并用加密货币对他们喜欢的网站和评论进行打赏并赚取数字币的颠覆性新式的社交平台。TipestryGo是一个任何地方让用户在任何网站或地理位置留下评论, 发的帖子和网站评论都可以收到奖赏数字币的提示功能。
+				</Typography>
+					<ExpansionPanel
+						square
+						expanded={expanded === 'panel1'}
+						onChange={this.handleChange('panel1')}
+					>
+						<ExpansionPanelSummary>
+							<Typography >
+								Tipestry Go是什么？
+							</Typography>
+						</ExpansionPanelSummary>
+						<ExpansionPanelDetails>
+							<Typography variant="body2" style={{ textAlign: 'left', marginBottom: 10 }} >
+								Tipestry Go是一个允许用户在任何地理位置发表评论的app。评论既可放置在用户当前地理位置处，也可在地图上选择一个点来放置。 评论可在视图&地图上查看，也可通过被选中范围内的附近帖子列表来查看，或在显示全球受欢迎帖子的栏中查看。						
+							</Typography>
+						</ExpansionPanelDetails>
+					</ExpansionPanel>
+					<ExpansionPanel
+						square
+						expanded={expanded === 'panel2'}
+						onChange={this.handleChange('panel2')}
+					>
+						<ExpansionPanelSummary>
+							<Typography >
+								Tipestry.com与设有评论栏目的其他站点有何区别？
+							</Typography>
+						</ExpansionPanelSummary>
+						<ExpansionPanelDetails>
+							<Typography variant="body2" style={{ textAlign: 'left', marginBottom: 10 }} >
+								尽管有些站点设有评论栏或留言板，但大多数站点却没有。本项目的目标之一是为人们提供更多的空间，供他们在线上，包括网络上更为偏僻的角落，进行互动和给予反馈。							
+							</Typography>
+						</ExpansionPanelDetails>
+					</ExpansionPanel>
+					<ExpansionPanel
+						square
+						expanded={expanded === 'panel3'}
+						onChange={this.handleChange('panel3')}
+					>
+						<ExpansionPanelSummary>
+							<Typography>
+								Tipestry.com是如何运行的？
+							</Typography>
+						</ExpansionPanelSummary>
+						<ExpansionPanelDetails>
+							<Typography variant="body2" style={{ textAlign: 'left', marginBottom: 10 }} >
+								在屏幕右上方的URL栏中， 输入你想讨论的网站的地址， 然后就会载入该页面的评论栏。 你也可以在Tipestry首页Trending栏中查看网友们目前讨论的内容
+							</Typography>
+						</ExpansionPanelDetails>
+					</ExpansionPanel>
+					<ExpansionPanel
+						square
+						expanded={expanded === 'panel4'}
+						onChange={this.handleChange('panel4')}
+					>
+						<ExpansionPanelSummary>
+							<Typography>
+								 嘿！如果我不想让人在我的站点上发表评论，该怎么办？
+							</Typography>
+						</ExpansionPanelSummary>
+						<ExpansionPanelDetails>
+							<Typography variant="body2" style={{ textAlign: 'left', marginBottom: 10 }} >
+								如果你有问题的话， 请发送电子邮件给我们， 地址为feedback @tipestry.com。
+							</Typography>
+						</ExpansionPanelDetails>
+					</ExpansionPanel>
+					<ExpansionPanel
+						square
+						expanded={expanded === 'panel7'}
+						onChange={this.handleChange('panel7')}
+					>
+						<ExpansionPanelSummary>
+							<Typography>
+								打赏是什么？
+							</Typography>
+						</ExpansionPanelSummary>
+						<ExpansionPanelDetails>
+							<Typography variant="body2" style={{ textAlign: 'left', marginBottom: 10 }} >
+								打赏是一种向其他用户展示你感谢他们评论的方法。这是点赞或赞同的加强版，因为它会自动将加密货币发送给你打赏的用户。 如欲给某人打赏，点击其帖子旁边的“赠送加密货币”（Give Coins）按钮，选择加密货币的类型和你想打赏的数量。接着，显示打赏的图标将出现在其帖子的旁边，他们将会在其账户中收到打赏的加密货币。 
+							</Typography>
+						</ExpansionPanelDetails>
+					</ExpansionPanel>
+					<ExpansionPanel
+						square
+						expanded={expanded === 'panel8'}
+						onChange={this.handleChange('panel8')}
+					>
+						<ExpansionPanelSummary>
+							<Typography>
+								加密货币是什么？
+							</Typography>
+						</ExpansionPanelSummary>
+						<ExpansionPanelDetails>
+							<Typography variant="body2" style={{ textAlign: 'left', marginBottom: 10 }} >
+								加密货币是点对点数字货币。与传统货币相比，它具有几种优点，其中之一就是它更易于在线上和跨境发送和接收。  第一种加密货币--比特币，是由中本聪于2009年创造的。自那时起，人们已创造出成许多种具有不同特点的其他加密货币和代币。
+							</Typography>
+						</ExpansionPanelDetails>
+					</ExpansionPanel>
+					<ExpansionPanel
+						square
+						expanded={expanded === 'panel9'}
+						onChange={this.handleChange('panel9')}
+					>
+						<ExpansionPanelSummary>
+							<Typography>
+								如何才能将币加入到我的Tipestry账户中？
+							</Typography>
+						</ExpansionPanelSummary>
+						<ExpansionPanelDetails>
+							<Typography variant="body2" style={{ textAlign: 'left', marginBottom: 10 }} >
+								你可以将比特币、狗狗币等从线上交易所或钱包中发送至Tipestry地址，这些地址可在首页的“货币”（Currency）链接中找到。然而，如果你是首次接触加密货币，我们建议首先将内容发布至Tipestry上，然后通过打赏赚取加密货币。
+							</Typography>
+						</ExpansionPanelDetails>
+					</ExpansionPanel>
+					<ExpansionPanel
+						square
+						expanded={expanded === 'panel10'}
+						onChange={this.handleChange('panel10')}
+					>
+						<ExpansionPanelSummary>
+							<Typography>
+								如何才能使我的币保持安全？
+							</Typography>
+						</ExpansionPanelSummary>
+						<ExpansionPanelDetails>
+							<Typography variant="body2" style={{ textAlign: 'left', marginBottom: 10 }} >
+								在线加密货币钱包，包括与Tipestry账户配套的钱包，本身不是完全安全的。保障加密货币安全的最好方法是离线钱包。关于钱包和安全的更多信息，敬请访问：
+								 <a href="https://bitcoin.org/en/secure-your-wallet"> https://bitcoin.org/en/secure-your-wallet </a> 
+									If you end up with a significant amount of coins in your Tipestry account(
+										如果最终你的Tipestry账户中有大量的加密货币（比如，如果你发布确实令人称奇的帖子，而某个人给你打赏很多比特币），我们强烈建议你将它们提现至更安全的地方。提现加密货币，请点击首页上的“货币”（Currencies）链接，选择货币，然后选择“提现/发送加密货币”（Withdraw/Send coins）选项
+							</Typography>
+						</ExpansionPanelDetails>
+					</ExpansionPanel>
+					<ExpansionPanel
+						square
+						expanded={expanded === 'panel12'}
+						onChange={this.handleChange('panel12')}
+					>
+						<ExpansionPanelSummary>
+							<Typography>
+								Tipestry对隐私的看法是什么？
+							</Typography>
+						</ExpansionPanelSummary>
+						<ExpansionPanelDetails>
+							<Typography variant="body2" style={{ textAlign: 'left', marginBottom: 10 }} >
+								Tipestry的主要目的之一是创建一个尊重用户隐私的社交媒体业务的典范，这也是将加密货币内置到平台中的原因之一。加密货币有利于隐私的原因有两个：第一，它允许人们在不通过信用卡或银行帐户并放弃个人信息的情况下发送和接收资金；第二，它为我们提供了一个机会，我们可以在不使用侵入性广告的情况下支付我们的费用。
+							</Typography>
+						</ExpansionPanelDetails>
+					</ExpansionPanel>
+					<ExpansionPanel
+						square
+						expanded={expanded === 'panel16'}
+						onChange={this.handleChange('panel16')}
+					>
+						<ExpansionPanelSummary>
+							<Typography>
+								如何才能发送反馈？
+							</Typography>
+						</ExpansionPanelSummary>
+						<ExpansionPanelDetails>
+							<Typography variant="body2" style={{ textAlign: 'left', marginBottom: 10 }} >
+								如果有任何意见、漏洞报告、滥用投诉或疑问，请发送至<a href="mailto:feedback@tipestry.com">feedback@tipestry.com</a>.						
+							</Typography>
+						</ExpansionPanelDetails>
+					</ExpansionPanel>
+				</div>
+		)
+	}
+	
+	render() {
+		const { expanded } = this.state;
+		return (
+			<div>
+				<Header />
+				{
+					Lang.locale === "en" ?
+						this.displayENg()
+					:
+						this.displayCN()
+				}
 			</div>
 		);
 	}
