@@ -2,6 +2,7 @@ import React , { Component } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Link from 'next/link';
 import { withStyles } from '@material-ui/core/styles';
+import { Lang } from '../../../lang';
 
 const styles = theme => ({
 	root: {
@@ -52,23 +53,29 @@ class SiteInfo extends Component {
 					</Typography>
 					&nbsp;&nbsp;
 					<Link href="/faq">
-						<a className={classes.link} >Faq</a>
+						<a className={classes.link} >
+							{Lang.i}
+						</a>
 					</Link>
 					&nbsp;&nbsp;
 					<Link href="/contests">
-						<a className={classes.link} >Contests</a>
+						<a className={classes.link} >
+							{Lang.e3}
+						</a>
 					</Link>
 					&nbsp;&nbsp;
 					<Link href="/privacypolicy">
-						<a className={classes.link}>Privacy Policy</a>
+						<a className={classes.link}>
+							{Lang.f3}
+						</a>
 					</Link>
 					&nbsp;&nbsp;
 					<a href='https://tipestrygo.com' target="_blank" className={classes.link} >
-						Tipestry Go
+						Tipestry &nbsp; {Lang.g3}
 					</a>
 					&nbsp;&nbsp;
 					<a href='https://tipestry.io/Tipestry-White-Paper.pdf' className={classes.link} >
-						White Paper
+						{Lang.h3}
 					</a>
 					&nbsp;&nbsp;
 					<a href='https://chrome.google.com/webstore/detail/tipestry-for-chrome/cedgeodmmkbpclcdomkojhmfgjiaiogo?brand=CHBD&gclid=CjwKCAjw1dzkBRBWEiwAROVDLPuzKR-abSIREVOOrY7JNB_i6jS8GFuv9DuFKCgV-XzSVCdeV2GCnRoCXpcQAvD_BwE&gclsrc=aw.ds' target="_blank" className={classes.link} >
@@ -76,12 +83,14 @@ class SiteInfo extends Component {
 					</a>
 					&nbsp;&nbsp;
 					<Link href="/terms">
-						<a className={classes.link} >Terms and Conditions</a>
+						<a className={classes.link} >
+							{Lang.i3}
+						</a>
 					</Link>
 				</div>
 				<div style={{ margin: '10px 20px' }}>
 					<Typography style={{ color: 'rgba(0, 0, 0, 0.61)', whiteSpace: 'nowrap', fontWeight: '600' }}>
-						Follow on Social Media
+						{Lang.j3}
 					</Typography>
 					<div>
 						<a href='https://www.facebook.com/tipestry' target="_blank" >

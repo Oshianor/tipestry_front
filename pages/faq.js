@@ -399,16 +399,12 @@ class Faq extends Component {
 					>
 						<ExpansionPanelSummary>
 							<Typography>
-								What is Tipestry’s view on privacy?
+								What is Tipestry’s view on privacy? 
 							</Typography>
 						</ExpansionPanelSummary>
 						<ExpansionPanelDetails>
 							<Typography variant="body2" style={{ textAlign: 'left', marginBottom: 10 }} >
-								One of the main purposes of Tipestry is to create a business model
-								for social media that respects users’ privacy, which is one of the reasons cryptocurrency is built into the platform.Cryptocurrency is good
-								for privacy
-								for us to cover our costs without resorting to invasive advertising.
-								for two reasons: first, it allows people to send and receive money without giving up personal information through a credit card or bank account, and second, it creates an opportunity
+								One of the main purposes of Tipestry is to create a business model for social media that respects users’ privacy, which is one of the reasons cryptocurrency is built into the platform. Cryptocurrency is good for privacy for two reasons: first, it allows people to send and receive money without giving up personal information through a credit card or bank account, and second, it creates an opportunity for us to cover our costs without resorting to invasive advertising.
 							</Typography>
 						</ExpansionPanelDetails>
 					</ExpansionPanel>

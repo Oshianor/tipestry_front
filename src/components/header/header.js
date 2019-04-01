@@ -549,12 +549,12 @@ class Header extends React.Component {
 						</React.Fragment>
 					:
 						<React.Fragment>
-							<Link href="/faq">
-								<Button color="inherit">
-									{Lang.i}
-									{/* Faq */}
+							<a target="_blank" style={{ textDecoration: "none" }} href="https://medium.com/@tipestry/introducing-the-tipestry-internet-meta-layer-comment-vote-and-earn-cryptocurrency-anywhere-7b94abb5918b">
+								<Button color="inherit" style={{ color: 'white' }} >
+									{Lang.d3}
+									{/* Abount */}
 								</Button>
-							</Link>
+							</a>
 							<Link href="/login" prefetch>
 								<Button color="inherit">
 									{Lang.j}
@@ -606,11 +606,11 @@ class Header extends React.Component {
 				{
 					!token ?
 						<React.Fragment>
-							<Link href="/faq">
+							<a  style={{ textDecoration: "none" }} target="_blank" href="https://medium.com/@tipestry/introducing-the-tipestry-internet-meta-layer-comment-vote-and-earn-cryptocurrency-anywhere-7b94abb5918b">
 								<MenuItem >
-									{Lang.i}
+									{Lang.d3}
 								</MenuItem>
-							</Link>
+							</a>
 							<Link href="/login" prefetch>
 								<MenuItem >
 									{Lang.j}
