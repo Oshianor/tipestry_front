@@ -195,20 +195,16 @@ class TipCoin extends React.Component {
 
 						{/* add coin  */}
 						<div>
-						{/* <Grid item xs={6} sm={3} md={4} lg={6} xl={4}> */}
-							{/* <Paper className={classes.paper}> */}
+							<a href="mailto:feedback@tipestry.com" style={{ textDecoration: 'none' }}>
 								<Button style={{ borderRadius: 0, width: 130, marginLeft: 5, height: 45 }} variant="outlined" color="secondary" >
-									{/* <div style={{ borderRight: "1px solid gray", paddingRight: "10%" }}>
-									</div> */}
-									{/* <div style={{ flexGrow: 1 }} /> */}
 									<Add style={{ width: 25 }} />
 									<Typography variant="button" >
 										{Lang.t1}
 									</Typography>
 								</Button>
-							{/* </Paper> */}
-						{/* </Grid> */}
+							</a>
 						</div>
+						
 					</Grid>
 				</Paper>
 			</div>

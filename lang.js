@@ -88,7 +88,7 @@ export const Lang = {
 	h3: "White Paper",
 	i3: "Terms and Conditions",
 	j3: "Follow on Social Media",
-	k3: "Cobntact"
+	k3: "Contact",
 	locale: "en"
 
 	// CHINESE
