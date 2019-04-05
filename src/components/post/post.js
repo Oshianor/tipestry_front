@@ -122,9 +122,8 @@ class Post extends React.Component {
 
 
   nutralizeTitle = (title) => {
-    return title.toLocaleLowerCase().split(" ").join("-").replace(/[.*+?^$/{}()|[\]\\]/g, '-');
+    return title.toLocaleLowerCase().split(" ").join("-").replace(/[.*+?^$/{}()!%#>@=:;'|[\]\\]/g, '');
   }
-
 
 
   // display the title based on the length

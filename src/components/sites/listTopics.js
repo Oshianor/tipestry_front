@@ -62,6 +62,9 @@ class TopicList extends React.Component {
 	}
 
 
+	nutralizeTitle = (title) => {
+    return title.toLocaleLowerCase().split(" ").join("-").replace(/[.*+?^$/{}()!%#>@=:;'|[\]\\]/g, '');
+  }
 
 
 	displayEmptyTopics = () => {
@@ -113,7 +116,7 @@ class TopicList extends React.Component {
 				<List className={classes.root} key={topic._id} >
 					<ListItem alignItems="flex-start">
 						<ListItemAvatar>
-							<Link href={encodeURI("/topics/" + topic._id + "/" + topic.title)} >
+							<Link href={"/topics/" + topic._id + "/" + this.nutralizeTitle(topic.title)} >
 								<a style={{ textDecoration: 'none', margin: "6px -1px" }}>
 									<Thumbnails 
 										borderColor="black" 
@@ -131,7 +134,7 @@ class TopicList extends React.Component {
 						</ListItemAvatar>
 						<ListItemText
 							primary = {
-								<Link href={encodeURI("/topics/" + topic._id + "/" + topic.title)} >
+								<Link href={"/topics/" + topic._id + "/" + this.nutralizeTitle(topic.title)} >
 									<a style={{ color: '#1F7BD8', textDecoration: 'none', fontSize: 18 }} >
 										{topic.title.length > 50 ? topic.title.substr(0, 40) + "..." : topic.title}
 										<Sitetopiccoin gift={topic.gift} />
