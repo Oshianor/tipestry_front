@@ -71,7 +71,7 @@ class SiteAbout extends React.Component {
         <Card className={classes.card}>
           <CardHeader
             avatar={
-              <Link href={"/profile/@" + data.siteTopic[0].user[0].username}>
+              <Link href={"/profile/" + data.siteTopic[0].user[0]._id + "/@" + data.siteTopic[0].user[0].username}>
                 <a style={{ textDecoration: 'none' }}>
                   <Thumbnails 
                     borderColor="black" 
