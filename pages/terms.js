@@ -694,15 +694,15 @@ class PrivacyPolicy extends React.Component {
 								<Typography variant="button" >The Tipestry Inc. Agent for notice of claims of copyright or other intellectual property infringement can be contacted as follows:</Typography>
 								Mailing Address:
 								<br />
-								Tipestry Inc.
+								TIPESTRY LTD,
 								<br />
-								Attn: Copyright Agent
+								35-37 LUDGATE HILL
 								<br />
-								940 Stewart Drive #203
+								LONDON
 								<br />
-								Sunnyvale, California 94085
+								EC4M 7JN
 								<br />
-								Telephone: (650) 605-3434
+								UNITED KINGDOM
 								<br />
 								Email: <a href='mailto:feedback@tipestry.com'>feedback@tipestry.com</a>
 							</Typography>
@@ -777,11 +777,17 @@ class PrivacyPolicy extends React.Component {
 								<br />
 								Mailing Address:
 								<br />
-								Tipestry Inc.
+								TIPESTRY LTD,
 								<br />
-								940 Stewart Drive #203
+								OFFICE 7
 								<br />
-								Sunnyvale, California 94085
+								35-37 LUDGATE HILL
+								<br />
+								LONDON
+								<br />
+								EC4M 7JN
+								<br />
+								UNITED KINGDOM
 								<br />
 								Email: <a href="mailto:feedback@tipestry.com">feedback@tipestry.com</a>
 							</Typography>

@@ -89,6 +89,11 @@ export const Lang = {
 	i3: "Terms and Conditions",
 	j3: "Follow on Social Media",
 	k3: "Contact",
+	l3: "I agree to the Terms and Conditions.",
+	m3: "This website uses cookies to enhance the user experience. It is your responsibility to keep the coins you earn safe by withdrawing them to your own wallet.",
+	n3: "Add to favourites",
+	o3: "Thumbs Up",
+	p3: "Thumbs Down",
 	locale: "en"
 
 	// CHINESE
@@ -100,7 +105,7 @@ export const Lang = {
 	// f: "跟随",
 	// g: "以下",
 	// h: "输入网址",
-	// i: "常见问题解答",
+	// i: "常见问题",
 	// j: "登录",
 	// k: "注册",
 	// l: "登出",
@@ -181,5 +186,10 @@ export const Lang = {
 	// i3: "条款和条件",
 	// j3: "关注社交媒体",
 	// k3: "联系",
+	// l3: "本人同意有关条款及条件.",
+	// m3: "本网站使用信息记录程序来增强用户体验。您有责任将您赚取的硬币取出来放到自己的钱包里。",
+	// n3: "添加到收藏夹",
+	// o3: '赞',
+	// p3: "不喜欢",
 	// locale: "zh_cn",
 }

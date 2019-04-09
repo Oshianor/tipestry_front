@@ -408,7 +408,8 @@ class RegisterPath extends Component {
             label={
               <Link href="/privacypolicy" >
                 <a>
-                  I agree to the Terms and Conditions.
+                  {/* I agree to the Terms and Conditions. */}
+                  {Lang.l3}
                 </a>
               </Link>
             }

@@ -16,6 +16,8 @@ import { getToken } from "../../../actions/data";
 
 import axios from 'axios';
 import { config } from '../../../../config';
+import { Lang } from '../../../../lang';
+
 
 
 const styles = theme => ({
@@ -140,7 +142,7 @@ class Thumb extends React.Component {
     return (
       <React.Fragment>
         {/*  */}
-        <Tooltip title="Thumbs Up" aria-label="Thumbs Up">
+        <Tooltip title={Lang.o3} aria-label="Thumbs Up">
           <IconButton aria-label="Thumbs Up" className={iconspacing} onClick={this.handleVote.bind(this, 1)} >
             {this.thumbup()}
           </IconButton>
@@ -153,7 +155,7 @@ class Thumb extends React.Component {
 				&nbsp;&nbsp;
 
         {/*  */}
-        <Tooltip title="Thumbs Down" aria-label="Thumbs Down">
+        <Tooltip title={Lang.p3} aria-label="Thumbs Down">
           <IconButton aria-label="Thumbs Down" className={iconspacing} onClick={this.handleVote.bind(this, 0)} >
             {this.thumbDown()}
           </IconButton>

@@ -245,7 +245,7 @@ class Notification extends React.Component {
           {
             notify.map((not, index) => (
               <div key={index} className={classes.index} >
-                <Link href={not.link} >
+                <Link href={config.host + not.link} >
                   <a className={classes.noty} >
                     <span style={{ marginBottom: 5 }}>
                       <Thumbnails 

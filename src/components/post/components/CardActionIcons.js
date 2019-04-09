@@ -19,6 +19,7 @@ import Axios from 'axios';
 import { config } from "../../../../config";
 import Coin from './coin';
 import Warning from '../../reuseable/warning';
+import { Lang } from '../../../../lang';
 
 const styles = theme => ({
   button: {
@@ -116,7 +117,7 @@ class CardActionIcons extends React.Component {
       }
     }
     return (
-      <Tooltip title="Add to favourites" aria-label="Add to favorites">
+      <Tooltip title={Lang.n3} aria-label="Add to favorites">
         <IconButton onClick={this.handleFavourite} aria-label="Add to favorites" className={classes.iconspacing}>
           <FavoriteIcon />
         </IconButton>
@@ -157,7 +158,7 @@ class CardActionIcons extends React.Component {
 
 
         {/*  */}
-        <Tooltip title="Comments" aria-label="comments">
+        <Tooltip title={Lang.g2} aria-label="comments">
           <IconButton aria-label="comments" className={classes.iconspacing}>
             <img src="/static/icons/comments.svg" alt="comments" width='25' height="25" />
           </IconButton>

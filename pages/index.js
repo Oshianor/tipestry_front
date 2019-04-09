@@ -12,6 +12,7 @@ import { getTopics, getUser, getToken } from "../src/actions/data";
 import BottomScrollListerer from 'react-bottom-scroll-listener';
 // import CircularProgress from '@material-ui/core/CircularProgress';
 import CookieConsent from "react-cookie-consent";
+import { Lang } from '../lang';
 
 
 
@@ -113,7 +114,8 @@ class Index extends React.Component {
                 style={{ zIndex: 99999, background: 'rgb(146, 95, 126)' }}
                 buttonStyle={{ background: 'rgb(255, 255, 255)' }}
               >
-                  This website uses cookies to enhance the user experience.It is your responsibility to keep the coins you earn safe by withdrawing them to your own wallet.
+                {Lang.m3}
+                  {/* This website uses cookies to enhance the user experience.It is your responsibility to keep the coins you earn safe by withdrawing them to your own wallet. */}
               </CookieConsent>
             </BottomScrollListerer>
         }

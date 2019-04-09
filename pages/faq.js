@@ -248,25 +248,6 @@ class Faq extends Component {
 							</Typography>
 						</ExpansionPanelDetails>
 					</ExpansionPanel>
-					{/* <ExpansionPanel
-						square
-						expanded={expanded === 'panel11'}
-						onChange={this.handleChange('panel11')}
-					>
-						<ExpansionPanelSummary>
-							<Typography>
-								Why isn't Tipestry a browser add-on?
-							</Typography>
-						</ExpansionPanelSummary>
-						<ExpansionPanelDetails>
-							<Typography variant="body2" style={{ textAlign: 'left', marginBottom: 10 }} >
-									Tipestry started out as an add - on but we found it was too difficult to get people to
-									try
-									if they had to install software before they could post or even view the content.We will release a new add - on in the future once the user base is large enough
-									for it to make sense.
-							</Typography>
-						</ExpansionPanelDetails>
-					</ExpansionPanel> */}
 					<ExpansionPanel
 						square
 						expanded={expanded === 'panel12'}
