@@ -75,8 +75,7 @@ class CoinGift extends React.Component {
         	amount,
         	coinType: type,
         	userId: topicUserId,
-					topicId,
-					dataType: data.type
+					topicId
         }),
         headers: {
           'content-type': 'application/json',
