@@ -17,20 +17,32 @@ import { connect } from 'react-redux';
 import SiteInfo from '../components/siteinfo/siteinfo';
 import Dialog from '../components/reuseable/dialog';
 import Stage from "../components/stage/stage";
-
+import Input from "@material-ui/core/Input";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import FilledInput from "@material-ui/core/FilledInput";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import { Typography } from '@material-ui/core';
+import { config } from "../../config";
+import { bindActionCreators } from "redux";
+import { getTopics, getUser, setType } from "../actions/data";
+import axios from 'axios';
 
 
 const styles = theme => ({
   root: {
-    backgroundImage: "url('/static/homepage/headerBackground.svg')", 
+    backgroundImage: "url('/static/homepage/headerBackground.svg')",
     width: "100%",
     height: "50vh",
-    backgroundRepeat: 'no-repeat',
+    backgroundRepeat: "no-repeat",
     backgroundSize: "cover"
   },
   new: {
     // flexGrow: 1,
-    marginTop: 300,
+    marginTop: 300
     // [theme.breakpoints.between('lg', 'xl')]: {
     //   marginTop: 300
     // },
@@ -44,12 +56,20 @@ const styles = theme => ({
   },
   top: {
     marginTop: 20,
-    [theme.breakpoints.between('lg', 'xl')]: {
+    [theme.breakpoints.between("lg", "xl")]: {
       marginTop: 300
-    },
+    }
   },
   rela: {
     position: "relative"
+  },
+  formControl: {
+    margin: theme.spacing.unit,
+    minWidth: 120,
+    display: 'flex',
+    justifyContent: "center",
+    flexDirection: "row",
+    alignItems: "center"
   }
 });
 
@@ -60,84 +80,111 @@ class Homepage extends Component {
     stopScroll: false,
     token: null,
     pageNumber: 2,
-    open: false
-  }
+    loading: false,
+    open: false,
+  };
 
   // handle drawer open
   handleDrawerOpen = () => {
     this.setState({ drawer: true });
-  }
+  };
 
-    // handle close of drawer
+  handleChange = async event => {
+    const { dataType } = this.state;
+    const { getTopics, data, setType } = this.props;
+    this.setState({
+      loading: true
+    })
+    let topics = await axios.get(config.api + '/topic?pageNumber=1&dataType=' + event.target.value);
+    console.log("yeyeyeyey", topics.data.content);
+    getTopics({
+      total: 0,
+      topic: []
+    });    
+    getTopics(topics.data.content);
+    setType(event.target.value);
+    this.setState({
+      loading: false
+    });
+  };
+
+  // handle close of drawer
   handleDrawerClose = () => {
     this.setState({ drawer: false });
-  }
+  };
 
   componentDidMount() {
     this.setState({
-      token: localStorage.getItem('token')
-    })
-		addEventListener('scroll', this.trackScrolling);
-	}
-
-	componentWillUnmount() {
-		removeEventListener('scroll', this.trackScrolling);
+      token: localStorage.getItem("token")
+    });
+    addEventListener("scroll", this.trackScrolling);
   }
-  
+
+  componentWillUnmount() {
+    removeEventListener("scroll", this.trackScrolling);
+  }
+
   // track scroolling . when scroll amost to the header
-  trackScrolling = (e) => {
+  trackScrolling = e => {
     // console.log(window.scrollY, "vvv", window.scrollX);
-    
+
     if (window.scrollY > 240) {
       this.setState({
         stopScroll: true
-      })
-      return false
+      });
+      return false;
     }
     this.setState({
       stopScroll: false
-    })
+    });
     return false;
-  }
+  };
 
   handleDialog = () => {
     this.setState(state => ({
       open: !state.open
-    }))
-  }
+    }));
+  };
 
   render() {
     const { data, classes } = this.props;
-    const { stopScroll, drawer, token, open } = this.state;
+    const { stopScroll, drawer, token, open, loading } = this.state;
     return (
       <div>
-        <Header 
-          drawer={drawer} 
-          handleDrawerOpen={this.handleDrawerOpen}  
-          handleDrawerClose={this.handleDrawerClose} 
+        <Header
+          drawer={drawer}
+          handleDrawerOpen={this.handleDrawerOpen}
+          handleDrawerClose={this.handleDrawerClose}
         />
-        <Drawer 
-          drawer={drawer} 
+        <Drawer
+          drawer={drawer}
           stopScroll={stopScroll}
           overlay={true}
           showOnLg={true}
           top={228}
-          handleDrawerOpen={this.handleDrawerOpen}  
-          handleDrawerClose={this.handleDrawerClose} 
+          handleDrawerOpen={this.handleDrawerOpen}
+          handleDrawerClose={this.handleDrawerClose}
         >
-          <Grid container justify="center" spacing={8} >
-            <Grid container justify="space-evenly" alignItems='baseline' className={classes.demo} >
+          <Grid container justify="center" spacing={8}>
+            <Grid
+              container
+              justify="space-evenly"
+              alignItems="baseline"
+              className={classes.demo}
+            >
               {/* trends */}
               <Hidden mdDown>
-                <Grid item lg={2} xl={2} style={{ marginRight: 25 }} >
-                <div 
-                    style={{ position: 'absolute' }} 
-                  >
-                    <div 
-                      style={stopScroll ? { position: 'fixed', top: 90} : { position: 'fixed' }} 
-                      // style={{ position: 'fixed' }} 
+                <Grid item lg={2} xl={2} style={{ marginRight: 25 }}>
+                  <div style={{ position: "absolute" }}>
+                    <div
+                      style={
+                        stopScroll
+                          ? { position: "fixed", top: 90 }
+                          : { position: "fixed" }
+                      }
+                      // style={{ position: 'fixed' }}
                     >
-                      { token && <Userinfo handleOpen={this.handleDialog} /> }
+                      {token && <Userinfo handleOpen={this.handleDialog} />}
                       <Trends modal={false} />
                       <Popular />
                     </div>
@@ -146,22 +193,47 @@ class Homepage extends Component {
               </Hidden>
 
               {/* post  */}
-              <Grid item lg={6} xl={6} md={12} sm={12} xs={12}  >
+              <Grid item lg={6} xl={6} md={12} sm={12} xs={12}>
+                <FormControl
+                  variant="outlined"
+                  disabled={loading}
+                  className={classes.formControl}
+                >
+                  <Typography variant="body1">
+                    Sort Post By &nbsp;
+                  </Typography>
+                  <Select
+                    value={data.type}
+                    onChange={this.handleChange}
+                    style={{ width: 150, height: 35 }}
+                    input={
+                      <OutlinedInput
+                        labelWidth={0}
+                        name="dataType"
+                        id="outlined-age-simple"
+                      />
+                    }
+                  >
+                    <MenuItem value="hot">Hot Post</MenuItem>
+                    <MenuItem value="recent">Most Recent</MenuItem>
+                  </Select>
+                </FormControl>
                 <div className={classes.center}>
                   <Post topicValue={data.topics.topic} source="topics" />
                 </div>
               </Grid>
 
-
               {/* coin details */}
               <Hidden mdDown>
-                <Grid item lg={3} xl={3} style={{ marginLeft: -25 }} >
-                  <div 
-                    style={{ position: 'absolute' }} 
-                  >
-                    <div 
-                    // style={{ position: 'fixed', maxWidth: 300 }} 
-                    style={stopScroll ? { position: 'fixed', top: 90, maxWidth: 300} : { position: 'fixed', maxWidth: 300 }} 
+                <Grid item lg={3} xl={3} style={{ marginLeft: -25 }}>
+                  <div style={{ position: "absolute" }}>
+                    <div
+                      // style={{ position: 'fixed', maxWidth: 300 }}
+                      style={
+                        stopScroll
+                          ? { position: "fixed", top: 90, maxWidth: 300 }
+                          : { position: "fixed", maxWidth: 300 }
+                      }
                     >
                       <Tipcoin />
                       <LeaderBoard />
@@ -174,10 +246,10 @@ class Homepage extends Component {
           </Grid>
         </Drawer>
         <Dialog open={open} handleClose={this.handleDialog}>
-					<Stage />
-				</Dialog>
+          <Stage />
+        </Dialog>
       </div>
-    )
+    );
   }
 }
 
@@ -191,7 +263,15 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, )(
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    getTopics: getTopics,
+    getUser: getUser,
+    setType: setType
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(
   compose(withStyles(styles), withWidth())
   (Homepage)
-  );
+);

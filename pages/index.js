@@ -27,7 +27,7 @@ class Index extends React.Component {
     // console.log('req', req);
     
     // const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
-    let topics = await axios.get(config.api + '/topic?pageNumber=1')
+    let topics = await axios.get(config.api + '/topic?pageNumber=1&dataType=hot')
     let dataTopics = JSON.stringify(topics.data.content);
 
     return {

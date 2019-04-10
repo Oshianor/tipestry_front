@@ -12,13 +12,18 @@ const initialstate = {
   history: [],
   trends: [],
   leaderboard: [],
-  popular: []
+  popular: [],
+  type: "hot"
 }
 export default (state = initialstate, action) => {
   switch (action.type) {
     case "X_AUTH_TOKEN":
       return Object.assign({}, state, {
         token: action.payload
+      });
+    case "SORT_TYPE":
+      return Object.assign({}, state, {
+        type: action.payload
       });
     case "USER_DATA":
       return Object.assign({}, state, {
@@ -73,6 +78,6 @@ export default (state = initialstate, action) => {
         popular: action.payload
       });
     default:
-      return state
+      return state;
   }
 }

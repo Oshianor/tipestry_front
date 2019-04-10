@@ -81,7 +81,11 @@ class PrivacyPolicy extends React.Component {
 						</ExpansionPanelSummary>
 						<ExpansionPanelDetails>
 							<Typography>
-								The following Terms of Service Agreement (the "TOS") is a legally binding agreement that shall govern the relationship with our users and others which may interact or interface with Tipestry Inc., also known as Tipestry, located at 940 Stewart Drive #203, Sunnyvale, California 94085 and our subsidiaries and affiliates, in association with the use of the Tipestry website, which includes <a href="http://www.tipestry.com">www.tipestry.com</a>, (the "Site") and its Services, which shall be defined below.
+								The following Terms of Service Agreement (the "TOS") is a legally binding agreement that shall govern the relationship with our users and others 
+								which may interact or interface with Tipestry Inc., also known as Tipestry, 
+								located at 35 - 37 LUDGATE HILL, LONDON, EC4M 7 JN, UNITED KINGDOM and our subsidiaries and affiliates,
+								in association with the use of the Tipestry website, which includes 
+								<a href="http://www.tipestry.com">www.tipestry.com</a>, (the "Site") and its Services, which shall be defined below.
 							</Typography>
 						</ExpansionPanelDetails>
 					</ExpansionPanel>

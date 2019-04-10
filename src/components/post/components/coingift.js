@@ -60,6 +60,7 @@ class CoinGift extends React.Component {
 			topicId,
 			getTopics,
 			getUser,
+			data,
 			showAlert
 		} = this.props;
 		let token = localStorage.getItem('token');
@@ -74,7 +75,8 @@ class CoinGift extends React.Component {
         	amount,
         	coinType: type,
         	userId: topicUserId,
-        	topicId
+					topicId,
+					dataType: data.type
         }),
         headers: {
           'content-type': 'application/json',
