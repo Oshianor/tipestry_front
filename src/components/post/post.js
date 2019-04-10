@@ -231,7 +231,7 @@ class Post extends React.Component {
                           :
                             "//image.thum.io/get/auth/3228-www.tipestry.com/" + topic.sites[0].url
                         :
-                          "https://tipestry.com/public/profile_images/1543028112_tokensale-logo.png"
+                          "//image.thum.io/get/auth/3228-www.tipestry.com/" + "https://tipestry.com"
                       }  
                     />
                   </a>
