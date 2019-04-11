@@ -6,12 +6,12 @@ export const getToken = (token) => {
   }
 }
 
-// export const setType = (token) => {
-//   return {
-//     type: "SORT_TYPE",
-//     payload: token
-//   }
-// }
+export const setType = (token) => {
+  return {
+    type: "SORT_TYPE",
+    payload: token
+  }
+}
 
 // get topic for a particaular site
 export const getSiteTopicList = (arg) => {

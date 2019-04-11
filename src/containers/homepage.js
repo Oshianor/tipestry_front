@@ -28,8 +28,10 @@ import Select from "@material-ui/core/Select";
 import { Typography } from '@material-ui/core';
 import { config } from "../../config";
 import { bindActionCreators } from "redux";
-import { getTopics, getUser } from "../actions/data";
+import { getTopics, getUser, setType } from "../actions/data";
 import axios from 'axios';
+
+
 
 
 const styles = theme => ({
@@ -80,7 +82,7 @@ class Homepage extends Component {
     stopScroll: false,
     token: null,
     pageNumber: 2,
-    // loading: false,
+    loading: false,
     open: false,
   };
 
@@ -89,30 +91,32 @@ class Homepage extends Component {
     this.setState({ drawer: true });
   };
 
-  // handleChange = async event => {
-  //   const { dataType } = this.state;
-  //   const { getTopics, data, setType } = this.props;
-  //   this.setState({
-  //     loading: true
-  //   })
-  //   let topics = await axios.get(config.api + '/topic?pageNumber=1&dataType=' + event.target.value);
-  //   console.log("yeyeyeyey", topics.data.content);
-  //   getTopics({
-  //     total: 0,
-  //     topic: []
-  //   });    
-  //   getTopics(topics.data.content);
-  //   setType(event.target.value);
-  //   this.setState({
-  //     loading: false
-  //   });
-  // };
+  handleChange = async event => {
+    const { dataType } = this.state;
+    const { getTopics, data, setType } = this.props;
+    this.setState({
+      loading: true
+    })
+    let topics = await axios.get(config.api + '/topic?pageNumber=1&dataType=' + event.target.value);
+    console.log("yeyeyeyey", topics.data.content);
+    getTopics({
+      total: 0,
+      topic: []
+    });    
+    getTopics(topics.data.content);
+    setType(event.target.value);
+    this.setState({
+      loading: false
+    });
+  };
+
 
   // handle close of drawer
   handleDrawerClose = () => {
     this.setState({ drawer: false });
   };
 
+  
   componentDidMount() {
     this.setState({
       token: localStorage.getItem("token")
@@ -148,8 +152,7 @@ class Homepage extends Component {
 
   render() {
     const { data, classes } = this.props;
-    // const { stopScroll, drawer, token, open, loading } = this.state;
-    const { stopScroll, drawer, token, open } = this.state;
+    const { stopScroll, drawer, token, open, loading } = this.state;
     return (
       <div>
         <Header
@@ -195,7 +198,7 @@ class Homepage extends Component {
 
               {/* post  */}
               <Grid item lg={6} xl={6} md={12} sm={12} xs={12}>
-                {/* <FormControl
+                <FormControl
                   variant="outlined"
                   disabled={loading}
                   className={classes.formControl}
@@ -218,7 +221,7 @@ class Homepage extends Component {
                     <MenuItem value="hot">Hot Post</MenuItem>
                     <MenuItem value="recent">Most Recent</MenuItem>
                   </Select>
-                </FormControl> */}
+                </FormControl>
                 <div className={classes.center}>
                   <Post topicValue={data.topics.topic} source="topics" />
                 </div>
@@ -267,7 +270,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     getTopics: getTopics,
-    getUser: getUser
+    getUser: getUser,
+    setType: setType
   }, dispatch)
 }
 
