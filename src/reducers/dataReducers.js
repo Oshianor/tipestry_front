@@ -13,7 +13,8 @@ const initialstate = {
   trends: [],
   leaderboard: [],
   popular: [],
-  type: "hot"
+  type: "hot",
+  pageNumber: 2
 }
 
 export default (state = initialstate, action) => {
@@ -21,6 +22,10 @@ export default (state = initialstate, action) => {
     case "X_AUTH_TOKEN":
       return Object.assign({}, state, {
         token: action.payload
+      });
+    case "INCREASE_PAGE_NUMBER":
+      return Object.assign({}, state, {
+        pageNumber: action.payload
       });
     case "SORT_TYPE":
       return Object.assign({}, state, {

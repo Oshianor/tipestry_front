@@ -6,12 +6,25 @@ export const getToken = (token) => {
   }
 }
 
+
+// topic page number
+export const setPageNumber = (num) => {
+  return {
+    type: "INCREASE_PAGE_NUMBER",
+    payload: num
+  };
+}
+
+
+// toggle sort by 
 export const setType = (token) => {
   return {
     type: "SORT_TYPE",
     payload: token
   }
 }
+
+
 
 // get topic for a particaular site
 export const getSiteTopicList = (arg) => {
@@ -20,7 +33,6 @@ export const getSiteTopicList = (arg) => {
     payload: arg
   }
 }
-
 
 
 // get the user details

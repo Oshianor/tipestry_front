@@ -7,7 +7,7 @@ import Preloader from '../src/components/preloader/preloader';
 import { config } from '../config';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getTopics, getUser, getToken } from "../src/actions/data";
+import { getTopics, getUser, getToken, setPageNumber } from "../src/actions/data";
 // import Bottom from '../src/components/reuseable/bottom';
 import BottomScrollListerer from 'react-bottom-scroll-listener';
 // import CircularProgress from '@material-ui/core/CircularProgress';
@@ -19,7 +19,6 @@ import { Lang } from '../lang';
 class Index extends React.Component {
   state = {
     loading: true,
-    pageNumber: 2,
     more: false
   }
   
@@ -69,32 +68,15 @@ class Index extends React.Component {
 
 
   handleFetchMoreTopics = async () => {
-    const { pageNumber } = this.state;
-    const { data, getTopics } = this.props;
-    // this.setState({
-    //   more: true
-    // })
-    let topicsCont = await axios.get(config.api + '/topic?pageNumber=' + pageNumber);
+    // const { pageNumber } = this.state;
+    const { data, getTopics, setPageNumber } = this.props;
+    let topicsCont = await axios.get(config.api + '/topic?pageNumber=' + data.pageNumber);
     if (!topicsCont.data.error) {
       topicsCont.data.content.topic.forEach(obj => {
         data.topics.topic.push(obj);
       })
-      // console.log("topicsCont", topicsCont);
-      
-      // console.log("BEFORE", data.topics.topic);
-      // data.topics.topic.concat(topicsCont.data.content.topic);
-      // console.log(data.topics.topic);
-      // console.log("AFTER", data.topics.topic);
-      getTopics(
-        {
-          topic: data.topics.topic,
-          total: topicsCont.data.content.total
-        }
-      );
-      this.setState({
-        // more: false,
-        pageNumber: pageNumber + 1
-      })
+      getTopics({ topic: data.topics.topic, total: topicsCont.data.content.total });
+      setPageNumber(Number(data.pageNumber )+ 1);
     }
   }
 
@@ -134,11 +116,15 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    getTopics: getTopics,
-    getUser: getUser,
-    getToken: getToken
-  }, dispatch)
+  return bindActionCreators(
+    {
+      getTopics: getTopics,
+      getUser: getUser,
+      getToken: getToken,
+      setPageNumber: setPageNumber
+    },
+    dispatch
+  );
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Index);

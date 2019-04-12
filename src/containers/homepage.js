@@ -17,6 +17,7 @@ import { connect } from 'react-redux';
 import SiteInfo from '../components/siteinfo/siteinfo';
 import Dialog from '../components/reuseable/dialog';
 import Stage from "../components/stage/stage";
+import Button from "@material-ui/core/Button";
 import Input from "@material-ui/core/Input";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import FilledInput from "@material-ui/core/FilledInput";
@@ -28,7 +29,7 @@ import Select from "@material-ui/core/Select";
 import { Typography } from '@material-ui/core';
 import { config } from "../../config";
 import { bindActionCreators } from "redux";
-import { getTopics, getUser, setType } from "../actions/data";
+import { getTopics, getUser, setType, setPageNumber } from "../actions/data";
 import axios from 'axios';
 
 
@@ -77,11 +78,11 @@ const styles = theme => ({
 
 
 class Homepage extends Component {
+
   state = {
     drawer: false,
     stopScroll: false,
     token: null,
-    pageNumber: 2,
     loading: false,
     open: false,
   };
@@ -91,20 +92,22 @@ class Homepage extends Component {
     this.setState({ drawer: true });
   };
 
-  handleChange = async event => {
+
+  async handleChange(type) {
     const { dataType } = this.state;
-    const { getTopics, data, setType } = this.props;
+    const { getTopics, data, setType, setPageNumber } = this.props;
     this.setState({
       loading: true
     })
-    let topics = await axios.get(config.api + '/topic?pageNumber=1&dataType=' + event.target.value);
-    console.log("yeyeyeyey", topics.data.content);
+    let topics = await axios.get(config.api + '/topic?pageNumber=1&dataType=' + type);
+    console.log("type", type);
     getTopics({
       total: 0,
       topic: []
     });    
     getTopics(topics.data.content);
-    setType(event.target.value);
+    setType(type);
+    setPageNumber(2);
     this.setState({
       loading: false
     });
@@ -198,7 +201,7 @@ class Homepage extends Component {
 
               {/* post  */}
               <Grid item lg={6} xl={6} md={12} sm={12} xs={12}>
-                <FormControl
+                {/* <FormControl
                   variant="outlined"
                   disabled={loading}
                   className={classes.formControl}
@@ -221,7 +224,35 @@ class Homepage extends Component {
                     <MenuItem value="hot">Hot Post</MenuItem>
                     <MenuItem value="recent">Most Recent</MenuItem>
                   </Select>
-                </FormControl>
+                </FormControl> */}
+                <div
+                  // variant="outlined"
+                  disabled={loading}
+                  className={classes.formControl}
+                >
+                  <Typography variant="body1">
+                    Sort Post By &nbsp;
+                  </Typography>
+                  <Button 
+                    style={{ borderRadius: 0 }}
+                    disabled={loading}
+                    onClick={this.handleChange.bind(this, 'hot')}
+                    variant={data.type === "hot" ? "contained" : "text"} 
+                    color="primary"
+                  >
+                    Hot
+                  </Button>
+                  <Button 
+                    style={{ borderRadius: 0 }}
+                    disabled={loading}
+                    onClick={this.handleChange.bind(this, 'recent')}
+                    variant={data.type === "recent" ? "contained" : "text"} 
+                    color="primary"
+                  >
+                    Recent
+                  </Button>
+                </div>
+
                 <div className={classes.center}>
                   <Post topicValue={data.topics.topic} source="topics" />
                 </div>
@@ -268,11 +299,15 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    getTopics: getTopics,
-    getUser: getUser,
-    setType: setType
-  }, dispatch)
+  return bindActionCreators(
+    {
+      getTopics: getTopics,
+      getUser: getUser,
+      setType: setType,
+      setPageNumber: setPageNumber
+    },
+    dispatch
+  );
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(
