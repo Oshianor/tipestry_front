@@ -57,7 +57,7 @@ class Claim extends Component {
                 />
                 <Typography variant="h6">
                   Site ownership was verified by: @
-                  {site.claim.verified.username}
+                  {site.claim.username}
                 </Typography>
               </div>
             )}
