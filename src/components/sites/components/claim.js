@@ -56,10 +56,8 @@ class Claim extends Component {
                   style={{ width: 25, height: 25 }}
                 />
                 <Typography variant="h6">
-                  This site as been verified by @
-                  {typeof site.claim.verified.username !== "undefined"
-                    ? site.verified.username
-                    : "system"}
+                  Site ownership was verified by: @
+                  {site.claim.verified.username}
                 </Typography>
               </div>
             )}
