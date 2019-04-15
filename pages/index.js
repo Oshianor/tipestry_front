@@ -76,7 +76,8 @@ class Index extends React.Component {
         data.topics.topic.push(obj);
       })
       getTopics({ topic: data.topics.topic, total: topicsCont.data.content.total });
-      setPageNumber(Number(data.pageNumber )+ 1);
+      let num = Number(data.pageNumber) + 1;
+      setPageNumber(num);
     }
   }
 
