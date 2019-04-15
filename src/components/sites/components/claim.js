@@ -17,7 +17,7 @@ const styles = theme => ({
 	extendedIcon: {
 		marginRight: theme.spacing.unit,
 	},
-	text: { textAlign: "center", margin: "10px 8%", fontSize: 18 },
+	text: { textAlign: "center", margin: "10px 8%", fontSize: 15 },
 });
 
 
@@ -55,7 +55,7 @@ class Claim extends Component {
                   src="/static/icons/verified-badge.svg"
                   style={{ width: 25, height: 25 }}
                 />
-                <Typography variant="h6">
+                <Typography variant="h6" style={{ fontSize: 14 }}>
                   Site ownership was verified by: @
                   {site.claim.username}
                 </Typography>
