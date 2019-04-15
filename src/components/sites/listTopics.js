@@ -16,36 +16,49 @@ import Siteactions from './siteactions';
 import Thumbnails from '../reuseable/thumbnails';
 import Paper from '@material-ui/core/Paper';
 import Sitetopiccoin from './components/sitetopiccoin';
+import Claim from './components/claim';
 
 
 
 const styles = theme => ({
   root: {
-    width: '100%',
-		// maxWidth: 360,
-		margin: "0px 10% 0px 0px",
-		padding: 0,
+    width: "100%",
+    // maxWidth: 360,
+    margin: "0px 10% 0px 0px",
+    padding: 0
     // backgroundColor: theme.palette.background.paper,
   },
   inline: {
-    display: 'inline',
-	},
-	container: {
-    display: 'flex',
-		flexWrap: 'wrap',
-		margin: "5px 10%"
-	},
-	buttonProgress: {
-		color: green[500],
-		position: 'absolute',
-		top: '50%',
-		left: '50%',
-		marginTop: -12,
-		marginLeft: -12,
-	},
-	cnt: {
-		fontSize: 11
-	}
+    display: "inline"
+  },
+  container: {
+    display: "flex",
+    flexWrap: "wrap",
+    margin: "5px 10%"
+  },
+  buttonProgress: {
+    color: green[500],
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    marginTop: -12,
+    marginLeft: -12
+  },
+  cnt: {
+    fontSize: 11
+  },
+  pap: {
+    margin: "10px 8%",
+    boxShadow: "0px 0px 1px 0px",
+    color: "#d9dadc",
+    borderRadius: 0
+  },
+  topic: {
+    maxHeight: 400,
+    width: "100%",
+    overflow: "auto"
+  },
+  head: { padding: "5px 12px", fontWeight: "400" }
 });
 
 class TopicList extends React.Component {
@@ -61,6 +74,14 @@ class TopicList extends React.Component {
 		msg: ''
 	}
 
+	componentDidMount() {
+		let token = localStorage.getItem("token");
+		this.setState({
+			token
+		})		
+	}
+	
+
 
 	nutralizeTitle = (title) => {
     return title.toLocaleLowerCase().split(" ").join("-").replace(/[.*+?^$/{}()!%#>@=:;'|[\]\\]/g, '');
@@ -68,7 +89,8 @@ class TopicList extends React.Component {
 
 
 	displayEmptyTopics = () => {
-		let token = localStorage.getItem('token');
+		// let token = localStorage.getItem('token');
+		const { token } = this.state;
 		const { url, site, gift } = this.props;
 		return (
 			<div>
@@ -163,57 +185,62 @@ class TopicList extends React.Component {
 	}
 
 	render() {
-		const { site, topics, url, gift } = this.props;
-		const { open, msg } = this.state;
-		console.log(site, 'wwwwww')
+		const { site, topics, url, gift, classes } = this.props;
+		const { token } = this.state;
+		// let token = localStorage
+		// console.log(site, 'wwwwww')
 		return (
-			<div style={{ marginTop: 80 }} >
-				{
-					typeof site.url !== "undefined" &&
-						<Typography style={{ textAlign: 'center', margin: "10px 8%", }}>
-							<Link href={site.url}>
-								<a>
-									{site.url}
-								</a>
-							</Link>
-						</Typography>
-				}
-				{
-					typeof topics === "undefined" ?
-						this.displayEmptyTopics()
-					:
-						<React.Fragment>
-							{/* <Siteactions url={url} site={site} gift={gift} /> */}
-							{
-								// the reason for this code is to mount and unmount it when the data changes
-								typeof site.id !== "undefined" &&
-									<Siteactions url={url} site={site} gift={gift} />
-							}
+      <div style={{ marginTop: 80 }}>
 
+				<Claim token={token} site={site} />
+        {/* {token && typeof site._id !== "undefined" && (
+          <Typography variant="h6" style={{ textAlign: "center", margin: "10px 8%", fontSize: 18 }}>
+            Do you own this site?
+            <Link href={"/site-verification/" + site._id + "/" + token}>
+              <a> Claim it </a>
+            </Link>
+            today and earn tips
+          </Typography>
+        )} */}
 
-							{/* topic fot the site */}
-							<Paper style={{ margin: "10px 8%", boxShadow: '0px 0px 1px 0px', color: '#d9dadc', borderRadius: 0 }} >
-								<Typography variant="h6" style={{ padding: "5px 12px", fontWeight: '400' }} >
-									{ /* Topics // 话题*/ }
-									{Lang.s}
-								</Typography>
-								<div>
-									<div style={{ backgroundColor: 'white', width: "100%" }}>
-										<div style={{ maxHeight: 400, width: "100%", overflow: "auto" }}>
-										{this.displayTopics()}
-										</div>
-									</div>
-								</div>
-							</Paper>
+        {typeof site.url !== "undefined" && (
+          <Typography style={{ textAlign: "center", margin: "10px 8%" }}>
+            <Link href={site.url}>
+              <a>{site.url}</a>
+            </Link>
+          </Typography>
+        )}
 
+        {typeof topics === "undefined" ? (
+          this.displayEmptyTopics()
+        ) : (
+          <React.Fragment>
+            {// the reason for this code is to mount and unmount it when the data changes
+            typeof site.id !== "undefined" && (
+              <Siteactions url={url} site={site} gift={gift} />
+            )}
 
+            {/* topic fot the site */}
+            <Paper className={classes.pap}>
+              <Typography variant="h6" className={classes.head}>
+                {/* Topics // 话题*/}
+                {Lang.s}
+              </Typography>
+              <div>
+                <div style={{ backgroundColor: "white", width: "100%" }}>
+                  <div className={classes.topic}>
+                    {this.displayTopics()}
+                  </div>
+                </div>
+              </div>
+            </Paper>
 
-							{/* add url form */}
-							<Addsite url={url} />
-						</React.Fragment>
-				}
-			</div>
-		);
+            {/* add url form */}
+            <Addsite url={url} />
+          </React.Fragment>
+        )}
+      </div>
+    );
 	}
 }
 

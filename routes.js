@@ -5,7 +5,8 @@ routes.add('index', '/')
 routes.add('login', '/login')
 routes.add('register', '/register')
 routes.add('forgotPassword', '/forgotpassword')
-routes.add('faq', '/faq')
+routes.add("faq", "/faq");
+routes.add("site-verification", "/site-verification/:siteObjId/:token");
 routes.add('topic', '/topics/:topicObjId/:topicName')
 routes.add('profile', '/profile/:userObjId/:username')
 routes.add('tipreport', '/tip/report/:userObjId')

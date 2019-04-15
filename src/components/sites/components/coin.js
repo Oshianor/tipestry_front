@@ -260,7 +260,7 @@ class Coin extends React.Component {
           // ! check if the site is verified and if the owner of the site 
           // * is not the not logged in user before you show
           typeof site.claim !== "undefined" &&
-            site.claim.verified && site.claim.userId !== data.user.id ?
+            site.claim.verified === "success" && site.claim.userId !== data.user.id ?
               <IconButton
                 buttonRef={node => {
                   this.anchorEl = node;
@@ -272,8 +272,8 @@ class Coin extends React.Component {
                 <img src="/static/icons/moneybag.svg" alt="comments" width='25' height="25" style={{ color: '#1F7BD8' }} />
               </IconButton>
             :
-                site.claim.verified &&
-                  <Button color="secondary" disabled variant="contained" >Site Owner</Button>
+              site.claim.verified === "done" &&
+                <Button color="secondary" disabled variant="contained" >Site Owner</Button>
         }
         <Popper
           id={id}

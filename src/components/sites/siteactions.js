@@ -47,7 +47,7 @@ class Siteactions extends Component {
 					<Follow />
 					{/* <SharePopover link={url} title={} placement='bottom'  handleOpen={this.handleOpen}  /> */}
 					<Coin site={site} />
-					<Claim site={site} />
+					{/* <Claim site={site} /> */}
 				{/* </div> */}
 				<br />
 				<SiteCoins gift={gift} />

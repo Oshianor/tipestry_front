@@ -58,13 +58,16 @@ const styles = theme => ({
   },
   cssOutlinedInput: {
     fontSize: 12
+  },
+  ul: {
+    padding: 20
   }
 });
 
 function getSteps() {
   return ['Generate Token', 'Verify'];
 }
-
+     
 class claimDiaglog extends React.Component {
   state = {
     activeStep: 0,
@@ -268,12 +271,11 @@ class claimDiaglog extends React.Component {
         <Typography variant="h6" style={{ textAlign: "center" }}>
           Claim This Website
         </Typography>
-        {/* <Typography variant='h6' style={{ textAlign: 'center' }} >
-					{msg}
-        </Typography> */}
         <div>
-          <Typography variant="h6">Steps to verify a site</Typography>
-          <ul>
+          <Typography variant="h6">
+            Add a new TXT record for <strong>{site.url}</strong>
+          </Typography>
+          <ul className={classes.ul} >
             <li>Click on the button below to generate a one time token</li>
             <li>
               To verify ownership of your site, you'll need to add a new DNS
@@ -283,7 +285,9 @@ class claimDiaglog extends React.Component {
               </a>{" "}
               &nbsp; using the account for your DNS host.
             </li>
-            <li>Please add the record on your root domain, not a subdomain.</li>
+            <li>
+              Please add the record on your root domain, not a subdomain.
+            </li>
             <li>
               Copy and paste the info below into the zone file for &nbsp;
               <a target="_blank" href={site.url}>
@@ -317,7 +321,9 @@ class claimDiaglog extends React.Component {
                       onClick={this.handleNext}
                       className={classes.button}
                     >
-                      {activeStep === steps.length - 1 ? "I'm Done" : "Next"}
+                      {activeStep === steps.length - 1
+                        ? "I'm Done"
+                        : "Next"}
                     </Button>
                   </div>
                 </div>
@@ -325,7 +331,11 @@ class claimDiaglog extends React.Component {
             </Step>
           ))}
         </Stepper>
-        <Alert open={open} message={msg} handleClose={this.handleAlertClose} />
+        <Alert
+          open={open}
+          message={msg}
+          handleClose={this.handleAlertClose}
+        />
       </div>
     );
   }
