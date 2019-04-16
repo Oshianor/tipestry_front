@@ -74,7 +74,7 @@ class Addsite extends Component {
 
 	handleChange = name => event => {
 		if(name === 'title') {
-			console.log(event.target.value.length <= 140);
+			// console.log(event.target.value.length <= 140);
 			
 			if(event.target.value.length <= 140) {
 				this.setState({

@@ -112,7 +112,7 @@ class claimDiaglog extends React.Component {
     const { site, getSiteTopicList, handleClose } = this.props;
     const { token, option } = this.state;
 
-    console.log(4444);
+    // console.log(4444);
 
     let initiateUrl = new URL(site.url);
     let url = this.removeWWW(initiateUrl.host);
@@ -132,7 +132,7 @@ class claimDiaglog extends React.Component {
         url: config.api + "/sites/verify/site"
       };
       let raw = await axios(options);
-      console.log(raw);
+      // console.log(raw);
       if (!raw.data.error) {
         getSiteTopicList(raw.data.content);
         this.setState({
@@ -264,7 +264,7 @@ class claimDiaglog extends React.Component {
     const { classes, site } = this.props;
     const steps = getSteps();
     const { activeStep, option, token, open, msg } = this.state;
-    console.log(this.state);
+    // console.log(this.state);
 
     return (
       <div className={classes.root}>

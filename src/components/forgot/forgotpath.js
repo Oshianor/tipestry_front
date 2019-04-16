@@ -153,7 +153,7 @@ class ForgotPath extends Component {
 				}, 6000);        
       }
     } catch (error) {
-      console.log("ERROR : ", error);
+      // console.log("ERROR : ", error);
       
     }
     this.setState({

@@ -112,7 +112,7 @@ class Changepassword extends React.Component {
 				}
 				
 			} catch (error) {
-				console.log("ERROR : ", error);
+				// console.log("ERROR : ", error);
 				
 			}
 		}

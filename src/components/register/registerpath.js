@@ -153,7 +153,7 @@ class RegisterPath extends Component {
       }
       
     } catch (error) {
-      console.log("ERROR : ", error);
+      // console.log("ERROR : ", error);
       
     }
     this.setState({

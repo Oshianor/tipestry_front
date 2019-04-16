@@ -83,11 +83,11 @@ class share extends Component {
 
 		try {
 			let url = await Axios(options);
-			console.log(url);
+			// console.log(url);
 			
 			// window.open(url.data, 'sharer', 'toolbar=0,status=0,width=548,height=325');
 		} catch (error) {
-			console.log("ERROR : ", error);
+			// console.log("ERROR : ", error);
 		}
 	}
 

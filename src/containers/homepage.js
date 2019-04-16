@@ -100,7 +100,7 @@ class Homepage extends Component {
       loading: true
     })
     let topics = await axios.get(config.api + '/topic?pageNumber=1&dataType=' + type);
-    console.log("type", type);
+    // console.log("type", type);
     getTopics({
       total: 0,
       topic: []

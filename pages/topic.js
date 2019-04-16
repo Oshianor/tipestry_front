@@ -26,7 +26,7 @@ class Topic extends Component {
 
   async componentDidMount() {
     const { dataTopic, getSiteTopic, getUser } = this.props;
-    console.log(JSON.parse(dataTopic));
+    // console.log(JSON.parse(dataTopic));
     let token = localStorage.getItem('token');
 
     if (token) {

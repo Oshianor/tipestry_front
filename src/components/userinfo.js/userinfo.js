@@ -66,7 +66,7 @@ class Userinfo extends Component {
 
 	
 	render() {
-		console.log('opppppppp', this.state);
+		// console.log('opppppppp', this.state);
 		const { token } = this.state;
 		const { classes, data, handleOpen } = this.props;
 		

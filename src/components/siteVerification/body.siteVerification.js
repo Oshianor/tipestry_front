@@ -114,7 +114,7 @@ class BodySiteVerification extends Component {
         url: config.api + "/sites/verify/site"
       };
       let raw = await axios(options);
-      console.log(raw);
+      // console.log(raw);
       if (!raw.data.error) {
         this.setState({
           open: true,

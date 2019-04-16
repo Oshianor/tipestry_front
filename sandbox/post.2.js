@@ -89,7 +89,7 @@ class Post extends React.Component {
 
   checkIfUrl = (url) => {
     let yes = isURL(url, { protocols: ['http','https'], require_protocol: false} );
-    console.log('yes', yes, url);
+    // console.log('yes', yes, url);
     
     return yes ? yes : null
   }

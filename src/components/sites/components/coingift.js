@@ -78,7 +78,7 @@ class CoinGift extends React.Component {
       }
 
 			let completed = await axios(options);
-			console.log('completed', completed);
+			// console.log('completed', completed);
 			
 			if (!completed.data.error) {
 				getSiteTopicList({ site: {}, gift: [], topics: [] });
@@ -94,7 +94,7 @@ class CoinGift extends React.Component {
 					url: config.api + '/users/me'
 				}
 				let user = await axios(options);
-				console.log('user', user);
+				// console.log('user', user);
 				getUser(user.data[0]);
 				this.setState({
 					error: '',

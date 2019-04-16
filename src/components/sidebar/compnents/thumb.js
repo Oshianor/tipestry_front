@@ -88,7 +88,7 @@ class Thumb extends React.Component {
       }
 
       let vote = await axios(options);
-      console.log("CHANGEING VOTES", vote);
+      // console.log("CHANGEING VOTES", vote);
       if (vote.data.error === false) {
         this.setState({
           res: vote.data.content.reply,

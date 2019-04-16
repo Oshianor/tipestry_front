@@ -44,7 +44,7 @@ class ReplyCompose extends React.Component {
 
 		let token = localStorage.getItem('token');
 		if (token) {
-      console.log('uuu');
+      // console.log('uuu');
       
       const options = {
         method: 'POST',
@@ -61,7 +61,7 @@ class ReplyCompose extends React.Component {
       }
 
       let comment = await axios(options);
-      console.log("CHANGEING VOTES", comment);
+      // console.log("CHANGEING VOTES", comment);
       if (comment.data.error === false) {
         this.setState({
           reply: ""

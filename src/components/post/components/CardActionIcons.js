@@ -89,7 +89,7 @@ class CardActionIcons extends React.Component {
         url: config.api + "/users/favourite",
       };
       let user = await Axios(options);
-      console.log('favorite', user);
+      // console.log('favorite', user);
       data.user.favourite = user.data.content.favourite;
       getUser(data.user);
     } else {

@@ -78,7 +78,7 @@ class Compose extends React.Component {
     try {
       let comment = await Axios(options);
       if (!comment.data.error) {
-        console.log("commentReply", comment);
+        // console.log("commentReply", comment);
         this.setState({
           comment: ''
         })
@@ -87,7 +87,7 @@ class Compose extends React.Component {
 
       }
     } catch (error) {
-      console.log("ERROR : ", error);
+      // console.log("ERROR : ", error);
     }
   }
 

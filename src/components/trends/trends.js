@@ -114,7 +114,7 @@ class Trends extends Component {
 				getTrends(res.data.content)
 			}
 		}).catch(error => {
-			console.log("NOT", error);
+			// console.log("NOT", error);
 
 		})
   }

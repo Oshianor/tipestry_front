@@ -179,7 +179,7 @@ class Profile extends React.Component {
       try {
         this.setState({ loading: true });
         let profile = await axios.get(config.api + '/users/profile/' + router.query.userObjId + "?userPageTopic=" + userTopicPageNum);
-        console.log('profile =====>>>>', profile);
+        // console.log('profile =====>>>>', profile);
         
         if (profile.data.userTopics) {
           this.setState({
@@ -194,7 +194,7 @@ class Profile extends React.Component {
         }
 
       } catch (err) {
-        console.log(err);
+        // console.log(err);
 
       }
     }
@@ -208,7 +208,7 @@ class Profile extends React.Component {
       try {
         this.setState({ loading: true });
         let favor = await axios.get(config.api + '/users/profile/' + router.query.userObjId + "?userFavouritePageTopic=" + favouritePageNum)
-        console.log(favor);
+        // console.log(favor);
         
         if (favor.data.favourite) {
           this.setState({
@@ -223,7 +223,7 @@ class Profile extends React.Component {
         }
 
       } catch (err) {
-        console.log(err);
+        // console.log(err);
 
       }
     }
@@ -368,7 +368,7 @@ class Profile extends React.Component {
   render() {
     const { stopScroll, drawer, loading, value } = this.state;
     const { classes, userPostTotal, data } = this.props;
-    console.log('userPostTotal', userPostTotal, 'data.topics.length', data.topics.length);
+    // console.log('userPostTotal', userPostTotal, 'data.topics.length', data.topics.length);
     
     return (
       <div>

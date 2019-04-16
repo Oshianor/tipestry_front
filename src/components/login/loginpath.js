@@ -146,7 +146,7 @@ class LoginPath extends Component {
 
     try {
       let login = await Axios(options);
-      console.log("LOGIN", login);
+      // console.log("LOGIN", login);
       
       if (login.data.error) {
         this.setState({
@@ -167,7 +167,7 @@ class LoginPath extends Component {
         
       }
     } catch (error) {
-      console.log("ERROR : ", error);
+      // console.log("ERROR : ", error);
       
     }
     this.setState({

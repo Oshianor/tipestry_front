@@ -36,7 +36,7 @@ class Box extends React.Component{
       }
 
       let follow = await Axios(options);
-      console.log("ADDING FOLLOWING", follow);
+      // console.log("ADDING FOLLOWING", follow);
       if (follow.data.error === false) {
 				this.setState({ loading: false })
 				getFollowers(follow.data.content.followersUserData);
@@ -48,7 +48,7 @@ class Box extends React.Component{
 
 	render() {
 		const { type, name, img, profile, user, token, data, id, loading } = this.props;
-		console.log("idddd", this.props);
+		// console.log("idddd", this.props);
 		
 		return (
 			<Paper style={{ width: 250, height: 270, margin: 5 }}>

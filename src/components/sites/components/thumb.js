@@ -60,9 +60,9 @@ class Thumb extends React.Component {
       }
       
       let vote = await axios(options);
-        console.log(vote.data, "9999999");      
+        // console.log(vote.data, "9999999");      
       if (vote.data.error == false) {
-        console.log(vote.data, "9999999");
+        // console.log(vote.data, "9999999");
         this.setState({
           res: vote.data.content.siteVotes,
           count: vote.data.content.count
@@ -88,7 +88,7 @@ class Thumb extends React.Component {
       }
 
       let vote = await axios(options);
-      console.log("CHANGEING VOTES", vote);
+      // console.log("CHANGEING VOTES", vote);
       if (vote.data.error === false) {
         this.setState({
           res: vote.data.content.reply,

@@ -102,7 +102,7 @@ class CoinGift extends React.Component {
 					url: config.api + '/users/me'
 				}
 				let user = await axios(options);
-				console.log('user', user);
+				// console.log('user', user);
 				getUser(user.data[0]);
 				this.setState({
 					error: '',

@@ -76,7 +76,7 @@ class TopicCoin extends React.Component {
 			})
 			gift.map((gif) => {
 				if (gif.currency === 'doge') {
-					console.log("DOGE", gif.amount,"----", parseFloat(doge) + parseFloat(gif.amount));
+					// console.log("DOGE", gif.amount,"----", parseFloat(doge) + parseFloat(gif.amount));
 					doge = parseFloat(doge) + parseFloat(gif.amount)
 					this.setState({
 						doge: doge.toFixed(5)

@@ -142,7 +142,7 @@ class Notification extends React.Component {
           })
         }
       }).catch(error => {
-        console.log("NOT", error);
+        // console.log("NOT", error);
         
       })
     }

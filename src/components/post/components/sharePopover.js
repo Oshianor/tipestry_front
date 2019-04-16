@@ -131,7 +131,7 @@ class AnchorPlayground extends React.Component {
       }
 
       let vote = await axios(options);
-      console.log("Adding count for share", vote);
+      // console.log("Adding count for share", vote);
     }
   }
 

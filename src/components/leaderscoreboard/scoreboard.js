@@ -62,7 +62,7 @@ class LeaderBoard extends Component {
 				getLeaderBoard(res.data.content)
 			}
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
 			
 		}
 		

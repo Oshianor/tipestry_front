@@ -184,7 +184,7 @@ class Options extends React.Component {
           // modal for deleteion confirmation
           this.handleDeleteClose();
         } catch (error) {
-          console.log(error);
+          // console.log(error);
         }
       }
     }

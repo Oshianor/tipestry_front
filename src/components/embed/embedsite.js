@@ -17,7 +17,7 @@ import isURL from 'validator/lib/isURL';
     const { url, screenshot } = this.props;
     // console.log(this.getQuery('v', url));
     // check if it is a valid url
-    console.log(this.checkIfUrl(url));
+    // console.log(this.checkIfUrl(url));
     if (this.checkIfUrl(url)) {
       if (this.checkIfItYouTube(url) == "youtube.com" && this.getQuery('v', url) != null) {
         this.setState({

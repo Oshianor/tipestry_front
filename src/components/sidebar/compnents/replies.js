@@ -75,7 +75,7 @@ class Repiles extends React.Component {
 		if (totalReplies > 0) {
 			try {
 				let getReply = await axios.get(config.api + "/commentReply/reply/" + commentId + "/limit");
-				console.log('getReply.data.content[0].reply', getReply.data.content);
+				// console.log('getReply.data.content[0].reply', getReply.data.content);
 
 				if (!getReply.data.error) {
 					// handleReply(getReply.data.content.total, getReply.data.content.replies)
@@ -85,7 +85,7 @@ class Repiles extends React.Component {
 					})
 				}
 			} catch (error) {
-				console.log(error);
+				// console.log(error);
 			}
 		}
 	}
@@ -200,7 +200,7 @@ class Repiles extends React.Component {
 		if (replyTotal  > 0) {
 			try {
 				let getReply = await axios.get(config.api + "/commentReply/reply/" + commentId + "/all");
-				console.log('yes     getReply.data.content[0].reply', getReply.data.content);
+				// console.log('yes     getReply.data.content[0].reply', getReply.data.content);
 
 				if (!getReply.data.error) {
 					// handleReply(getReply.data.content.total, getReply.data.content.replies)
@@ -210,7 +210,7 @@ class Repiles extends React.Component {
 					})
 				}
 			} catch (error) {
-				console.log(error);
+				// console.log(error);
 			}
 		}
 	}
