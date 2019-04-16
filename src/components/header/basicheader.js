@@ -72,23 +72,37 @@ const styles = theme => ({
 
 class Header extends React.Component {
   render() {
-		const { classes } = this.props;
+		const { classes, admin } = this.props;
     return (
       <div className={classes.root}>
-        <AppBar position="fixed"
-					className={classes.appBar}
-				>
-          <Toolbar className={classes.rootGrow} >
-						<Link href="/" prefetch>
-							<a>
-								<Typography variant="h2" gutterBottom style={{ margin: '0px 3%' }} >
-									<img src="/static/login/newlogo.png" className={classes.logo} />
-								</Typography>
-							</a>
-						</Link>
-            
-            <div className={classes.grow} />
+        <AppBar position="fixed" className={classes.appBar}>
+          <Toolbar className={classes.rootGrow}>
+            <Link href="/" prefetch>
+              <a
+                style={{
+                  margin: "0px 3%",
+                  display: "flex",
+                  alignItems: "baseline",
+                  textDecoration: "none"
+                }}
+              >
+                <img
+                  src="/static/login/newlogo.png"
+                  className={classes.logo}
+                />
+                {admin && (
+                  <Typography
+                    variant="h6"
+                    gutterBottom
+                    style={{ color: "white" }}
+                  >
+                    admin
+                  </Typography>
+                )}
+              </a>
+            </Link>
 
+            <div className={classes.grow} />
           </Toolbar>
         </AppBar>
       </div>
@@ -96,8 +110,13 @@ class Header extends React.Component {
   }
 }
 
+Header.defaultProps = {
+  admin: false
+};
+
 Header.propTypes = {
   classes: PropTypes.object.isRequired,
+  admin: PropTypes.bool
 };
 
 export default withStyles(styles)(Header);

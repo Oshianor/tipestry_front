@@ -12,6 +12,8 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Axios from 'axios';
 import { config } from "../../../config";
 import Alert from '../reuseable/alert';
+import Remove from "@material-ui/icons/Cancel";
+import IconButton from "@material-ui/core/IconButton";
 
 
 const styles = theme => ({
@@ -102,7 +104,7 @@ class Withdrawal extends React.Component {
   }
 
   handleWithdrawal = async () => {
-    const { coin, amount, address, handleClose } = this.state;
+    const { coin, amount, address } = this.state;
     let token = localStorage.getItem('token');
     let obj = {
       coinType: coin,
@@ -130,7 +132,7 @@ class Withdrawal extends React.Component {
           opener: true,
           msg: withh.data.msg
         });
-        handleClose();
+        // handleClose();
       } else {
         this.setState({
           opener: true,
@@ -148,6 +150,11 @@ class Withdrawal extends React.Component {
       })
     }
   }
+
+  handleDialogClose = () => {
+    const { handleClose } = this.props;
+    handleClose();
+  }
   
   render() {
     // console.log(this.state);
@@ -160,6 +167,8 @@ class Withdrawal extends React.Component {
     let nobac = {
       backgroundColor: 'white'
     }
+
+
     return (
       <div>
         <Dialog
@@ -168,31 +177,183 @@ class Withdrawal extends React.Component {
           scroll="paper"
           aria-labelledby="scroll-dialog-title"
         >
-          <DialogTitle id="scroll-dialog-title" style={{ textAlign: 'center' }}  >Withdraw</DialogTitle>
-          {
-            withdraw.error &&
-              <Typography style={{ color: 'red', textAlign: 'center' }} >{withdraw.msg}</Typography>
-          }
+          <div>
+            <IconButton onClick={this.handleDialogClose}>
+              <Remove />
+            </IconButton>
+            <DialogTitle
+              id="scroll-dialog-title"
+              style={{ textAlign: "center", marginTop: -60 }}
+            >
+              Withdraw
+            </DialogTitle>
+          </div>
+
+          {withdraw.error && (
+            <Typography style={{ color: "red", textAlign: "center" }}>
+              {withdraw.msg}
+            </Typography>
+          )}
           <DialogContent>
-            <Grid container spacing="24" >
-              <Grid item xs={12} sm={8} md={8} lg={8} xl={8} >
+            {coin === "bitcoin" && opener && amount >= 0.099 && (
+              <Typography
+                style={{
+                  color: "red",
+                  fontSize: 12,
+                  padding: "10px 0px"
+                }}
+              >
+                Withdraw of{" "}
+                <strong style={{ textTransform: "uppercase" }}>
+                  &nbsp;{coin}
+                </strong>{" "}
+                greater than{" "}
+                <strong style={{ textTransform: "uppercase" }}>
+                  {coin === "bitcoin" ? 0.099 : 500}
+                </strong>{" "}
+                would be subject to review and approval of admin
+              </Typography>
+            )}
+            
+            {coin === "dogecoin" && opener && amount >= 500 && (
+              <Typography
+                style={{
+                  color: "red",
+                  fontSize: 12,
+                  padding: "10px 0px"
+                }}
+              >
+                Withdraw of{" "}
+                <strong style={{ textTransform: "uppercase" }}>
+                  &nbsp;{coin}
+                </strong>{" "}
+                greater than{" "}
+                <strong style={{ textTransform: "uppercase" }}>
+                  {coin === "bitcoin" ? 0.099 : 500}
+                </strong>{" "}
+                would be subject to review and approval of admin
+              </Typography>
+            )}
+
+            <Grid container spacing="24">
+              <Grid item xs={12} sm={8} md={8} lg={8} xl={8}>
                 <Typography>Choose Currency</Typography>
-                <div style={{ display: 'flex' }}>
-                  <img 
-                    src="/static/tipcoins/bit.svg" 
+                <div style={{ display: "flex" }}>
+                  <img
+                    src="/static/tipcoins/bit.svg"
                     alt="btc"
-                    onClick={this.onChnage.bind(this, 'bitcoin')}
-                    className={classes.img} 
-                    style={ coin === "bitcoin" ? bac : nobac } 
+                    onClick={this.onChnage.bind(this, "bitcoin")}
+                    className={classes.img}
+                    style={coin === "bitcoin" ? bac : nobac}
                   />
-                  <img 
-                    src="/static/tipcoins/doge.svg" 
-                    alt="doge" 
-                    onClick={this.onChnage.bind(this, 'dogecoin')}
-                    className={classes.img} 
-                    style={ coin === "dogecoin" ? bac : nobac } 
+                  <img
+                    src="/static/tipcoins/doge.svg"
+                    alt="doge"
+                    onClick={this.onChnage.bind(this, "dogecoin")}
+                    className={classes.img}
+                    style={coin === "dogecoin" ? bac : nobac}
                   />
-                  {/* <img 
+                </div>
+                <Typography
+                  style={{
+                    color: "red",
+                    fontSize: 12,
+                    padding: "10px 0px"
+                  }}
+                >
+                  Cannot withdraw funds without
+                  <strong>
+                    &nbsp;Network fee of &nbsp;
+                    {coin === "bitcoin" ? 0.0005 : 2.0}
+                    <strong style={{ textTransform: "uppercase" }}>
+                      &nbsp;{coin}.
+                    </strong>
+                  </strong>
+                  &nbsp;Maximum withdrawable balance is{" "}
+                  {coin === "bitcoin"
+                    ? btc.balance - 0.0005
+                    : doge.doge_balance - 2}
+                  <strong style={{ textTransform: "uppercase" }}>
+                    &nbsp;{coin}
+                  </strong>
+                </Typography>
+
+                <TextField
+                  error={error !== ""}
+                  id="outlined-adornment-amount"
+                  variant="outlined"
+                  label="Wallet Address (optional)"
+                  helperText={error}
+                  fullWidth
+                  className={classes.margin}
+                  value={address}
+                  onChange={this.handleAddress}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">xyz</InputAdornment>
+                    )
+                  }}
+                />
+
+                <TextField
+                  error={error !== ""}
+                  required
+                  id="outlined-adornment-amount"
+                  variant="outlined"
+                  label="Amount"
+                  type="number"
+                  helperText={error}
+                  value={amount}
+                  fullWidth
+                  className={classes.margin}
+                  onChange={this.handleChangeText("amount")}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        {this.renderCurrentCoinImg()}
+                      </InputAdornment>
+                    )
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={4} md={4} lg={4} xl={4}>
+                <img
+                  src="/static/icons/colormoneybag.svg"
+                  className={classes.icon}
+                />
+              </Grid>
+              <Button
+                onClick={this.handleWithdrawal}
+                style={{ marginLeft: "35%" }}
+                color="secondary"
+              >
+                Cash Out
+              </Button>
+            </Grid>
+          </DialogContent>
+          <Alert
+            open={opener}
+            message={msg}
+            handleClose={this.handleAlertClose}
+          />
+        </Dialog>
+      </div>
+    );
+  }
+}
+
+Withdrawal.propTypes = {
+	classes: PropTypes.object.isRequired,
+	open: PropTypes.bool.isRequired,
+	handleClose: PropTypes.func.isRequired
+};
+
+export default withStyles(styles)(Withdrawal);
+
+
+
+{
+  /* <img 
                     src="/static/tipcoins/eth.svg" 
                     alt="eth" 
                     onClick={this.onChnage.bind(this, 'ethcoin')}
@@ -219,80 +380,5 @@ class Withdrawal extends React.Component {
                     onClick={this.onChnage.bind(this, 'ethxrtcoin')}
                     className={classes.img} 
                     style={ coin === "ethxrtcoin" ? bac : nobac } 
-                  /> */}
-                </div>
-                
-                <Typography style={{ color: 'red', padding: '10px 0px' }}>
-                    Cannot withdraw funds without
-                  <strong>
-                    &nbsp;Network fee of 
-                    &nbsp;{coin === "bitcoin" ? 0.0005 : 2.00000000} 
-                    <strong style={{ textTransform: 'uppercase' }}>
-                    &nbsp;{coin}.
-                    </strong>
-                  </strong>
-                    &nbsp;Maximum withdrawable balance is {coin === "bitcoin" ? btc.balance - 0.0005 : doge.doge_balance - 2}
-                  <strong style={{ textTransform: 'uppercase' }}>
-                    &nbsp;{coin}
-                  </strong>
-                </Typography>
-
-                <TextField
-                  error={error !== ""}
-                  id="outlined-adornment-amount"  
-                  variant="outlined"
-                  label="Wallet Address (optional)"
-                  helperText={error}
-                  fullWidth
-                  className={classes.margin}
-                  value={address}
-                  onChange={this.handleAddress}
-                  InputProps={{
-                    startAdornment: <InputAdornment position="start">
-                      xyz
-                    </InputAdornment>,
-                  }}
-                />
-                
-                <TextField
-                  error={error !== ""}
-                  required
-                  id="outlined-adornment-amount"  
-                  variant="outlined"
-                  label="Amount"
-                  type='number'
-                  helperText={error}
-                  value={amount}
-                  fullWidth
-                  className={classes.margin}
-                  onChange={this.handleChangeText('amount')}
-                  InputProps={{
-                    startAdornment: <InputAdornment position="start">
-                      {this.renderCurrentCoinImg()}
-                    </InputAdornment>,
-                  }}
-                />
-                
-              </Grid>
-              <Grid item xs={12} sm={4} md={4} lg={4} xl={4} >
-							  <img src="/static/icons/colormoneybag.svg" className={classes.icon} />              
-              </Grid>
-              <Button onClick={this.handleWithdrawal} style={{ marginLeft: '35%' }} color="secondary">
-                Cash Out
-              </Button>
-            </Grid>						
-          </DialogContent>
-          <Alert open={opener} message={msg} handleClose={this.handleAlertClose} />
-        </Dialog>
-      </div>
-    );
-  }
+                  /> */
 }
-
-Withdrawal.propTypes = {
-	classes: PropTypes.object.isRequired,
-	open: PropTypes.bool.isRequired,
-	handleClose: PropTypes.func.isRequired
-};
-
-export default withStyles(styles)(Withdrawal);

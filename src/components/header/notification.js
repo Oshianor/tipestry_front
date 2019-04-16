@@ -203,20 +203,17 @@ class Notification extends React.Component {
           buttonRef={node => {
             this.anchorEl = node;
           }}
-          aria-label="Share" 
+          aria-label="Share"
           aria-describedby={id}
-          onClick={this.handleClickButton('arrow')}
-          
+          onClick={this.handleClickButton("arrow")}
         >
-          {
-            !count || count === 0 ?
-						  <Notifications style={{ color: "white" }} />
-            :
-              <Badge badgeContent={count} color="secondary">
-                <Notifications style={{ color: "white" }} />
-              </Badge>
-          }
-          
+          {!count || count === 0 ? (
+            <Notifications style={{ color: "white" }} />
+          ) : (
+            <Badge badgeContent={count} color="secondary">
+              <Notifications style={{ color: "white" }} />
+            </Badge>
+          )}
         </IconButton>
         <Popper
           id={id}
@@ -227,49 +224,65 @@ class Notification extends React.Component {
           className={classes.popper}
           modifiers={{
             flip: {
-              enabled: flip,
+              enabled: flip
             },
             arrow: {
               enabled: arrow,
-              element: arrowRef,
+              element: arrowRef
             },
             preventOverflow: {
-              enabled: preventOverflow !== 'disabled',
+              enabled: preventOverflow !== "disabled",
               boundariesElement:
-                preventOverflow === 'disabled' ? 'scrollParent' : preventOverflow,
-            },
+                preventOverflow === "disabled"
+                  ? "scrollParent"
+                  : preventOverflow
+            }
           }}
         >
           {/* {arrow ? <span className={classes.arrow} ref={this.handleArrowRef} /> : null} */}
           <Paper className={classes.paper}>
-          {
-            notify.map((not, index) => (
-              <div key={index} className={classes.index} >
-                <Link href={config.host + not.link} >
-                  <a className={classes.noty} >
-                    <span style={{ marginBottom: 5 }}>
-                      <Thumbnails 
-                        color="black"
-                        url={
-                          not.img ?
-                            not.img.length > 200 ?
-                              config.base64 + not.img
-                            :
-                              config.topic + not.img
-                          :
-                            null
-                        }
-                        name={data.user.username}
-                      />
-                    </span>
-                    <Typography variant='body2' style={{ fontSize: 12, marginLeft: 15 }}>
+            {notify.map((not, index) => (
+              <div key={index} className={classes.index}>
+                {not.link ? (
+                  <Link href={config.host + not.link}>
+                    <a className={classes.noty}>
+                      <span style={{ marginBottom: 5 }}>
+                        <Thumbnails
+                          color="black"
+                          url={
+                            not.img
+                              ? not.img.length > 200
+                                ? config.base64 + not.img
+                                : config.topic + not.img
+                              : null
+                          }
+                          name={data.user.username}
+                        />
+                      </span>
+                      <Typography
+                        variant="body2"
+                        style={{ fontSize: 12, marginLeft: 15 }}
+                      >
+                        {not.message}
+                      </Typography>
+                    </a>
+                  </Link>
+                ) : (
+                  <>
+                    <Typography
+                      variant="body2"
+                      style={{
+                        fontSize: 12,
+                        padding: 10,
+                        backgroundColor: "#f0ddb885"
+                      }}
+                    >
                       {not.message}
                     </Typography>
-                  </a>
-                </Link>
+                  </>
+                )}
               </div>
-            ))
-          }
+            ))}
           </Paper>
         </Popper>
       </React.Fragment>

@@ -507,8 +507,6 @@ class Header extends React.Component {
 		}
 	}
 
-
-
 	displayBody = () => {
 		const { hide } = this.state;
 		const { router } = this.props;
@@ -527,67 +525,52 @@ class Header extends React.Component {
     const { classes, data } = this.props;
     const isMenuOpen = Boolean(anchorEl);
 		return (
-      <div className={classes.sectionDesktop}>
-        {token ? (
-          <React.Fragment>
-            {data.user.is_admin === 1 && (
-              <Link href={"/controlpanel/" + token}>
-                <Button
-									variant="text"
-									style={{ color: "white" }}
-                  size="small"
-                  color="primary"
-                >
-                  Admin
-                </Button>
-              </Link>
-            )}
-
-            <Button
-              onClick={this.handleClickOpen}
-              variant="outlined"
-              style={{ color: "white", fontSize: 14, borderColor: "white" }}
-              size="small"
-              color="secondary"
-              className={classes.button}
-            >
-              {Lang.h}
-              {/* Enter Url */}
-            </Button>
-            <Tooltip title="Log out" aria-label="logout">
-              <IconButton onClick={this.handleLogout} color="inherit">
-                <Logout />
-              </IconButton>
-            </Tooltip>
-          </React.Fragment>
-        ) : (
-          <React.Fragment>
-            <a
-              target="_blank"
-              style={{ textDecoration: "none" }}
-              href="https://medium.com/@tipestry/introducing-the-tipestry-internet-meta-layer-comment-vote-and-earn-cryptocurrency-anywhere-7b94abb5918b"
-            >
-              <Button color="inherit" style={{ color: "white" }}>
-                {Lang.d3}
-                {/* Abount */}
-              </Button>
-            </a>
-            <Link href="/login" prefetch>
-              <Button color="inherit">
-                {Lang.j}
-                {/* Login */}
-              </Button>
-            </Link>
-            <Link href="/register" prefetch>
-              <Button color="inherit">
-                {Lang.k}
-                {/* Register */}
-              </Button>
-            </Link>
-          </React.Fragment>
-        )}
-      </div>
-    );
+			<div className={classes.sectionDesktop}>
+				{
+					token ?
+						<React.Fragment>
+							<Button 
+								onClick={this.handleClickOpen} 
+								variant="outlined" 
+								style={{ color: 'white', fontSize: 14, borderColor: 'white' }} 
+								size="small" 
+								color="secondary" className={classes.button}>
+								{Lang.h}
+								{/* Enter Url */}
+							</Button>
+							<Tooltip title="Log out" aria-label="logout">
+								<IconButton
+									onClick={this.handleLogout}
+									color="inherit"
+								>
+									<Logout />
+								</IconButton>
+							</Tooltip>
+						</React.Fragment>
+					:
+						<React.Fragment>
+							<a target="_blank" style={{ textDecoration: "none" }} href="https://medium.com/@tipestry/introducing-the-tipestry-internet-meta-layer-comment-vote-and-earn-cryptocurrency-anywhere-7b94abb5918b">
+								<Button color="inherit" style={{ color: 'white' }} >
+									{Lang.d3}
+									{/* Abount */}
+								</Button>
+							</a>
+							<Link href="/login" prefetch>
+								<Button color="inherit">
+									{Lang.j}
+									{/* Login */}
+								</Button>
+							</Link>
+							<Link href="/register" prefetch >
+								<Button color="inherit">
+									{Lang.k}
+									{/* Register */}
+								</Button>
+							</Link>
+						</React.Fragment>
+				}
+			</div>
+		)
 	}
 
 	displayHeight = () => {
@@ -663,7 +646,14 @@ class Header extends React.Component {
 
 		// console.log(this.state);
 		const back = {
+			// backgroundImage: "url('/static/homepage/headerBackground.svg')",
+			// backgroundColor: "transparent",
+			// width: "100%",
+			// only show the profile image and the upload link if logged in or if the route is profile or edit profile
 			height: this.displayHeight(),
+			// backgroundRepeat: 'no-repeat',
+			// backgroundSize: "cover",
+			// boxShadow: '0 0 0 0'
 		}
 
     return (

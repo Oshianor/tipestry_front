@@ -4,7 +4,8 @@ const routes = module.exports = nextRoutes();
 routes.add('index', '/')
 routes.add('login', '/login')
 routes.add('register', '/register')
-routes.add('forgotPassword', '/forgotpassword')
+routes.add("forgotPassword", "/forgotpassword");
+routes.add("controlpanel", "/controlpanel/:token");
 routes.add("faq", "/faq");
 routes.add("site-verification", "/site-verification/:siteObjId/:token");
 routes.add('topic', '/topics/:topicObjId/:topicName')

@@ -7,6 +7,8 @@ import { connect } from 'react-redux';
 import { getUser, getProfile, getTipHistory } from "../src/actions/data";
 import CheckoutContainer from "../src/containers/checkout";
 import Router from "next/router"
+import Head from 'next/head';
+
 
 class Checkout extends React.Component {
   state = {
@@ -62,6 +64,9 @@ class Checkout extends React.Component {
     const { loading } = this.state;
     return (
       <div>
+        <Head>
+          <link rel="stylesheet" href="/static/css/checkout.css" />
+        </Head>
         {
           loading ? 
             <Preloader />
