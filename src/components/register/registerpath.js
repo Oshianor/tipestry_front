@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import isEmail from 'validator/lib/isEmail';
 import isEmpty from 'validator/lib/isEmpty';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Router , {
+import {
   withRouter
 } from 'next/router';
 import { config } from '../../../config';
@@ -20,6 +20,9 @@ import { getToken } from "../../actions/data";
 import { Lang } from '../../../lang';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import MessageAlert from "../reuseable/message";
+
+
 
 
 
@@ -86,7 +89,7 @@ class RegisterPath extends Component {
     loading: false,
     username: "",
     usernameHelper: {
-      msg: '',
+      msg: "",
       err: false
     },
     email: "",
@@ -99,25 +102,29 @@ class RegisterPath extends Component {
       msg: "",
       err: false
     },
-    confirmPassword: '',
+    confirmPassword: "",
     confirmPasswordHelper: {
-      msg: '',
+      msg: "",
       err: false
     },
     res: {
       error: false,
-      msg: ""
+      msg: "",
+      status: 'w'
     },
     checked: null
-  }
-  
+  };
 
   handleRegister = async () => {
     const { email, password, username } = this.state;
-    const { router } = this.props;
-    // console.log('router', router);
-    
-    if (!this.handleEmail() || !this.handlePassword() || !this.handleConfirmPassword() || !this.handleUsername()) {
+    const { router, getToken } = this.props;
+
+    if (
+      !this.handleEmail() ||
+      !this.handlePassword() ||
+      !this.handleConfirmPassword() ||
+      !this.handleUsername()
+    ) {
       return false;
     }
     this.setState({
@@ -125,42 +132,45 @@ class RegisterPath extends Component {
     });
     let refId = typeof router.query.i === "undefined" ? "" : router.query.i;
     let data = {
-      email, password, username, refId
+      email,
+      password,
+      username,
+      refId
     };
-    
+
     const options = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'content-type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
+        "content-type": "application/json",
+        "Access-Control-Allow-Origin": "*"
       },
       data: JSON.stringify(data),
-      url: config.api + "/users",
+      url: config.api + "/users"
     };
-    
 
     try {
       let register = await Axios(options);
-      // console.log("register  ===>>>> ", register);
+      console.log("register  ===>>>> ", register);
       if (register.data.error) {
         this.setState({
-          res: register.data
-        })
+          res: {
+            err: register.data.error,
+            msg: register.data.msg,
+            status: "d"
+          }
+        });
       } else {
-        localStorage.setItem('token', register.headers['x-auth-token']);
-        this.props.getToken(register.headers['x-auth-token']);
-        Router.push('/');
+        localStorage.setItem("token", register.headers["x-auth-token"]);
+        getToken(register.headers["x-auth-token"]);
+        router.push("/");
       }
-      
     } catch (error) {
       // console.log("ERROR : ", error);
-      
     }
     this.setState({
       loading: false
     });
-    
-  }
+  };
 
   handleEmail = () => {
     const { email } = this.state;
@@ -188,8 +198,8 @@ class RegisterPath extends Component {
         err: false
       }
     });
-    return true
-  }
+    return true;
+  };
 
   handlePassword = () => {
     const { password } = this.state;
@@ -218,7 +228,7 @@ class RegisterPath extends Component {
       }
     });
     return true;
-  }
+  };
 
   handleConfirmPassword = () => {
     const { confirmPassword, password } = this.state;
@@ -256,7 +266,7 @@ class RegisterPath extends Component {
       }
     });
     return true;
-  }
+  };
 
   handleUsername = () => {
     const { username } = this.state;
@@ -285,22 +295,31 @@ class RegisterPath extends Component {
       }
     });
     return true;
-  }
+  };
 
-  onchnage = (event) => {
+  onchnage = event => {
     this.setState({
       [event.target.name]: event.target.value
     });
-  }
+  };
 
   handleChange = name => event => {
     this.setState({ [name]: event.target.checked });
   };
 
+  handleMessageAlertClose = () => {
+    this.setState({
+      res: {
+        err: false,
+        msg: "",
+        status: ""
+      }
+    });
+  };
 
-  render(){
+  render() {
     // console.log(this.state);
-    
+
     const {
       res,
       password,
@@ -320,30 +339,48 @@ class RegisterPath extends Component {
         {/* <Typography variant="h2" gutterBottom style={{ margin: '4% 8%' }} > Tipestry</Typography> */}
         <Link href="/" prefetch>
           <a>
-            <Typography variant="h2" gutterBottom style={{ margin: '4% 8%' }} >
-              <img src="/static/login/newlogo.png" style={{ width: 200, height: 60 }} />
+            <Typography variant="h2" gutterBottom style={{ margin: "4% 8%" }}>
+              <img
+                src="/static/login/newlogo.png"
+                style={{ width: 200, height: 60 }}
+              />
             </Typography>
           </a>
         </Link>
 
-        <Typography variant="overline" gutterBottom style={{ margin: '2% 8%', marginTop: "15%", fontSize: 20 }}> 
+        {res.err && (
+          <MessageAlert
+            msg={res.msg}
+            status={res.status}
+            handleClose={this.handleMessageAlertClose}
+          />
+        )}
+
+        <Typography
+          variant="overline"
+          gutterBottom
+          style={{ margin: "2% 8%", marginTop: "10%", fontSize: 20 }}
+        >
           {/* New Here? Create an Account... */}
           {Lang.m1}
         </Typography>
         <form className={classes.container} noValidate autoComplete="off">
-          {
-            res.error &&
-              <Typography variant="caption" gutterBottom style={{ margin: '0 8%', fontSize: 12, color: 'red' }}> 
-                *{res.msg}
-              </Typography>
-          }
+          {res.error && (
+            <Typography
+              variant="caption"
+              gutterBottom
+              style={{ margin: "0 8%", fontSize: 12, color: "red" }}
+            >
+              *{res.msg}
+            </Typography>
+          )}
           <TextField
             error={usernameHelper.err}
             name="username"
             value={username}
             // label="Username" // 用户名
             label={Lang.g1}
-            style={{ margin: '2% 8%' }}
+            style={{ margin: "2% 8%" }}
             onBlur={this.handleUsername}
             onChange={this.onchnage}
             helperText={usernameHelper.msg}
@@ -357,7 +394,7 @@ class RegisterPath extends Component {
             name="email"
             value={email}
             label={Lang.h1} //"Email"
-            style={{ margin: '2% 8%' }}
+            style={{ margin: "2% 8%" }}
             onBlur={this.handleEmail}
             helperText={emailHelper.msg}
             onChange={this.onchnage}
@@ -366,11 +403,11 @@ class RegisterPath extends Component {
             variant="outlined"
           />
 
-         <TextField
+          <TextField
             error={passwordHelper.err}
             name="password"
-            label={Lang.i1}  //"Password" //   //密码
-            style={{ margin: '2% 8%' }}
+            label={Lang.i1} //"Password" //   //密码
+            style={{ margin: "2% 8%" }}
             value={password}
             type="password"
             onBlur={this.handlePassword}
@@ -384,8 +421,8 @@ class RegisterPath extends Component {
           <TextField
             error={confirmPasswordHelper.err}
             name="confirmPassword"
-            label={Lang.j1}  //"Confirm Password" 确认密码
-            style={{ margin: '2% 8%' }}
+            label={Lang.j1} //"Confirm Password" 确认密码
+            style={{ margin: "2% 8%" }}
             value={confirmPassword}
             onChange={this.onchnage}
             onBlur={this.handleConfirmPassword}
@@ -397,16 +434,16 @@ class RegisterPath extends Component {
           />
 
           <FormControlLabel
-            style={{ marginLeft: '5%' }}
+            style={{ marginLeft: "5%" }}
             control={
               <Checkbox
                 checked={checked}
-                onChange={this.handleChange('checked')}
+                onChange={this.handleChange("checked")}
                 value="checked"
               />
             }
             label={
-              <Link href="/privacypolicy" >
+              <Link href="/privacypolicy">
                 <a>
                   {/* I agree to the Terms and Conditions. */}
                   {Lang.l3}
@@ -415,28 +452,42 @@ class RegisterPath extends Component {
             }
           />
 
-          <Grid container spacing={24} style={{ margin: '0 8%' }} >
+          <Grid container spacing={24} style={{ margin: "0 8%" }}>
             <Grid item xs={6} sm={6} style={{ paddingLeft: 0 }}>
-              <Button variant="outlined" disabled={!checked} color="secondary" onClick={this.handleRegister} className={classes.button}>
-                {loading ? <CircularProgress size={24} className={classes.buttonProgress} /> : Lang.f1}
+              <Button
+                variant="outlined"
+                disabled={!checked}
+                color="secondary"
+                onClick={this.handleRegister}
+                className={classes.button}
+              >
+                {loading ? (
+                  <CircularProgress
+                    size={24}
+                    className={classes.buttonProgress}
+                  />
+                ) : (
+                  Lang.f1
+                )}
               </Button>
             </Grid>
-            <Grid item xs={6} sm={6} style={{ paddingRight: 0 }} >
-              <Typography variant="overline" gutterBottom className={classes.forgot} > 
+            <Grid item xs={6} sm={6} style={{ paddingRight: 0 }}>
+              <Typography
+                variant="overline"
+                gutterBottom
+                className={classes.forgot}
+              >
                 {/* Have an account? &nbsp; // 有一个账户？ */}
                 {Lang.l1} &nbsp;
                 <Link href="/login">
                   <a>
                     {Lang.k1}
                     {/* Log In */}
-                  </a> 
+                  </a>
                 </Link>
               </Typography>
             </Grid>
           </Grid>
-
-          
-              
 
           {/* <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
           <Typography variant="caption" gutterBottom style={{ margin: '0 8%' }} > 
@@ -454,7 +505,6 @@ class RegisterPath extends Component {
             </Link>
           </Typography>
           </div> */}
-        
         </form>
       </div>
     );
@@ -465,8 +515,6 @@ RegisterPath.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-const RegisterPaths = withStyles(styles)(RegisterPath);
-const RegisterPathes = withRouter(RegisterPaths);
 function mapStateToProps(state) {
   return {
     data: state.data,
@@ -479,4 +527,4 @@ function mapDispatchToProps(dispatch) {
   }, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterPathes);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withStyles(styles)(RegisterPath)));

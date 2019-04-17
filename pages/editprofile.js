@@ -6,6 +6,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getUser } from "../src/actions/data";
 import EditProfileComponent from '../src/containers/editprofile';
+import Router from "next/router";
+
+
+
 
 class Editprofile extends React.Component {
   state = {
@@ -15,25 +19,29 @@ class Editprofile extends React.Component {
   async componentDidMount() {
     const { getUser } = this.props;
     let token = localStorage.getItem('token');
-
-    if (token) {
-      const options = {
-        method: 'GET',
-        headers: {
-          'content-type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'x-auth-token': token
-        },
-        url: config.api + '/users/me'
+    try {
+      if (token) {
+        const options = {
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "x-auth-token": token
+          },
+          url: config.api + "/users/me"
+        };
+        let user = await axios(options);
+        getUser(user.data[0]);
+        this.setState({
+          loading: false
+        });
+      } else {
+        Router.push("/");
       }
-      let user = await axios(options);
-			getUser(user.data[0]);
-			this.setState({
-				loading: false
-			})
-    } else {
-			Router.push('/');
-		}
+    } catch (error) {
+      localStorage.removeItem("token");
+      Router.push("/login?sE=true");
+    }
   }
 
   render() {

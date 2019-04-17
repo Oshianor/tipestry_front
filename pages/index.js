@@ -13,95 +13,104 @@ import BottomScrollListerer from 'react-bottom-scroll-listener';
 // import CircularProgress from '@material-ui/core/CircularProgress';
 import CookieConsent from "react-cookie-consent";
 import { Lang } from '../lang';
-
+import Router from "next/router";
 
 
 class Index extends React.Component {
   state = {
     loading: true,
     more: false
-  }
-  
+  };
+
   static async getInitialProps({ req }) {
     // console.log('req', req);
-    
+
     // const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
-    let topics = await axios.get(config.api + '/topic?pageNumber=1&dataType=hot')
+    let topics = await axios.get(
+      config.api + "/topic?pageNumber=1&dataType=hot"
+    );
     let dataTopics = JSON.stringify(topics.data.content);
 
     return {
       // userAgent,
       dataTopics
-    }
+    };
   }
 
   async componentDidMount() {
-    const { dataTopics, getTopics, getUser } = this.props;
-    // console.log(data);
-    let token = localStorage.getItem('token');
+    const { dataTopics, getTopics, getUser, getToken } = this.props;
 
-    if (token) {
-      // get me 
-      
-      const options = {
-        method: 'GET',
-        headers: {
-          'content-type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'x-auth-token': token
-        },
-        url: config.api + '/users/me'
+    let token = localStorage.getItem("token");
+
+    try {
+      if (token) {
+        const options = {
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "x-auth-token": token
+          },
+          url: config.api + "/users/me"
+        };
+        let user = await axios(options);
+        getUser(user.data[0]);
+        getToken(token);
       }
-      let user = await axios(options);
-      getUser(user.data[0]);
-      // this.props.getToken(token)
-    }
-    
-    if (dataTopics) {
-      getTopics(JSON.parse(dataTopics));
 
-      this.setState({
-        loading: false
-      })
+      if (dataTopics) {
+        getTopics(JSON.parse(dataTopics));
+
+        this.setState({
+          loading: false
+        });
+      }
+    } catch (error) {
+      localStorage.removeItem('token');
+      Router.push("/login?sE=true");
     }
   }
 
+  // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyT2JqSWQiOiI1Y2I0N2E4NTdhMTlkNjMzNDdmODAyZWUiLCJpZCI6NDUxOCwiaXNfYWRtaW4iOjAsImlhdCI6MTU1NTMzMTc0MX0.ve3dVAyXsFQEjEaanod4BxQp5RjUntuNb67Xrlkc-YM
 
   handleFetchMoreTopics = async () => {
     // const { pageNumber } = this.state;
     const { data, getTopics, setPageNumber } = this.props;
-    let topicsCont = await axios.get(config.api + '/topic?pageNumber=' + data.pageNumber);
+    let topicsCont = await axios.get(
+      config.api + "/topic?pageNumber=" + data.pageNumber
+    );
     if (!topicsCont.data.error) {
       topicsCont.data.content.topic.forEach(obj => {
         data.topics.topic.push(obj);
-      })
-      getTopics({ topic: data.topics.topic, total: topicsCont.data.content.total });
+      });
+      getTopics({
+        topic: data.topics.topic,
+        total: topicsCont.data.content.total
+      });
       let num = Number(data.pageNumber) + 1;
       setPageNumber(num);
     }
-  }
+  };
 
   render() {
     const { loading, more } = this.state;
-    // console.log(this.state);
-    
+
     return (
       <div>
-        {
-          loading ? 
-            <Preloader />
-          :
-            <BottomScrollListerer onBottom={this.handleFetchMoreTopics} >
-              <Homepage />
-              <CookieConsent
-                style={{ zIndex: 99999, background: 'rgb(146, 95, 126)' }}
-                buttonStyle={{ background: 'rgb(255, 255, 255)' }}
-              >
-                {Lang.m3}
-                  {/* This website uses cookies to enhance the user experience.It is your responsibility to keep the coins you earn safe by withdrawing them to your own wallet. */}
-              </CookieConsent>
-            </BottomScrollListerer>
-        }
+        {loading ? (
+          <Preloader />
+        ) : (
+          <BottomScrollListerer onBottom={this.handleFetchMoreTopics}>
+            <Homepage />
+            <CookieConsent
+              style={{ zIndex: 99999, background: "rgb(146, 95, 126)" }}
+              buttonStyle={{ background: "rgb(255, 255, 255)" }}
+            >
+              {Lang.m3}
+              {/* This website uses cookies to enhance the user experience.It is your responsibility to keep the coins you earn safe by withdrawing them to your own wallet. */}
+            </CookieConsent>
+          </BottomScrollListerer>
+        )}
       </div>
     );
   }
@@ -129,19 +138,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Index);
-
-
-        {/* {
-          more && 
-            <div style={{
-              marginTop: 30,
-              left: "45%",
-              right: "20%",
-              bottom: 0,
-              position: 'absolute',
-              zIndex: 999999,
-              height: 50
-            }} >
-              <CircularProgress color="secondary" />
-            </div>
-        } */}

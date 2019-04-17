@@ -6,6 +6,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getSiteTopicList, getUser } from "../src/actions/data";
 import SiteContainer from '../src/containers/sites';
+import Router from "next/router";
+
+
+
 
 class Sites extends Component {
 	state = {
@@ -37,31 +41,34 @@ class Sites extends Component {
 
   async componentDidMount() {
     const { dataTopic, getSiteTopicList, getUser } = this.props;
-    // console.log(data);
     let token = localStorage.getItem('token');
-
-    if (token) {
-      // get me 
-      const options = {
-        method: 'GET',
-        headers: {
-          'content-type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'x-auth-token': token
-        },
-        url: config.api + '/users/me'
-      }
-      let user = await axios(options);
-      getUser(user.data[0]);
-    }
-    // console.log('dataTopic', dataTopic);
     
-    if (dataTopic) {
-      getSiteTopicList(JSON.parse(dataTopic));
+    try {
+      if (token) {
+        const options = {
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "x-auth-token": token
+          },
+          url: config.api + "/users/me"
+        };
+        let user = await axios(options);
+        getUser(user.data[0]);
+      }
+      // console.log('dataTopic', dataTopic);
 
-      this.setState({
-        loading: false
-      })
+      if (dataTopic) {
+        getSiteTopicList(JSON.parse(dataTopic));
+
+        this.setState({
+          loading: false
+        });
+      }
+    } catch (error) {
+      localStorage.removeItem("token");
+      Router.push("/login?sE=true");
     }
 	}
 	

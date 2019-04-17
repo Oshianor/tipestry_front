@@ -7,7 +7,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getSiteTopic, getUser } from "../src/actions/data";
 import Head from 'next/head';
-// import {Helmet} from "react-helmet";
+import Router from "next/router";
+
+
+
 
 class Topic extends Component {
 	state = {
@@ -29,33 +32,37 @@ class Topic extends Component {
     // console.log(JSON.parse(dataTopic));
     let token = localStorage.getItem('token');
 
-    if (token) {
-      // get me 
-      
-      const options = {
-        method: 'GET',
-        headers: {
-          'content-type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'x-auth-token': token
-        },
-        url: config.api + '/users/me'
+    try {
+      if (token) {
+        const options = {
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "x-auth-token": token
+          },
+          url: config.api + "/users/me"
+        };
+        let user = await axios(options);
+        getUser(user.data[0]);
       }
-      let user = await axios(options);
-      getUser(user.data[0]);
-    }
 
-    // send request to the server to save the user ip
-    this.recordViews(JSON.parse(dataTopic));
-    
-    if (dataTopic) {
-      getSiteTopic(JSON.parse(dataTopic));
+      // send request to the server to save the user ip
+      this.recordViews(JSON.parse(dataTopic));
 
-      this.setState({
-        loading: false
-      })
+      if (dataTopic) {
+        getSiteTopic(JSON.parse(dataTopic));
+
+        this.setState({
+          loading: false
+        });
+      }
+    } catch (error) {
+      localStorage.removeItem("token");
+      Router.push("/login?sE=true");
     }
   }
+  
   
   recordViews = async (topic) => {
     const options = {

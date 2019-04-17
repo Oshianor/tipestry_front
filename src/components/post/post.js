@@ -22,7 +22,6 @@ import { config } from '../../../config';
 import { Lang } from '../../../lang';
 // import isURL from 'validator/lib/isURL';
 import Linkify from 'linkifyjs/react';
-import Masonry from 'react-masonry-component';
 import withWidth from '@material-ui/core/withWidth';
 
 const styles = theme => ({

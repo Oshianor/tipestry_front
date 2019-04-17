@@ -31,33 +31,37 @@ class Checkout extends React.Component {
     const { getUser, getProfile, userProfile, getTipHistory, history } = this.props;
     let token = localStorage.getItem('token');
 
-    if (token) {
-      const options = {
-        method: 'GET',
-        headers: {
-          'content-type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'x-auth-token': token
-        },
-        url: config.api + '/users/me'
+    try {
+      if (token) {
+        const options = {
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "x-auth-token": token
+          },
+          url: config.api + "/users/me"
+        };
+        let user = await axios(options);
+        if (user.data[0]._id !== JSON.parse(userProfile)._id) {
+          // console.log(user.data[0]._id, "why cn", JSON.parse(userProfile)._id);
+          // if the current profile is not the logged in user then redirect the user
+          Router.push("/");
+        } else {
+          getUser(user.data[0]);
+          getProfile(JSON.parse(userProfile));
+          getTipHistory(JSON.parse(history));
+          this.setState({
+            loading: false
+          });
+        }
+      } else {
+        Router.push("/");
       }
-      let user = await axios(options);
-      if (user.data[0]._id !== JSON.parse(userProfile)._id) {
-        // console.log(user.data[0]._id, "why cn", JSON.parse(userProfile)._id);
-        
-        // if the current profile is not the logged in user then redirect the user
-        Router.push('/');
-      }else{
-        getUser(user.data[0]);
-        getProfile(JSON.parse(userProfile));
-        getTipHistory(JSON.parse(history))
-        this.setState({
-          loading: false
-        })
-      }
-    } else {
-			Router.push('/');
-		}
+    } catch (error) {
+      localStorage.removeItem("token");
+      Router.push("/login?sE=true"); 
+    }
   }
 
   render() {
