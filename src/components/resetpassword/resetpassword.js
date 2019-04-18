@@ -87,16 +87,6 @@ const styles = theme => ({
 class RegisterPath extends Component {
   state = {
     loading: false,
-    username: "",
-    usernameHelper: {
-      msg: "",
-      err: false
-    },
-    email: "",
-    emailHelper: {
-      msg: "",
-      err: false
-    },
     password: "",
     passwordHelper: {
       msg: "",
@@ -111,31 +101,26 @@ class RegisterPath extends Component {
       error: false,
       msg: "",
       status: 'w'
-    },
-    checked: null
+    }
   };
 
-  handleRegister = async () => {
-    const { email, password, username } = this.state;
-    const { router, getToken } = this.props;
+  handlePasswordChange = async () => {
+    const { password } = this.state;
+    const { router, getToken, userObjId } = this.props;
 
     if (
-      !this.handleEmail() ||
       !this.handlePassword() ||
-      !this.handleConfirmPassword() ||
-      !this.handleUsername()
+      !this.handleConfirmPassword() 
     ) {
       return false;
     }
     this.setState({
       loading: true
     });
-    let refId = typeof router.query.i === "undefined" ? "" : router.query.i;
+
     let data = {
-      email,
       password,
-      username,
-      refId
+      userObjId
     };
 
     const options = {
@@ -145,24 +130,14 @@ class RegisterPath extends Component {
         "Access-Control-Allow-Origin": "*"
       },
       data: JSON.stringify(data),
-      url: config.api + "/users"
+      url: config.api + "/auth/user/reset/password"
     };
 
     try {
       let register = await Axios(options);
       console.log("register  ===>>>> ", register);
-      if (register.data.error) {
-        this.setState({
-          res: {
-            err: register.data.error,
-            msg: register.data.msg,
-            status: "d"
-          }
-        });
-      } else {
-        localStorage.setItem("token", register.headers["x-auth-token"]);
-        getToken(register.headers["x-auth-token"]);
-        router.push("/");
+      if (!register.data.error) {
+        router.push("/login");
       }
     } catch (error) {
       // console.log("ERROR : ", error);
@@ -170,35 +145,6 @@ class RegisterPath extends Component {
     this.setState({
       loading: false
     });
-  };
-
-  handleEmail = () => {
-    const { email } = this.state;
-    if (!isEmail(email)) {
-      this.setState({
-        emailHelper: {
-          msg: "A valid email is required!",
-          err: true
-        }
-      });
-      return false;
-    }
-    if (isEmpty(email)) {
-      this.setState({
-        emailHelper: {
-          msg: "Email is required",
-          err: true
-        }
-      });
-      return false;
-    }
-    this.setState({
-      emailHelper: {
-        msg: "",
-        err: false
-      }
-    });
-    return true;
   };
 
   handlePassword = () => {
@@ -268,34 +214,6 @@ class RegisterPath extends Component {
     return true;
   };
 
-  handleUsername = () => {
-    const { username } = this.state;
-    if (isEmpty(username)) {
-      this.setState({
-        usernameHelper: {
-          msg: "Username is required",
-          err: true
-        }
-      });
-      return false;
-    }
-    if (username.length > 15) {
-      this.setState({
-        usernameHelper: {
-          msg: "Username characters can't be greater than 15",
-          err: true
-        }
-      });
-      return false;
-    }
-    this.setState({
-      usernameHelper: {
-        msg: "",
-        err: false
-      }
-    });
-    return true;
-  };
 
   onchnage = event => {
     this.setState({
@@ -318,17 +236,11 @@ class RegisterPath extends Component {
   };
 
   render() {
-    // console.log(this.state);
-
     const {
       res,
       password,
       passwordHelper,
-      email,
-      emailHelper,
       loading,
-      username,
-      usernameHelper,
       confirmPassword,
       confirmPasswordHelper,
       checked
@@ -339,7 +251,11 @@ class RegisterPath extends Component {
         {/* <Typography variant="h2" gutterBottom style={{ margin: '4% 8%' }} > Tipestry</Typography> */}
         <Link href="/" prefetch>
           <a>
-            <Typography variant="h2" gutterBottom style={{ margin: "4% 8%" }}>
+            <Typography
+              variant="h2"
+              gutterBottom
+              style={{ margin: "4% 8%" }}
+            >
               <img
                 src="/static/login/newlogo.png"
                 style={{ width: 200, height: 60 }}
@@ -362,47 +278,10 @@ class RegisterPath extends Component {
           style={{ margin: "2% 8%", marginTop: "10%", fontSize: 20 }}
         >
           {/* New Here? Create an Account... */}
-          {Lang.m1}
+          {/* {Lang.m1} */}
+          Change Password
         </Typography>
         <form className={classes.container} noValidate autoComplete="off">
-          {/* {res.error && (
-            <Typography
-              variant="caption"
-              gutterBottom
-              style={{ margin: "0 8%", fontSize: 12, color: "red" }}
-            >
-              *{res.msg}
-            </Typography>
-          )} */}
-          <TextField
-            error={usernameHelper.err}
-            name="username"
-            value={username}
-            // label="Username" // 用户名
-            label={Lang.g1}
-            style={{ margin: "2% 8%" }}
-            onBlur={this.handleUsername}
-            onChange={this.onchnage}
-            helperText={usernameHelper.msg}
-            fullWidth
-            margin="normal"
-            variant="outlined"
-          />
-
-          <TextField
-            error={emailHelper.err}
-            name="email"
-            value={email}
-            label={Lang.h1} //"Email"
-            style={{ margin: "2% 8%" }}
-            onBlur={this.handleEmail}
-            helperText={emailHelper.msg}
-            onChange={this.onchnage}
-            fullWidth
-            margin="normal"
-            variant="outlined"
-          />
-
           <TextField
             error={passwordHelper.err}
             name="password"
@@ -433,78 +312,24 @@ class RegisterPath extends Component {
             variant="outlined"
           />
 
-          <FormControlLabel
-            style={{ marginLeft: "5%" }}
-            control={
-              <Checkbox
-                checked={checked}
-                onChange={this.handleChange("checked")}
-                value="checked"
-              />
-            }
-            label={
-              <Link href="/privacypolicy">
-                <a>
-                  {/* I agree to the Terms and Conditions. */}
-                  {Lang.l3}
-                </a>
-              </Link>
-            }
-          />
-
-          <Grid container spacing={24} style={{ margin: "0 8%" }}>
-            <Grid item xs={6} sm={6} style={{ paddingLeft: 0 }}>
-              <Button
-                variant="outlined"
-                disabled={!checked}
-                color="secondary"
-                onClick={this.handleRegister}
-                className={classes.button}
-              >
-                {loading ? (
-                  <CircularProgress
-                    size={24}
-                    className={classes.buttonProgress}
-                  />
-                ) : (
-                  Lang.f1
-                )}
-              </Button>
-            </Grid>
-            <Grid item xs={6} sm={6} style={{ paddingRight: 0 }}>
-              <Typography
-                variant="overline"
-                gutterBottom
-                className={classes.forgot}
-              >
-                {/* Have an account? &nbsp; // 有一个账户？ */}
-                {Lang.l1} &nbsp;
-                <Link href="/login">
-                  <a>
-                    {Lang.k1}
-                    {/* Log In */}
-                  </a>
-                </Link>
-              </Typography>
-            </Grid>
-          </Grid>
-
-          {/* <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
-          <Typography variant="caption" gutterBottom style={{ margin: '0 8%' }} > 
-            <Link href="/register">
-              <a className={classes.bottom}>Terms and Conditions</a>
-            </Link>
-            <Link href="/register">
-              <a className={classes.bottom}>Support</a>
-            </Link>
-            <Link href="/register">
-              <a className={classes.bottom}>FAQ</a>
-            </Link>
-            <Link href="/register">
-              <a className={classes.bottomend}>Privacy Policy</a>
-            </Link>
-          </Typography>
-          </div> */}
+          <div style={{ margin: "0 8%" }}>
+            <Button
+              variant="outlined"
+              disabled={loading}
+              color="secondary"
+              onClick={this.handlePasswordChange}
+              className={classes.button}
+            >
+              {loading ? (
+                <CircularProgress
+                  size={24}
+                  className={classes.buttonProgress}
+                />
+              ) : (
+                'save'
+              )}
+            </Button>
+          </div>
         </form>
       </div>
     );

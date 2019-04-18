@@ -5,6 +5,7 @@ routes.add('index', '/')
 routes.add('login', '/login')
 routes.add('register', '/register')
 routes.add("forgotPassword", "/forgotpassword");
+routes.add("resetPassword", "/reset/password/:token");
 routes.add("controlpanel", "/controlpanel/:token");
 routes.add("faq", "/faq");
 routes.add("site-verification", "/site-verification/:siteObjId/:token");
@@ -17,3 +18,6 @@ routes.add('contests', '/contests')
 routes.add('privacypolicy', '/privacypolicy')
 routes.add('terms', '/terms')
 routes.add('userinfo', '/users/details')
+
+
+

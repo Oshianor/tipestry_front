@@ -108,7 +108,7 @@ class Changepassword extends React.Component {
 					});
 				} else {
 					localStorage.removeItem('token');
-					Router.push('/');
+					Router.push('/login');
 				}
 				
 			} catch (error) {
