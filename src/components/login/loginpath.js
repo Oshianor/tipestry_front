@@ -373,7 +373,7 @@ class LoginPath extends Component {
                 className={classes.forgot}
               >
                 <Link href="/forgotpassword">
-                  <a>{/* Forgot Password // 忘记密码 */}</a>
+                  <a>{Lang.r1/* Forgot Password // 忘记密码 */}</a>
                 </Link>
               </Typography>
             </Grid>

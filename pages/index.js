@@ -66,8 +66,11 @@ class Index extends React.Component {
         });
       }
     } catch (error) {
-      localStorage.removeItem('token');
-      Router.push("/login?sE=true");
+      // console.log("error", error.response);
+      if (error.response.data.error) {
+        localStorage.removeItem("token");
+        Router.push("/login?sE=true");
+      }
     }
   }
 

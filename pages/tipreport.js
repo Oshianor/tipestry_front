@@ -59,8 +59,10 @@ class Checkout extends React.Component {
         Router.push("/");
       }
     } catch (error) {
-      localStorage.removeItem("token");
-      Router.push("/login?sE=true"); 
+      if (error.response.data.error) {
+        localStorage.removeItem("token");
+        Router.push("/login?sE=true");
+      }
     }
   }
 
