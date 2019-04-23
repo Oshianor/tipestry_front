@@ -197,7 +197,11 @@ class LoginPath extends Component {
         router.push("/");
       }
     } catch (error) {
-      // console.log("ERROR : ", error);
+      console.log("ERROR : ", error);
+      this.setState({
+        res: { err: error.response.data.error, msg: error.response.data.msg, status: "d" },
+        password: ""
+      });
     }
     this.setState({
       loading: false,

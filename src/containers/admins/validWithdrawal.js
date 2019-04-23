@@ -29,13 +29,18 @@ const styles = theme => ({
     },
     textAlign: "center"
   },
+  rootCont: {
+    display: "flex",
+    justifyContent: "center",
+    flexWrap: "wrap"
+  },
   bid: {
     display: "flex",
     justifyContent: "flex-start",
     alignItems: "center"
   },
   headBid: { fontSize: 16, fontWeight: "600" },
-  container: { width: 400, height: 300, padding: 10 },
+  container: { width: 400, height: 300, padding: 10, margin: 20 },
   bot: {
     display: "flex",
     justifyContent: "flex-end"
@@ -116,69 +121,88 @@ class ValidateWithdrawal extends Component {
       <div>
         <BasicHeader admin={true} />
         <div className={classes.root}>
-          <Typography variant="h4" style={{ marginTop: 80, marginBottom: 20 }}>
+          <Typography
+            variant="h4"
+            style={{ marginTop: 80, marginBottom: 20 }}
+          >
             Approve Withdrawals
           </Typography>
+          <div className={classes.rootCont}>
+            {data.topics.map(req => (
+              <Paper
+                elevation={12}
+                key={req._id}
+                className={classes.container}
+              >
+                <div className={classes.bid}>
+                  <Typography variant="h6" className={classes.headBid}>
+                    Email:{" "}
+                  </Typography>
+                  &nbsp;
+                  <Typography>{req.user[0].email}</Typography>
+                </div>
+                <div className={classes.bid}>
+                  <Typography variant="h6" className={classes.headBid}>
+                    Username:{" "}
+                  </Typography>
+                  &nbsp;
+                  <Typography>{req.user[0].username}</Typography>
+                </div>
+                <div className={classes.bid}>
+                  <Typography variant="h6" className={classes.headBid}>
+                    Withdrawal Amount:{" "}
+                  </Typography>
+                  &nbsp;
+                  <Typography>{req.amount}</Typography>
+                </div>
+                <div className={classes.bid}>
+                  <Typography variant="h6" className={classes.headBid}>
+                    Coin:{" "}
+                  </Typography>
+                  <Typography>{req.wallettype}</Typography>
+                </div>
 
-          {data.topics.map(req => (
-            <Paper elevation={12} key={req._id} className={classes.container}>
-              <div className={classes.bid}>
-                <Typography variant="h6" className={classes.headBid}>
-                  Email:{" "}
-                </Typography>
-                &nbsp;
-                <Typography>{req.user[0].email}</Typography>
-              </div>
-              <div className={classes.bid}>
-                <Typography variant="h6" className={classes.headBid}>
-                  Username:{" "}
-                </Typography>
-                &nbsp;
-                <Typography>{req.user[0].username}</Typography>
-              </div>
-              <div className={classes.bid}>
-                <Typography variant="h6" className={classes.headBid}>
-                  Withdrawal Amount:{" "}
-                </Typography>
-                &nbsp;
-                <Typography>{req.amount}</Typography>
-              </div>
-              <div className={classes.bid}>
-                <Typography variant="h6" className={classes.headBid}>
-                  Coin:{" "}
-                </Typography>
-                <Typography>{req.wallettype}</Typography>
-              </div>
+                <div className={classes.bid}>
+                  <Typography variant="h6" className={classes.headBid}>
+                    address:{" "}
+                  </Typography>
+                  &nbsp;
+                  <Typography>{req.receive_wallet_id}</Typography>
+                </div>
 
-              <div className={classes.bid}>
-                <Typography variant="h6" className={classes.headBid}>
-                  address:{" "}
-                </Typography>
-                &nbsp;
-                <Typography>{req.receive_wallet_id}</Typography>
-              </div>
-
-              <TextField
-                style={{ marginTop: 40 }}
-                variant="outlined"
-                value={transactionid}
-                onChange={this.handleChange}
-								fullWidth
-								error={txHelper.err}
-								helperText={txHelper.msg}
-                required
-                label="Tx Hash"
-              />
-              <div className={classes.bot}>
-                <Button onClick={this.handleCancelledRequest.bind(this, req._id)} variant="text" color="secondary">
-                  Cancel
-                </Button>
-                <Button onClick={this.handleApproveRequest.bind(this, req._id)} variant="outlined" color="primary">
-                  Approve
-                </Button>
-              </div>
-            </Paper>
-          ))}
+                <TextField
+                  style={{ marginTop: 40 }}
+                  variant="outlined"
+                  value={transactionid}
+                  onChange={this.handleChange}
+                  fullWidth
+                  error={txHelper.err}
+                  helperText={txHelper.msg}
+                  required
+                  label="Tx Hash"
+                />
+                <div className={classes.bot}>
+                  <Button
+                    onClick={this.handleCancelledRequest.bind(
+                      this,
+                      req._id
+                    )}
+                    variant="text"
+                    color="secondary"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={this.handleApproveRequest.bind(this, req._id)}
+                    variant="outlined"
+                    color="primary"
+                  >
+                    Approve
+                  </Button>
+                </div>
+              </Paper>
+            ))}
+          </div>
         </div>
       </div>
     );
