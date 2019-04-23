@@ -14,7 +14,7 @@ import { config } from "../../../config";
 import Alert from '../reuseable/alert';
 import Remove from "@material-ui/icons/Cancel";
 import IconButton from "@material-ui/core/IconButton";
-
+import MessageAlert from '../reuseable/message';
 
 const styles = theme => ({
 	root: {
@@ -50,11 +50,12 @@ class Withdrawal extends React.Component {
     show: 'false',
     address: '',
     withdraw: {
-      error: false,
+      err: false,
       msg: ""
     },
-    opener: false,
-    msg: ''
+    loading: false
+    // opener: false,
+    // msg: ''
   }
 
   onChnage(name) {
@@ -95,7 +96,10 @@ class Withdrawal extends React.Component {
 
   handleAlertClose = () => {
     this.setState({
-      opener: false
+      withdraw: {
+        err: false,
+        msg: ''
+      }
     })
   }
 
@@ -105,6 +109,9 @@ class Withdrawal extends React.Component {
 
   handleWithdrawal = async () => {
     const { coin, amount, address } = this.state;
+    this.setState({
+      loading: true
+    });
     let token = localStorage.getItem('token');
     let obj = {
       coinType: coin,
@@ -124,43 +131,75 @@ class Withdrawal extends React.Component {
         url: config.api + "/crypto/withdrawal"
       };
       let withh = await Axios(options);
-      // console.log('withdraw,', withh);
+      console.log('withdraw,', withh);
 
       if (!withh.data.error) {
         this.setState({
-          withdraw: withh.data,
-          opener: true,
-          msg: withh.data.msg
+          withdraw: {
+            err: true,
+            msg: withh.data.msg,
+            status: "i"
+          },
+          loading: false
         });
-        // handleClose();
       } else {
         this.setState({
-          opener: true,
-          msg: withh.data.msg
-        })
+          withdraw: {
+            err: true,
+            msg: withh.data.msg,
+            status: "w"
+          },
+          loading: false
+        });
       }
-
 
     } else {
       this.setState({
         withdraw: {
-          error: true,
+          err: true,
+          status: 'w',
           msg: "You don't have sufficient amount for a withdrawal"
         },
+        loading: false
       })
     }
+
+    
   }
 
   handleDialogClose = () => {
     const { handleClose } = this.props;
     handleClose();
+    this.setState({
+      coin: "bitcoin",
+      error: "",
+      amount: "",
+      currentCoin: 0,
+      show: "false",
+      address: "",
+      withdraw: {
+        err: false,
+        msg: ""
+      },
+      loading: false
+    });
   }
   
   render() {
-    // console.log(this.state);
+    console.log(this.state);
     
     const { classes, open, handleClose, btc, doge } = this.props;
-    const { opener, msg, coin, error, amount, show, address, withdraw } = this.state;
+    const {
+      opener,
+      msg,
+      coin,
+      error,
+      amount,
+      show,
+      address,
+      withdraw,
+      loading
+    } = this.state;
     let bac = {
       backgroundColor: '#50557b'      
     }
@@ -189,13 +228,19 @@ class Withdrawal extends React.Component {
             </DialogTitle>
           </div>
 
-          {withdraw.error && (
-            <Typography style={{ color: "red", textAlign: "center" }}>
-              {withdraw.msg}
-            </Typography>
-          )}
           <DialogContent>
-            {coin === "bitcoin" && opener && amount >= 0.099 && (
+            {withdraw.err && (
+              // <Typography style={{ color: "red", textAlign: "center" }}>
+              //   {withdraw.msg}
+              // </Typography>
+              <MessageAlert
+                msg={withdraw.msg}
+                status={withdraw.status}
+                handleClose={this.handleAlertClose}
+              />
+            )}
+
+            {coin === "bitcoin" && withdraw.err && amount >= 0.099 && (
               <Typography
                 style={{
                   color: "red",
@@ -214,7 +259,7 @@ class Withdrawal extends React.Component {
                 would be subject to review and approval of admin
               </Typography>
             )}
-            
+
             {coin === "dogecoin" && opener && amount >= 500 && (
               <Typography
                 style={{
@@ -323,6 +368,7 @@ class Withdrawal extends React.Component {
                 />
               </Grid>
               <Button
+                disabled={loading}
                 onClick={this.handleWithdrawal}
                 style={{ marginLeft: "35%" }}
                 color="secondary"
@@ -331,11 +377,12 @@ class Withdrawal extends React.Component {
               </Button>
             </Grid>
           </DialogContent>
-          <Alert
+
+          {/* <Alert
             open={opener}
             message={msg}
             handleClose={this.handleAlertClose}
-          />
+          /> */}
         </Dialog>
       </div>
     );
