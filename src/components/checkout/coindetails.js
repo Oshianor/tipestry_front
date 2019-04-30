@@ -386,13 +386,13 @@ class CoinDetails extends React.Component{
 				</div>
 
 
-				{/* <Button 
+				<Button 
 					variant="contained"
 					onClick={this.handleOpenWithdraw} 
 					color="primary"
 				>
 					Withdraw
-				</Button> */}
+				</Button>
 
 				<Withdrawal open={withdraw} btc={data.user.btc[0]} doge={data.user.doge[0]} handleClose={this.handleCloseWithdraw} />
 
