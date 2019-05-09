@@ -31,7 +31,7 @@ import { config } from "../../config";
 import { bindActionCreators } from "redux";
 import { getTopics, getUser, setType, setPageNumber } from "../actions/data";
 import axios from 'axios';
-
+import { Lang } from "../../lang"
 
 
 
@@ -231,25 +231,29 @@ class Homepage extends Component {
                   className={classes.formControl}
                 >
                   <Typography variant="body1">
-                    Sort Post By &nbsp;
+                    {/* Sort Post By  */}
+                    {Lang.q3}
+                    &nbsp;
                   </Typography>
-                  <Button 
+                  <Button
                     style={{ borderRadius: 0 }}
                     disabled={loading}
-                    onClick={this.handleChange.bind(this, 'hot')}
-                    variant={data.type === "hot" ? "contained" : "text"} 
+                    onClick={this.handleChange.bind(this, "hot")}
+                    variant={data.type === "hot" ? "contained" : "text"}
                     color="primary"
                   >
-                    Hot
+                    {/* Hot */}
+                    {Lang.r3}
                   </Button>
-                  <Button 
+                  <Button
                     style={{ borderRadius: 0 }}
                     disabled={loading}
-                    onClick={this.handleChange.bind(this, 'recent')}
-                    variant={data.type === "recent" ? "contained" : "text"} 
+                    onClick={this.handleChange.bind(this, "recent")}
+                    variant={data.type === "recent" ? "contained" : "text"}
                     color="primary"
                   >
-                    Recent
+                    {/* Recent */}
+                    {Lang.s3}
                   </Button>
                 </div>
 

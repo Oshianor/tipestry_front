@@ -94,6 +94,9 @@ export const Lang = {
 	// n3: "Add to favourites",
 	// o3: "Thumbs Up",
 	// p3: "Thumbs Down",
+	// q3: "Sort Post By",
+	// r3: "Hot",
+	// s3: "Recent",
 	// locale: "en"
 
 	// CHINESE
@@ -191,5 +194,8 @@ export const Lang = {
 	n3: "添加到收藏夹",
 	o3: '赞',
 	p3: "不喜欢",
+	q3: "按邮件排序",
+	r3: "热",
+	s3: "最近",
 	locale: "zh_cn"
 }

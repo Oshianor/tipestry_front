@@ -28,11 +28,11 @@ export const config = {
 
 	
 	// cn
-	api: "http://cn.tipestry.com/api",
-	url: "http://cn.tipestry.com",
-	host: "http://cn.tipestry.com",
-	profileimage: "http://cn.tipestry.com/public/profile_images/",
+	api: "https://cn.tipestry.com/api",
+	url: "https://cn.tipestry.com",
+	host: "https://cn.tipestry.com",
+	profileimage: "https://cn.tipestry.com/public/profile_images/",
 	base64: 'data:image/jpeg;base64,',
-	topic: "http://cn.tipestry.com/public",
+	topic: "https://cn.tipestry.com/public",
 	port: 5001
 }

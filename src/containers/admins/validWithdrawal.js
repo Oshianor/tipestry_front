@@ -153,7 +153,11 @@ class ValidateWithdrawal extends Component {
                     Withdrawal Amount:{" "}
                   </Typography>
                   &nbsp;
-                  <Typography>{req.amount}</Typography>
+                  <Typography>
+                    {req.wallettype === "dogecoin"
+                      ? parseFloat(req.amount) - 2
+                      : parseFloat(req.amount) - 0.0005}
+                  </Typography>
                 </div>
                 <div className={classes.bid}>
                   <Typography variant="h6" className={classes.headBid}>
