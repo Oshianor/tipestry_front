@@ -41,35 +41,65 @@ class Thumb extends React.Component {
   }
 
   async componentDidMount() {
-    const { topicObjId, votes } = this.props;
     let token = localStorage.getItem('token');
 
+    // this.setState({
+    //   count: typeof votes[0] !== "undefined" ? votes[0].count : ""
+    // });
+
+    this.handleVotesCount();
+    this.handleUserVotes(token);
+    
+  }
+
+  round(value, precision) {
+    var multiplier = Math.pow(10, precision || 0);
+    return Math.round(value * multiplier) / multiplier;
+  }
+
+  handleVotesCount = async () => {
+    const { topicObjId } = this.props;
+    const options = {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
+      url: config.api + "/votes/get/topic/upvotes/" + topicObjId
+    };
+
+    let vote = await axios(options);
+    console.log("vote.data.content", vote.data.content);
+    
     this.setState({
-      count: typeof votes[0] !== "undefined" ? votes[0].count : ""
+      count: this.round(vote.data.content)
     });
+  }
+
+
+  handleUserVotes = async (token) => {
+    const { topicObjId } = this.props;
 
     if (token) {
-      // console.log('token', token);
-      
       const options = {
-        method: 'GET',
+        method: "GET",
         headers: {
-          'content-type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'x-auth-token': token
+          "content-type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "x-auth-token": token
         },
-        url: config.api + '/votes/topic/' + topicObjId
-      }
-      
+        url: config.api + "/votes/topic/" + topicObjId
+      };
+
       let vote = await axios(options);
-      if (vote.data.error == false) {
+      if (!vote.data.error) {
         // console.log(vote.data, "9999999");
         this.setState({
           res: vote.data.content
-        })
+        });
       }
-      
-      this.props.getToken(token)
+
+      this.props.getToken(token);
     }
   }
 
@@ -90,12 +120,12 @@ class Thumb extends React.Component {
       }
 
       let vote = await axios(options);
-      // console.log("CHANGEING VOTES", vote);
+      console.log("vote.data.content.count", vote.data.content.count);
       if (vote.data.error === false) {
         this.setState({
           res: vote.data.content.reply,
-          count: vote.data.content.count
-        })
+          count: this.round(vote.data.content.count)
+        });
       }
       
     } else {
