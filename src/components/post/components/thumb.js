@@ -69,7 +69,7 @@ class Thumb extends React.Component {
     };
 
     let vote = await axios(options);
-    console.log("vote.data.content", vote.data.content);
+    // console.log("vote.data.content", vote.data.content);
     
     this.setState({
       count: this.round(vote.data.content)
@@ -105,12 +105,13 @@ class Thumb extends React.Component {
 
   async handleVote(votes) {
     const { topicObjId, handleOpen } = this.props;
+    const { count } = this.state; 
     let token = localStorage.getItem('token');
 
     if (token) {
       const options = {
         method: 'POST',
-        data: JSON.stringify({ votes, topicObjId }),
+        data: JSON.stringify({ count, votes, topicObjId }),
         headers: {
           'content-type': 'application/json',
           'Access-Control-Allow-Origin': '*',
@@ -119,15 +120,19 @@ class Thumb extends React.Component {
         url: config.api + '/votes/topic'
       }
 
-      let vote = await axios(options);
-      console.log("vote.data.content.count", vote.data.content.count);
-      if (vote.data.error === false) {
-        this.setState({
-          res: vote.data.content.reply,
-          count: this.round(vote.data.content.count)
-        });
+      try {
+        let vote = await axios(options);
+        console.log("vote.data.content.count", vote.data.content.count);
+        if (vote.data.error === false) {
+          this.setState({
+            res: vote.data.content.reply,
+            count: vote.data.content.count
+          });
+        }
+      } catch (error) {
+        console.log("voting", error);
+        
       }
-      
     } else {
       handleOpen();
     }
@@ -168,6 +173,8 @@ class Thumb extends React.Component {
   render() {
     const { num, iconspacing } = this.props;
     const { count, open } = this.state;
+    console.log("this.state", this.state);
+    
     
     return (
       <React.Fragment>
