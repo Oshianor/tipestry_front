@@ -187,7 +187,7 @@ class Thumb extends React.Component {
         &nbsp;
         <p className={num}>
           {/* chek if the count is zero then show nothing else show count */}
-          {count === 0 ? "" : count}
+          {count <= 0 ? "" : count}
         </p>
 				&nbsp;&nbsp;
 

@@ -5,6 +5,7 @@ routes.add('index', '/')
 routes.add('login', '/login')
 routes.add('register', '/register')
 routes.add("forgotPassword", "/forgotpassword");
+routes.add("verification", "/verify/email-address/:token");
 routes.add("resetPassword", "/reset/password/:token");
 routes.add("controlpanel", "/controlpanel/:token");
 routes.add("faq", "/faq");

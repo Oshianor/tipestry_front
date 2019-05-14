@@ -32,6 +32,7 @@ import { bindActionCreators } from "redux";
 import { getTopics, getUser, setType, setPageNumber } from "../actions/data";
 import axios from 'axios';
 import { Lang } from "../../lang"
+import VerificationWarning from '../components/header/components/verificationWarning';
 
 
 

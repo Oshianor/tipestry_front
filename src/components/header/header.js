@@ -35,6 +35,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import classNames from 'classnames';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import moment from 'moment';
+import VerificationWarning from './components/verificationWarning';
 
 
 
@@ -44,6 +45,7 @@ const drawerWidth = 240;
 const styles = theme => ({
   root: {
 		width: '100%',
+		// marginTop: 30
 	},
 	rootGrow: {
 		[theme.breakpoints.up('xs')]: {
@@ -661,92 +663,128 @@ class Header extends React.Component {
       </Menu>
     );
 
-		// console.log(this.state);
+		// console.log("this.statedata", data);
 		const back = {
 			height: this.displayHeight(),
 		}
 
     return (
-      <div className={classes.root}>
-				<CssBaseline />
-        <AppBar position="fixed"
-					style={back}
-					className={classNames(classes.appBar, {
-            [classes.appBarShift]: drawer,
-          })}
-				>
-          <Toolbar className={classes.rootGrow} disableGutters={!drawer} >
-						{/* tigger for drawer */}
-						<IconButton
-              color="inherit"
-              aria-label="Open drawer"
-              onClick={() => handleDrawerOpen()}
-              className={classNames(classes.menuButton, {
-                [classes.hide]: drawer,
-              })}
-            >
-              <MenuIcon />
-            </IconButton>
-
-						<Link href="/" prefetch>
-							<a>
-								<Typography variant="h2" gutterBottom style={{ margin: '0px 3%' }} >
-									<img src="/static/login/newlogo.png" className={classes.logo} />
-								</Typography>
-							</a>
-						</Link>
-            
-            <div className={classes.grow} />
-						{
-							token &&
-								<React.Fragment>
-									<Notification />
-										<Link href={"/profile/" + data.user._id + "/" + data.user.username} >
-											<a>
-												<Thumbnails 
-													size="xs" color="black"  
-													name={typeof data.user !== "undefined" && typeof data.user.username !== "undefined" ? data.user.username : "o"} 
-													url={
-														data.user.profileimage === "" || !data.user.profileimage ?
-															null
-														:
-															config.profileimage + data.user.profileimage
-													}
-												/>
-											</a>
-										</Link>
-										<Link href={"/profile/" + data.user._id + "/" + data.user.username} >
-											<a style={{ textDecoration: 'none' }}>
-												<Typography style={{ color: 'white', textTransform: 'capitalize' }} >
-													&nbsp;
-													{Lang.m},
-													{/* Hi,  */}
-													&nbsp;
-													{data.user.username}
-												</Typography>
-											</a>
-										</Link>
-										&nbsp;
-										&nbsp;
-								</React.Fragment>
-						}
-						{this.displayDesktop()}
-            <div className={classes.sectionMobile}>
-              <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
-								<MoreVertIcon />
+      <>
+        {typeof data.user.deactivated !== "undefined" && data.user.deactivated && (
+					<VerificationWarning />
+				)}
+        <div className={classes.root}>
+          <CssBaseline />
+          <AppBar
+            position="fixed"
+            style={back}
+            className={classNames(classes.appBar, {
+              [classes.appBarShift]: drawer
+            })}
+          >
+            <Toolbar className={classes.rootGrow} disableGutters={!drawer}>
+              {/* tigger for drawer */}
+              <IconButton
+                color="inherit"
+                aria-label="Open drawer"
+                onClick={() => handleDrawerOpen()}
+                className={classNames(classes.menuButton, {
+                  [classes.hide]: drawer
+                })}
+              >
+                <MenuIcon />
               </IconButton>
-            </div>
-          </Toolbar>
-					{/* display body for hide when scroll **bad english funck you */}
-					{this.displayBody()}
-        </AppBar>
 
-				{/* render mobile menu */}
-				{renderMobileMenu}
+              <Link href="/" prefetch>
+                <a>
+                  <Typography
+                    variant="h2"
+                    gutterBottom
+                    style={{ margin: "0px 3%" }}
+                  >
+                    <img
+                      src="/static/login/newlogo.png"
+                      className={classes.logo}
+                    />
+                  </Typography>
+                </a>
+              </Link>
 
-				{/* upload url modal display */}
-				<UploadUrl uploadStatus={uploadStatus} handleClose={this.handleClose} />
-      </div>
+              <div className={classes.grow} />
+              {token && (
+                <React.Fragment>
+                  <Notification />
+                  <Link
+                    href={
+                      "/profile/" + data.user._id + "/" + data.user.username
+                    }
+                  >
+                    <a>
+                      <Thumbnails
+                        size="xs"
+                        color="black"
+                        name={
+                          typeof data.user !== "undefined" &&
+                          typeof data.user.username !== "undefined"
+                            ? data.user.username
+                            : "o"
+                        }
+                        url={
+                          data.user.profileimage === "" ||
+                          !data.user.profileimage
+                            ? null
+                            : config.profileimage + data.user.profileimage
+                        }
+                      />
+                    </a>
+                  </Link>
+                  <Link
+                    href={
+                      "/profile/" + data.user._id + "/" + data.user.username
+                    }
+                  >
+                    <a style={{ textDecoration: "none" }}>
+                      <Typography
+                        style={{
+                          color: "white",
+                          textTransform: "capitalize"
+                        }}
+                      >
+                        &nbsp;
+                        {Lang.m},{/* Hi,  */}
+                        &nbsp;
+                        {data.user.username}
+                      </Typography>
+                    </a>
+                  </Link>
+                  &nbsp; &nbsp;
+                </React.Fragment>
+              )}
+              {this.displayDesktop()}
+              <div className={classes.sectionMobile}>
+                <IconButton
+                  aria-haspopup="true"
+                  onClick={this.handleMobileMenuOpen}
+                  color="inherit"
+                >
+                  <MoreVertIcon />
+                </IconButton>
+              </div>
+            </Toolbar>
+            {/* display body for hide when scroll **bad english funck you */}
+            {this.displayBody()}
+          </AppBar>
+
+          {/* render mobile menu */}
+          {renderMobileMenu}
+
+          {/* upload url modal display */}
+          <UploadUrl
+            uploadStatus={uploadStatus}
+            handleClose={this.handleClose}
+          />
+        </div>
+      </>
     );
   }
 }
