@@ -71,41 +71,70 @@ class SiteAbout extends React.Component {
         <Card className={classes.card}>
           <CardHeader
             avatar={
-              <Link href={"/profile/" + data.siteTopic[0].user[0]._id + "/@" + data.siteTopic[0].user[0].username}>
-                <a style={{ textDecoration: 'none' }}>
-                  <Thumbnails 
-                    borderColor="black" 
-                    borderWidth={2} 
+              <Link
+                href={
+                  "/profile/" +
+                  data.siteTopic[0].user[0]._id +
+                  "/@" +
+                  data.siteTopic[0].user[0].username
+                }
+              >
+                <a style={{ textDecoration: "none" }}>
+                  <Thumbnails
+                    borderColor="black"
+                    borderWidth={2}
                     name={data.siteTopic[0].user[0].username}
                     url={
-                      data.siteTopic[0].user[0].profileimage === "" || !data.siteTopic[0].user[0].profileimage ?
-                        null
-                      :
-                        config.profileimage + data.siteTopic[0].user[0].profileimage
+                      data.siteTopic[0].user[0].profileimage === "" ||
+                      !data.siteTopic[0].user[0].profileimage
+                        ? null
+                        : config.profileimage +
+                          data.siteTopic[0].user[0].profileimage
                     }
                   />
                 </a>
               </Link>
             }
             title={
-              <Link href={"/profile/"+ data.siteTopic[0].user[0]._id +"/@" + data.siteTopic[0].user[0].username} >
-                <a style={{ color: '#1F7BD8', textDecoration: 'none' }}>
-                  <strong style={{ color: 'gray' }}>@</strong>
-                  {typeof data.siteTopic[0].user[0] !== "undefined" ? `${data.siteTopic[0].user[0].username}` : "@No name"}
+              <Link
+                href={
+                  "/profile/" +
+                  data.siteTopic[0].user[0]._id +
+                  "/@" +
+                  data.siteTopic[0].user[0].username
+                }
+              >
+                <a style={{ color: "#1F7BD8", textDecoration: "none" }}>
+                  <strong style={{ color: "gray" }}>@</strong>
+                  {typeof data.siteTopic[0].user[0] !== "undefined"
+                    ? `${data.siteTopic[0].user[0].username}`
+                    : "@No name"}
                 </a>
               </Link>
             }
             subheader={
-              <p style={{ fontSize: 10, margin: 0 }} >
-                {Moment(data.siteTopic[0].created_at).locale(Lang.locale).fromNow()}
+              <p style={{ fontSize: 10, margin: 0 }}>
+                {Moment(data.siteTopic[0].created_at)
+                  .locale(Lang.locale)
+                  .fromNow()}
               </p>
             }
           />
           <CardContent style={{ padding: "0px 25px" }}>
-            <Typography component="p" >
-            <Linkify tagName="span">
-              {data.siteTopic[0].message}
-            </Linkify>
+            <Typography component="p">
+              <Linkify tagName="span">
+                {/* {data.siteTopic[0].message} */}
+                {data.siteTopic[0].message
+                  .split("\n")
+                  .map(function(item, key) {
+                    return (
+                      <span key={key}>
+                        {item}
+                        <br />
+                      </span>
+                    );
+                  })}
+              </Linkify>
               {/* {data.siteTopic[0].message} */}
             </Typography>
           </CardContent>
@@ -118,12 +147,18 @@ class SiteAbout extends React.Component {
             token={token}
             topicUserId={data.siteTopic[0].user[0].id}
             topicObjId={data.siteTopic[0]._id}
-            link={encodeURI("/topics/" + data.siteTopic[0]._id + "/" + data.siteTopic[0].title.replace(/[.*+?^$/{}()|[\]\\]/g, '-'))}
+            link={encodeURI(
+              "/topics/" +
+                data.siteTopic[0]._id +
+                "/" +
+                data.siteTopic[0].title.replace(
+                  /[.*+?^$/{}()|[\]\\]/g,
+                  "-"
+                )
+            )}
           />
           {/* coin details */}
-          <TopicCoin 
-            gift={data.siteTopic[0].gift}
-          />
+          <TopicCoin gift={data.siteTopic[0].gift} />
         </Card>
       );
     } else {
