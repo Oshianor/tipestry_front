@@ -193,156 +193,196 @@ class Comments extends React.Component {
 		// console.log(this.state);
 		
     return (
-			<React.Fragment>
-				{
-					data.siteTopic[0].comment.map((comment, index) => (
-						<Card className={classes.card} key={index}>
-							<CardHeader
-								style={{ paddingTop: 5, paddingBottom: 7 }}
-								avatar={
-									<Link href={"/profile/" + comment.commentUser[0]._id + "/@" + comment.commentUser[0].username}>
-										<a style={{ textDecoration: 'none' }}>
-											<Thumbnails 
-												borderColor="black" 
-												borderWidth={2} 
-												name={comment.commentUser[0].username} 
-												url={
-													comment.commentUser[0].profileimage === "" || !comment.commentUser[0].profileimage ?
-														null
-													:
-														config.profileimage + comment.commentUser[0].profileimage
-												}
-											/>
-										</a>
-									</Link>
-								}
-								title={
-									<Link href={"/profile/" + comment.commentUser[0]._id + "/@" + comment.commentUser[0].username} >
-										<a style={{ color: '#1F7BD8', textDecoration: 'none' }}>
-											<strong style={{ color: 'gray' }}>@</strong>
-											{comment.commentUser[0].username}
-										</a>
-									</Link>
-								}
-								subheader={
-									<p style={{ fontSize: 10, margin: 0 }} >
-										{Moment(comment.created_at).locale(Lang.locale).fromNow()}
-									</p>
-								}
-							/>
-							<CardContent style={{ padding: "0px 25px" }}>
-								{
-									// edit element
-									edit && edit === comment._id ?
-										<form className={classes.container} noValidate autoComplete="off">
-											<TextField
-												label="Edit comment"
-												style={{ margin: 8, marginTop: -5 }}
-												onChange={this.handleChange}
-												fullWidth
-												value={content}
-												margin="normal"
-												multiline
-												onSubmit={this.handleCommentEdit}
-											/>
-											<Button 
-												color="secondary" 
-												style={{ marginTop: 27, marginTop: -5 }} 
-												className={classes.button}
-												onClick={this.handleCommentEdit}
-											>
-												Save
-											</Button>
-										</form>
-									:
-									// when edit state is null
-										<Typography component="p" style={{ fontSize: 15, fontWeight: 'lighter' }} >
-											<Linkify tagName="p">
-												{comment.content}
-											</Linkify>
-										</Typography>
-								}
-							</CardContent>
+      <React.Fragment>
+        {data.siteTopic[0].comment.map((comment, index) => (
+          <Card className={classes.card} key={index}>
+            <CardHeader
+              style={{ paddingTop: 5, paddingBottom: 7 }}
+              avatar={
+                <Link
+                  href={
+                    "/profile/" +
+                    comment.commentUser[0]._id +
+                    "/@" +
+                    comment.commentUser[0].username
+                  }
+                >
+                  <a style={{ textDecoration: "none" }}>
+                    <Thumbnails
+                      borderColor="black"
+                      borderWidth={2}
+                      name={comment.commentUser[0].username}
+                      url={
+                        comment.commentUser[0].profileimage === "" ||
+                        !comment.commentUser[0].profileimage
+                          ? null
+                          : config.profileimage +
+                            comment.commentUser[0].profileimage
+                      }
+                    />
+                  </a>
+                </Link>
+              }
+              title={
+                <Link
+                  href={
+                    "/profile/" +
+                    comment.commentUser[0]._id +
+                    "/@" +
+                    comment.commentUser[0].username
+                  }
+                >
+                  <a style={{ color: "#1F7BD8", textDecoration: "none" }}>
+                    <strong style={{ color: "gray" }}>@</strong>
+                    {comment.commentUser[0].username}
+                  </a>
+                </Link>
+              }
+              subheader={
+                <p style={{ fontSize: 10, margin: 0 }}>
+                  {Moment(comment.created_at)
+                    .locale(Lang.locale)
+                    .fromNow()}
+                </p>
+              }
+            />
+            <CardContent style={{ padding: "0px 25px" }}>
+              {// edit element
+              edit && edit === comment._id ? (
+                <form
+                  className={classes.container}
+                  noValidate
+                  autoComplete="off"
+                >
+                  <TextField
+                    label="Edit comment"
+                    style={{ margin: 8, marginTop: -5 }}
+                    onChange={this.handleChange}
+                    fullWidth
+                    value={content}
+                    margin="normal"
+                    multiline
+                    onSubmit={this.handleCommentEdit}
+                  />
+                  <Button
+                    color="secondary"
+                    style={{ marginTop: 27, marginTop: -5 }}
+                    className={classes.button}
+                    onClick={this.handleCommentEdit}
+                  >
+                    Save
+                  </Button>
+                </form>
+              ) : (
+                // when edit state is null
+                <Typography
+                  component="p"
+                  style={{
+                    fontSize: 15,
+                    fontWeight: "lighter",
+                    whiteSpace: "pre-line"
+                  }}
+                >
+                  <Linkify tagName="p">
+                    {/* {comment.content} */}
+                    {comment.content.split("\n").map(function(item, key) {
+                      return (
+                        <span key={key}>
+                          {item}
+                          <br />
+                        </span>
+                      );
+                    })}
+                  </Linkify>
+                </Typography>
+              )}
+            </CardContent>
 
-							<CardActions className={classes.actions} disableActionSpacing>
-								<ThumbComment 
-									commentObjId={comment._id} 
-									votes={comment.votesCount}
-								/>
+            <CardActions className={classes.actions} disableActionSpacing>
+              <ThumbComment
+                commentObjId={comment._id}
+                votes={comment.votesCount}
+              />
+              {/* reply icon */}
+              <IconButton
+                aria-label="Reply"
+                onClick={this.handleDisplayReplyCompose.bind(
+                  this,
+                  comment._id
+                )}
+              >
+                <Reply style={{ fontSize: 20 }} />
+              </IconButton>
+              &nbsp;&nbsp;
+              {// only show them if the owner of the post and the logged in user are the same
+              data.user._id === comment.commentUser[0]._id && (
+                <IconButton
+                  aria-label="Edit"
+                  onClick={this.handleEdit.bind(
+                    this,
+                    comment._id,
+                    comment.content
+                  )}
+                >
+                  <Edit style={{ fontSize: 20 }} />
+                </IconButton>
+              )}
+              {// only show them if the owner of the post and the logged in user are the same
+              data.user._id === comment.commentUser[0]._id && (
+                <IconButton
+                  aria-label="delete"
+                  onClick={this.handleCommentDelete.bind(this, comment._id)}
+                >
+                  <Remove style={{ fontSize: 20 }} />
+                </IconButton>
+              )}
+              {//  fetch replies for this comment
+              // if reply exist for this comment then show this
+              typeof comment.replyCount[0] !== "undefined" && (
+                <Typography style={{ fontSize: 11 }}>
+                  Replies &nbsp;
+                  {typeof comment.replyCount[0] !== "undefined"
+                    ? comment.replyCount[0].count
+                    : ""}
+                </Typography>
+              )}
+              &nbsp;&nbsp;
+              <CommentCoin
+                // topic object id
+                topicObjId={data.siteTopic[0]._id}
+                // comment id
+                commentId={comment.id}
+                handleOpen={this.handleNotLoggedIn}
+                // comment owner id
+                commentUserId={comment.commentUser[0].id}
+              />
+            </CardActions>
 
-								{/* reply icon */}
-								<IconButton aria-label="Reply" onClick={this.handleDisplayReplyCompose.bind(this, comment._id)} >
-									<Reply style={{ fontSize: 20 }} />
-								</IconButton>
-								&nbsp;&nbsp;
+            {/* tips for comment */}
+            <TopicCoins gift={comment.gifts} />
 
-								{
-									// only show them if the owner of the post and the logged in user are the same
-									data.user._id === comment.commentUser[0]._id &&
-										<IconButton aria-label="Edit" onClick={this.handleEdit.bind(this, comment._id, comment.content)} >
-											<Edit style={{ fontSize: 20 }} />
-										</IconButton>
-								}
-								{
-									// only show them if the owner of the post and the logged in user are the same
-									data.user._id === comment.commentUser[0]._id &&
-										<IconButton aria-label="delete" onClick={this.handleCommentDelete.bind(this, comment._id)} >
-											<Remove style={{ fontSize: 20 }} />
-										</IconButton>
-								}
+            {/* display reply form */}
+            {/* {this.displayReplyForm(comment._id, comment.id, comment.commentUser[0].username)} */}
 
-								{
-									 //  fetch replies for this comment
-									 // if reply exist for this comment then show this
-								 typeof comment.replyCount[0] !== "undefined" &&
-									<Typography 
-										style={{ fontSize: 11 }}
-									>
-										Replies
-										&nbsp;
-										{typeof comment.replyCount[0] !== "undefined" ? comment.replyCount[0].count : ""}
-									</Typography> 
-								}
-
-								&nbsp;&nbsp;
-								<CommentCoin 
-									// topic object id
-									topicObjId={data.siteTopic[0]._id}
-									// comment id
-									commentId={comment.id}
-									handleOpen={this.handleNotLoggedIn}
-									// comment owner id
-									commentUserId={comment.commentUser[0].id}
-								/>
-							</CardActions>
-
-
-							{/* tips for comment */}
-							<TopicCoins gift={comment.gifts} />
-
-
-
-							{/* display reply form */}
-							{/* {this.displayReplyForm(comment._id, comment.id, comment.commentUser[0].username)} */}
-							
-
-							{/* display replies and it component */}
-							<Replies 
-								replyValues={replyValues} 
-								reply={reply}
-								username={comment.commentUser[0].username}
-								commentId={comment.id} 
-								handleReply={this.handleReply}
-								totalReplies={typeof comment.replyCount[0] !== "undefined" ? comment.replyCount[0].count : 0}
-								commentObjId={comment._id}
-								handleUpdateReply={this.handleUpdateReply}
-							/>
-							
-						</Card>
-					))
-				}
-        <Warning open={open} handleClose={this.handleNotLoggedIn}/>
-			</React.Fragment>
+            {/* display replies and it component */}
+            <Replies
+              replyValues={replyValues}
+              reply={reply}
+              username={comment.commentUser[0].username}
+              commentId={comment.id}
+              handleReply={this.handleReply}
+              totalReplies={
+                typeof comment.replyCount[0] !== "undefined"
+                  ? comment.replyCount[0].count
+                  : 0
+              }
+              commentObjId={comment._id}
+              handleUpdateReply={this.handleUpdateReply}
+            />
+          </Card>
+        ))}
+        <Warning open={open} handleClose={this.handleNotLoggedIn} />
+      </React.Fragment>
     );
   }
 }

@@ -241,104 +241,149 @@ class Repiles extends React.Component {
 		
 
     return (
-			<div style={{ backgroundColor: "#fafafa" }}>
-				{this.displayReplyForm()}
-				{
-					replyValues.map((reply, index) => (
-						<Card className={classes.semicard} key={index} >
-							<CardHeader
-								classes = {
-									{
-										title: classes.time,
-										subheader: classes.time // class name, e.g. `classes-nesting-root-x`
-									}
-								}
-								avatar={
-									<Link href={"/profile/" + reply.user[0]._id + "/@" + reply.user[0].username}>
-										<a style={{ textDecoration: 'none' }}>
-											<Thumbnails 
-												size="xs" borderColor="black" borderWidth={1}
-												name={reply.user[0].username}
-												url = {
-													// check if user profile image exist
-													reply.user[0].profileimage === "" || !reply.user[0].profileimage ?
-														null 
-													:
-														config.profileimage + reply.user[0].profileimage
-												}
-											/>
-										</a>
-									</Link>
-								}
-								titleTypographyProps={{ fontSize: 12 }}
-								style={{ padding: "8px 25px"  }}
-								action={
-									data.user._id === reply.user[0]._id &&
-									<CardActions className={classes.actions} disableActionSpacing>
-										<div style={{ flexGrow: 1 }} />
-										<IconButton 
-											aria-label="Thumbs Up" 
-											onClick={this.enableEdit.bind(this, reply._id, reply.content)} 
-											className={classes.iconspacing} >
-											<Edit style={{ fontSize: 14 }} /> 
-										</IconButton>
-										<IconButton 
-											aria-label="delete" 
-											onClick={this.handleDeleteReply.bind(this, reply._id)} 
-											className={classes.iconspacing} >
-											<RemoveCircle style={{ fontSize: 14 }} /> 
-										</IconButton>
-									</CardActions>
-								}
-								title={
-									<Link href={"/profile/" + reply.user[0]._id + "/@" + reply.user[0].username} >
-										<a style={{ color: '#1F7BD8', textDecoration: 'none' }}>
-											<strong style={{ color: 'gray' }}>@</strong>
-											{reply.user[0].username}
-										</a>
-									</Link>
-								}
-								subheader={
-									<p style={{ fontSize: 10, margin: 0 }} >
-										{Moment(reply.created_at).locale(Lang.locale).fromNow()}
-									</p>
-								}
-							/>
-							<CardContent style={{ paddingTop: 0, paddingBottom: 9, paddingLeft: 25, paddingRight: 25  }}>
-								{
-									edit && edit === reply._id ?
-										<form className={classes.container} noValidate autoComplete="off">
-											<TextField
-												label={<span style={{ fontSize: 12 }} >Edit Reply</span>}
-												style={{ margin: 8, marginTop: -5, fontSize: 12 }}
-												onChange={this.handleChange}
-												fullWidth
-												value={content}
-												margin="normal"
-												multiline
-											/>
-											<Button 
-												color="secondary" 
-												style={{ marginTop: 27, marginTop: -5 }} 
-												className={classes.button}
-												onClick={this.handleReplyEdit}
-											>
-												Save
-											</Button>
-										</form>
-									:
-										<Typography component="p" style={{ fontSize: 15, fontWeight: 'lighter' }}>
-											<Linkify tagName="p">
-												{reply.content}
-											</Linkify>
-										</Typography>
-								}
-							</CardContent>
-						</Card>
-					))
-				}
-				{this.displayLoadMoreButton()}
-			</div>
+      <div style={{ backgroundColor: "#fafafa" }}>
+        {this.displayReplyForm()}
+        {replyValues.map((reply, index) => (
+          <Card className={classes.semicard} key={index}>
+            <CardHeader
+              classes={{
+                title: classes.time,
+                subheader: classes.time // class name, e.g. `classes-nesting-root-x`
+              }}
+              avatar={
+                <Link
+                  href={
+                    "/profile/" +
+                    reply.user[0]._id +
+                    "/@" +
+                    reply.user[0].username
+                  }
+                >
+                  <a style={{ textDecoration: "none" }}>
+                    <Thumbnails
+                      size="xs"
+                      borderColor="black"
+                      borderWidth={1}
+                      name={reply.user[0].username}
+                      url={
+                        // check if user profile image exist
+                        reply.user[0].profileimage === "" ||
+                        !reply.user[0].profileimage
+                          ? null
+                          : config.profileimage + reply.user[0].profileimage
+                      }
+                    />
+                  </a>
+                </Link>
+              }
+              titleTypographyProps={{ fontSize: 12 }}
+              style={{ padding: "8px 25px" }}
+              action={
+                data.user._id === reply.user[0]._id && (
+                  <CardActions
+                    className={classes.actions}
+                    disableActionSpacing
+                  >
+                    <div style={{ flexGrow: 1 }} />
+                    <IconButton
+                      aria-label="Thumbs Up"
+                      onClick={this.enableEdit.bind(
+                        this,
+                        reply._id,
+                        reply.content
+                      )}
+                      className={classes.iconspacing}
+                    >
+                      <Edit style={{ fontSize: 14 }} />
+                    </IconButton>
+                    <IconButton
+                      aria-label="delete"
+                      onClick={this.handleDeleteReply.bind(this, reply._id)}
+                      className={classes.iconspacing}
+                    >
+                      <RemoveCircle style={{ fontSize: 14 }} />
+                    </IconButton>
+                  </CardActions>
+                )
+              }
+              title={
+                <Link
+                  href={
+                    "/profile/" +
+                    reply.user[0]._id +
+                    "/@" +
+                    reply.user[0].username
+                  }
+                >
+                  <a style={{ color: "#1F7BD8", textDecoration: "none" }}>
+                    <strong style={{ color: "gray" }}>@</strong>
+                    {reply.user[0].username}
+                  </a>
+                </Link>
+              }
+              subheader={
+                <p style={{ fontSize: 10, margin: 0 }}>
+                  {Moment(reply.created_at)
+                    .locale(Lang.locale)
+                    .fromNow()}
+                </p>
+              }
+            />
+            <CardContent
+              style={{
+                paddingTop: 0,
+                paddingBottom: 9,
+                paddingLeft: 25,
+                paddingRight: 25
+              }}
+            >
+              {edit && edit === reply._id ? (
+                <form
+                  className={classes.container}
+                  noValidate
+                  autoComplete="off"
+                >
+                  <TextField
+                    label={<span style={{ fontSize: 12 }}>Edit Reply</span>}
+                    style={{ margin: 8, marginTop: -5, fontSize: 12 }}
+                    onChange={this.handleChange}
+                    fullWidth
+                    value={content}
+                    margin="normal"
+                    multiline
+                  />
+                  <Button
+                    color="secondary"
+                    style={{ marginTop: 27, marginTop: -5 }}
+                    className={classes.button}
+                    onClick={this.handleReplyEdit}
+                  >
+                    Save
+                  </Button>
+                </form>
+              ) : (
+                <Typography
+                  component="p"
+                  style={{ fontSize: 15, fontWeight: "lighter" }}
+                >
+                  <Linkify tagName="p">
+                    {/* {reply.content} */}
+                    {reply.content.split("\n").map(function(item, key) {
+                      return (
+                        <span key={key}>
+                          {item}
+                          <br />
+                        </span>
+                      );
+                    })}
+                  </Linkify>
+                </Typography>
+              )}
+            </CardContent>
+          </Card>
+        ))}
+        {this.displayLoadMoreButton()}
+      </div>
     );
   }
 }
