@@ -141,6 +141,8 @@ class SiteAbout extends React.Component {
 
           <CardActionIcons
             title={data.siteTopic[0].title}
+            views={typeof data.siteTopic[0].views !== "undefined" ? data.siteTopic[0].views.length : 0}
+            gift={data.siteTopic[0].gift.length}
             votes={data.siteTopic[0].votes}
             comment={data.siteTopic[0].comment.length}
             topicId={data.siteTopic[0].id}
