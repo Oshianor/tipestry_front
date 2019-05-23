@@ -30,6 +30,8 @@ const styles = theme => ({
   },
 });
 
+
+
 class Thumb extends React.Component {
   state = {
     count: "",
@@ -42,39 +44,41 @@ class Thumb extends React.Component {
 
   async componentDidMount() {
     let token = localStorage.getItem('token');
+    const { votes } = this.props;
 
-    // this.setState({
-    //   count: typeof votes[0] !== "undefined" ? votes[0].count : ""
-    // });
 
-    this.handleVotesCount();
+    this.setState({
+      count: typeof votes[0] !== "undefined" ? votes[0].count : ""
+    });
+
+    // this.handleVotesCount();
     this.handleUserVotes(token);
     
   }
 
-  round(value, precision) {
-    var multiplier = Math.pow(10, precision || 0);
-    return Math.round(value * multiplier) / multiplier;
-  }
+  // round(value, precision) {
+  //   var multiplier = Math.pow(10, precision || 0);
+  //   return Math.round(value * multiplier) / multiplier;
+  // }
 
-  handleVotesCount = async () => {
-    const { topicObjId } = this.props;
-    const options = {
-      method: "GET",
-      headers: {
-        "content-type": "application/json",
-        "Access-Control-Allow-Origin": "*"
-      },
-      url: config.api + "/votes/get/topic/upvotes/" + topicObjId
-    };
+  // handleVotesCount = async () => {
+  //   const { topicObjId } = this.props;
+  //   const options = {
+  //     method: "GET",
+  //     headers: {
+  //       "content-type": "application/json",
+  //       "Access-Control-Allow-Origin": "*"
+  //     },
+  //     url: config.api + "/votes/get/topic/upvotes/" + topicObjId
+  //   };
 
-    let vote = await axios(options);
-    // console.log("vote.data.content", vote.data.content);
+  //   let vote = await axios(options);
+  //   // console.log("vote.data.content", vote.data.content);
     
-    this.setState({
-      count: this.round(vote.data.content)
-    });
-  }
+  //   this.setState({
+  //     count: this.round(vote.data.content)
+  //   });
+  // }
 
 
   handleUserVotes = async (token) => {
@@ -103,6 +107,7 @@ class Thumb extends React.Component {
     }
   }
 
+
   async handleVote(votes) {
     const { topicObjId, handleOpen } = this.props;
     const { count } = this.state; 
@@ -111,7 +116,7 @@ class Thumb extends React.Component {
     if (token) {
       const options = {
         method: 'POST',
-        data: JSON.stringify({ count, votes, topicObjId }),
+        data: JSON.stringify({ votes, topicObjId }),
         headers: {
           'content-type': 'application/json',
           'Access-Control-Allow-Origin': '*',
@@ -171,11 +176,11 @@ class Thumb extends React.Component {
   }
   
   render() {
-    const { num, iconspacing } = this.props;
+    const { num, iconspacing, views , gift , comment} = this.props;
     const { count, open } = this.state;
-    console.log("this.state", this.state);
+    // console.log("this.state", this.props);
     
-    
+    let total = count + views + gift + comment;
     return (
       <React.Fragment>
         {/*  */}
@@ -187,7 +192,8 @@ class Thumb extends React.Component {
         &nbsp;
         <p className={num}>
           {/* chek if the count is zero then show nothing else show count */}
-          {count <= 0 ? "" : count}
+          {/* {count <= 0 ? "" : count} */}
+          {total <= 0 ? "" : total}
         </p>
 				&nbsp;&nbsp;
 

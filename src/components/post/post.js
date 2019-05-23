@@ -24,6 +24,9 @@ import { Lang } from '../../../lang';
 import Linkify from 'linkifyjs/react';
 import withWidth from '@material-ui/core/withWidth';
 
+
+
+
 const styles = theme => ({
   card: {
     margin: "10px", 
@@ -144,134 +147,178 @@ class Post extends React.Component {
     
     return (
       <Grid container justify="center">
-        {
-          // check if topic value exist
-          typeof topicValue[0] === "undefined" ?
-            <img src="/static/images/sadface.svg" style={{  marginTop: 20 }} />
-          :
-            topicValue.map((topic, index) => (
-              <Card className={classes.card} key={index}>
-                <CardHeader
-                  avatar={
-                    // link to the user profile
-                    <Link href={encodeURI("/profile/" + topic.user[0]._id + "/@" + topic.user[0].username)} >
-                      <a style={{ textDecoration: 'none' }}>
-                        <Thumbnails 
-                          name={topic.user[0].username}
-                          url = {
-                            // check if user profile image exist
-                            topic.user[0].profileimage === "" || !topic.user[0].profileimage ?
-                              null 
-                            :
-                              config.profileimage + topic.user[0].profileimage
-                          }
-                        />
-                      </a>
-                    </Link>
-                  }
-                  action={
-                    <Options 
-                    // sending token
-                      token={token}
-                      // topic object id
-                      topicObjId={topic._id}
-                      following={topic.following}
-                      // topic owner details
-                      topicUser={topic.user[0]}
-                    />
-                  }
-                  component="div"
-                  title={
-                    <Link href={encodeURI("/profile/" + topic.user[0]._id + "/@" + topic.user[0].username)} >
-                      <a style={{ color: '#1F7BD8', textDecoration: 'none' }}>
-                        <strong style={{ color: 'gray' }}>@</strong>
-                        {typeof topic.user[0] !== "undefined" ? `${topic.user[0].username !== "" ? topic.user[0].username : topic.user[0].name}` : "@No name"}
-                      </a>
-                    </Link>
-                  }
-                  subheader={
-                    <p style={{ fontSize: 10, margin: 0 }} >
-                      {/* {Moment(topic.created_at).fromNow()} */}
-                      {Moment(topic.created_at).locale(Lang.locale).fromNow()}
-                    </p>
-                  }
-                />
-                <CardContent>
-                  <Typography component="p">
-                    {/* post title */}
-                    <Link 
-                      href={"/topics/" + topic._id + "/" + this.nutralizeTitle(topic.title)} 
-                    >
-                      {this.displayTitle(topic.title)}
-                    </Link>
-                    <br />
-                  </Typography>
-                </CardContent>
-
-                <div>
-                  <a 
-                    href={"/topics/" + topic._id + "/" + this.nutralizeTitle(topic.title)}
-                    style={{ 
-                      position: 'relative',
-                      display: 'block'
-                    }}
+        {// check if topic value exist
+        typeof topicValue[0] === "undefined" ? (
+          <img src="/static/images/sadface.svg" style={{ marginTop: 20 }} />
+        ) : (
+          topicValue.map((topic, index) => (
+            <Card className={classes.card} key={index}>
+              <CardHeader
+                avatar={
+                  // link to the user profile
+                  <Link
+                    href={encodeURI(
+                      "/profile/" +
+                        topic.user[0]._id +
+                        "/@" +
+                        topic.user[0].username
+                    )}
                   >
-                    <img 
-                      style={{ 
-                        backgroundPosition: 'top',
-                        // height: 'auto',
-                        maxHeight: '-webkit-fill-available',
-                        width: '100%'
-                      }}
-                      src={
-                        typeof topic.sites[0] !== "undefined" ? 
-                          this.checkForGif(topic.sites[0].url) == 'gif' || this.checkForGif(topic.sites[0].url) == 'png' || this.checkForGif(topic.sites[0].url) == 'jpg' ?
-                            topic.sites[0].url
-                          :
-                            "//image.thum.io/get/auth/3228-www.tipestry.com/" + topic.sites[0].url
-                        :
-                          "//image.thum.io/get/auth/3228-www.tipestry.com/" + "https://tipestry.com"
-                      }  
-                    />
-                  </a>
-                </div>
-
-                <CardContent>
-                  <Typography component="p">
-                    {
-                      // post link
-                      typeof topic.sites[0] !== "undefined" &&
-                        <Link href={"/sites?s=" + topic.sites[0].url} >
-                          <a style={{ fontSize: 12 }} >
-                            {topic.sites[0].url.length > 50 ? topic.sites[0].url.substr(0, 40) + "..." : topic.sites[0].url}
-                          </a>
-                        </Link>
+                    <a style={{ textDecoration: "none" }}>
+                      <Thumbnails
+                        name={topic.user[0].username}
+                        url={
+                          // check if user profile image exist
+                          topic.user[0].profileimage === "" ||
+                          !topic.user[0].profileimage
+                            ? null
+                            : config.profileimage +
+                              topic.user[0].profileimage
+                        }
+                      />
+                    </a>
+                  </Link>
+                }
+                action={
+                  <Options
+                    // sending token
+                    token={token}
+                    // topic object id
+                    topicObjId={topic._id}
+                    following={topic.following}
+                    // topic owner details
+                    topicUser={topic.user[0]}
+                  />
+                }
+                component="div"
+                title={
+                  <Link
+                    href={encodeURI(
+                      "/profile/" +
+                        topic.user[0]._id +
+                        "/@" +
+                        topic.user[0].username
+                    )}
+                  >
+                    <a style={{ color: "#1F7BD8", textDecoration: "none" }}>
+                      <strong style={{ color: "gray" }}>@</strong>
+                      {typeof topic.user[0] !== "undefined"
+                        ? `${
+                            topic.user[0].username !== ""
+                              ? topic.user[0].username
+                              : topic.user[0].name
+                          }`
+                        : "@No name"}
+                    </a>
+                  </Link>
+                }
+                subheader={
+                  <p style={{ fontSize: 10, margin: 0 }}>
+                    {/* {Moment(topic.created_at).fromNow()} */}
+                    {Moment(topic.created_at)
+                      .locale(Lang.locale)
+                      .fromNow()}
+                  </p>
+                }
+              />
+              <CardContent>
+                <Typography component="p">
+                  {/* post title */}
+                  <Link
+                    href={
+                      "/topics/" +
+                      topic._id +
+                      "/" +
+                      this.nutralizeTitle(topic.title)
                     }
-                  </Typography>
-                </CardContent>
+                  >
+                    {this.displayTitle(topic.title)}
+                  </Link>
+                  <br />
+                </Typography>
+              </CardContent>
 
-                {/* card action icons */}
-                <CardActionsIcons 
-                // topic votes 
-                  votes={topic.votes}
-                  title={topic.title}
-                  // topic comment
-                  comment={typeof topic.comment[0] !== "undefined" ? topic.comment[0].count : ""}
-                  topicId={topic.id}
-                  topicUserId={topic.user[0].id}
-                  token={token}
-                  topicObjId={topic._id}
-                  // link for the topic
-                  link={"/topics/" + topic._id + "/" + this.nutralizeTitle(topic.title)}
-                />
-                
-                {/* coin details */}
-                <TopicCoin 
-                  gift={topic.gift}
-                />
-              </Card>
-            ))
-        }
+              <div>
+                <a
+                  href={
+                    "/topics/" +
+                    topic._id +
+                    "/" +
+                    this.nutralizeTitle(topic.title)
+                  }
+                  style={{
+                    position: "relative",
+                    display: "block"
+                  }}
+                >
+                  <img
+                    style={{
+                      backgroundPosition: "top",
+                      // height: 'auto',
+                      maxHeight: "-webkit-fill-available",
+                      width: "100%"
+                    }}
+                    src={
+                      typeof topic.sites[0] !== "undefined"
+                        ? this.checkForGif(topic.sites[0].url) == "gif" ||
+                          this.checkForGif(topic.sites[0].url) == "png" ||
+                          this.checkForGif(topic.sites[0].url) == "jpg"
+                          ? topic.sites[0].url
+                          : "//image.thum.io/get/auth/3228-www.tipestry.com/" +
+                            topic.sites[0].url
+                        : "//image.thum.io/get/auth/3228-www.tipestry.com/" +
+                          "https://tipestry.com"
+                    }
+                  />
+                </a>
+              </div>
+
+              <CardContent>
+                <Typography component="p">
+                  {// post link
+                  typeof topic.sites[0] !== "undefined" && (
+                    <Link href={"/sites?s=" + topic.sites[0].url}>
+                      <a style={{ fontSize: 12 }}>
+                        {topic.sites[0].url.length > 50
+                          ? topic.sites[0].url.substr(0, 40) + "..."
+                          : topic.sites[0].url}
+                      </a>
+                    </Link>
+                  )}
+                </Typography>
+              </CardContent>
+
+              {/* card action icons */}
+              <CardActionsIcons
+                // topic votes
+                views={typeof topic.views !== "undefined" ? topic.views.length : 0}
+                votes={topic.votes}
+                title={topic.title}
+                gift={topic.gift.length}
+                // topic comment
+                comment={
+                  typeof topic.comment[0] !== "undefined"
+                    ? topic.comment[0].count
+                    : ""
+                }
+                topicId={topic.id}
+                topicUserId={topic.user[0].id}
+                token={token}
+                topicObjId={topic._id}
+                // link for the topic
+                link={
+                  "/topics/" +
+                  topic._id +
+                  "/" +
+                  this.nutralizeTitle(topic.title)
+                }
+              />
+
+              {/* coin details */}
+              <TopicCoin gift={topic.gift} />
+            </Card>
+          ))
+        )}
       </Grid>
     );
   }

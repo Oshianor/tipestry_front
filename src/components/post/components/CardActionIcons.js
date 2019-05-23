@@ -136,56 +136,59 @@ class CardActionIcons extends React.Component {
       link,
       topicId,
       data,
-      title
+      title,
+      views,
+      gift
     } = this.props;
     // console.log('votes.length,', votes.length);
     const { open } = this.state;
     return (
-      <CardActions className={classes.actions} >
-
-        <Thumb 
-          votes={votes} 
-          token={token} 
-          topicObjId={topicObjId} 
-          iconspacing={classes.iconspacing} 
-          num={classes.num} 
+      <CardActions className={classes.actions}>
+        <Thumb
+          views={views}
+          comment={comment}
+          gift={gift}
+          votes={votes}
+          token={token}
+          topicObjId={topicObjId}
+          iconspacing={classes.iconspacing}
+          num={classes.num}
           handleOpen={this.handleOpen}
         />
-
-
         {/*  */}
         {this.displayFavour()}
-
-
         {/*  */}
         <Tooltip title={Lang.g2} aria-label="comments">
           <IconButton aria-label="comments" className={classes.iconspacing}>
-            <img src="/static/icons/comments.svg" alt="comments" width='25' height="25" />
+            <img
+              src="/static/icons/comments.svg"
+              alt="comments"
+              width="25"
+              height="25"
+            />
           </IconButton>
         </Tooltip>
-        <p className={classes.num} >
-          {comment}
-        </p>
-				&nbsp;&nbsp;
-
-
-
+        <p className={classes.num}>{comment}</p>
+        &nbsp;&nbsp;
         {/*  */}
         {/* <Tooltip title="Share Post" aria-label="Share"> */}
-          <SharePopover 
-            link={encodeURI(config.host + link)} 
-            handleOpen={this.handleOpen} 
-            placement='top' 
-            title={title}
-          />
+        <SharePopover
+          link={encodeURI(config.host + link)}
+          handleOpen={this.handleOpen}
+          placement="top"
+          title={title}
+        />
         {/* </Tooltip> */}
-
         {/* tips coin icons */}
-        {
-          typeof data.user.id !== "undefined" && topicUserId !== data.user.id &&
-            <Coin topicUserId={topicUserId} topicId={topicId} handleOpen={this.handleOpen} handleClose={this.handleClose} />
-        }
-
+        {typeof data.user.id !== "undefined" &&
+          topicUserId !== data.user.id && (
+            <Coin
+              topicUserId={topicUserId}
+              topicId={topicId}
+              handleOpen={this.handleOpen}
+              handleClose={this.handleClose}
+            />
+          )}
         <Warning open={open} handleClose={this.handleClose} />
       </CardActions>
     );
