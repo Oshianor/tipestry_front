@@ -73,6 +73,6 @@ class MyApp extends App {
 
 export default MyApp;
 
-// store.subscribe(() => {
-//   console.log("Store Changed, ", store.getState());
-// });
+store.subscribe(() => {
+  console.log("Store Changed, ", store.getState());
+});

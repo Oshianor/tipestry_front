@@ -44,11 +44,11 @@ class Thumb extends React.Component {
 
   async componentDidMount() {
     let token = localStorage.getItem('token');
-    const { votes } = this.props;
+    const { votes, views, gift, comment } = this.props;
 
 
     this.setState({
-      count: typeof votes[0] !== "undefined" ? votes[0].count : ""
+      count: typeof votes[0] !== "undefined" ? Number(votes[0].count) + Number(views) + Number(gift) + Number(comment) : ""
     });
 
     // this.handleVotesCount();
@@ -109,7 +109,7 @@ class Thumb extends React.Component {
 
 
   async handleVote(votes) {
-    const { topicObjId, handleOpen } = this.props;
+    const { topicObjId, handleOpen, views, gift, comment } = this.props;
     const { count } = this.state; 
     let token = localStorage.getItem('token');
 
@@ -131,7 +131,7 @@ class Thumb extends React.Component {
         if (vote.data.error === false) {
           this.setState({
             res: vote.data.content.reply,
-            count: vote.data.content.count
+            count: Number(vote.data.content.count) + Number(views) + Number(gift) + Number(comment)
           });
         }
       } catch (error) {
@@ -180,7 +180,7 @@ class Thumb extends React.Component {
     const { count, open } = this.state;
     // console.log("this.state", this.props);
     
-    let total = count + views + gift + comment;
+    // let total = Number(count) + Number(views) + Number(gift) + Number(comment);
     return (
       <React.Fragment>
         {/*  */}
@@ -193,7 +193,7 @@ class Thumb extends React.Component {
         <p className={num}>
           {/* chek if the count is zero then show nothing else show count */}
           {/* {count <= 0 ? "" : count} */}
-          {total <= 0 ? "" : total}
+          {count <= 0 ? "" : count}
         </p>
 				&nbsp;&nbsp;
 

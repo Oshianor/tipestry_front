@@ -138,8 +138,8 @@ class TopicList extends React.Component {
 				<List className={classes.root} key={topic._id} >
 					<ListItem alignItems="flex-start">
 						<ListItemAvatar>
-							<Link href={"/topics/" + topic._id + "/" + this.nutralizeTitle(topic.title)} >
-								<a style={{ textDecoration: 'none', margin: "6px -1px" }}>
+							{/* <Link href={"/topics/" + topic._id + "/" + this.nutralizeTitle(topic.title)} > */}
+								<a target="_blank" href={"/topics/" + topic._id + "/" + this.nutralizeTitle(topic.title)} style={{ textDecoration: 'none', margin: "6px -1px" }}>
 									<Thumbnails 
 										borderColor="black" 
 										borderWidth={2} 
@@ -152,16 +152,16 @@ class TopicList extends React.Component {
 										}
 									/>
 								</a>
-							</Link>
+							{/* </Link> */}
 						</ListItemAvatar>
 						<ListItemText
 							primary = {
-								<Link href={"/topics/" + topic._id + "/" + this.nutralizeTitle(topic.title)} >
-									<a style={{ color: '#1F7BD8', textDecoration: 'none', fontSize: 18 }} >
+								// <Link href={"/topics/" + topic._id + "/" + this.nutralizeTitle(topic.title)} >
+									<a target="_blank" href={"/topics/" + topic._id + "/" + this.nutralizeTitle(topic.title)} style={{ color: '#1F7BD8', textDecoration: 'none', fontSize: 18 }} >
 										{topic.title.length > 50 ? topic.title.substr(0, 40) + "..." : topic.title}
 										<Sitetopiccoin gift={topic.gift} />
 									</a>
-								</Link>
+								// </Link>
 							}
 							secondary={
 								<React.Fragment>
