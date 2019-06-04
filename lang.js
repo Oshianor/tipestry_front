@@ -105,6 +105,9 @@ export const Lang = {
 	// y3: "First Name",
 	// z3: "Last Name",
 	// a4: "Bio",
+	// b4: "Change Password",
+	// c4: "Personal Information",
+	// d4: "Update Profile",
 	// locale: "en"
 
 	// CHINESE
@@ -213,5 +216,8 @@ export const Lang = {
 	y3: "名字",
 	z3: "姓",
 	a4: "生物",
+	b4: "更改密码",
+	c4: "个人信息",
+	d4: "更新配置文件",
 	locale: "zh_cn"
 }

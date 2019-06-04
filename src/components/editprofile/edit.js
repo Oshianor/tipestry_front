@@ -165,7 +165,7 @@ class Edit extends React.Component {
     return (
       <div className={classes.root}>
         <Typography style={{ textAlign: "center" }} variant="h6">
-          Personal Information
+          {Lang.c4}
         </Typography>
         <Grid container justify="center" spacing={8}>
           <form className={classes.container} autoComplete="off">
@@ -234,7 +234,7 @@ class Edit extends React.Component {
               onClick={this.handleFormComplete.bind(this)}
             >
               {!loading ? (
-                "Update Profile"
+                Lang.d4
               ) : (
                 <CircularProgress
                   size={24}

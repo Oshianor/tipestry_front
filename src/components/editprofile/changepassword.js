@@ -233,7 +233,7 @@ class Changepassword extends React.Component {
     return (
       <div className={classes.root}>
         <Typography style={{ textAlign: "center" }} variant="h6">
-          Change Password
+          {Lang.b4}
         </Typography>
         <Grid container justify="center" spacing={8}>
           <form className={classes.container} autoComplete="off">
@@ -304,7 +304,7 @@ class Changepassword extends React.Component {
               onClick={this.handlePasswordChange.bind(this)}
             >
               {!loading ? (
-                "Change Password"
+                Lang.b4
               ) : (
                 <CircularProgress
                   size={24}
