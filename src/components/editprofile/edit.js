@@ -12,6 +12,9 @@ import Router from "next/router"
 import { config } from '../../../config';
 import Axios from 'axios';
 import { connect } from 'react-redux';
+import { Lang } from "../../../lang";
+
+
 
 const styles = theme => ({
   root: {
@@ -161,13 +164,15 @@ class Edit extends React.Component {
 
     return (
       <div className={classes.root}>
-        <Typography style={{ textAlign: 'center' }} variant="h6" >Personal Information</Typography>
+        <Typography style={{ textAlign: "center" }} variant="h6">
+          Personal Information
+        </Typography>
         <Grid container justify="center" spacing={8}>
           <form className={classes.container} autoComplete="off">
             <Grid item md={12}>
               <TextField
                 id="outlined-name"
-                label="Email"
+                label={Lang.x3}
                 className={classes.textField}
                 value={email}
                 readOnly
@@ -180,10 +185,10 @@ class Edit extends React.Component {
               <TextField
                 required
                 id="outlined-name"
-                label="First Name"
+                label={Lang.y3}
                 className={classes.textField}
                 value={first}
-                onChange={this.handleChange('first')}
+                onChange={this.handleChange("first")}
                 margin="normal"
                 variant="outlined"
                 onBlur={this.handleFirst}
@@ -196,10 +201,10 @@ class Edit extends React.Component {
               <TextField
                 required
                 id="outlined-name"
-                label="Last Name"
+                label={Lang.z3}
                 className={classes.textField}
                 value={last}
-                onChange={this.handleChange('last')}
+                onChange={this.handleChange("last")}
                 margin="normal"
                 variant="outlined"
                 onBlur={this.handleLast}
@@ -211,29 +216,33 @@ class Edit extends React.Component {
             <Grid item md={12}>
               <TextField
                 id="outlined-name"
-                label="Bio"
+                label={Lang.a4}
                 multiline
                 rows={3}
                 className={classes.textField}
                 value={bio}
-                onChange={this.handleChange('bio')}
+                onChange={this.handleChange("bio")}
                 margin="normal"
                 variant="outlined"
               />
             </Grid>
 
-              <Button
-                variant="contained"
-                color="primary"
-                disabled={loading}
-                onClick={this.handleFormComplete.bind(this)}
-              >
-                {!loading ? "Update Profile" : <CircularProgress size={24} className={classes.buttonProgress} />}
-              </Button>
-
-
+            <Button
+              variant="contained"
+              color="primary"
+              disabled={loading}
+              onClick={this.handleFormComplete.bind(this)}
+            >
+              {!loading ? (
+                "Update Profile"
+              ) : (
+                <CircularProgress
+                  size={24}
+                  className={classes.buttonProgress}
+                />
+              )}
+            </Button>
           </form>
-
         </Grid>
       </div>
     );

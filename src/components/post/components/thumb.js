@@ -178,7 +178,7 @@ class Thumb extends React.Component {
   render() {
     const { num, iconspacing, views , gift , comment} = this.props;
     const { count, open } = this.state;
-    // console.log("this.state", this.props);
+    console.log("this.state", this.state);
     
     // let total = Number(count) + Number(views) + Number(gift) + Number(comment);
     return (

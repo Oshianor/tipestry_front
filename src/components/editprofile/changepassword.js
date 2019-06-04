@@ -9,7 +9,8 @@ import green from '@material-ui/core/colors/green';
 import { Typography } from '@material-ui/core';
 import isEmpty from 'validator/lib/isEmpty';
 import Router from "next/router"
-import { config } from '../../../config';
+import { config } from "../../../config";
+import { Lang } from '../../../lang';
 import Axios from 'axios';
 import { connect } from 'react-redux';
 
@@ -231,78 +232,87 @@ class Changepassword extends React.Component {
     
     return (
       <div className={classes.root}>
-        <Typography style={{ textAlign: 'center' }} variant="h6" >Change Password</Typography>
+        <Typography style={{ textAlign: "center" }} variant="h6">
+          Change Password
+        </Typography>
         <Grid container justify="center" spacing={8}>
           <form className={classes.container} autoComplete="off">
-						{
-            res.error &&
-              <Typography variant="caption" gutterBottom style={{ margin: '0 8%', fontSize: 12, color: 'red' }}> 
+            {res.error && (
+              <Typography
+                variant="caption"
+                gutterBottom
+                style={{ margin: "0 8%", fontSize: 12, color: "red" }}
+              >
                 *{res.msg}
               </Typography>
-          	}
+            )}
             <Grid item md={12}>
               <TextField
-								error={passwordHelper.err}
-								name="password"
-								label="Current Password"
-								className={classes.textField}
-								value={password}
-								type="password"
-								onBlur={this.handleCurrentPassword}
-								onChange={this.onchnage}
-								helperText={passwordHelper.msg}
-								fullWidth
-								margin="normal"
-								variant="outlined"
-							/>
+                error={passwordHelper.err}
+                name="password"
+                label={Lang.v3}
+                className={classes.textField}
+                value={password}
+                type="password"
+                onBlur={this.handleCurrentPassword}
+                onChange={this.onchnage}
+                helperText={passwordHelper.msg}
+                fullWidth
+                margin="normal"
+                variant="outlined"
+              />
             </Grid>
 
             <Grid item md={12}>
               <TextField
-								error={newPasswordHelper.err}
-								name="newPassword"
-								label="New Password"
-								className={classes.textField}
-								value={newPassword}
-								type="password"
-								onBlur={this.handleNewPassword}
-								onChange={this.onchnage}
-								helperText={newPasswordHelper.msg}
-								fullWidth
-								margin="normal"
-								variant="outlined"
-							/>
+                error={newPasswordHelper.err}
+                name="newPassword"
+                label={Lang.u3}
+                className={classes.textField}
+                value={newPassword}
+                type="password"
+                onBlur={this.handleNewPassword}
+                onChange={this.onchnage}
+                helperText={newPasswordHelper.msg}
+                fullWidth
+                margin="normal"
+                variant="outlined"
+              />
             </Grid>
 
             <Grid item md={12}>
               <TextField
-								error={confirmPasswordHelper.err}
-								name="confirmPassword"
-								label="Confirm Password"
-								className={classes.textField}
-								value={confirmPassword}
-								onChange={this.onchnage}
-								onBlur={this.handleConfirmPassword}
-								type="password"
-								helperText={confirmPasswordHelper.msg}
-								fullWidth
-								margin="normal"
-								variant="outlined"
-							/>
+                error={confirmPasswordHelper.err}
+                name="confirmPassword"
+                label={Lang.w3}
+                className={classes.textField}
+                value={confirmPassword}
+                onChange={this.onchnage}
+                onBlur={this.handleConfirmPassword}
+                type="password"
+                helperText={confirmPasswordHelper.msg}
+                fullWidth
+                margin="normal"
+                variant="outlined"
+              />
             </Grid>
 
-              <Button
-                variant="contained"
-                color="primary"
-                disabled={loading}
-                onClick={this.handlePasswordChange.bind(this)}
-              >
-                {!loading ? "Change Password" : <CircularProgress size={24} className={classes.buttonProgress} />}
-              </Button>
-
-
+            <Button
+              variant="contained"
+              color="primary"
+              disabled={loading}
+              onClick={this.handlePasswordChange.bind(this)}
+            >
+              {!loading ? (
+                "Change Password"
+              ) : (
+                <CircularProgress
+                  size={24}
+                  className={classes.buttonProgress}
+                />
+              )}
+            </Button>
           </form>
-
         </Grid>
       </div>
     );
