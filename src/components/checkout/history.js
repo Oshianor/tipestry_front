@@ -72,15 +72,11 @@ class History extends React.Component {
 											{Lang.s2}
 										</TableCell>
 										<TableCell align="right">
-											{/* Tip Status */}
+											{/* Activity*/}
 											{Lang.t2}
 										</TableCell>
 										<TableCell align="right">
-											{/* Currency */}
-											{Lang.u2}
-										</TableCell>
-										<TableCell align="right">
-											{/* Amount */}
+											{/* Token */}
 											{Lang.v2}
 										</TableCell>
 										<TableCell align="right">
@@ -92,29 +88,49 @@ class History extends React.Component {
 								<TableBody>
 									{history.map(row => {
 										return (
-											<TableRow key={row.id}>
-												<TableCell component="th" scope="row">
-													{typeof row.user[0].name !== "undefined" ? row.user[0].name : row.user[0].username}
-												</TableCell>
-												<TableCell 
-													align="right"
-													style={ row.transactiontype === "received" ? { color: 'green' } : row.transactiontype === "withdrawal" ? { color: "orange" } : { color: 'red' } }>
-													{row.transactiontype}
-												</TableCell>
-												<TableCell align="right" >{row.wallettype}</TableCell>
-												<TableCell align="right">
-													{/* {row.amount} */}
-													{/* {
-														row.wallettype === 'bitcoin' ?
-															row.amount / 100000
-														:
-															row.amount / 1000
-													} */}
-													{this.renderMoney(row.amount, row.wallettype )}
-												</TableCell>
-												<TableCell align="right">{moment(row.created_at).locale(Lang.locale).format('ddd MMM YYYY')}</TableCell>
-											</TableRow>
-										);
+                      <TableRow key={row.id}>
+                        <TableCell
+                          component="th"
+                          scope="row"
+                        >
+                          {typeof row.user[0].name !==
+                          "undefined"
+                            ? row.user[0].name
+                            : row.user[0].username}
+                        </TableCell>
+                        <TableCell
+                          align="right"
+                          style={
+                            row.transactiontype ===
+                            "received"
+                              ? { color: "red" }
+                              : row.transactiontype ===
+                                "withdrawal"
+                              ? { color: "orange" }
+                              : { color: "green" }
+                          }
+                        >
+                          {row.transactiontype ===
+                          "received"
+                            ? "Gifted"
+														: row.transactiontype ===
+                                "withdrawal"
+															? 
+															"Withdrawal"
+															:
+															"Received"}
+                        </TableCell>
+                        <TableCell align="right">
+                          {row.amount + " " + row.wallettype}
+                        </TableCell>
+
+                        <TableCell align="right">
+                          {moment(row.created_at)
+                            .locale(Lang.locale)
+                            .format("lll")}
+                        </TableCell>
+                      </TableRow>
+                    );
 									})}
 								</TableBody>
 							</Table>
