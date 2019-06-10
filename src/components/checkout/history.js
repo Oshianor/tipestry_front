@@ -103,25 +103,25 @@ class History extends React.Component {
                           style={
                             row.transactiontype ===
                             "received"
-                              ? { color: "red" }
+                              ? { color: "green" }
                               : row.transactiontype ===
                                 "withdrawal"
                               ? { color: "orange" }
-                              : { color: "green" }
+                              : { color: "red" }
                           }
                         >
                           {row.transactiontype ===
                           "received"
-                            ? "Gifted"
-														: row.transactiontype ===
-                                "withdrawal"
-															? 
-															"Withdrawal"
-															:
-															"Received"}
+                            ? "Received"
+                            : row.transactiontype ===
+                              "withdrawal"
+                            ? "Withdrawal"
+                            : "Gifted"}
                         </TableCell>
                         <TableCell align="right">
-                          {row.amount + " " + row.wallettype}
+                          {row.amount +
+                            " " +
+                            row.wallettype}
                         </TableCell>
 
                         <TableCell align="right">
