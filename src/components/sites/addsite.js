@@ -112,7 +112,7 @@ class Addsite extends Component {
 		if (!data.includes(tag) && chipData.length <= 4) {
       chipData.push({
         key: tag + Math.floor(Math.random() * 10 + 1),
-        label: tag.toLocaleLowerCase()
+        label: tag.toLocaleLowerCase().replace(/[^A-Z0-9]+/gi, "")
       });
       this.setState({
         chipData,
@@ -138,7 +138,17 @@ class Addsite extends Component {
     const { title, message, chipData } = this.state;
     const { url } = this.props;
     let token = localStorage.getItem("token");
-    if (token && title !== "" && chipData.length > 0) {
+
+    if (chipData.length === 0) {
+      this.setState({
+        loading: false,
+        open: true,
+        msg: "Please ensure atleast one hashtag is added."
+      });
+      return false
+    }
+
+    if (token && title !== "") {
 			let tags = [];
       chipData.forEach(chip => {
         tags.push(chip.label);
@@ -174,11 +184,13 @@ class Addsite extends Component {
     } else {
       this.setState({
         open: true,
+        loading: false,
         msg: Lang.q
         // // "Title field can't be empty" // 标题字段不能为空
       });
     }
   }
+
 
   render() {
     const { classes } = this.props;
