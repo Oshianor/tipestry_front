@@ -25,7 +25,7 @@ const styles = theme => ({
 		overflowX: 'auto',
 	},
 	table: {
-		minWidth: 700,
+		minWidth: 600,
 	},
 });
 
@@ -54,6 +54,7 @@ class History extends React.Component {
       <div>
         <Dialog
           open={open}
+          fullScreen
           onClose={() => handleClose()}
           scroll="paper"
           aria-labelledby="scroll-dialog-title"

@@ -33,6 +33,7 @@ import { getTopics, getUser, setType, setPageNumber } from "../actions/data";
 import axios from 'axios';
 import { Lang } from "../../lang"
 import VerificationWarning from '../components/header/components/verificationWarning';
+import Search from '../components/search/search';
 
 
 
@@ -73,6 +74,7 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: "center",
     flexDirection: "row",
+    flexWrap: "wrap",
     alignItems: "center"
   }
 });
@@ -202,37 +204,12 @@ class Homepage extends Component {
 
               {/* post  */}
               <Grid item lg={6} xl={6} md={12} sm={12} xs={12}>
-                {/* <FormControl
-                  variant="outlined"
-                  disabled={loading}
-                  className={classes.formControl}
-                >
-                  <Typography variant="body1">
-                    Sort Post By &nbsp;
-                  </Typography>
-                  <Select
-                    value={data.type}
-                    onChange={this.handleChange}
-                    style={{ width: 150, height: 35 }}
-                    input={
-                      <OutlinedInput
-                        labelWidth={0}
-                        name="dataType"
-                        id="outlined-age-simple"
-                      />
-                    }
-                  >
-                    <MenuItem value="hot">Hot Post</MenuItem>
-                    <MenuItem value="recent">Most Recent</MenuItem>
-                  </Select>
-                </FormControl> */}
                 <div
                   // variant="outlined"
                   disabled={loading}
                   className={classes.formControl}
                 >
                   <Typography variant="body1">
-                    {/* Sort Post By  */}
                     {Lang.q3}
                     &nbsp;
                   </Typography>
@@ -243,7 +220,6 @@ class Homepage extends Component {
                     variant={data.type === "hot" ? "contained" : "text"}
                     color="primary"
                   >
-                    {/* Hot */}
                     {Lang.r3}
                   </Button>
                   <Button
@@ -253,9 +229,9 @@ class Homepage extends Component {
                     variant={data.type === "recent" ? "contained" : "text"}
                     color="primary"
                   >
-                    {/* Recent */}
                     {Lang.s3}
                   </Button>
+                  <Search />
                 </div>
 
                 <div className={classes.center}>
