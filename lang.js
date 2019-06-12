@@ -110,6 +110,7 @@ export const Lang = {
          b4: "Change Password",
          c4: "Personal Information",
          d4: "Update Profile",
+         e4: 'hashtag',
          locale: "en"
 
          // CHINESE
@@ -221,5 +222,6 @@ export const Lang = {
          // b4: "更改密码",
          // c4: "个人信息",
          // d4: "更新配置文件",
+        //  e4: '井号',
          // locale: "zh_cn"
        };
