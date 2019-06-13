@@ -34,7 +34,8 @@ import axios from 'axios';
 import { Lang } from "../../lang"
 import VerificationWarning from '../components/header/components/verificationWarning';
 import Search from '../components/search/search';
-
+import Radio from "@material-ui/core/Radio";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 
 const styles = theme => ({
@@ -71,10 +72,14 @@ const styles = theme => ({
   formControl: {
     margin: theme.spacing.unit,
     minWidth: 120,
-    display: 'flex',
+    display: "flex",
     justifyContent: "center",
     flexDirection: "row",
     flexWrap: "wrap",
+    alignItems: "center"
+  },
+  options: {
+    display: "flex",
     alignItems: "center"
   }
 });
@@ -88,6 +93,7 @@ class Homepage extends Component {
     token: null,
     loading: false,
     open: false,
+    searchBy: 'tag'
   };
 
   // handle drawer open
@@ -116,6 +122,11 @@ class Homepage extends Component {
     });
   };
 
+  handlesearchBy = event => {
+    this.setState({
+      searchBy: event.target.value
+    })
+  }
 
   // handle close of drawer
   handleDrawerClose = () => {
@@ -158,7 +169,9 @@ class Homepage extends Component {
 
   render() {
     const { data, classes } = this.props;
-    const { stopScroll, drawer, token, open, loading } = this.state;
+    console.log(this.state);
+    
+    const { stopScroll, drawer, token, open, loading, searchBy } = this.state;
     return (
       <div>
         <Header
@@ -231,7 +244,24 @@ class Homepage extends Component {
                   >
                     {Lang.s3}
                   </Button>
-                  <Search />
+                  <Search searchBy={searchBy} />
+                  <div className={classes.options}>
+                    <Typography>&nbsp;Search By:&nbsp;</Typography>
+                    <FormControlLabel
+                      value="tag"
+                      checked={searchBy === "tag"}
+                      onChange={this.handlesearchBy}
+                      control={<Radio />}
+                      label="Tag"
+                    />
+                    <FormControlLabel
+                      value="title"
+                      checked={searchBy === "title"}
+                      onChange={this.handlesearchBy}
+                      control={<Radio />}
+                      label="Title"
+                    />
+                  </div>
                 </div>
 
                 <div className={classes.center}>

@@ -15,32 +15,33 @@ import { config } from "../../../../config";
 import TopicCoin from './topicCoins';
 import { Lang } from '../../../../lang';
 import Linkify from 'linkifyjs/react';
-
+import Avatar from "@material-ui/core/Avatar";
+import Chip from "@material-ui/core/Chip";
 
 const styles = theme => ({
   card: {
-		margin: '2px 5%',
+    margin: "2px 5%",
     boxShadow: "0px 0px 0px 0px",
     // backgroundColor: 'navajowhite'
-    backgroundColor: '#fafafa'
+    backgroundColor: "#fafafa"
   },
   actions: {
-		display: 'flex',
-		padding: "0px 25px"
+    display: "flex",
+    padding: "0px 25px"
   },
   expand: {
-    transform: 'rotate(0deg)',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
+    transform: "rotate(0deg)",
+    transition: theme.transitions.create("transform", {
+      duration: theme.transitions.duration.shortest
     }),
     // marginLeft: 'auto',
     marginRight: "2%",
-    [theme.breakpoints.up('sm')]: {
-      marginRight: -8,
-    },
+    [theme.breakpoints.up("sm")]: {
+      marginRight: -8
+    }
   },
   expandOpen: {
-    transform: 'rotate(180deg)',
+    transform: "rotate(180deg)"
   },
   badge: {
     top: 0,
@@ -49,18 +50,28 @@ const styles = theme => ({
     height: 27,
     // The border color match the background color.
     border: `2px solid ${
-      theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[900]
-    }`,
+      theme.palette.type === "light"
+        ? theme.palette.grey[200]
+        : theme.palette.grey[900]
+    }`
   },
   iconspacing: {
-    margin: '0 3%',
-    [theme.breakpoints.down('xs')]: {
-      margin: '0 1%',
-    },
+    margin: "0 3%",
+    [theme.breakpoints.down("xs")]: {
+      margin: "0 1%"
+    }
   },
   avatar: {
-    backgroundColor: red[500],
+    backgroundColor: red[500]
   },
+  chip: {
+    margin: 1,
+    height: 20
+  },
+  chipAvater: {
+    height: 20,
+    width: 20
+  }
 });
 
 class SiteAbout extends React.Component {
@@ -136,12 +147,26 @@ class SiteAbout extends React.Component {
                   })}
               </Linkify>
               {/* {data.siteTopic[0].message} */}
+              {data.siteTopic[0].tags.map(tag => (
+                <Chip
+                  avatar={
+                    <Avatar className={classes.chipAvater}>#</Avatar>
+                  }
+                  label={tag}
+                  className={classes.chip}
+                  variant="filled"
+                />
+              ))}
             </Typography>
           </CardContent>
 
           <CardActionIcons
             title={data.siteTopic[0].title}
-            views={typeof data.siteTopic[0].views !== "undefined" ? data.siteTopic[0].views.length : 0}
+            views={
+              typeof data.siteTopic[0].views !== "undefined"
+                ? data.siteTopic[0].views.length
+                : 0
+            }
             gift={data.siteTopic[0].gift.length}
             votes={data.siteTopic[0].votes}
             comment={data.siteTopic[0].comment.length}

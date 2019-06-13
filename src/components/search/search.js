@@ -17,6 +17,7 @@ import { Typography } from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import IconButton from "@material-ui/core/IconButton";
 
+
 const styles = theme => ({
   grow: {
     flexGrow: 1,
@@ -138,6 +139,7 @@ class Search extends React.Component {
   }
 
   handleSearch = async e => {
+    const { searchBy }  = this.props;
     this.setState({
       value: e.target.value,
       res: []
@@ -149,9 +151,10 @@ class Search extends React.Component {
       });
 
       try {
-        let result = await axios.get(
-          config.api + "/topic/search/" + e.target.value
-        );
+        let result = await axios.post(config.api + "/topic/search", {
+          text: e.target.value,
+          searchBy
+        });
         this.setState({
           res: result.data,
           open: true,
