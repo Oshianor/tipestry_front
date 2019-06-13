@@ -147,7 +147,7 @@ class SiteAbout extends React.Component {
                   })}
               </Linkify>
               {/* {data.siteTopic[0].message} */}
-              {data.siteTopic[0].tags.map(tag => (
+              {typeof data.siteTopic[0].tags !== "undefined" && data.siteTopic[0].tags.map(tag => (
                 <Chip
                   avatar={
                     <Avatar className={classes.chipAvater}>#</Avatar>
