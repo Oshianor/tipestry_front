@@ -18,21 +18,21 @@ export const config = {
 	// port: 8008
 
 	// live
-	api: "https://tipestry.com/api",
-	url: "https://tipestry.com",
-	host: "https://tipestry.com",
-	profileimage: "https://tipestry.com/public/profile_images/",
-	base64: 'data:image/jpeg;base64,',
-	topic: "https://tipestry.com/public",
-	port: 4001
+	// api: "https://tipestry.com/api",
+	// url: "https://tipestry.com",
+	// host: "https://tipestry.com",
+	// profileimage: "https://tipestry.com/public/profile_images/",
+	// base64: 'data:image/jpeg;base64,',
+	// topic: "https://tipestry.com/public",
+	// port: 4001
 
 	
 	// cn
-	// api: "https://cn.tipestry.com/api",
-	// url: "https://cn.tipestry.com",
-	// host: "https://cn.tipestry.com",
-	// profileimage: "https://cn.tipestry.com/public/profile_images/",
-	// base64: 'data:image/jpeg;base64,',
-	// topic: "https://cn.tipestry.com/public",
-	// port: 5001
+	api: "https://cn.tipestry.com/api",
+	url: "https://cn.tipestry.com",
+	host: "https://cn.tipestry.com",
+	profileimage: "https://cn.tipestry.com/public/profile_images/",
+	base64: 'data:image/jpeg;base64,',
+	topic: "https://cn.tipestry.com/public",
+	port: 5001
 }
