@@ -22,32 +22,35 @@ import { config } from '../../../config';
 import { Lang } from '../../../lang';
 // import isURL from 'validator/lib/isURL';
 import Linkify from 'linkifyjs/react';
-import withWidth from '@material-ui/core/withWidth';
+// import withWidth from '@material-ui/core/withWidth';
+import Tags from "./components/tag"
+import TagPopover from './components/tagPopup';
+import axios from "axios";
 
 
 
 
 const styles = theme => ({
   card: {
-    margin: "10px", 
-    position: 'relative',
-    [theme.breakpoints.only('xs')]: {
+    margin: "10px",
+    position: "relative",
+    [theme.breakpoints.only("xs")]: {
       maxWidth: 450
     },
-    [theme.breakpoints.only('sm')]: {
+    [theme.breakpoints.only("sm")]: {
       maxWidth: 500
     },
-    [theme.breakpoints.only('md')]: {
+    [theme.breakpoints.only("md")]: {
       maxWidth: 500
     },
-    [theme.breakpoints.only('lg')]: {
+    [theme.breakpoints.only("lg")]: {
       maxWidth: 450
-    }, 
+    }
   },
   demo: {
     // width: '100%',
     marginTop: 20,
-    position: 'relative',
+    position: "relative",
     [theme.breakpoints.up("lg")]: {
       width: 1170
     }
@@ -55,7 +58,7 @@ const styles = theme => ({
   media: {
     height: 0,
     // minHeight: 400,
-    paddingTop: '56.25%', // 16:9
+    paddingTop: "56.25%" // 16:9
   },
   button: {
     // margin: theme.spacing.unit,
@@ -64,11 +67,11 @@ const styles = theme => ({
     fontSize: 10
   },
   actions: {
-    display: 'flex',
-    borderTop: '.5px solid gray'
+    display: "flex",
+    borderTop: ".5px solid gray"
   },
   avatar: {
-    backgroundColor: red[500],
+    backgroundColor: red[500]
   },
   home: {
     // [theme.breakpoints.only('xs')]: {
@@ -87,22 +90,25 @@ const styles = theme => ({
     // [theme.breakpoints.only('xl')]: {
     //   margin: '0px 5%',
     // },
+  },
+  chip: {
+    margin: 1,
+    height: 20
+  },
+  chipAvater: {
+    height: 20,
+    width: 20
   }
 });
 
 
-const masonryOptions = {
-  transitionDuration: 0
-};
-
-const imagesLoadedOptions = {
-  background: '.my-bg-image-el'
-}
-
 class Post extends React.Component {
   state = {
     token: null,
-    textId: null
+    textId: null,
+    open: false,
+    loading: false,
+    res: []
   }
 
   // check if the link if it is a gif so instead of the 
@@ -141,9 +147,36 @@ class Post extends React.Component {
   }
 
 
+  handleOpenTagFind = async (tag) => {
+    this.setState({
+      loading: true
+    });
+
+    let result = await axios.post(config.api + "/topic/search", {
+      text: tag,
+      searchBy: "tag"
+    });
+
+    console.log('result', result);
+    
+
+    this.setState({
+      res: result.data,
+      open: true,
+      loading: false
+    });
+  }
+
+  handleCloseTag = () => {
+    this.setState({
+      open: false
+    })
+  }
+
+
   render() {
     const { classes, topicValue, errMsg } = this.props;
-    const { token } = this.state;
+    const { token, open, res } = this.state;
     
     return (
       <Grid container justify="center">
@@ -235,6 +268,10 @@ class Post extends React.Component {
                     {this.displayTitle(topic.title)}
                   </Link>
                   <br />
+                  <Tags
+                    tags={topic.tags}
+                    handleTag={this.handleOpenTagFind}
+                  />
                 </Typography>
               </CardContent>
 
@@ -291,7 +328,11 @@ class Post extends React.Component {
               {/* card action icons */}
               <CardActionsIcons
                 // topic votes
-                views={typeof topic.views !== "undefined" ? topic.views.length : 0}
+                views={
+                  typeof topic.views !== "undefined"
+                    ? topic.views.length
+                    : 0
+                }
                 votes={topic.votes}
                 title={topic.title}
                 gift={topic.gift.length}
@@ -316,6 +357,7 @@ class Post extends React.Component {
 
               {/* coin details */}
               <TopicCoin gift={topic.gift} />
+              <TagPopover open={open} handleClose={this.handleCloseTag} data={res} />
             </Card>
           ))
         )}

@@ -17,6 +17,7 @@ import { Lang } from '../../../../lang';
 import Linkify from 'linkifyjs/react';
 import Avatar from "@material-ui/core/Avatar";
 import Chip from "@material-ui/core/Chip";
+import Tag from '../../post/components/tag';
 
 const styles = theme => ({
   card: {
@@ -75,6 +76,9 @@ const styles = theme => ({
 });
 
 class SiteAbout extends React.Component {
+  handleTag = () => {
+    console.log("click link");
+  };
   render() {
     const { classes, data, token } = this.props;
     if (typeof data.siteTopic[0] !== "undefined") {
@@ -135,28 +139,17 @@ class SiteAbout extends React.Component {
             <Typography component="p">
               <Linkify tagName="span">
                 {/* {data.siteTopic[0].message} */}
-                {data.siteTopic[0].message
-                  .split("\n")
-                  .map(function(item, key) {
-                    return (
-                      <span key={key}>
-                        {item}
-                        <br />
-                      </span>
-                    );
-                  })}
+                {data.siteTopic[0].message.split("\n").map(function(item, key) {
+                  return (
+                    <span key={key}>
+                      {item}
+                      <br />
+                    </span>
+                  );
+                })}
               </Linkify>
               {/* {data.siteTopic[0].message} */}
-              {typeof data.siteTopic[0].tags !== "undefined" && data.siteTopic[0].tags.map(tag => (
-                <Chip
-                  avatar={
-                    <Avatar className={classes.chipAvater}>#</Avatar>
-                  }
-                  label={tag}
-                  className={classes.chip}
-                  variant="filled"
-                />
-              ))}
+              <Tag tags={data.siteTopic[0].tags} handleTag={this.handleTag} />
             </Typography>
           </CardContent>
 
@@ -178,10 +171,7 @@ class SiteAbout extends React.Component {
               "/topics/" +
                 data.siteTopic[0]._id +
                 "/" +
-                data.siteTopic[0].title.replace(
-                  /[.*+?^$/{}()|[\]\\]/g,
-                  "-"
-                )
+                data.siteTopic[0].title.replace(/[.*+?^$/{}()|[\]\\]/g, "-")
             )}
           />
           {/* coin details */}
@@ -189,7 +179,7 @@ class SiteAbout extends React.Component {
         </Card>
       );
     } else {
-      return null
+      return null;
     }
   }
 }
