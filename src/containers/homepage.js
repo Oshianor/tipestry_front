@@ -216,7 +216,7 @@ class Homepage extends Component {
               </Hidden>
 
               {/* post  */}
-              <Grid item lg={6} xl={6} md={12} sm={12} xs={12}>
+              <Grid item lg={6} xl={6} md={6} sm={12} xs={12}>
                 <div
                   // variant="outlined"
                   disabled={loading}

@@ -18,7 +18,8 @@ routes.add('site', '/sites')
 routes.add('contests', '/contests')
 routes.add('privacypolicy', '/privacypolicy')
 routes.add('terms', '/terms')
-routes.add('userinfo', '/users/details')
+routes.add("userinfo", "/users/details");
+routes.add('hashtag', '/hashtag')
 
 
 

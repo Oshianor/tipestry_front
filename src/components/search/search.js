@@ -202,7 +202,7 @@ class Search extends React.Component {
   render() {
     const { classes } = this.props;
     const { open, res, loading } = this.state;
-    console.log("search", this.state);
+    // console.log("search", this.state);
 
     return (
       <div>

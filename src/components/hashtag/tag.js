@@ -9,9 +9,9 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import {
   getTopics
-} from "../../../actions/data";
+} from "../../actions/data";
 import axios from "axios";
-import { config } from "../../../../config";
+import { config } from "../../../config";
 
 
 const styles = theme => ({
@@ -26,7 +26,7 @@ const styles = theme => ({
 });
 
 class Tags extends Component {
-  async handleTagGet (tag) {
+  handleTagGet = (tag) => {
     const { getTopics } = this.props;
 
     let topics = await axios.get(
@@ -35,7 +35,7 @@ class Tags extends Component {
 
     console.log("rrrr", topics);
     
-    getTopics(topics.data.content);
+    getTopics(topics.data);
     Router.push('/hashtag?search=' + tag)
   };
 
@@ -52,7 +52,7 @@ class Tags extends Component {
               clickable
               color="primary"
               // href={"#" + tag}
-              onClick={this.handleTagGet.bind(this, tag)}
+              onClick={this.handleTagGet(tag)}
               className={classes.chip}
               variant="filled"
             />

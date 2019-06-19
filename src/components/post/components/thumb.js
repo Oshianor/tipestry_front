@@ -127,7 +127,7 @@ class Thumb extends React.Component {
 
       try {
         let vote = await axios(options);
-        console.log("vote.data.content.count", vote.data.content.count);
+        // console.log("vote.data.content.count", vote.data.content.count);
         if (vote.data.error === false) {
           this.setState({
             res: vote.data.content.reply,
@@ -178,7 +178,7 @@ class Thumb extends React.Component {
   render() {
     const { num, iconspacing, views , gift , comment} = this.props;
     const { count, open } = this.state;
-    console.log("this.state", this.state);
+    // console.log("this.state", this.state);
     
     // let total = Number(count) + Number(views) + Number(gift) + Number(comment);
     return (
