@@ -347,15 +347,20 @@ class Comments extends React.Component {
                 </Typography>
               )}
               &nbsp;&nbsp;
-              <CommentCoin
-                // topic object id
-                topicObjId={data.siteTopic[0]._id}
-                // comment id
-                commentId={comment.id}
-                handleOpen={this.handleNotLoggedIn}
-                // comment owner id
-                commentUserId={comment.commentUser[0].id}
-              />
+              {/* check if user is logged in and also if 
+              the user is not the creator of the comment */}
+              {typeof data.user.id !== "undefined" &&
+                comment.commentUser[0].id !== data.user.id && (
+                  <CommentCoin
+                    // topic object id
+                    topicObjId={data.siteTopic[0]._id}
+                    // comment id
+                    commentId={comment.id}
+                    handleOpen={this.handleNotLoggedIn}
+                    // comment owner id
+                    commentUserId={comment.commentUser[0].id}
+                  />
+                )}
             </CardActions>
 
             {/* tips for comment */}

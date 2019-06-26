@@ -24,7 +24,7 @@ import { Lang } from '../../../lang';
 import Linkify from 'linkifyjs/react';
 // import withWidth from '@material-ui/core/withWidth';
 import Tags from "./components/tag"
-import TagPopover from './components/tagPopup';
+// import TagPopover from './components/tagPopup';
 import axios from "axios";
 
 
@@ -147,25 +147,25 @@ class Post extends React.Component {
   }
 
 
-  handleOpenTagFind = async (tag) => {
-    this.setState({
-      loading: true
-    });
+  // handleOpenTagFind = async (tag) => {
+  //   this.setState({
+  //     loading: true
+  //   });
 
-    let result = await axios.post(config.api + "/topic/search", {
-      text: tag,
-      searchBy: "tag"
-    });
+  //   let result = await axios.post(config.api + "/topic/search", {
+  //     text: tag,
+  //     searchBy: "tag"
+  //   });
 
-    console.log('result', result);
+  //   console.log('result', result);
     
 
-    this.setState({
-      res: result.data,
-      open: true,
-      loading: false
-    });
-  }
+  //   this.setState({
+  //     res: result.data,
+  //     open: true,
+  //     loading: false
+  //   });
+  // }
 
   handleCloseTag = () => {
     this.setState({
@@ -357,7 +357,7 @@ class Post extends React.Component {
 
               {/* coin details */}
               <TopicCoin gift={topic.gift} />
-              <TagPopover open={open} handleClose={this.handleCloseTag} data={res} />
+              {/* <TagPopover open={open} handleClose={this.handleCloseTag} data={res} /> */}
             </Card>
           ))
         )}
