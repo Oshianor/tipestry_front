@@ -6,19 +6,19 @@ import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import Tipcoin from '../components/tipcoin/tipcoin';
 import Grid from '@material-ui/core/Grid';
-import Trends from '../components/trends/trends';
+// import Trends from '../components/trends/trends';
 import Userinfo from '../components/userinfo.js/userinfo';
 import Hidden from '@material-ui/core/Hidden';
 import withWidth from '@material-ui/core/withWidth';
 import compose from 'recompose/compose';
 import LeaderBoard from "../components/leaderscoreboard/scoreboard"
-import Popular from "../components/popular/popular";
+// import Popular from "../components/popular/popular";
 import { connect } from 'react-redux';
 import SiteInfo from '../components/siteinfo/siteinfo';
 import Dialog from '../components/reuseable/dialog';
 import Stage from "../components/stage/stage";
 import Button from "@material-ui/core/Button";
-import Input from "@material-ui/core/Input";
+import Paper from "@material-ui/core/Paper";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import FilledInput from "@material-ui/core/FilledInput";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -36,6 +36,7 @@ import VerificationWarning from '../components/header/components/verificationWar
 import Search from '../components/search/search';
 import Radio from "@material-ui/core/Radio";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Tag from "../components/post/components/tag";
 
 
 const styles = theme => ({
@@ -45,6 +46,10 @@ const styles = theme => ({
     height: "50vh",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover"
+  },
+  wrapitRoot: {
+    maxWidth: 220,
+    height: 300
   },
   new: {
     // flexGrow: 1,
@@ -93,7 +98,8 @@ class Homepage extends Component {
     token: null,
     loading: false,
     open: false,
-    searchBy: 'tag'
+    searchBy: 'tag',
+    tag: []
   };
 
   // handle drawer open
@@ -138,11 +144,20 @@ class Homepage extends Component {
     this.setState({
       token: localStorage.getItem("token")
     });
+    this.handleGetTags();
     addEventListener("scroll", this.trackScrolling);
   }
 
   componentWillUnmount() {
     removeEventListener("scroll", this.trackScrolling);
+  }
+
+
+  handleGetTags = async() => {
+    let tag = await axios.get(config.api + "/topic/top/hashtag");
+    this.setState({
+      tag: tag.data
+    })
   }
 
   // track scroolling . when scroll amost to the header
@@ -170,8 +185,9 @@ class Homepage extends Component {
   render() {
     const { data, classes } = this.props;
     // console.log(this.state);
-    
-    const { stopScroll, drawer, token, open, loading, searchBy } = this.state;
+
+
+    const { stopScroll, drawer, token, open, loading, searchBy, tag } = this.state;
     return (
       <div>
         <Header
@@ -205,11 +221,24 @@ class Homepage extends Component {
                           ? { position: "fixed", top: 90 }
                           : { position: "fixed" }
                       }
-                      // style={{ position: 'fixed' }}
                     >
                       {token && <Userinfo handleOpen={this.handleDialog} />}
-                      <Trends modal={false} />
-                      <Popular />
+                      {/* <Trends modal={false} />
+                      <Popular /> */}
+                      <Paper className={classes.wrapitRoot}>
+                        <Typography
+                          className={classes.text}
+                          variant="subheading"
+                        >
+                          Top Hashtags
+                        </Typography>
+                        <div className={classes.wrapit}>
+                          {
+                            typeof tag[0] !== "undefined" &&
+                              <Tag tags={tag} />
+                          }
+                        </div>
+                      </Paper>
                     </div>
                   </div>
                 </Grid>

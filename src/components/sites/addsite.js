@@ -226,6 +226,8 @@ class Addsite extends Component {
       tag,
       chipData
     } = this.state;
+    console.log("this.state", this.state);
+    
     return (
       <Paper className={classes.container}>
         <Typography
@@ -306,8 +308,11 @@ class Addsite extends Component {
           />
         </form> */}
 
-        <div className={classes.control}>
-          <ChipsArray chipData={chipData} handleDelete={this.handleDelete} />
+        <form onSubmit={this.handleHashtag} className={classes.control}>
+          <ChipsArray
+            chipData={chipData}
+            handleDelete={this.handleDelete}
+          />
 
           <TextField
             required
@@ -317,12 +322,12 @@ class Addsite extends Component {
             label={Lang.e4}
             value={tag}
             margin="normal"
-            placeholder="Add an hashtag and press enter to the spacebar"
+            placeholder="Enter a hashtag and press the enter key or spacebar"
             size="small"
             fullWidth
             variant="outlined"
           />
-        </div>
+        </form>
 
         <Button
           style={{ margin: "10px 20px" }}
