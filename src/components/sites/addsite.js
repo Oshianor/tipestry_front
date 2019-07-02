@@ -67,8 +67,8 @@ class Addsite extends Component {
     },
     loading: false,
     open: false,
-		msg: "",
-		tag: '',
+    msg: "",
+    tag: "",
     chipData: [{ key: "tipestry-678", label: "tipestry" }]
   };
 
@@ -101,15 +101,15 @@ class Addsite extends Component {
     return;
   };
 
-  handleHashtag = (e) => {
-		e.preventDefault();
-		const { tag, chipData } = this.state;
-		let data = [];
-		chipData.forEach(chip => {
-			data.push(chip.label)
-		});
-		
-		if (!data.includes(tag) && chipData.length <= 4) {
+  handleHashtag = e => {
+    e.preventDefault();
+    const { tag, chipData } = this.state;
+    let data = [];
+    chipData.forEach(chip => {
+      data.push(chip.label);
+    });
+
+    if (!data.includes(tag) && chipData.length <= 4) {
       chipData.push({
         key: tag + Math.floor(Math.random() * 10 + 1),
         label: tag.toLocaleLowerCase().replace(/[^A-Z0-9]+/gi, "")
@@ -119,7 +119,7 @@ class Addsite extends Component {
         tag: ""
       });
     }
-	}
+  };
 
   handleDelete = data => {
     const { chipData } = this.state;
@@ -128,6 +128,29 @@ class Addsite extends Component {
     this.setState({
       chipData: chipData.filter(chip => chip.key !== data.key)
     });
+  };
+
+  handleChangeTag = (e) => {
+    console.log("e.keyCode", e.keyCode, "e.key", e.key);
+    
+    if (e.keyCode === 32 || e.key === " " || e.key === "Spacebar") {
+      const { tag, chipData } = this.state;
+      let data = [];
+      chipData.forEach(chip => {
+        data.push(chip.label);
+      });
+
+      if (!data.includes(tag) && chipData.length <= 4) {
+        chipData.push({
+          key: tag + Math.floor(Math.random() * 10 + 1),
+          label: tag.toLocaleLowerCase().replace(/[^A-Z0-9]+/gi, "")
+        });
+        this.setState({
+          chipData,
+          tag: ""
+        });
+      }
+    }
   };
 
   // handle add topic
@@ -145,11 +168,11 @@ class Addsite extends Component {
         open: true,
         msg: "Please ensure atleast one hashtag is added."
       });
-      return false
+      return false;
     }
 
     if (token && title !== "") {
-			let tags = [];
+      let tags = [];
       chipData.forEach(chip => {
         tags.push(chip.label);
       });
@@ -191,7 +214,6 @@ class Addsite extends Component {
     }
   }
 
-
   render() {
     const { classes } = this.props;
     const {
@@ -200,8 +222,8 @@ class Addsite extends Component {
       message,
       loading,
       msg,
-			open,
-			tag,
+      open,
+      tag,
       chipData
     } = this.state;
     return (
@@ -264,7 +286,7 @@ class Addsite extends Component {
           multiline
           rows={3}
         />
-        <form onSubmit={this.handleHashtag} className={classes.control} >
+        {/* <form onSubmit={this.handleHashtag} className={classes.control} >
           <ChipsArray
             chipData={chipData}
             handleDelete={this.handleDelete}
@@ -282,7 +304,25 @@ class Addsite extends Component {
             fullWidth
             variant="outlined"
           />
-        </form>
+        </form> */}
+
+        <div className={classes.control}>
+          <ChipsArray chipData={chipData} handleDelete={this.handleDelete} />
+
+          <TextField
+            required
+            id="outlined-name"
+            onChange={this.handleChange("tag")}
+            onKeyUp={this.handleChangeTag}
+            label={Lang.e4}
+            value={tag}
+            margin="normal"
+            placeholder="Add an hashtag and press enter to the spacebar"
+            size="small"
+            fullWidth
+            variant="outlined"
+          />
+        </div>
 
         <Button
           style={{ margin: "10px 20px" }}
