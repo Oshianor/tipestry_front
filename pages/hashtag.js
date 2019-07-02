@@ -71,7 +71,7 @@ class Index extends React.Component {
         });
       }
     } catch (error) {
-      console.log("error", error.response);
+      // console.log("error", error.response);
       if (error.response.data.error) {
         localStorage.removeItem("token");
         Router.push("/login?sE=true");
@@ -94,7 +94,7 @@ class Index extends React.Component {
         search
 		);
 		
-		console.log("searcsearchsearchsearchsearchsearchh", topicsCont);
+		// console.log("searcsearchsearchsearchsearchsearchh", topicsCont);
 
     if (!topicsCont.data.error) {
       topicsCont.data.content.topic.forEach(obj => {
@@ -111,7 +111,7 @@ class Index extends React.Component {
 
   render() {
     const { loading, more } = this.state;
-		console.log("router", this.props);
+		// console.log("router", this.props);
 
     return (
       <div>

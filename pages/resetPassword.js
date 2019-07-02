@@ -24,7 +24,7 @@ class ForgotPassword extends Component {
   render() {
 		const { dataTopics } = this.props;
 		let user = JSON.parse(dataTopics);
-		console.log("user", user);
+		// console.log("user", user);
 		
     return (
       <div>

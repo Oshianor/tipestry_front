@@ -169,7 +169,7 @@ class Homepage extends Component {
 
   render() {
     const { data, classes } = this.props;
-    console.log(this.state);
+    // console.log(this.state);
     
     const { stopScroll, drawer, token, open, loading, searchBy } = this.state;
     return (
