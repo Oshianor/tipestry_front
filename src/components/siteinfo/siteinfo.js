@@ -82,7 +82,7 @@ class SiteInfo extends Component {
 						Tipestry &nbsp; {Lang.g3}
 					</a>
 					&nbsp;&nbsp;
-					<a href='https://tipestry.io/Tipestry-White-Paper.pdf' className={classes.link} >
+					<a href='https://tipestry.com/api/users/download' className={classes.link} >
 						{Lang.h3}
 					</a>
 					&nbsp;&nbsp;
