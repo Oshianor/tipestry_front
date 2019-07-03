@@ -49,7 +49,7 @@ const styles = theme => ({
   },
   wrapitRoot: {
     maxWidth: 220,
-    height: 300
+    height: 350
   },
   new: {
     // flexGrow: 1,
