@@ -137,19 +137,27 @@ class SiteAbout extends React.Component {
           />
           <CardContent style={{ padding: "0px 25px" }}>
             <Typography component="p">
-              <Linkify tagName="span">
-                {/* {data.siteTopic[0].message} */}
-                {data.siteTopic[0].message.split("\n").map(function(item, key) {
-                  return (
-                    <span key={key}>
-                      {item}
-                      <br />
-                    </span>
-                  );
-                })}
-              </Linkify>
+              {typeof data.siteTopic[0].message !== "undefined" ||
+                (data.siteTopic[0].message && (
+                  <Linkify tagName="span">
+                    {/* {data.siteTopic[0].message} */}
+                    {data.siteTopic[0].message
+                      .split("\n")
+                      .map(function(item, key) {
+                        return (
+                          <span key={key}>
+                            {item}
+                            <br />
+                          </span>
+                        );
+                      })}
+                  </Linkify>
+                ))}
               {/* {data.siteTopic[0].message} */}
-              <Tag tags={data.siteTopic[0].tags} handleTag={this.handleTag} />
+              <Tag
+                tags={data.siteTopic[0].tags}
+                handleTag={this.handleTag}
+              />
             </Typography>
           </CardContent>
 
@@ -171,7 +179,10 @@ class SiteAbout extends React.Component {
               "/topics/" +
                 data.siteTopic[0]._id +
                 "/" +
-                data.siteTopic[0].title.replace(/[.*+?^$/{}()|[\]\\]/g, "-")
+                data.siteTopic[0].title.replace(
+                  /[.*+?^$/{}()|[\]\\]/g,
+                  "-"
+                )
             )}
           />
           {/* coin details */}
