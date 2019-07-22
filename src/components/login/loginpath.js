@@ -24,7 +24,7 @@ import Axios from 'axios';
 import { config } from '../../../config';
 import { Lang } from '../../../lang';
 
-
+import ReCAPTCHA from "react-google-recaptcha";
 
 const styles = theme => ({
   root: {
@@ -106,34 +106,40 @@ const styles = theme => ({
 });
 
 class LoginPath extends Component {
-  state = {
-    loading: false,
-    email: "",
-    emailHelper: {
-      msg: "",
-      err: false
-    },
-    password: "",
-    passwordHelper: {
-      msg: "",
-      err: false
-    },
-    res: {
-      err: false,
-      msg: "",
-      status: "w"
-    }
-  };
+  constructor(props) {
+    super(props);
+
+     this.recaptchaRef = React.createRef();
+    
+    this.state = {
+      loading: false,
+      email: "",
+      emailHelper: {
+        msg: "",
+        err: false
+      },
+      password: "",
+      passwordHelper: {
+        msg: "",
+        err: false
+      },
+      res: {
+        err: false,
+        msg: "",
+        status: "w"
+      }
+    };
+  }
 
   handleMessageAlertClose = () => {
     this.setState({
-      res: { 
+      res: {
         err: false,
-        msg: '',
+        msg: "",
         status: ""
       }
-    })
-  }
+    });
+  };
 
   componentDidMount() {
     const { router } = this.props;
@@ -150,6 +156,12 @@ class LoginPath extends Component {
   }
 
   async handleLogin() {
+    const recaptchaValue = this.recaptchaRef.current.getValue();
+
+    console.log("recaptchaValue", recaptchaValue);
+    
+    // this.props.onSubmit(recaptchaValue);
+
     const { email, password, emailHelper, passwordHelper } = this.state;
     const { router, getToken } = this.props;
 
@@ -188,7 +200,7 @@ class LoginPath extends Component {
         this.setState({
           res: {
             error: false,
-            msg: "",
+            msg: ""
           },
           password: ""
         });
@@ -199,7 +211,11 @@ class LoginPath extends Component {
     } catch (error) {
       console.log("ERROR : ", error);
       this.setState({
-        res: { err: error.response.data.error, msg: error.response.data.msg, status: "d" },
+        res: {
+          err: error.response.data.error,
+          msg: error.response.data.msg,
+          status: "d"
+        },
         password: ""
       });
     }
@@ -273,6 +289,10 @@ class LoginPath extends Component {
     });
   };
 
+  onChange(value) {
+    console.log("Captcha value:", value);
+  }
+
   render() {
     const { classes } = this.props;
     const {
@@ -288,11 +308,7 @@ class LoginPath extends Component {
         {/* <Typography variant="h2" gutterBottom style={{ margin: '4% 8%' }} >Tipestry</Typography> */}
         <Link href="/" prefetch>
           <a>
-            <Typography
-              variant="h2"
-              gutterBottom
-              style={{ margin: "4% 8%" }}
-            >
+            <Typography variant="h2" gutterBottom style={{ margin: "4% 8%" }}>
               <img
                 src="/static/login/newlogo.png"
                 style={{ width: 200, height: 60 }}
@@ -318,7 +334,6 @@ class LoginPath extends Component {
           {Lang.s1}
         </Typography>
         <form className={classes.container} noValidate autoComplete="off">
-          
           <TextField
             error={emailHelper.err}
             name="email"
@@ -351,6 +366,12 @@ class LoginPath extends Component {
             variant="outlined"
           />
 
+          <ReCAPTCHA
+            ref={this.recaptchaRef}
+            sitekey="6LfC9q4UAAAAAMbyFnaZtaQyEOuiBKb1gI8QMZKx"
+            onChange={this.onChange}
+          />
+
           <Grid container spacing={24} style={{ margin: "0 8%" }}>
             <Grid item xs={6} sm={6} style={{ paddingLeft: 0 }}>
               <Button
@@ -377,7 +398,7 @@ class LoginPath extends Component {
                 className={classes.forgot}
               >
                 <Link href="/forgotpassword">
-                  <a>{Lang.r1/* Forgot Password // 忘记密码 */}</a>
+                  <a>{Lang.r1 /* Forgot Password // 忘记密码 */}</a>
                 </Link>
               </Typography>
             </Grid>

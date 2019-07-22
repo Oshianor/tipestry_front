@@ -15,7 +15,7 @@ class Login extends Component {
       <div>
         <LoginContainer />
       </div>
-    )
+    );
   }
 }
 export default Login;

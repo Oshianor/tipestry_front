@@ -429,8 +429,8 @@ class Faq extends Component {
         </ExpansionPanel>
         <ExpansionPanel
           square
-          expanded={expanded === "panel17"}
-          onChange={this.handleChange("panel17")}
+          expanded={expanded === "panel18"}
+          onChange={this.handleChange("panel18")}
         >
           <ExpansionPanelSummary>
             <Typography>
