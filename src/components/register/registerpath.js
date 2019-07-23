@@ -21,6 +21,7 @@ import { Lang } from '../../../lang';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import MessageAlert from "../reuseable/message";
+import ReCAPTCHA from "react-google-recaptcha";
 
 
 
@@ -85,91 +86,100 @@ const styles = theme => ({
 });
 
 class RegisterPath extends Component {
-  state = {
-    loading: false,
-    username: "",
-    usernameHelper: {
-      msg: "",
-      err: false
-    },
-    email: "",
-    emailHelper: {
-      msg: "",
-      err: false
-    },
-    password: "",
-    passwordHelper: {
-      msg: "",
-      err: false
-    },
-    confirmPassword: "",
-    confirmPasswordHelper: {
-      msg: "",
-      err: false
-    },
-    res: {
-      error: false,
-      msg: "",
-      status: 'w'
-    },
-    checked: null
-  };
+  constructor(props) {
+    super(props);
+
+    this.recaptchaRef = React.createRef();
+    this.state = {
+      loading: false,
+      username: "",
+      usernameHelper: {
+        msg: "",
+        err: false
+      },
+      email: "",
+      emailHelper: {
+        msg: "",
+        err: false
+      },
+      password: "",
+      passwordHelper: {
+        msg: "",
+        err: false
+      },
+      confirmPassword: "",
+      confirmPasswordHelper: {
+        msg: "",
+        err: false
+      },
+      res: {
+        error: false,
+        msg: "",
+        status: 'w'
+      },
+      checked: null
+    };
+  }
 
   handleRegister = async () => {
-    const { email, password, username } = this.state;
-    const { router, getToken } = this.props;
+    const recaptchaValue = this.recaptchaRef.current.getValue();
 
-    if (
-      !this.handleEmail() ||
-      !this.handlePassword() ||
-      !this.handleConfirmPassword() ||
-      !this.handleUsername()
-    ) {
-      return false;
-    }
-    this.setState({
-      loading: true
-    });
-    let refId = typeof router.query.i === "undefined" ? "" : router.query.i;
-    let data = {
-      email,
-      password,
-      username,
-      refId
-    };
+    if (recaptchaValue !== "") {
+      const { email, password, username } = this.state;
+      const { router, getToken } = this.props;
 
-    const options = {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        "Access-Control-Allow-Origin": "*"
-      },
-      data: JSON.stringify(data),
-      url: config.api + "/users"
-    };
-
-    try {
-      let register = await Axios(options);
-      console.log("register  ===>>>> ", register);
-      if (register.data.error) {
-        this.setState({
-          res: {
-            err: register.data.error,
-            msg: register.data.msg,
-            status: "d"
-          }
-        });
-      } else {
-        localStorage.setItem("token", register.headers["x-auth-token"]);
-        getToken(register.headers["x-auth-token"]);
-        router.push("/");
+      if (
+        !this.handleEmail() ||
+        !this.handlePassword() ||
+        !this.handleConfirmPassword() ||
+        !this.handleUsername()
+      ) {
+        return false;
       }
-    } catch (error) {
-      // console.log("ERROR : ", error);
+      this.setState({
+        loading: true
+      });
+      let refId = typeof router.query.i === "undefined" ? "" : router.query.i;
+      let data = {
+        email,
+        password,
+        username,
+        refId
+      };
+
+      const options = {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
+        data: JSON.stringify(data),
+        url: config.api + "/users"
+      };
+
+      try {
+        let register = await Axios(options);
+        console.log("register  ===>>>> ", register);
+        if (register.data.error) {
+          this.setState({
+            res: {
+              err: register.data.error,
+              msg: register.data.msg,
+              status: "d"
+            }
+          });
+        } else {
+          localStorage.setItem("token", register.headers["x-auth-token"]);
+          getToken(register.headers["x-auth-token"]);
+          router.push("/");
+        }
+      } catch (error) {
+        // console.log("ERROR : ", error);
+      }
+      this.setState({
+        loading: false
+      });
     }
-    this.setState({
-      loading: false
-    });
   };
 
   handleEmail = () => {
@@ -339,7 +349,11 @@ class RegisterPath extends Component {
         {/* <Typography variant="h2" gutterBottom style={{ margin: '4% 8%' }} > Tipestry</Typography> */}
         <Link href="/" prefetch>
           <a>
-            <Typography variant="h2" gutterBottom style={{ margin: "4% 8%" }}>
+            <Typography
+              variant="h2"
+              gutterBottom
+              style={{ margin: "4% 8%" }}
+            >
               <img
                 src="/static/login/newlogo.png"
                 style={{ width: 200, height: 60 }}
@@ -451,6 +465,14 @@ class RegisterPath extends Component {
               </Link>
             }
           />
+
+          <div style={{ margin: "0 8%" }}>
+            <ReCAPTCHA
+              ref={this.recaptchaRef}
+              sitekey="6LfC9q4UAAAAAMbyFnaZtaQyEOuiBKb1gI8QMZKx"
+              onChange={this.onChange}
+            />
+          </div>
 
           <Grid container spacing={24} style={{ margin: "0 8%" }}>
             <Grid item xs={6} sm={6} style={{ paddingLeft: 0 }}>

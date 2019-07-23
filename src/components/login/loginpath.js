@@ -157,72 +157,75 @@ class LoginPath extends Component {
 
   async handleLogin() {
     const recaptchaValue = this.recaptchaRef.current.getValue();
-
-    console.log("recaptchaValue", recaptchaValue);
     
     // this.props.onSubmit(recaptchaValue);
+    if (recaptchaValue !== "") {
+      const { email, password, emailHelper, passwordHelper } = this.state;
+      const { router, getToken } = this.props;
 
-    const { email, password, emailHelper, passwordHelper } = this.state;
-    const { router, getToken } = this.props;
+      if (!this.handleEmail() || !this.handlePassword()) {
+        return false;
+      }
+      this.setState({
+        loading: true
+      });
+      let data = {
+        email,
+        password
+      };
 
-    if (!this.handleEmail() || !this.handlePassword()) {
-      return false;
-    }
-    this.setState({
-      loading: true
-    });
-    let data = {
-      email,
-      password
-    };
+      // console.log(data);
+      const options = {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
+        data: JSON.stringify(data),
+        url: config.api + "/auth"
+      };
 
-    // console.log(data);
-    const options = {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        "Access-Control-Allow-Origin": "*"
-      },
-      data: JSON.stringify(data),
-      url: config.api + "/auth"
-    };
+      try {
+        let login = await Axios(options);
+        // console.log("LOGIN", login);
 
-    try {
-      let login = await Axios(options);
-      // console.log("LOGIN", login);
-
-      if (login.data.error) {
-        this.setState({
-          res: { err: login.data.error, msg: login.data.msg, status: "d" },
-          password: ""
-        });
-      } else {
+        if (login.data.error) {
+          this.setState({
+            res: {
+              err: login.data.error,
+              msg: login.data.msg,
+              status: "d"
+            },
+            password: ""
+          });
+        } else {
+          this.setState({
+            res: {
+              error: false,
+              msg: ""
+            },
+            password: ""
+          });
+          localStorage.setItem("token", login.headers["x-auth-token"]);
+          getToken(login.headers["x-auth-token"]);
+          router.push("/");
+        }
+      } catch (error) {
+        console.log("ERROR : ", error);
         this.setState({
           res: {
-            error: false,
-            msg: ""
+            err: error.response.data.error,
+            msg: error.response.data.msg,
+            status: "d"
           },
           password: ""
         });
-        localStorage.setItem("token", login.headers["x-auth-token"]);
-        getToken(login.headers["x-auth-token"]);
-        router.push("/");
       }
-    } catch (error) {
-      console.log("ERROR : ", error);
       this.setState({
-        res: {
-          err: error.response.data.error,
-          msg: error.response.data.msg,
-          status: "d"
-        },
+        loading: false,
         password: ""
       });
     }
-    this.setState({
-      loading: false,
-      password: ""
-    });
   }
 
   handleEmail = () => {
@@ -308,7 +311,11 @@ class LoginPath extends Component {
         {/* <Typography variant="h2" gutterBottom style={{ margin: '4% 8%' }} >Tipestry</Typography> */}
         <Link href="/" prefetch>
           <a>
-            <Typography variant="h2" gutterBottom style={{ margin: "4% 8%" }}>
+            <Typography
+              variant="h2"
+              gutterBottom
+              style={{ margin: "4% 8%" }}
+            >
               <img
                 src="/static/login/newlogo.png"
                 style={{ width: 200, height: 60 }}
@@ -366,11 +373,13 @@ class LoginPath extends Component {
             variant="outlined"
           />
 
-          <ReCAPTCHA
-            ref={this.recaptchaRef}
-            sitekey="6LfC9q4UAAAAAMbyFnaZtaQyEOuiBKb1gI8QMZKx"
-            onChange={this.onChange}
-          />
+          <div style={{ margin: "0 8%" }}>
+            <ReCAPTCHA
+              ref={this.recaptchaRef}
+              sitekey="6LfC9q4UAAAAAMbyFnaZtaQyEOuiBKb1gI8QMZKx"
+              onChange={this.onChange}
+            />
+          </div>
 
           <Grid container spacing={24} style={{ margin: "0 8%" }}>
             <Grid item xs={6} sm={6} style={{ paddingLeft: 0 }}>
