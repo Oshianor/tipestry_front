@@ -41,8 +41,10 @@ class UploadSite extends React.Component {
     if ( !isURL(event.target.value) ) {
       // {require_valid_protocol: true, protocols: ['http','https','ftp'], require_protocol: true}
 
-      this.setState({ msg: "You need to provided a valid web url" });
-      this.setState({ err: true });
+      this.setState({
+        msg: "You need to provided a valid web url",
+        err: true
+      });
       return false;
 
 
