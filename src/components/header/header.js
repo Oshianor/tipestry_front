@@ -36,6 +36,7 @@ import classNames from 'classnames';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import moment from 'moment';
 import VerificationWarning from './components/verificationWarning';
+import Searchpost from './searchpost';
 
 
 
@@ -316,6 +317,7 @@ class Header extends React.Component {
 										{/* get started */}
 									</Button>
 							}
+							<Searchpost />
 						</Grid>
           </Grid>
         </div>

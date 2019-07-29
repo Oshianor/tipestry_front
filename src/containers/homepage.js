@@ -26,17 +26,17 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import { Typography } from '@material-ui/core';
+import Typography from "@material-ui/core/Typography";
 import { config } from "../../config";
 import { bindActionCreators } from "redux";
 import { getTopics, getUser, setType, setPageNumber } from "../actions/data";
 import axios from 'axios';
 import { Lang } from "../../lang"
 import VerificationWarning from '../components/header/components/verificationWarning';
-import Search from '../components/search/search';
-import Radio from "@material-ui/core/Radio";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
+// import Search from '../components/search/search';
 import Tag from "../components/post/components/tag";
+import UploadSite from '../components/uploadurl/uploadsite';
+import Ads from '../components/ads/ads';
 
 
 const styles = theme => ({
@@ -48,8 +48,12 @@ const styles = theme => ({
     backgroundSize: "cover"
   },
   wrapitRoot: {
-    maxWidth: 220,
-    height: 350
+    maxWidth: 250,
+    padding: 5,
+    boxShadow: "0px 0px 1px 0px",
+    color: "grey",
+    borderRadius: 0,
+    maxHeight: 350
   },
   new: {
     // flexGrow: 1,
@@ -83,22 +87,32 @@ const styles = theme => ({
     flexWrap: "wrap",
     alignItems: "center"
   },
+  formControlNew: {
+    margin: theme.spacing.unit,
+    minWidth: 120,
+    display: "flex",
+    justifyContent: "center",
+    flexDirection: 'column',
+    alignItems: "center"
+  },
   options: {
     display: "flex",
     alignItems: "center"
-  }
+  },
+  // center: {
+  //   display: 
+  // }
 });
 
 
 class Homepage extends Component {
-
   state = {
     drawer: false,
     stopScroll: false,
     token: null,
     loading: false,
     open: false,
-    searchBy: 'tag',
+    searchBy: "tag",
     tag: []
   };
 
@@ -107,31 +121,26 @@ class Homepage extends Component {
     this.setState({ drawer: true });
   };
 
-
   async handleChange(type) {
     const { dataType } = this.state;
     const { getTopics, data, setType, setPageNumber } = this.props;
     this.setState({
       loading: true
-    })
-    let topics = await axios.get(config.api + '/topic?pageNumber=1&dataType=' + type);
+    });
+    let topics = await axios.get(
+      config.api + "/topic?pageNumber=1&dataType=" + type
+    );
     // console.log("type", type);
     getTopics({
       total: 0,
       topic: []
-    });    
+    });
     getTopics(topics.data.content);
     setType(type);
     setPageNumber(2);
     this.setState({
       loading: false
     });
-  };
-
-  handlesearchBy = event => {
-    this.setState({
-      searchBy: event.target.value
-    })
   }
 
   // handle close of drawer
@@ -139,7 +148,6 @@ class Homepage extends Component {
     this.setState({ drawer: false });
   };
 
-  
   componentDidMount() {
     this.setState({
       token: localStorage.getItem("token")
@@ -152,13 +160,12 @@ class Homepage extends Component {
     removeEventListener("scroll", this.trackScrolling);
   }
 
-
-  handleGetTags = async() => {
+  handleGetTags = async () => {
     let tag = await axios.get(config.api + "/topic/top/hashtag");
     this.setState({
       tag: tag.data
-    })
-  }
+    });
+  };
 
   // track scroolling . when scroll amost to the header
   trackScrolling = e => {
@@ -182,12 +189,25 @@ class Homepage extends Component {
     }));
   };
 
+  handleClose = () => {
+    this.setState({
+      uploadStatus: false
+    });
+  };
+
   render() {
     const { data, classes } = this.props;
     // console.log(this.state);
 
-
-    const { stopScroll, drawer, token, open, loading, searchBy, tag } = this.state;
+    const {
+      stopScroll,
+      drawer,
+      token,
+      open,
+      loading,
+      searchBy,
+      tag
+    } = this.state;
     return (
       <div>
         <Header
@@ -233,10 +253,9 @@ class Homepage extends Component {
                           Top Hashtags
                         </Typography>
                         <div className={classes.wrapit}>
-                          {
-                            typeof tag[0] !== "undefined" &&
-                              <Tag tags={tag} />
-                          }
+                          {typeof tag[0] !== "undefined" && (
+                            <Tag tags={tag} />
+                          )}
                         </div>
                       </Paper>
                     </div>
@@ -246,11 +265,16 @@ class Homepage extends Component {
 
               {/* post  */}
               <Grid item lg={6} xl={6} md={6} sm={12} xs={12}>
+
                 <div
                   // variant="outlined"
-                  disabled={loading}
-                  className={classes.formControl}
+                  // disabled={loading}
+                  className={classes.formControlNew}
                 >
+                  {/* upload url modal display */}
+                  <UploadSite />
+
+                <div className={classes.formControl} >
                   <Typography variant="body1">
                     {Lang.q3}
                     &nbsp;
@@ -273,27 +297,12 @@ class Homepage extends Component {
                   >
                     {Lang.s3}
                   </Button>
-                  <Search searchBy={searchBy} />
-                  <div className={classes.options}>
-                    <Typography>&nbsp;Search By:&nbsp;</Typography>
-                    <FormControlLabel
-                      value="tag"
-                      checked={searchBy === "tag"}
-                      onChange={this.handlesearchBy}
-                      control={<Radio />}
-                      label="Tag"
-                    />
-                    <FormControlLabel
-                      value="title"
-                      checked={searchBy === "title"}
-                      onChange={this.handlesearchBy}
-                      control={<Radio />}
-                      label="Title"
-                    />
                   </div>
                 </div>
 
+                {/* post component */}
                 <div className={classes.center}>
+                  {/* <Ads /> */}
                   <Post topicValue={data.topics.topic} source="topics" />
                 </div>
               </Grid>

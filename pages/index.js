@@ -14,6 +14,7 @@ import BottomScrollListerer from 'react-bottom-scroll-listener';
 import CookieConsent from "react-cookie-consent";
 import { Lang } from '../lang';
 import Router from "next/router";
+import Head from "next/head";
 
 
 class Index extends React.Component {
@@ -100,6 +101,20 @@ class Index extends React.Component {
 
     return (
       <div>
+        <Head>
+          {/* <link
+            rel="stylesheet"
+            type="text/css"
+            charset="UTF-8"
+            href="/static/containerStyle.css"
+          />
+          <link
+            rel="stylesheet"
+            type="text/css"
+            charset="UTF-8"
+            href="/static/sliderStyle.css"
+          /> */}
+        </Head>
         {loading ? (
           <Preloader />
         ) : (

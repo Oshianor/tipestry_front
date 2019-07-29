@@ -146,12 +146,12 @@ class MiniDrawer extends React.Component {
 						<ListItemText primary={Lang.n} />
 					</ListItem>
 					<Divider />
-					<ListItem button onClick={this.handleOpen('trendings')} >
+					{/* <ListItem button onClick={this.handleOpen('trendings')} >
 						<ListItemIcon>
 							<Trend />
 						</ListItemIcon>
 						<ListItemText primary={Lang.u1} />
-					</ListItem>
+					</ListItem> */}
 					<Divider />
 					<ListItem button onClick={this.handleOpen('score')}>
 						<ListItemIcon>
@@ -160,12 +160,12 @@ class MiniDrawer extends React.Component {
 						<ListItemText primary={Lang.x2} />
 					</ListItem>
 					<Divider />
-					<ListItem button onClick={this.handleOpen('star')}>
+					{/* <ListItem button onClick={this.handleOpen('star')}>
 						<ListItemIcon>
 							<Star />
 						</ListItemIcon>
 						<ListItemText primary={Lang.y2} />
-					</ListItem>
+					</ListItem> */}
 					{
 						token &&
 							<React.Fragment>
