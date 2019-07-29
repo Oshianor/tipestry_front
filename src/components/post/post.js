@@ -57,7 +57,7 @@ const styles = theme => ({
   },
   media: {
     height: 0,
-    // minHeight: 400,
+    // minHeight: 600,
     paddingTop: "56.25%" // 16:9
   },
   button: {
@@ -146,26 +146,6 @@ class Post extends React.Component {
     )
   }
 
-
-  // handleOpenTagFind = async (tag) => {
-  //   this.setState({
-  //     loading: true
-  //   });
-
-  //   let result = await axios.post(config.api + "/topic/search", {
-  //     text: tag,
-  //     searchBy: "tag"
-  //   });
-
-  //   console.log('result', result);
-    
-
-  //   this.setState({
-  //     res: result.data,
-  //     open: true,
-  //     loading: false
-  //   });
-  // }
 
   handleCloseTag = () => {
     this.setState({
@@ -291,8 +271,10 @@ class Post extends React.Component {
                   <img
                     style={{
                       backgroundPosition: "top",
-                      // height: 'auto',
-                      maxHeight: "-webkit-fill-available",
+                      // height: "auto",
+                      // minHeight: 500,
+                      minHeight: "-webkit-fill-available",
+                      // maxHeight: "-webkit-fill-available",
                       width: "100%"
                     }}
                     src={
@@ -380,6 +362,25 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps, )(Posts);
 
 
+  // handleOpenTagFind = async (tag) => {
+  //   this.setState({
+  //     loading: true
+  //   });
+
+  //   let result = await axios.post(config.api + "/topic/search", {
+  //     text: tag,
+  //     searchBy: "tag"
+  //   });
+
+  //   console.log('result', result);
+    
+
+  //   this.setState({
+  //     res: result.data,
+  //     open: true,
+  //     loading: false
+  //   });
+  // }
 
 {
   /* <CardMedia
