@@ -110,7 +110,7 @@ class UploadSite extends React.Component {
         >
           {/* Upload */}
           {!loading ? (
-            Lang.j2
+            'Search'
           ) : (
             <CircularProgress
               style={{ width: 35, height: 35, color: "red" }}

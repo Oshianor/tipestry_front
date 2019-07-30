@@ -18,7 +18,7 @@ const styles = theme => ({
   },
   but:{
     height: 50,
-    marginTop: 3,
+    marginTop: -17,
     borderRadius: 0
   }
 });
@@ -26,17 +26,22 @@ const styles = theme => ({
 
 class UploadSite extends React.Component {
   state = {
+    url: "",
     msg: "",
     err: true
   };
 
-  handleURLPost = async () => {
+  handleURLPost = async (e) => {
+    e.preventDefault();
     const { url } = this.state;
 
-    Router.push("/sites?s=" + url);
+    if (url !== "") {
+      Router.push("/sites?s=" + url);
+    }
   };
 
   handleURL = event => {
+    this.setState({ url: "" })
     // check if the url is valid
     if ( !isURL(event.target.value) ) {
       // {require_valid_protocol: true, protocols: ['http','https','ftp'], require_protocol: true}
@@ -79,24 +84,24 @@ class UploadSite extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <div>
-          <Typography>{Lang.i2}</Typography>
+        <form onSubmit={this.handleURLPost}>
+          {/* <Typography>{Lang.i2}</Typography> */}
           <TextField
             autoFocus
             margin="dense"
             style={{ maxWidth: 350 }}
             id="name"
             label={Lang.h2}
-            type="url"
+            // type="url"
             variant="outlined"
             fullWidth
             onChange={this.handleURL}
           />
           <FormHelperText style={{ color: "red" }}>{msg}</FormHelperText>
-        </div>
+        </form>
         <Button
           onClick={this.handleURLPost}
-          color="secondary"
+          color="primary"
           className={classes.but}
           variant="contained"
           disabled={err}
