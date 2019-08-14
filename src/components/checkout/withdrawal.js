@@ -87,8 +87,8 @@ class Withdrawal extends React.Component {
     //   return <img src="/static/tipcoins/eth.svg" alt="doge" style={{ width: 15, height: 15 }} />      
     // } else if(coin === 'ethtipc') {
     //   return <img src="/static/tipcoins/Tip-1.png" alt="doge" style={{ width: 15, height: 15 }} />
-    // } else if (coin === 'ethtipcoin') {
-    //   return <img src="/static/tipcoins/Tip-2.png" alt="doge" style={{ width: 15, height: 15 }} />
+    } else if (coin === 'ethtipcoin') {
+      return <img src="/static/tipcoins/Tip-2.png" alt="doge" style={{ width: 15, height: 15 }} />
     // } else if (coin === 'ethxrtcoin') {
     //   return <img src="/static/tipcoins/Tip-3.png" alt="doge" style={{ width: 15, height: 15 }} />
     }
@@ -297,6 +297,13 @@ class Withdrawal extends React.Component {
                     onClick={this.onChnage.bind(this, "dogecoin")}
                     className={classes.img}
                     style={coin === "dogecoin" ? bac : nobac}
+                  />
+                  <img
+                    src="/static/tipcoins/Tip-2.png"
+                    alt="tipcoin"
+                    onClick={this.onChnage.bind(this, "ethtipcoin")}
+                    className={classes.img}
+                    style={coin === "ethtipcoin" ? bac : nobac}
                   />
                 </div>
                 <Typography
