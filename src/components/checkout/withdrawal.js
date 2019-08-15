@@ -85,10 +85,10 @@ class Withdrawal extends React.Component {
       return <img src="/static/tipcoins/doge.svg" alt="doge" style={{ width: 15, height: 15 }} />
     // } else if (coin === 'ethcoin') {
     //   return <img src="/static/tipcoins/eth.svg" alt="doge" style={{ width: 15, height: 15 }} />      
-    // } else if(coin === 'ethtipc') {
-    //   return <img src="/static/tipcoins/Tip-1.png" alt="doge" style={{ width: 15, height: 15 }} />
-    } else if (coin === 'ethtipcoin') {
-      return <img src="/static/tipcoins/Tip-2.png" alt="doge" style={{ width: 15, height: 15 }} />
+    } else if(coin === 'ethtipc') {
+      return <img src="/static/tipcoins/Tip-1.png" alt="doge" style={{ width: 15, height: 15 }} />
+    // } else if (coin === 'ethtipcoin') {
+    //   return <img src="/static/tipcoins/Tip-2.png" alt="doge" style={{ width: 15, height: 15 }} />
     // } else if (coin === 'ethxrtcoin') {
     //   return <img src="/static/tipcoins/Tip-3.png" alt="doge" style={{ width: 15, height: 15 }} />
     }
@@ -118,7 +118,16 @@ class Withdrawal extends React.Component {
       amount,
       address,
     }
-    let amt = coin === "bitcoin" ? parseFloat(amount) - 0.0005 : parseFloat(amount) - 2;
+    let amt; 
+    if (coin === "bitcoin") {
+      amt = parseFloat(amount) - 0.0005;
+    } else if (coin === "dogecoin") {
+      amt = parseFloat(amount) - 2;
+    } else {
+      // not sure how much is network fee
+      amt = parseFloat(amount) - 2;
+    }
+
     if (token && amt > 0) {
       const options = {
         method: 'POST',
@@ -186,9 +195,9 @@ class Withdrawal extends React.Component {
   }
   
   render() {
-    console.log(this.state);
+    // console.log(this.state);
     
-    const { classes, open, handleClose, btc, doge } = this.props;
+    const { classes, open, handleClose, btc, doge, eth } = this.props;
     const {
       opener,
       msg,
@@ -260,7 +269,7 @@ class Withdrawal extends React.Component {
               </Typography>
             )}
 
-            {coin === "dogecoin" && opener && amount >= 500 && (
+            {coin === "dogecoin" && withdraw.err && amount >= 500 && (
               <Typography
                 style={{
                   color: "red",
@@ -275,6 +284,26 @@ class Withdrawal extends React.Component {
                 greater than{" "}
                 <strong style={{ textTransform: "uppercase" }}>
                   {coin === "bitcoin" ? 0.099 : 500}
+                </strong>{" "}
+                would be subject to review and approval of admin
+              </Typography>
+            )}
+
+            {coin === "ethtipc" && withdraw.err && amount >= 500 && (
+              <Typography
+                style={{
+                  color: "red",
+                  fontSize: 12,
+                  padding: "10px 0px"
+                }}
+              >
+                Withdraw of{" "}
+                <strong style={{ textTransform: "uppercase" }}>
+                  &nbsp; tipcoin
+                </strong>{" "}
+                greater than{" "}
+                <strong style={{ textTransform: "uppercase" }}>
+                  {coin === "ethtipc" ? 100 : 500}
                 </strong>{" "}
                 would be subject to review and approval of admin
               </Typography>
@@ -299,13 +328,14 @@ class Withdrawal extends React.Component {
                     style={coin === "dogecoin" ? bac : nobac}
                   />
                   <img
-                    src="/static/tipcoins/Tip-2.png"
+                    src="/static/tipcoins/Tip-1.png"
                     alt="tipcoin"
-                    onClick={this.onChnage.bind(this, "ethtipcoin")}
+                    onClick={this.onChnage.bind(this, "ethtipc")}
                     className={classes.img}
-                    style={coin === "ethtipcoin" ? bac : nobac}
+                    style={coin === "ethtipc" ? bac : nobac}
                   />
                 </div>
+
                 <Typography
                   style={{
                     color: "red",
@@ -324,7 +354,9 @@ class Withdrawal extends React.Component {
                   &nbsp;Maximum withdrawable balance is{" "}
                   {coin === "bitcoin"
                     ? btc.balance - 0.0005
-                    : doge.doge_balance - 2}
+                    : coin === "dogecoin"
+                    ? doge.doge_balance - 2
+                    : eth.tipapibalance - 2}
                   <strong style={{ textTransform: "uppercase" }}>
                     &nbsp;{coin}
                   </strong>

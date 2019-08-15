@@ -199,218 +199,298 @@ class CoinDetails extends React.Component{
 		const { open, btc, withdraw, copied } = this.state;
 		const { classes, data } = this.props;
 		return (
-			<div className={classes.root} >
-				<div className={classes.paperRoot}>
-					<Typography className={classes.rooty} variant="subtitle2" style={{ fontSize: 12, textAlign: "left", marginTop: -13 }} >
-						COIN DETAILS
-					</Typography>
+      <div className={classes.root}>
+        <div className={classes.paperRoot}>
+          <Typography
+            className={classes.rooty}
+            variant="subtitle2"
+            style={{ fontSize: 12, textAlign: "left", marginTop: -13 }}
+          >
+            COIN DETAILS
+          </Typography>
 
-					<Grid container className={classes.rooty} spacing={8}>
-						<Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
-							<Paper className={classes.paper} >
-								<div className={classes.sec} >
-									<img src="/static/tipcoins/bit.svg" alt="btc"className={classes.img} />
-									<div style={{ flexGrow: 1 }} />
-									<Typography variant="button" >
-										{data.user.btc[0].balance}
-									</Typography>
-								</div>
-								<div className={classes.sec}>
-									<Typography variant="button" className={classes.address} >
-										{data.user.btc[0].address}
-										&nbsp;&nbsp;
-										<CopyToClipboard
-											text={data.user.btc[0].address}
-											onCopy={() => this.setState({ copied: true })}
-										>
-											<FileCopy style={{ cursor: 'pointer', fontSize: 12, marginBottom: -3 }} />
-										</CopyToClipboard>
-									</Typography>
-									<div style={{ flexGrow: 1 }} />
-									<IconButton onClick={this.handleGenerateBtc} >
-										<RefreshRounded />
-									</IconButton>
-								</div>
-							</Paper>
-						</Grid>
+          <Grid container className={classes.rooty} spacing={8}>
+            <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
+              <Paper className={classes.paper}>
+                <div className={classes.sec}>
+                  <img
+                    src="/static/tipcoins/bit.svg"
+                    alt="btc"
+                    className={classes.img}
+                  />
+                  <div style={{ flexGrow: 1 }} />
+                  <Typography variant="button">
+                    {data.user.btc[0].balance}
+                  </Typography>
+                </div>
+                <div className={classes.sec}>
+                  <Typography variant="button" className={classes.address}>
+                    {data.user.btc[0].address}
+                    &nbsp;&nbsp;
+                    <CopyToClipboard
+                      text={data.user.btc[0].address}
+                      onCopy={() => this.setState({ copied: true })}
+                    >
+                      <FileCopy
+                        style={{
+                          cursor: "pointer",
+                          fontSize: 12,
+                          marginBottom: -3
+                        }}
+                      />
+                    </CopyToClipboard>
+                  </Typography>
+                  <div style={{ flexGrow: 1 }} />
+                  <IconButton onClick={this.handleGenerateBtc}>
+                    <RefreshRounded />
+                  </IconButton>
+                </div>
+              </Paper>
+            </Grid>
 
-						<Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
-							<Paper className={classes.paper} >
-								<div className={classes.sec} >
-									<img src="/static/tipcoins/doge.svg" alt="doge" className={classes.img} />
-									<div style={{ flexGrow: 1 }} />
-									<Typography variant="button" >
-										{data.user.doge[0].doge_balance}
-									</Typography>
-								</div>
-								<div className={classes.sec}>
-									<Typography variant="button" className={classes.address} >
-										{data.user.doge[0].address}
-										&nbsp;&nbsp;
-										<CopyToClipboard
-											text={data.user.doge[0].address}
-											onCopy={() => this.setState({ copied: true })}
-										>
-											<FileCopy style={{ cursor: 'pointer', fontSize: 12, marginBottom: -3 }} />
-										</CopyToClipboard>
-									</Typography>
-									<div style={{ flexGrow: 1 }} />
-									<IconButton onClick={this.handleGenerateDoge} >
-										<RefreshRounded />
-									</IconButton>
-								</div>
-							</Paper>
-						</Grid>
+            <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
+              <Paper className={classes.paper}>
+                <div className={classes.sec}>
+                  <img
+                    src="/static/tipcoins/doge.svg"
+                    alt="doge"
+                    className={classes.img}
+                  />
+                  <div style={{ flexGrow: 1 }} />
+                  <Typography variant="button">
+                    {data.user.doge[0].doge_balance}
+                  </Typography>
+                </div>
+                <div className={classes.sec}>
+                  <Typography variant="button" className={classes.address}>
+                    {data.user.doge[0].address}
+                    &nbsp;&nbsp;
+                    <CopyToClipboard
+                      text={data.user.doge[0].address}
+                      onCopy={() => this.setState({ copied: true })}
+                    >
+                      <FileCopy
+                        style={{
+                          cursor: "pointer",
+                          fontSize: 12,
+                          marginBottom: -3
+                        }}
+                      />
+                    </CopyToClipboard>
+                  </Typography>
+                  <div style={{ flexGrow: 1 }} />
+                  <IconButton onClick={this.handleGenerateDoge}>
+                    <RefreshRounded />
+                  </IconButton>
+                </div>
+              </Paper>
+            </Grid>
 
-						<Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
-							<Paper className={classes.paper} >
-								<div className={classes.sec} >
-									<img src="/static/tipcoins/eth.svg" alt="eth" className={classes.img} />
-									<div style={{ flexGrow: 1 }} />
-									<Typography variant="button" >
-										{data.user.eth[0].ethapibalance}
-									</Typography>
-								</div>
-								<div className={classes.sec}>
-									<Typography variant="button" className={classes.address} >
-										{data.user.eth[0].address}
-										&nbsp;&nbsp;
-										<CopyToClipboard
-											text={data.user.eth[0].address}
-											onCopy={() => this.setState({ copied: true })}
-										>
-											<FileCopy style={{ cursor: 'pointer', fontSize: 12, marginBottom: -3 }} />
-										</CopyToClipboard>
-									</Typography>
-									<div style={{ flexGrow: 1 }} />
-									<IconButton onClick={this.handleGenerateEth} > 
-										<RefreshRounded />
-									</IconButton>
-								</div>
-							</Paper>
-						</Grid>
+            <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
+              <Paper className={classes.paper}>
+                <div className={classes.sec}>
+                  <img
+                    src="/static/tipcoins/eth.svg"
+                    alt="eth"
+                    className={classes.img}
+                  />
+                  <div style={{ flexGrow: 1 }} />
+                  <Typography variant="button">
+                    {data.user.eth[0].ethapibalance}
+                  </Typography>
+                </div>
+                <div className={classes.sec}>
+                  <Typography variant="button" className={classes.address}>
+                    {data.user.eth[0].address}
+                    &nbsp;&nbsp;
+                    <CopyToClipboard
+                      text={data.user.eth[0].address}
+                      onCopy={() => this.setState({ copied: true })}
+                    >
+                      <FileCopy
+                        style={{
+                          cursor: "pointer",
+                          fontSize: 12,
+                          marginBottom: -3
+                        }}
+                      />
+                    </CopyToClipboard>
+                  </Typography>
+                  <div style={{ flexGrow: 1 }} />
+                  <IconButton onClick={this.handleGenerateEth}>
+                    <RefreshRounded />
+                  </IconButton>
+                </div>
+              </Paper>
+            </Grid>
 
-						<Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
-							<Paper className={classes.paper} >
-								<div className={classes.sec} >
-									<img src="/static/tipcoins/Tip-1.png" alt="tipc" className={classes.img} />
-									<div style={{ flexGrow: 1 }} />
-									<Typography variant="button" >
-										{data.user.eth[0].tipcapibalance}
-									</Typography>
-								</div>
-								<div className={classes.sec}>
-									<Typography variant="button" className={classes.address} >
-										{data.user.eth[0].address}
-										&nbsp;&nbsp;
-										<CopyToClipboard
-											text={data.user.eth[0].address}
-											onCopy={() => this.setState({ copied: true })}
-										>
-											<FileCopy style={{ cursor: 'pointer', fontSize: 12, marginBottom: -3 }} />
-										</CopyToClipboard>
-									</Typography>
-									<div style={{ flexGrow: 1 }} />
-									<IconButton onClick={this.handleGenerateEth}>
-										<RefreshRounded />
-									</IconButton>
-								</div>
-							</Paper>
-						</Grid>
+            <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
+              <Paper className={classes.paper}>
+                <div className={classes.sec}>
+                  <img
+                    src="/static/tipcoins/Tip-1.png"
+                    alt="tipc"
+                    className={classes.img}
+                  />
+                  <div style={{ flexGrow: 1 }} />
+                  <Typography variant="button">
+                    {data.user.eth[0].tipcapibalance}
+                  </Typography>
+                </div>
+                <div className={classes.sec}>
+                  <Typography variant="button" className={classes.address}>
+                    {data.user.eth[0].address}
+                    &nbsp;&nbsp;
+                    <CopyToClipboard
+                      text={data.user.eth[0].address}
+                      onCopy={() => this.setState({ copied: true })}
+                    >
+                      <FileCopy
+                        style={{
+                          cursor: "pointer",
+                          fontSize: 12,
+                          marginBottom: -3
+                        }}
+                      />
+                    </CopyToClipboard>
+                  </Typography>
+                  <div style={{ flexGrow: 1 }} />
+                  <IconButton onClick={this.handleGenerateEth}>
+                    <RefreshRounded />
+                  </IconButton>
+                </div>
+              </Paper>
+            </Grid>
 
-						<Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
-							<Paper className={classes.paper} >
-								<div className={classes.sec} >
-									<img src="/static/tipcoins/Tip-2.png" alt="tip" className={classes.img} />
-									<div style={{ flexGrow: 1 }} />
-									<Typography variant="button" >
-										{data.user.eth[0].tipapibalance}
-									</Typography>
-								</div>
-								<div className={classes.sec}>
-									<Typography variant="button" className={classes.address} >
-										{data.user.eth[0].address}
-										&nbsp;&nbsp;
-										<CopyToClipboard
-											text={data.user.eth[0].address}
-											onCopy={() => this.setState({ copied: true })}
-										>
-											<FileCopy style={{ cursor: 'pointer', fontSize: 12, marginBottom: -3 }} />
-										</CopyToClipboard>
-									</Typography>
-									<div style={{ flexGrow: 1 }} />
-									<IconButton onClick={this.handleGenerateEth}>
-										<RefreshRounded />
-									</IconButton>
-								</div>
-							</Paper>
-						</Grid>
+            <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
+              <Paper className={classes.paper}>
+                <div className={classes.sec}>
+                  <img
+                    src="/static/tipcoins/Tip-2.png"
+                    alt="tip"
+                    className={classes.img}
+                  />
+                  <div style={{ flexGrow: 1 }} />
+                  <Typography variant="button">
+                    {data.user.eth[0].tipapibalance}
+                  </Typography>
+                </div>
+                <div className={classes.sec}>
+                  <Typography variant="button" className={classes.address}>
+                    {data.user.eth[0].address}
+                    &nbsp;&nbsp;
+                    <CopyToClipboard
+                      text={data.user.eth[0].address}
+                      onCopy={() => this.setState({ copied: true })}
+                    >
+                      <FileCopy
+                        style={{
+                          cursor: "pointer",
+                          fontSize: 12,
+                          marginBottom: -3
+                        }}
+                      />
+                    </CopyToClipboard>
+                  </Typography>
+                  <div style={{ flexGrow: 1 }} />
+                  <IconButton onClick={this.handleGenerateEth}>
+                    <RefreshRounded />
+                  </IconButton>
+                </div>
+              </Paper>
+            </Grid>
 
-						<Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
-							<Paper className={classes.paper} >
-								<div className={classes.sec} >
-									<img src="/static/tipcoins/Tip-3.png" alt="xth" className={classes.img} />
-									<div style={{ flexGrow: 1 }} />
-									<Typography variant="button" >
-										{data.user.eth[0].xrtapibalance}
-									</Typography>
-								</div>
-								<div className={classes.sec}>
-									<Typography variant="button" className={classes.address} >
-										{data.user.eth[0].address}
-										&nbsp;&nbsp;
-										<CopyToClipboard
-											text={data.user.eth[0].address}
-											onCopy={() => this.setState({ copied: true })}
-										>
-											<FileCopy style={{ cursor: 'pointer', fontSize: 12, marginBottom: -3 }} />
-										</CopyToClipboard>
-									</Typography>
-									<div style={{ flexGrow: 1 }} />
-									<IconButton onClick={this.handleGenerateEth}>
-										<RefreshRounded />
-									</IconButton>
-								</div>
-							</Paper>
-						</Grid>
-					</Grid>
-					
-					<Typography 
-						onClick={this.handleOpen} 
-						className={classes.rooty} 
-						variant="subtitle2" 
-						style={{ fontSize: 12, textDecoration: 'underline', textAlign: "left", marginTop: 5, cursor: "pointer", color: '#1F7BD8' }} 
-					>
-						View Tips History
-					</Typography>
-				</div>
+            <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
+              <Paper className={classes.paper}>
+                <div className={classes.sec}>
+                  <img
+                    src="/static/tipcoins/Tip-3.png"
+                    alt="xth"
+                    className={classes.img}
+                  />
+                  <div style={{ flexGrow: 1 }} />
+                  <Typography variant="button">
+                    {data.user.eth[0].xrtapibalance}
+                  </Typography>
+                </div>
+                <div className={classes.sec}>
+                  <Typography variant="button" className={classes.address}>
+                    {data.user.eth[0].address}
+                    &nbsp;&nbsp;
+                    <CopyToClipboard
+                      text={data.user.eth[0].address}
+                      onCopy={() => this.setState({ copied: true })}
+                    >
+                      <FileCopy
+                        style={{
+                          cursor: "pointer",
+                          fontSize: 12,
+                          marginBottom: -3
+                        }}
+                      />
+                    </CopyToClipboard>
+                  </Typography>
+                  <div style={{ flexGrow: 1 }} />
+                  <IconButton onClick={this.handleGenerateEth}>
+                    <RefreshRounded />
+                  </IconButton>
+                </div>
+              </Paper>
+            </Grid>
+          </Grid>
 
+          <Typography
+            onClick={this.handleOpen}
+            className={classes.rooty}
+            variant="subtitle2"
+            style={{
+              fontSize: 12,
+              textDecoration: "underline",
+              textAlign: "left",
+              marginTop: 5,
+              cursor: "pointer",
+              color: "#1F7BD8"
+            }}
+          >
+            View Tips History
+          </Typography>
+        </div>
 
-				<Button 
-					variant="contained"
-					onClick={this.handleOpenWithdraw} 
-					color="primary"
-				>
-					Withdraw
-				</Button>
+        <Button
+          variant="contained"
+          onClick={this.handleOpenWithdraw}
+          color="primary"
+        >
+          Withdraw
+        </Button>
 
-				<Withdrawal open={withdraw} btc={data.user.btc[0]} doge={data.user.doge[0]} handleClose={this.handleCloseWithdraw} />
+        <Withdrawal
+          open={withdraw}
+          btc={data.user.btc[0]}
+          doge={data.user.doge[0]}
+          eth={data.user.eth[0]}
+          handleClose={this.handleCloseWithdraw}
+        />
 
-				<History open={open} handleClose={this.handleClose} history={data.history} />
+        <History
+          open={open}
+          handleClose={this.handleClose}
+          history={data.history}
+        />
 
-				<Snackbar
+        <Snackbar
           anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'right',
+            vertical: "bottom",
+            horizontal: "right"
           }}
           open={copied}
           autoHideDuration={6000}
           onClose={this.handleSnackbarClose}
           ContentProps={{
-            'aria-describedby': 'message-id',
+            "aria-describedby": "message-id"
           }}
-					message={<span id="message-id">Successfully copied!</span>}
-					action={[
+          message={<span id="message-id">Successfully copied!</span>}
+          action={[
             <IconButton
               key="close"
               aria-label="Close"
@@ -419,12 +499,11 @@ class CoinDetails extends React.Component{
               onClick={this.handleSnackbarClose}
             >
               <CloseIcon />
-            </IconButton>,
+            </IconButton>
           ]}
         />
-
-			</div>
-		);
+      </div>
+    );
 	}
 }
 
