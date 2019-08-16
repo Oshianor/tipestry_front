@@ -162,7 +162,7 @@ class TipCoin extends React.Component {
 								</Typography>
 							</Paper>
 						</Grid>
-						<Grid item xs={6} sm={3} md={4} lg={6} xl={6}>
+						{/* <Grid item xs={6} sm={3} md={4} lg={6} xl={6}>
 							<Paper className={classes.paper}>
 								<img src="/static/tipcoins/Tip-2.png" className={classes.img}/>
 								<div style={{ flexGrow: 1 }} />
@@ -176,7 +176,7 @@ class TipCoin extends React.Component {
 									}
 								</Typography>
 							</Paper>
-						</Grid>
+						</Grid> */}
 						<Grid item xs={6} sm={3} md={4} lg={6} xl={6}>
 							<Paper className={classes.paper}>
 								<img src="/static/tipcoins/Tip-3.png" className={classes.img}  />

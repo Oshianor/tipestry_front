@@ -362,7 +362,7 @@ class CoinDetails extends React.Component{
               </Paper>
             </Grid>
 
-            <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
+            {/* <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
               <Paper className={classes.paper}>
                 <div className={classes.sec}>
                   <img
@@ -398,7 +398,7 @@ class CoinDetails extends React.Component{
                   </IconButton>
                 </div>
               </Paper>
-            </Grid>
+            </Grid> */}
 
             <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
               <Paper className={classes.paper}>

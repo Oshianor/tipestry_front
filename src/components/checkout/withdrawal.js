@@ -45,28 +45,30 @@ class Withdrawal extends React.Component {
   state = {
     coin: "bitcoin",
     error: "",
-    amount: '',
+    amount: "",
     currentCoin: 0,
-    show: 'false',
-    address: '',
+    show: "false",
+    address: "",
     withdraw: {
       err: false,
       msg: ""
     },
-    loading: false
+    loading: false,
+    displayName: "bitcoin"
     // opener: false,
     // msg: ''
-  }
+  };
 
-  onChnage(name) {
+  onChnage(name, displayName) {
     this.setState({
-      coin: name
-    })
+      coin: name,
+      displayName
+    });
   }
 
   handleChangeText = prop => event => {
     this.setState({
-      [prop]: (event.target.value),
+      [prop]: event.target.value,
       error: ""
     });
   };
@@ -74,51 +76,69 @@ class Withdrawal extends React.Component {
   handleAddress = event => {
     this.setState({
       address: event.target.value
-    })
-  }
+    });
+  };
 
   renderCurrentCoinImg = () => {
     const { coin } = this.state;
-    if (coin == 'bitcoin') {
-      return <img src="/static/tipcoins/bit.svg" alt="doge" style={{ width: 15, height: 15 }} />      
-    } else if(coin === "dogecoin") {
-      return <img src="/static/tipcoins/doge.svg" alt="doge" style={{ width: 15, height: 15 }} />
-    // } else if (coin === 'ethcoin') {
-    //   return <img src="/static/tipcoins/eth.svg" alt="doge" style={{ width: 15, height: 15 }} />      
-    } else if(coin === 'ethtipc') {
-      return <img src="/static/tipcoins/Tip-1.png" alt="doge" style={{ width: 15, height: 15 }} />
-    // } else if (coin === 'ethtipcoin') {
-    //   return <img src="/static/tipcoins/Tip-2.png" alt="doge" style={{ width: 15, height: 15 }} />
-    // } else if (coin === 'ethxrtcoin') {
-    //   return <img src="/static/tipcoins/Tip-3.png" alt="doge" style={{ width: 15, height: 15 }} />
+    if (coin == "bitcoin") {
+      return (
+        <img
+          src="/static/tipcoins/bit.svg"
+          alt="doge"
+          style={{ width: 15, height: 15 }}
+        />
+      );
+    } else if (coin === "dogecoin") {
+      return (
+        <img
+          src="/static/tipcoins/doge.svg"
+          alt="doge"
+          style={{ width: 15, height: 15 }}
+        />
+      );
+      // } else if (coin === 'ethcoin') {
+      //   return <img src="/static/tipcoins/eth.svg" alt="doge" style={{ width: 15, height: 15 }} />
+    } else if (coin === "ethtipc") {
+      return (
+        <img
+          src="/static/tipcoins/Tip-1.png"
+          alt="doge"
+          style={{ width: 15, height: 15 }}
+        />
+      );
+      // } else if (coin === 'ethtipcoin') {
+      //   return <img src="/static/tipcoins/Tip-2.png" alt="doge" style={{ width: 15, height: 15 }} />
+      // } else if (coin === 'ethxrtcoin') {
+      //   return <img src="/static/tipcoins/Tip-3.png" alt="doge" style={{ width: 15, height: 15 }} />
     }
-  }
+  };
 
   handleAlertClose = () => {
     this.setState({
       withdraw: {
         err: false,
-        msg: ''
+        msg: ""
       }
-    })
-  }
+    });
+  };
 
   handleChange = name => event => {
     this.setState({ show: name });
-  }
+  };
 
   handleWithdrawal = async () => {
     const { coin, amount, address } = this.state;
     this.setState({
       loading: true
     });
-    let token = localStorage.getItem('token');
+    let token = localStorage.getItem("token");
     let obj = {
       coinType: coin,
       amount,
-      address,
-    }
-    let amt; 
+      address
+    };
+    let amt;
     if (coin === "bitcoin") {
       amt = parseFloat(amount) - 0.0005;
     } else if (coin === "dogecoin") {
@@ -130,17 +150,17 @@ class Withdrawal extends React.Component {
 
     if (token && amt > 0) {
       const options = {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'content-type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'x-auth-token': token
+          "content-type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "x-auth-token": token
         },
         data: JSON.stringify(obj),
         url: config.api + "/crypto/withdrawal"
       };
       let withh = await Axios(options);
-      console.log('withdraw,', withh);
+      console.log("withdraw,", withh);
 
       if (!withh.data.error) {
         this.setState({
@@ -161,20 +181,17 @@ class Withdrawal extends React.Component {
           loading: false
         });
       }
-
     } else {
       this.setState({
         withdraw: {
           err: true,
-          status: 'w',
+          status: "w",
           msg: "You don't have sufficient amount for a withdrawal"
         },
         loading: false
-      })
+      });
     }
-
-    
-  }
+  };
 
   handleDialogClose = () => {
     const { handleClose } = this.props;
@@ -192,11 +209,11 @@ class Withdrawal extends React.Component {
       },
       loading: false
     });
-  }
-  
+  };
+
   render() {
     // console.log(this.state);
-    
+
     const { classes, open, handleClose, btc, doge, eth } = this.props;
     const {
       opener,
@@ -204,18 +221,17 @@ class Withdrawal extends React.Component {
       coin,
       error,
       amount,
-      show,
+      displayName,
       address,
       withdraw,
       loading
     } = this.state;
     let bac = {
-      backgroundColor: '#50557b'      
-    }
+      backgroundColor: "#50557b"
+    };
     let nobac = {
-      backgroundColor: 'white'
-    }
-
+      backgroundColor: "white"
+    };
 
     return (
       <div>
@@ -316,21 +332,25 @@ class Withdrawal extends React.Component {
                   <img
                     src="/static/tipcoins/bit.svg"
                     alt="btc"
-                    onClick={this.onChnage.bind(this, "bitcoin")}
+                    onClick={this.onChnage.bind(this, "bitcoin", "bitcoin")}
                     className={classes.img}
                     style={coin === "bitcoin" ? bac : nobac}
                   />
                   <img
                     src="/static/tipcoins/doge.svg"
                     alt="doge"
-                    onClick={this.onChnage.bind(this, "dogecoin")}
+                    onClick={this.onChnage.bind(
+                      this,
+                      "dogecoin",
+                      "dogecoin"
+                    )}
                     className={classes.img}
                     style={coin === "dogecoin" ? bac : nobac}
                   />
                   <img
                     src="/static/tipcoins/Tip-1.png"
                     alt="tipcoin"
-                    onClick={this.onChnage.bind(this, "ethtipc")}
+                    onClick={this.onChnage.bind(this, "ethtipc", "tipcoin")}
                     className={classes.img}
                     style={coin === "ethtipc" ? bac : nobac}
                   />
@@ -348,7 +368,7 @@ class Withdrawal extends React.Component {
                     &nbsp;Network fee of &nbsp;
                     {coin === "bitcoin" ? 0.0005 : 2.0}
                     <strong style={{ textTransform: "uppercase" }}>
-                      &nbsp;{coin}.
+                      &nbsp;{displayName}.
                     </strong>
                   </strong>
                   &nbsp;Maximum withdrawable balance is{" "}
@@ -358,7 +378,7 @@ class Withdrawal extends React.Component {
                     ? doge.doge_balance - 2
                     : eth.tipapibalance - 2}
                   <strong style={{ textTransform: "uppercase" }}>
-                    &nbsp;{coin}
+                    &nbsp;{displayName}
                   </strong>
                 </Typography>
 
