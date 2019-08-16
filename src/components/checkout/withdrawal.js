@@ -376,7 +376,7 @@ class Withdrawal extends React.Component {
                     ? btc.balance - 0.0005
                     : coin === "dogecoin"
                     ? doge.doge_balance - 2
-                    : eth.tipapibalance - 2}
+                    : eth.tipcapibalance - 2}
                   <strong style={{ textTransform: "uppercase" }}>
                     &nbsp;{displayName}
                   </strong>

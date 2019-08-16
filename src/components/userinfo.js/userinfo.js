@@ -51,7 +51,7 @@ class Userinfo extends Component {
 		if (coin === "XRT") {
 			return <img src="/static/tipcoins/Tip-3.png" alt="comments" width='25' height="25" style={sty} />;
 		} else if (coin === "TIPC") {
-			return <img src="/static/tipcoins/Tip-2.png" alt="comments" width='25' height="25" style={sty} />;
+			return <img src="/static/tipcoins/Tip-1.png" alt="comments" width='25' height="25" style={sty} />;
 		} else if (coin === "DOGE") {
 			return <img src="/static/tipcoins/Dogecoin-Icon.svg" alt="comments" width='25' height="25" style={sty} />;
 		}
