@@ -211,7 +211,8 @@ class Header extends React.Component {
 
 	handleLogout = () => {
 		const { router } = this.props;
-		localStorage.removeItem('token');
+		localStorage.removeItem("token");
+		sessionStorage.removeItem('user');
 		this.setState({
 			token: null
 		})
