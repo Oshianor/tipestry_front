@@ -34,24 +34,27 @@ class Topic extends Component {
     let user = sessionStorage.getItem("user");
 
     try {
-      if (!user && token) {
-        const options = {
-          method: "GET",
-          headers: {
-            "content-type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-            "x-auth-token": token
-          },
-          url: config.api + "/users/me"
-        };
-        let user = await axios(options);
-        getUser(user.data[0]);
-        sessionStorage.setItem("user", JSON.stringify(user.data[0]));
-      } else {
-        console.log("NOWWWW");
-
-        // check if the user details is already saved and stop the loading
-        getUser(JSON.parse(user));
+      if (token) {
+        if (!user) {
+          const options = {
+            method: "GET",
+            headers: {
+              "content-type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+              "x-auth-token": token
+            },
+            url: config.api + "/users/me"
+          };
+          let user = await axios(options);
+          getUser(user.data[0]);
+          sessionStorage.setItem(
+            "user",
+            JSON.stringify(user.data[0])
+          );
+        } else {
+          // check if the user details is already saved and stop the loading
+          getUser(JSON.parse(user));
+        }
       }
 
       // send request to the server to save the user ip

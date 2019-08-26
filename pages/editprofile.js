@@ -18,10 +18,10 @@ class Editprofile extends React.Component {
   
   async componentDidMount() {
     const { getUser } = this.props;
-    let user = sessionStorage.getItem("user");
+    // let user = sessionStorage.getItem("user");
     let token = localStorage.getItem('token');
     try {
-      if (!user && token) {
+      if (token) {
         const options = {
           method: "GET",
           headers: {

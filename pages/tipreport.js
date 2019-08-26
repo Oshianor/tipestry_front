@@ -33,38 +33,46 @@ class Checkout extends React.Component {
     let userSession = sessionStorage.getItem("user");
 
     try {
-      if (!userSession && token) {
-        const options = {
-          method: "GET",
-          headers: {
-            "content-type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-            "x-auth-token": token
-          },
-          url: config.api + "/users/me"
-        };
-        let user = await axios(options);
-        if (user.data[0]._id !== JSON.parse(userProfile)._id) {
-          // console.log(user.data[0]._id, "why cn", JSON.parse(userProfile)._id);
-          // if the current profile is not the logged in user then redirect the user
-          Router.push("/");
+      if (token) {
+        if (!userSession) {
+          const options = {
+            method: "GET",
+            headers: {
+              "content-type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+              "x-auth-token": token
+            },
+            url: config.api + "/users/me"
+          };
+          let user = await axios(options);
+          if (user.data[0]._id !== JSON.parse(userProfile)._id) {
+            // console.log(user.data[0]._id, "why cn", JSON.parse(userProfile)._id);
+            // if the current profile is not the logged in user then redirect the user
+            Router.push("/");
+          } else {
+            getUser(user.data[0]);
+            sessionStorage.setItem(
+              "user",
+              JSON.stringify(user.data[0])
+            );
+            getProfile(JSON.parse(userProfile));
+            getTipHistory(JSON.parse(history));
+            this.setState({
+              loading: false
+            });
+          }
         } else {
-          getUser(user.data[0]);
-          sessionStorage.setItem("user", JSON.stringify(user.data[0]));
-          getProfile(JSON.parse(userProfile));
-          getTipHistory(JSON.parse(history));
+          if (
+            JSON.parse(userSession)._id !==
+            JSON.parse(userProfile)._id
+          ) {
+            Router.push("/");
+          }
+          getUser(JSON.parse(userSession));
           this.setState({
             loading: false
           });
         }
-      } else {
-        if (JSON.parse(userSession)._id !== JSON.parse(userProfile)._id) {
-          Router.push("/");
-        }
-        getUser(JSON.parse(userSession));
-        this.setState({
-          loading: false
-        });
       }
     } catch (error) {
       console.log("error.response.data.error", error.response);
