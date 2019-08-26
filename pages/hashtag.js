@@ -68,11 +68,6 @@ class Index extends React.Component {
 
         // check if the user details is already saved and stop the loading
         getUser(JSON.parse(user));
-      } else {
-        console.log("NOWWWW");
-
-        // check if the user details is already saved and stop the loading
-        getUser(JSON.parse(user));
       }
 
       if (dataTopics) {
