@@ -30,10 +30,10 @@ class Checkout extends React.Component {
   async componentDidMount() {
     const { getUser, getProfile, userProfile, getTipHistory, history } = this.props;
     let token = localStorage.getItem('token');
-    let user = sessionStorage.getItem("user");
+    let userSession = sessionStorage.getItem("user");
 
     try {
-      if (!user && token) {
+      if (!userSession && token) {
         const options = {
           method: "GET",
           headers: {
@@ -58,10 +58,17 @@ class Checkout extends React.Component {
           });
         }
       } else {
-        Router.push("/");
-        getUser(JSON.parse(user));
+        if (JSON.parse(userSession)._id !== JSON.parse(userProfile)._id) {
+          Router.push("/");
+        }
+        getUser(JSON.parse(userSession));
+        this.setState({
+          loading: false
+        });
       }
     } catch (error) {
+      console.log("error.response.data.error", error.response);
+      
       if (error.response.data.error) {
         localStorage.removeItem("token");
         Router.push("/login?sE=true");
