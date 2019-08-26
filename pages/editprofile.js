@@ -18,9 +18,10 @@ class Editprofile extends React.Component {
   
   async componentDidMount() {
     const { getUser } = this.props;
+    let user = sessionStorage.getItem("user");
     let token = localStorage.getItem('token');
     try {
-      if (token) {
+      if (!user && token) {
         const options = {
           method: "GET",
           headers: {
@@ -32,6 +33,7 @@ class Editprofile extends React.Component {
         };
         let user = await axios(options);
         getUser(user.data[0]);
+        sessionStorage.setItem("user", JSON.stringify(user.data[0]));
         this.setState({
           loading: false
         });

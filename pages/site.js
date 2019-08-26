@@ -42,9 +42,9 @@ class Sites extends Component {
   async componentDidMount() {
     const { dataTopic, getSiteTopicList, getUser } = this.props;
     let token = localStorage.getItem('token');
-    
+    let user = sessionStorage.getItem("user");
     try {
-      if (token) {
+      if (!user && token) {
         const options = {
           method: "GET",
           headers: {
@@ -56,16 +56,18 @@ class Sites extends Component {
         };
         let user = await axios(options);
         getUser(user.data[0]);
-      }
-      // console.log('dataTopic', dataTopic);
+        sessionStorage.setItem("user", JSON.stringify(user.data[0]));
+      } else {
+        console.log("NOWWWW");
 
-      if (dataTopic) {
-        getSiteTopicList(JSON.parse(dataTopic));
-
-        this.setState({
-          loading: false
-        });
+        // check if the user details is already saved and stop the loading
+        getUser(JSON.parse(user));
       }
+      getSiteTopicList(JSON.parse(dataTopic));
+
+      this.setState({
+        loading: false
+      });
     } catch (error) {
       if (error.response.data.error) {
         localStorage.removeItem("token");

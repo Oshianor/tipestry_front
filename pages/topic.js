@@ -31,9 +31,10 @@ class Topic extends Component {
     const { dataTopic, getSiteTopic, getUser } = this.props;
     // console.log(JSON.parse(dataTopic));
     let token = localStorage.getItem('token');
+    let user = sessionStorage.getItem("user");
 
     try {
-      if (token) {
+      if (!user && token) {
         const options = {
           method: "GET",
           headers: {
@@ -45,6 +46,12 @@ class Topic extends Component {
         };
         let user = await axios(options);
         getUser(user.data[0]);
+        sessionStorage.setItem("user", JSON.stringify(user.data[0]));
+      } else {
+        console.log("NOWWWW");
+
+        // check if the user details is already saved and stop the loading
+        getUser(JSON.parse(user));
       }
 
       // send request to the server to save the user ip

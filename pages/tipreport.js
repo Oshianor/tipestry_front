@@ -30,9 +30,10 @@ class Checkout extends React.Component {
   async componentDidMount() {
     const { getUser, getProfile, userProfile, getTipHistory, history } = this.props;
     let token = localStorage.getItem('token');
+    let user = sessionStorage.getItem("user");
 
     try {
-      if (token) {
+      if (!user && token) {
         const options = {
           method: "GET",
           headers: {
@@ -49,6 +50,7 @@ class Checkout extends React.Component {
           Router.push("/");
         } else {
           getUser(user.data[0]);
+          sessionStorage.setItem("user", JSON.stringify(user.data[0]));
           getProfile(JSON.parse(userProfile));
           getTipHistory(JSON.parse(history));
           this.setState({
@@ -57,6 +59,7 @@ class Checkout extends React.Component {
         }
       } else {
         Router.push("/");
+        getUser(JSON.parse(user));
       }
     } catch (error) {
       if (error.response.data.error) {
