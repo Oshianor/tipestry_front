@@ -115,16 +115,6 @@ class ValidateWithdrawal extends Component {
   };
 
 
-  handleAmount = (amount) => {
-    if (condition) {
-      
-    } else if () {
-      
-    } else {
-
-    }
-  }
-
   render() {
     const { data, classes } = this.props;
     const { transactionid, txHelper } = this.state;
@@ -168,7 +158,6 @@ class ValidateWithdrawal extends Component {
                     {req.wallettype === "dogecoin" || req.wallettype === "ethtipc"
                       ? parseFloat(req.amount) - 2
                       : parseFloat(req.amount) - 0.0005}
-                      {/* {this.handleAmount(parseFloat(req.amount), req.wallettype)} */}
                   </Typography>
                 </div>
                 <div className={classes.bid}>
