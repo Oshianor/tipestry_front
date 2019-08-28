@@ -45,6 +45,7 @@ class Withdrawal extends React.Component {
   state = {
     coin: "bitcoin",
     error: "",
+    message: "",
     amount: "",
     currentCoin: 0,
     show: "false",
@@ -148,6 +149,23 @@ class Withdrawal extends React.Component {
       amt = parseFloat(amount) - 2;
     }
 
+    if (address === "") {
+      this.setState({
+        error: "address",
+        message: "Address is required."
+      })
+      return 
+    }
+
+
+    if (amount <= 0) {
+      this.setState({
+        error: "amount",
+        message: "Amount must be greater than 0."
+      });
+      return;
+    }
+
     if (token && amt > 0) {
       const options = {
         method: "POST",
@@ -218,6 +236,7 @@ class Withdrawal extends React.Component {
     const {
       opener,
       msg,
+      message,
       coin,
       error,
       amount,
@@ -226,6 +245,9 @@ class Withdrawal extends React.Component {
       withdraw,
       loading
     } = this.state;
+
+    console.log("this.state", this.state);
+    
     let bac = {
       backgroundColor: "#50557b"
     };
@@ -339,11 +361,7 @@ class Withdrawal extends React.Component {
                   <img
                     src="/static/tipcoins/doge.svg"
                     alt="doge"
-                    onClick={this.onChnage.bind(
-                      this,
-                      "dogecoin",
-                      "dogecoin"
-                    )}
+                    onClick={this.onChnage.bind(this, "dogecoin", "dogecoin")}
                     className={classes.img}
                     style={coin === "dogecoin" ? bac : nobac}
                   />
@@ -383,15 +401,16 @@ class Withdrawal extends React.Component {
                 </Typography>
 
                 <TextField
-                  error={error !== ""}
-                  id="outlined-adornment-amount"
+                  error={error === "address"}
+                  id="outlined"
                   variant="outlined"
-                  label="Wallet Address (optional)"
-                  helperText={error}
+                  label="Wallet Address"
+                  helperText={message}
                   fullWidth
                   className={classes.margin}
                   value={address}
-                  onChange={this.handleAddress}
+                  // onChange={this.handleAddress}
+                  onChange={this.handleChangeText("address")}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">xyz</InputAdornment>
@@ -400,13 +419,13 @@ class Withdrawal extends React.Component {
                 />
 
                 <TextField
-                  error={error !== ""}
+                  error={error === "amount"}
                   required
                   id="outlined-adornment-amount"
                   variant="outlined"
                   label="Amount"
                   type="number"
-                  helperText={error}
+                  helperText={message}
                   value={amount}
                   fullWidth
                   className={classes.margin}
