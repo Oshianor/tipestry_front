@@ -404,7 +404,11 @@ class Withdrawal extends React.Component {
                   error={error === "address"}
                   id="outlined"
                   variant="outlined"
-                  label="Wallet Address"
+                  label={
+                    coin === "ethtipc"
+                      ? "Enter Ethereum Wallet Address"
+                      : "Wallet Address"
+                  }
                   helperText={message}
                   fullWidth
                   className={classes.margin}

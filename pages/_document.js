@@ -19,10 +19,10 @@ class MyDocument extends Document {
           {/* PWA primary color */}
           {/* <script src="https://apis.google.com/js/client.js"></script> */}
           <meta name="theme-color" content={pageContext.theme.palette.primary.main} />
-          <link
+          {/* <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
-          />
+          /> */}
         </Head>
         <body style={{ backgroundColor: "#E6ECF0" }} >
           <Main />
