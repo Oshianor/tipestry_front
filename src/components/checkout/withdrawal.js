@@ -365,13 +365,13 @@ class Withdrawal extends React.Component {
                     className={classes.img}
                     style={coin === "dogecoin" ? bac : nobac}
                   />
-                  {/* <img
+                  <img
                     src="/static/tipcoins/Tip-1.png"
                     alt="tipcoin"
                     onClick={this.onChnage.bind(this, "ethtipc", "tipcoin")}
                     className={classes.img}
                     style={coin === "ethtipc" ? bac : nobac}
-                  /> */}
+                  />
                 </div>
 
                 <Typography
