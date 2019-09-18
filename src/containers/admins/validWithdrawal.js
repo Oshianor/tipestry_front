@@ -118,23 +118,18 @@ class ValidateWithdrawal extends Component {
   render() {
     const { data, classes } = this.props;
     const { transactionid, txHelper } = this.state;
+
+    
     return (
       <div>
         <BasicHeader admin={true} />
         <div className={classes.root}>
-          <Typography
-            variant="h4"
-            style={{ marginTop: 80, marginBottom: 20 }}
-          >
+          <Typography variant="h4" style={{ marginTop: 80, marginBottom: 20 }}>
             Approve Withdrawals
           </Typography>
           <div className={classes.rootCont}>
             {data.topics.map(req => (
-              <Paper
-                elevation={12}
-                key={req._id}
-                className={classes.container}
-              >
+              <Paper elevation={12} key={req._id} className={classes.container}>
                 <div className={classes.bid}>
                   <Typography variant="h6" className={classes.headBid}>
                     Email:{" "}
@@ -155,7 +150,8 @@ class ValidateWithdrawal extends Component {
                   </Typography>
                   &nbsp;
                   <Typography>
-                    {req.wallettype === "dogecoin" || req.wallettype === "ethtipc"
+                    {req.wallettype === "dogecoin" ||
+                    req.wallettype === "ethtipc"
                       ? parseFloat(req.amount) - 2
                       : parseFloat(req.amount) - 0.0005}
                   </Typography>
@@ -175,6 +171,14 @@ class ValidateWithdrawal extends Component {
                   <Typography>{req.receive_wallet_id}</Typography>
                 </div>
 
+                <div className={classes.bid}>
+                  <Typography variant="h6" className={classes.headBid}>
+                    IP:{" "}
+                  </Typography>
+                  &nbsp;
+                  <Typography>{req.user[0].registration_ip}</Typography>
+                </div>
+
                 <TextField
                   style={{ marginTop: 40 }}
                   variant="outlined"
@@ -188,10 +192,7 @@ class ValidateWithdrawal extends Component {
                 />
                 <div className={classes.bot}>
                   <Button
-                    onClick={this.handleCancelledRequest.bind(
-                      this,
-                      req._id
-                    )}
+                    onClick={this.handleCancelledRequest.bind(this, req._id)}
                     variant="text"
                     color="secondary"
                   >
