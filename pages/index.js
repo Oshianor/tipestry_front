@@ -89,7 +89,7 @@ class Index extends React.Component {
     // const { pageNumber } = this.state;
     const { data, getTopics, setPageNumber } = this.props;
     let topicsCont = await axios.get(
-      config.api + "/topic?pageNumber=" + data.pageNumber
+      config.api + "/topic?pageNumber=" + data.pageNumber + "&dataType=" + data.type
     );
     if (!topicsCont.data.error) {
       topicsCont.data.content.topic.forEach(obj => {
