@@ -185,8 +185,7 @@ class Post extends React.Component {
                           topic.user[0].profileimage === "" ||
                           !topic.user[0].profileimage
                             ? null
-                            : config.profileimage +
-                              topic.user[0].profileimage
+                            : config.profileimage + topic.user[0].profileimage
                         }
                       />
                     </a>
@@ -248,10 +247,7 @@ class Post extends React.Component {
                     {this.displayTitle(topic.title)}
                   </Link>
                   <br />
-                  <Tags
-                    tags={topic.tags}
-                    handleTag={this.handleOpenTagFind}
-                  />
+                  <Tags tags={topic.tags} handleTag={this.handleOpenTagFind} />
                 </Typography>
               </CardContent>
 
@@ -283,9 +279,9 @@ class Post extends React.Component {
                           this.checkForGif(topic.sites[0].url) == "png" ||
                           this.checkForGif(topic.sites[0].url) == "jpg"
                           ? topic.sites[0].url
-                          : "//image.thum.io/get/auth/3228-www.tipestry.com/" +
+                          : "//image.thum.io/get/iphoneX/noanimate/crop/650/auth/3228-www.tipestry.com/" +
                             topic.sites[0].url
-                        : "//image.thum.io/get/auth/3228-www.tipestry.com/" +
+                        : "//image.thum.io/get/iphoneX/noanimate/crop/650/auth/3228-www.tipestry.com/" +
                           "https://tipestry.com"
                     }
                   />
@@ -311,9 +307,7 @@ class Post extends React.Component {
               <CardActionsIcons
                 // topic votes
                 views={
-                  typeof topic.views !== "undefined"
-                    ? topic.views.length
-                    : 0
+                  typeof topic.views !== "undefined" ? topic.views.length : 0
                 }
                 votes={topic.votes}
                 title={topic.title}
