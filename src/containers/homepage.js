@@ -302,7 +302,7 @@ class Homepage extends Component {
 
                 {/* post component */}
                 <div className={classes.center}>
-                  {/* <Ads /> */}
+                  <Ads />
                   <Post topicValue={data.topics.topic} source="topics" />
                 </div>
               </Grid>
