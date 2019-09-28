@@ -93,7 +93,7 @@ const styles = theme => ({
 		},
 	},
   grow: {
-		flexGrow: 1
+    flexGrow: 1,
   },
   menuButton: {
     marginLeft: -12,
@@ -246,11 +246,9 @@ class Header extends React.Component {
     this.setState({ mobileMoreAnchorEl: event.currentTarget });
   };
 
-
   handleMobileMenuClose = () => {
     this.setState({ mobileMoreAnchorEl: null });
 	};
-
 
 	componentDidMount() {
 		let token = localStorage.getItem('token');
@@ -260,11 +258,9 @@ class Header extends React.Component {
 		addEventListener('scroll', this.trackScrolling);
 	}
 
-
 	componentWillUnmount() {
 		removeEventListener('scroll', this.trackScrolling);
 	}
-
 
 	trackScrolling = (e) => {
 		if(window.scrollY > 200) {
@@ -279,13 +275,11 @@ class Header extends React.Component {
 		return false;
 	}
 
-
 	SignUp = () => {
 		const { router } = this.props;
 		router.push("/register");
 	}
-	
-	
+	  
   displayHome = () => {
     const { hide, token } = this.state;
     const { classes, data } = this.props;
@@ -361,16 +355,13 @@ class Header extends React.Component {
 		}
 	}
 
-
 	hoverOn = () => {
 		this.setState({ hover: true });
 	}
 	
-
 	hoverOff = () => { 
 		this.setState({ hover: false });    
 	}
-
 
 	displayProfile = () => {
 		const { hover, hide, token } = this.state;
@@ -487,7 +478,6 @@ class Header extends React.Component {
     }
   }
 
-
 	following = () => {
 		const { data, classes } = this.props;
 		if (typeof data.user.following !== "undefined") {
@@ -522,6 +512,7 @@ class Header extends React.Component {
 			)
 		}
 	}
+
 
 
 	displayBody = () => {
@@ -605,7 +596,6 @@ class Header extends React.Component {
     );
 	}
 
-
 	displayHeight = () => {
 		const { hide } = this.state;
 		const { router } = this.props;
@@ -619,7 +609,6 @@ class Header extends React.Component {
 		}
 		return "";
 	}
-
 
   render() {
     const { anchorEl, mobileMoreAnchorEl, uploadStatus, token } = this.state;
@@ -680,14 +669,14 @@ class Header extends React.Component {
 
 		// console.log("this.statedata", data);
 		const back = {
-      // height: this.displayHeight(),
-      height: 'auto'
-    };
+			height: this.displayHeight(),
+		}
 
     return (
       <>
-        {typeof data.user.deactivated !== "undefined" &&
-          data.user.deactivated && <VerificationWarning />}
+        {typeof data.user.deactivated !== "undefined" && data.user.deactivated && (
+					<VerificationWarning />
+				)}
         <div className={classes.root}>
           <CssBaseline />
           <AppBar
@@ -698,7 +687,8 @@ class Header extends React.Component {
             })}
           >
             <Toolbar className={classes.rootGrow} disableGutters={!drawer}>
-              {/* tigger for drawer */}
+							
+							{/* tigger for drawer */}
               <IconButton
                 color="inherit"
                 aria-label="Open drawer"
@@ -726,6 +716,7 @@ class Header extends React.Component {
               </Link>
 
               <div className={classes.grow} />
+							<Uploadsite />
               {token && (
                 <React.Fragment>
                   <Notification />
@@ -785,7 +776,6 @@ class Header extends React.Component {
                   <MoreVertIcon />
                 </IconButton>
               </div>
-              <Uploadsite />
             </Toolbar>
             {/* display body for hide when scroll **bad english funck you */}
             {/* {this.displayBody()} */}

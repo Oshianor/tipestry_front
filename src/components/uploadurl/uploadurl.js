@@ -68,43 +68,44 @@ class UploadUrl extends React.Component {
 		const { uploadStatus, handleClose } = this.props;
 		const { msg, err } = this.state;
     return (
-			<Dialog
-				open={uploadStatus}
-				onClose={() => handleClose()}
-				aria-labelledby="form-dialog-title"
-			>
-				<DialogTitle id="form-dialog-title">
-					{/* Enter a Url */}
-					{Lang.h2}
-				</DialogTitle>
-				<DialogContent>
-					<DialogContentText>
-						{/* Enter a url of your choice and create a post. */}
-						{Lang.i2}
-					</DialogContentText>
-					<TextField
-						autoFocus
-						margin="dense"
-						id="name"
-						label={Lang.h2}
-						type="url"
-						variant="outlined"
-						fullWidth
-						onChange={this.handleURL}
-					/>
-					<FormHelperText style={{ color: 'red' }}>{msg}</FormHelperText>
-				</DialogContent>
-				<DialogActions>
-					<Button onClick={() => handleClose()} color="secondary">
-						{/* No, Thanks */}
-						{Lang.k2}
-					</Button>
-					<Button onClick={this.handleURLPost} color="primary" disabled={err} >
-						{/* Upload */}
-						{Lang.j2}
-					</Button>
-				</DialogActions>
-			</Dialog>
+      <Dialog
+        open={uploadStatus}
+        onClose={() => handleClose()}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">
+          {/* Enter a Url */}
+          {Lang.h2}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            {/* Enter a url of your choice and create a post. */}
+            {Lang.i2}
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            // label={Lang.h2}
+            placeholder={Lang.h2}
+            type="url"
+            variant="outlined"
+            fullWidth
+            onChange={this.handleURL}
+          />
+          <FormHelperText style={{ color: "red" }}>{msg}</FormHelperText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => handleClose()} color="secondary">
+            {/* No, Thanks */}
+            {Lang.k2}
+          </Button>
+          <Button onClick={this.handleURLPost} color="primary" disabled={err}>
+            {/* Upload */}
+            {Lang.j2}
+          </Button>
+        </DialogActions>
+      </Dialog>
     );
   }
 }

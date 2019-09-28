@@ -64,8 +64,7 @@ const styles = theme => ({
   },
   demo: {
     // width: '100%',
-    marginTop: 100,
-    // marginTop: 300,
+    marginTop: 300,
     [theme.breakpoints.up("lg")]: {
       width: 1170
     }
@@ -93,15 +92,15 @@ const styles = theme => ({
     minWidth: 120,
     display: "flex",
     justifyContent: "center",
-    flexDirection: "column",
+    flexDirection: 'column',
     alignItems: "center"
   },
   options: {
     display: "flex",
     alignItems: "center"
-  }
+  },
   // center: {
-  //   display:
+  //   display: 
   // }
 });
 

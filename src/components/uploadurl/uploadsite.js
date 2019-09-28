@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import isURL from "validator/lib/isURL";
 import PropTypes from "prop-types";
@@ -13,13 +14,17 @@ import Typography from "@material-ui/core/Typography";
 const styles = theme => ({
   root: {
     display: "flex",
+    marginTop: 10,
     justifyContent: "center",
     alignItems: "center"
   },
   but:{
-    height: 50,
+    height: 30,
     marginTop: -17,
     borderRadius: 0
+  },
+  int: {
+    height: 8
   }
 });
 
@@ -86,15 +91,30 @@ class UploadSite extends React.Component {
       <div className={classes.root}>
         <form onSubmit={this.handleURLPost}>
           {/* <Typography>{Lang.i2}</Typography> */}
-          <TextField
+          {/* <TextField
             autoFocus
             margin="dense"
-            style={{ maxWidth: 350 }}
+            inputProps={{ height: 8 }}
+            style={{ maxWidth: 350, width: "100%" }}
             id="name"
-            label={Lang.h2}
+            // label={Lang.h2}
+            placeholder={Lang.h2}
             // type="url"
             variant="outlined"
-            fullWidth
+            onChange={this.handleURL}
+          /> */}
+          <OutlinedInput
+            autoFocus
+            margin="dense"
+            classes={{
+              input: classes.int
+            }}
+            // style={{ maxWidth: 350, width: "100%" }}
+            id="name"
+            // label={Lang.h2}
+            placeholder={Lang.h2}
+            // type="url"
+            // variant="outlined"
             onChange={this.handleURL}
           />
           <FormHelperText style={{ color: "red" }}>{msg}</FormHelperText>
@@ -102,6 +122,7 @@ class UploadSite extends React.Component {
         <Button
           onClick={this.handleURLPost}
           color="primary"
+          size="small"
           className={classes.but}
           variant="contained"
           disabled={err}
