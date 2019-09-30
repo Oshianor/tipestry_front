@@ -168,6 +168,7 @@ class Homepage extends Component {
     });
   };
 
+
   // track scroolling . when scroll amost to the header
   trackScrolling = e => {
     // console.log(window.scrollY, "vvv", window.scrollX);
@@ -273,7 +274,7 @@ class Homepage extends Component {
                   className={classes.formControlNew}
                 >
                   {/* upload url modal display */}
-                  {/* <UploadSite /> */}
+                  <UploadSite />
 
                 <div className={classes.formControl} >
                   <Typography variant="body1">

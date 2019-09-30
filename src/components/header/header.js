@@ -529,9 +529,10 @@ class Header extends React.Component {
 		const { router } = this.props;
 		// console.log('router', router);
 		
-		if (router.pathname == "/") {
-			return this.displayHome()
-		} else if (router.pathname == "/profile" || router.pathname == "/tipreport" || router.pathname == "/invite") {
+		// if (router.pathname == "/") {
+		// 	return this.displayHome()
+		// } else 
+		if (router.pathname == "/profile" || router.pathname == "/tipreport" || router.pathname == "/invite") {
 			return this.displayProfile();
 		}
 	}
@@ -613,9 +614,10 @@ class Header extends React.Component {
 		if (!hide) {
 			if (router.pathname == "/profile" || router.pathname == "/tipreport" || router.pathname == "/invite") {
 				return 200;
-			} else if (router.pathname == "/") {
-				return 300;
 			}
+			//  else if (router.pathname == "/") {
+			// 	return 300;
+			// }
 		}
 		return "";
 	}
@@ -632,56 +634,61 @@ class Header extends React.Component {
     const renderMobileMenu = (
       <Menu
         anchorEl={mobileMoreAnchorEl}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
         open={isMobileMenuOpen}
         onClose={this.handleMobileMenuClose}
       >
-				{
-					!token ?
-						<React.Fragment>
-							<a  style={{ textDecoration: "none" }} target="_blank" href="https://medium.com/@tipestry/introducing-the-tipestry-internet-meta-layer-comment-vote-and-earn-cryptocurrency-anywhere-7b94abb5918b">
-								<MenuItem >
-									{Lang.d3}
-								</MenuItem>
-							</a>
-							<Link href="/login" prefetch>
-								<MenuItem >
-									{Lang.j}
-								</MenuItem>
-							</Link>
-							<Link href="/register" prefetch >
-								<MenuItem >
-									{Lang.k}
-								</MenuItem>
-							</Link>
-						</React.Fragment>
-					:
-						<React.Fragment>
-							<MenuItem onClick={this.handleLogout} >
-								<IconButton color="inherit" >
-									<Logout />
-								</IconButton>
-								<p>
-									{Lang.l}
-									{/* logout */}
-								</p>
-							</MenuItem>
-						</React.Fragment>
-				}
-				<MenuItem onClick={this.handleClickOpen}>
-          <Button style={{ margin: "1% 1%" }} variant="outlined" size="small" color="secondary" className={classes.button}>
-						{Lang.h}
-						{/* Enter Url */}
-					</Button>
-        </MenuItem>
+        {!token ? (
+          <React.Fragment>
+            <a
+              style={{ textDecoration: "none" }}
+              target="_blank"
+              href="https://medium.com/@tipestry/introducing-the-tipestry-internet-meta-layer-comment-vote-and-earn-cryptocurrency-anywhere-7b94abb5918b"
+            >
+              <MenuItem>{Lang.d3}</MenuItem>
+            </a>
+            <Link href="/login" prefetch>
+              <MenuItem>{Lang.j}</MenuItem>
+            </Link>
+            <Link href="/register" prefetch>
+              <MenuItem>{Lang.k}</MenuItem>
+            </Link>
+          </React.Fragment>
+        ) : (
+          <React.Fragment>
+            <MenuItem onClick={this.handleLogout}>
+              <IconButton color="inherit">
+                <Logout />
+              </IconButton>
+              <p>
+                {Lang.l}
+                {/* logout */}
+              </p>
+            </MenuItem>
+          </React.Fragment>
+        )}
+        {/* <MenuItem onClick={this.handleClickOpen}>
+          <Button
+            style={{ margin: "1% 1%" }}
+            variant="outlined"
+            size="small"
+            color="secondary"
+            className={classes.button}
+          >
+            {Lang.h}
+            Enter Url
+          </Button>
+        </MenuItem> */}
+        {/* <MenuItem onClick={this.handleClickOpen}> */}
+          <Searchpost />
+        {/* </MenuItem> */}
       </Menu>
     );
 
 		// console.log("this.statedata", data);
 		const back = {
-      // height: this.displayHeight(),
-      height: 'auto'
+      height: this.displayHeight()
     };
 
     return (
@@ -785,10 +792,10 @@ class Header extends React.Component {
                   <MoreVertIcon />
                 </IconButton>
               </div>
-              <Uploadsite />
+              {/* <Uploadsite /> */}
             </Toolbar>
             {/* display body for hide when scroll **bad english funck you */}
-            {/* {this.displayBody()} */}
+            {this.displayBody()}
           </AppBar>
 
           {/* render mobile menu */}
