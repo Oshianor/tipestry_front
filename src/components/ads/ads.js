@@ -83,8 +83,14 @@ const tutorialSteps = [
     imgPath: "/static/homepage/bitcfnews.png",
     href:
       "https://www.accesswire.com/560634/First-Bitcoin-Capital-Corp-OTCBITCF-Incubator-Division-Announced-Tipestry-Inc-An-Innovative-Content-Monetization-And-Social-Media-Platform-As-Its-First-Client-Company"
+  },
+  {
+    label: "Post of the week",
+    imgPath: "/static/homepage/potw-banner.png",
+    href: "https://tipestry.com/topics/5d9397d496e2273b3425453b/post-of-the-week-thread"
   }
 ];
+
 
 const useStyles = theme => ({
   root: {

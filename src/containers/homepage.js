@@ -37,6 +37,7 @@ import VerificationWarning from '../components/header/components/verificationWar
 import Tag from "../components/post/components/tag";
 import UploadSite from '../components/uploadurl/uploadsite';
 import Ads from '../components/ads/ads';
+import Searchpost from '../components/header/searchpost';
 
 
 const styles = theme => ({
@@ -255,9 +256,7 @@ class Homepage extends Component {
                           Top Hashtags
                         </Typography>
                         <div className={classes.wrapit}>
-                          {typeof tag[0] !== "undefined" && (
-                            <Tag tags={tag} />
-                          )}
+                          {typeof tag[0] !== "undefined" && <Tag tags={tag} />}
                         </div>
                       </Paper>
                     </div>
@@ -267,7 +266,6 @@ class Homepage extends Component {
 
               {/* post  */}
               <Grid item lg={6} xl={6} md={6} sm={12} xs={12}>
-
                 <div
                   // variant="outlined"
                   // disabled={loading}
@@ -276,29 +274,29 @@ class Homepage extends Component {
                   {/* upload url modal display */}
                   <UploadSite />
 
-                <div className={classes.formControl} >
-                  <Typography variant="body1">
-                    {Lang.q3}
-                    &nbsp;
-                  </Typography>
-                  <Button
-                    style={{ borderRadius: 0 }}
-                    disabled={loading}
-                    onClick={this.handleChange.bind(this, "hot")}
-                    variant={data.type === "hot" ? "contained" : "text"}
-                    color="primary"
-                  >
-                    {Lang.r3}
-                  </Button>
-                  <Button
-                    style={{ borderRadius: 0 }}
-                    disabled={loading}
-                    onClick={this.handleChange.bind(this, "recent")}
-                    variant={data.type === "recent" ? "contained" : "text"}
-                    color="primary"
-                  >
-                    {Lang.s3}
-                  </Button>
+                  <div className={classes.formControl}>
+                    <Typography variant="body1">
+                      {Lang.q3}
+                      &nbsp;
+                    </Typography>
+                    <Button
+                      style={{ borderRadius: 0 }}
+                      disabled={loading}
+                      onClick={this.handleChange.bind(this, "hot")}
+                      variant={data.type === "hot" ? "contained" : "text"}
+                      color="primary"
+                    >
+                      {Lang.r3}
+                    </Button>
+                    <Button
+                      style={{ borderRadius: 0 }}
+                      disabled={loading}
+                      onClick={this.handleChange.bind(this, "recent")}
+                      variant={data.type === "recent" ? "contained" : "text"}
+                      color="primary"
+                    >
+                      {Lang.s3}
+                    </Button>
                   </div>
                 </div>
 
@@ -321,6 +319,7 @@ class Homepage extends Component {
                           : { position: "fixed", maxWidth: 300 }
                       }
                     >
+                      <Searchpost />
                       <Tipcoin />
                       <LeaderBoard />
                       <SiteInfo />
