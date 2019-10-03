@@ -125,11 +125,17 @@ function SwipeableTextMobileStepper(props) {
       <AutoPlaySwipeableViews
         // axis={theme.direction === "rtl" ? "x-reverse" : "x"}
         index={activeStep}
+        activeStep={activeStep}
+        variant="dots"
         onChangeIndex={handleStepChange}
-        enableMouseEvents
+        // enableMouseEvents
+        steps={2}
+        position="static"
+        className={classes.root}
+        interval={8000}
       >
         {tutorialSteps.map((step, index) => (
-          <a  href={step.href} target="_blank" key={step.label}>
+          <a href={step.href} target="_blank" key={step.label}>
             {Math.abs(activeStep - index) <= 2 ? (
               <img
                 className={classes.img}
@@ -140,6 +146,13 @@ function SwipeableTextMobileStepper(props) {
           </a>
         ))}
       </AutoPlaySwipeableViews>
+      <MobileStepper
+        steps={tutorialSteps.length}
+        position="static"
+        variant="dots"
+        className={classes.root}
+        activeStep={activeStep}
+      />
     </div>
   );
 }
