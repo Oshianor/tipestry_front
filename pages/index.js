@@ -20,7 +20,7 @@ import Head from "next/head";
 class Index extends React.Component {
   state = {
     loading: true,
-    more: false
+    loadingMore: false
   };
 
   static async getInitialProps({ req }) {
@@ -86,21 +86,42 @@ class Index extends React.Component {
   // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyT2JqSWQiOiI1Y2I0N2E4NTdhMTlkNjMzNDdmODAyZWUiLCJpZCI6NDUxOCwiaXNfYWRtaW4iOjAsImlhdCI6MTU1NTMzMTc0MX0.ve3dVAyXsFQEjEaanod4BxQp5RjUntuNb67Xrlkc-YM
 
   handleFetchMoreTopics = async () => {
-    // const { pageNumber } = this.state;
-    const { data, getTopics, setPageNumber } = this.props;
-    let topicsCont = await axios.get(
-      config.api + "/topic?pageNumber=" + data.pageNumber + "&dataType=" + data.type
-    );
-    if (!topicsCont.data.error) {
-      topicsCont.data.content.topic.forEach(obj => {
-        data.topics.topic.push(obj);
+    try {
+      const { data, getTopics, setPageNumber } = this.props;
+      const { loadingMore } = this.state;
+
+      this.setState({
+        loadingMore: true
       });
-      getTopics({
-        topic: data.topics.topic,
-        total: topicsCont.data.content.total
-      });
-      let num = Number(data.pageNumber) + 1;
-      setPageNumber(num);
+      
+
+      if (!loadingMore) {
+        let topicsCont = await axios.get(
+          config.api +
+            "/topic?pageNumber=" +
+            data.pageNumber +
+            "&dataType=" +
+            data.type
+        );
+        if (!topicsCont.data.error) {
+          topicsCont.data.content.topic.forEach(obj => {
+            data.topics.topic.push(obj);
+          });
+
+          this.setState({
+            loadingMore: false
+          });
+          getTopics({
+            topic: data.topics.topic,
+            total: topicsCont.data.content.total
+          });
+          let num = Number(data.pageNumber) + 1;          
+          setPageNumber(num);
+        }
+      }
+    } catch (error) {
+      console.log("error", error);
+      
     }
   };
 
