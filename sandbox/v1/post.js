@@ -23,11 +23,10 @@ import { Lang } from '../../../lang';
 // import isURL from 'validator/lib/isURL';
 import Linkify from 'linkifyjs/react';
 // import withWidth from '@material-ui/core/withWidth';
-import Tags from "./components/tag";
+import Tags from "./components/tag"
 // import TagPopover from './components/tagPopup';
 import axios from "axios";
-import YouTube from "react-youtube";
-import isURL from "validator/lib/isURL";
+
 
 
 
@@ -110,82 +109,55 @@ class Post extends React.Component {
     open: false,
     loading: false,
     res: []
-  };
+  }
 
-  // check if the link if it is a gif so instead of the
+  // check if the link if it is a gif so instead of the 
   // displaying the image we use link and show the gif
-  checkForGif = filename => {
+  checkForGif = (filename) => {
     var ext = /.+\.(.+)$/.exec(filename);
     // console.log('r ? r[1] ',ext ? ext[1] : null);
-
+    
     return ext ? ext[1] : null;
-  };
+  }
 
   // when the component ount set the token to the state
   componentDidMount() {
-    let token = localStorage.getItem("token");
+    let token = localStorage.getItem('token');
     this.setState({
       token
-    });
+    })
   }
 
-  nutralizeTitle = title => {
-    return title
-      .toLocaleLowerCase()
-      .split(" ")
-      .join("-")
-      .replace(/[.*+?^$/{}()!%#>@=:;'|[\]\\]/g, "");
-  };
+
+  nutralizeTitle = (title) => {
+    return title.toLocaleLowerCase().split(" ").join("-").replace(/[.*+?^$/{}()!%#>@=:;'|[\]\\]/g, '');
+  }
+
 
   // display the title based on the length
   // truncate the title if it too long
-  displayTitle = title => {
+  displayTitle = (title) => {
     return (
-      <a
-        style={{
-          color: "#1F7BD8",
-          textDecoration: "none",
-          fontSize: 16,
-          textTransform: "capitalize"
-        }}
-      >
-        <Linkify tagName="span">{title}</Linkify>
+      <a style={{ color: '#1F7BD8', textDecoration: 'none', fontSize: 16, textTransform: "capitalize" }} >
+        <Linkify tagName="span">
+          {title}
+        </Linkify>
       </a>
-    );
-  };
+    )
+  }
+
 
   handleCloseTag = () => {
     this.setState({
       open: false
-    });
-  };
-
-  getQuery(name, url) {
-    // gettting YouTube videoId
-    // if (!url) url = window.location.href;
-    name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-      results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return "";
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
+    })
   }
 
-  _onReady(event) {
-    // access to player in all event handlers via event.target
-    event.target.pauseVideo();
-  }
-
-  checkIfItYouTube = url => {
-    var pathname = new URL(url).hostname;
-    let improved = pathname.replace(/^(?:https?:\/\/)?(?:www\.)?/i, "");
-    return improved;
-  };
 
   render() {
     const { classes, topicValue, errMsg } = this.props;
     const { token, open, res } = this.state;
-
+    
     return (
       <Grid container justify="center">
         {// check if topic value exist
@@ -279,59 +251,42 @@ class Post extends React.Component {
                 </Typography>
               </CardContent>
 
-              {/* check if it is youtube */}
-              {this.checkIfItYouTube(topic.sites[0].url) !== "youtube.com" &&
-              this.getQuery("v", topic.sites[0].url) === null ? (
-                <div>
-                  <a
-                    href={
-                      "/topics/" +
-                      topic._id +
-                      "/" +
-                      this.nutralizeTitle(topic.title)
-                    }
-                    style={{
-                      position: "relative",
-                      display: "block"
-                    }}
-                  >
-                    <img
-                      style={{
-                        backgroundPosition: "top",
-                        // height: "auto",
-                        // minHeight: 500,
-                        minHeight: "-webkit-fill-available",
-                        // maxHeight: "-webkit-fill-available",
-                        width: "100%"
-                      }}
-                      src={
-                        typeof topic.sites[0] !== "undefined"
-                          ? this.checkForGif(topic.sites[0].url) == "gif" ||
-                            this.checkForGif(topic.sites[0].url) == "png" ||
-                            this.checkForGif(topic.sites[0].url) == "jpg"
-                            ? topic.sites[0].url
-                            : "//image.thum.io/get/iphoneX/noanimate/crop/650/auth/3228-www.tipestry.com/" +
-                              topic.sites[0].url
-                          : "//image.thum.io/get/iphoneX/noanimate/crop/650/auth/3228-www.tipestry.com/" +
-                            "https://tipestry.com"
-                      }
-                    />
-                  </a>
-                </div>
-              ) : (
-                <YouTube
-                  videoId={this.getQuery("v", topic.sites[0].url)}
-                  opts={{
-                    // height: "500px",
-                    width: "100%",
-                    playerVars: {
-                      // https://developers.google.com/youtube/player_parameters
-                      autoplay: 1
-                    }
+              <div>
+                <a
+                  href={
+                    "/topics/" +
+                    topic._id +
+                    "/" +
+                    this.nutralizeTitle(topic.title)
+                  }
+                  style={{
+                    position: "relative",
+                    display: "block"
                   }}
-                  onReady={this._onReady}
-                />
-              )}
+                >
+                  <img
+                    style={{
+                      backgroundPosition: "top",
+                      // height: "auto",
+                      // minHeight: 500,
+                      minHeight: "-webkit-fill-available",
+                      // maxHeight: "-webkit-fill-available",
+                      width: "100%"
+                    }}
+                    src={
+                      typeof topic.sites[0] !== "undefined"
+                        ? this.checkForGif(topic.sites[0].url) == "gif" ||
+                          this.checkForGif(topic.sites[0].url) == "png" ||
+                          this.checkForGif(topic.sites[0].url) == "jpg"
+                          ? topic.sites[0].url
+                          : "//image.thum.io/get/iphoneX/noanimate/crop/650/auth/3228-www.tipestry.com/" +
+                            topic.sites[0].url
+                        : "//image.thum.io/get/iphoneX/noanimate/crop/650/auth/3228-www.tipestry.com/" +
+                          "https://tipestry.com"
+                    }
+                  />
+                </a>
+              </div>
 
               <CardContent>
                 <Typography component="p">
@@ -399,3 +354,71 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, )(Posts);
+
+
+  // handleOpenTagFind = async (tag) => {
+  //   this.setState({
+  //     loading: true
+  //   });
+
+  //   let result = await axios.post(config.api + "/topic/search", {
+  //     text: tag,
+  //     searchBy: "tag"
+  //   });
+
+  //   console.log('result', result);
+    
+
+  //   this.setState({
+  //     res: result.data,
+  //     open: true,
+  //     loading: false
+  //   });
+  // }
+
+{
+  /* <CardMedia
+                        className={classes.media}
+                        style={{ backgroundPosition: 'top' }}
+                        image={
+                            // if the link is a gif then show that
+                            typeof topic.sites[0] !== "undefined" && this.checkForGif(topic.sites[0].url) == 'gif' ?
+                              topic.sites[0].url
+                            :
+                              // check to see if it the old data of base64
+                              // by using the lenght of the screenshot field
+                              topic.screenshot.length > 200 ?
+                                config.base64 + topic.screenshot
+                              :
+                                config.topic + topic.screenshot
+                        }
+                        title={topic.title}
+                        component="a"
+                        href={encodeURI("/topics/" + topic._id + "/" + topic.title.replace(/[.*+?^$/{}()|[\]\\]/g, '-'))}
+                      /> */
+}
+
+
+ // // if the link is a gif then show that
+ // typeof topic.sites[0] !== "undefined" && this.checkForGif(topic.sites[0].url) == 'gif' ?
+ //   topic.sites[0].url
+
+ // :
+ // // chec if it is a link
+ //   this.checkIfUrl(topic.screenshot) ?
+ //     topic.screenshot
+ //   :
+ //     // check to see if it the old data of base64
+ //     // by using the lenght of the screenshot field
+ //     topic.screenshot.length > 200 ?
+ //       config.base64 + topic.screenshot
+ //     :
+ //       config.topic + topic.screenshot
+
+
+  //  checkIfUrl = (url) => {
+  //   let yes = isURL(url, { protocols: ['http','https'], require_protocol: false} );
+  //   console.log('yes', yes, url);
+    
+  //   return yes ? yes : null
+  // }

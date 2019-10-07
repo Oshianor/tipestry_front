@@ -33,21 +33,27 @@ import Warning from '../../reuseable/warning'
 
 const styles = theme => ({
   card: {
-		maxWidth: "100%",
-		marginTop: 5,
-		// boxShadow: '11px -1px 24px -4px'
-		boxShadow: "1px -1px 8px -4px",
-		borderRadius: 10
-	},
+    // maxWidth: "100%",
+    marginTop: 5,
+    // boxShadow: '11px -1px 24px -4px'
+    boxShadow: "1px -1px 8px -4px",
+    borderRadius: 10,
+    [theme.breakpoints.only("xs")]: {
+      maxWidth: 400
+    },
+    [theme.breakpoints.only("sm")]: {
+      maxWidth: 700
+    }
+  },
   actions: {
-		display: 'flex',
-		padding: "0px 25px",
-		// borderBottom: '2px solid gray'
-		// borderBottom: '1px solid #d8d6d6'
-	},
-	textLink: {
-		cursor: 'pointer',
-	}
+    display: "flex",
+    padding: "0px 25px"
+    // borderBottom: '2px solid gray'
+    // borderBottom: '1px solid #d8d6d6'
+  },
+  textLink: {
+    cursor: "pointer"
+  }
 });
 
 class Comments extends React.Component {

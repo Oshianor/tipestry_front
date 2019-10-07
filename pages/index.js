@@ -15,7 +15,29 @@ import CookieConsent from "react-cookie-consent";
 import { Lang } from '../lang';
 import Router from "next/router";
 import Head from "next/head";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import ExpandMore from "@material-ui/icons/ExpandMore";
+import IconButton from "@material-ui/core/IconButton";
+import { withStyles } from "@material-ui/core/styles";
 
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    marginTop: 100,
+    minHeight: 45
+  },
+  tab: {
+    alignItems: "baseline",
+    padding: 10
+  },
+  pos: {
+    // position: "absolute"
+  },
+  progress: {
+    margin: theme.spacing.unit * 2
+  }
+});
 
 class Index extends React.Component {
   state = {
@@ -126,8 +148,8 @@ class Index extends React.Component {
   };
 
   render() {
-    const { loading, more } = this.state;
-
+    const { loading, loadingMore } = this.state;
+    const { classes } = this.props;
     return (
       <div>
         <Head>
@@ -158,6 +180,19 @@ class Index extends React.Component {
             </CookieConsent>
           </BottomScrollListerer>
         )}
+        {// show a preloader sign for user post and user favourite post
+        loadingMore && (
+          <IconButton style={{ display: "contents" }}>
+            {/* {loading ? ( */}
+              <CircularProgress
+                className={classes.progress}
+                color="secondary"
+              />
+            {/* ) : (
+              <ExpandMore />
+            )} */}
+          </IconButton>
+        )}
       </div>
     );
   }
@@ -184,4 +219,7 @@ function mapDispatchToProps(dispatch) {
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Index);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(Index));
