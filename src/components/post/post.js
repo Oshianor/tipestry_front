@@ -163,12 +163,21 @@ class Post extends React.Component {
   getQuery(name, url) {
     // gettting YouTube videoId
     // if (!url) url = window.location.href;
-    name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-      results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return "";
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
+    const urlObj = new URL(url);
+    const pathname = urlObj.hostname;
+    let improved = pathname.replace(/^(?:https?:\/\/)?(?:www\.)?/i, "");
+    if (improved === "youtube.com") {
+      name = name.replace(/[\[\]]/g, "\\$&");
+      var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return "";
+      return decodeURIComponent(results[2].replace(/\+/g, " "));
+    } else if (improved === "youtu.be") {
+      return urlObj.pathname.replace("/", "");
+    } else {
+      return null
+    }
   }
 
   _onReady(event) {
@@ -179,7 +188,8 @@ class Post extends React.Component {
   checkIfItYouTube = url => {
     var pathname = new URL(url).hostname;
     let improved = pathname.replace(/^(?:https?:\/\/)?(?:www\.)?/i, "");
-    return improved;
+    if (improved === "youtube.com" || improved === "youtu.be") return true;
+    return false
   };
 
   render() {
@@ -280,7 +290,7 @@ class Post extends React.Component {
               </CardContent>
 
               {/* check if it is youtube */}
-              {this.checkIfItYouTube(topic.sites[0].url) !== "youtube.com" &&
+              {!this.checkIfItYouTube(topic.sites[0].url) &&
               this.getQuery("v", topic.sites[0].url) === null ? (
                 <div>
                   <a
@@ -319,6 +329,7 @@ class Post extends React.Component {
                   </a>
                 </div>
               ) : (
+
                 <YouTube
                   videoId={this.getQuery("v", topic.sites[0].url)}
                   opts={{
