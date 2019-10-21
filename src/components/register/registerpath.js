@@ -349,11 +349,7 @@ class RegisterPath extends Component {
         {/* <Typography variant="h2" gutterBottom style={{ margin: '4% 8%' }} > Tipestry</Typography> */}
         <Link href="/" prefetch>
           <a>
-            <Typography
-              variant="h2"
-              gutterBottom
-              style={{ margin: "4% 8%" }}
-            >
+            <Typography variant="h2" gutterBottom style={{ margin: "4% 8%" }}>
               <img
                 src="/static/login/newlogo.png"
                 style={{ width: 200, height: 60 }}
@@ -457,7 +453,7 @@ class RegisterPath extends Component {
               />
             }
             label={
-              <Link href="/privacypolicy">
+              <Link href="/terms">
                 <a>
                   {/* I agree to the Terms and Conditions. */}
                   {Lang.l3}
