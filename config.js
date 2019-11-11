@@ -8,6 +8,7 @@ export const config = {
 	// topic: "http://localhost:3000",
 	// port: 8008
 
+
 	// demo
 	// api: "http://demo.tipestry.com/api",
 	// url: "http://demo.tipestry.com",
@@ -16,6 +17,7 @@ export const config = {
 	// base64: 'data:image/jpeg;base64,',
 	// topic: "http://demo.tipestry.com/public",
 	// port: 8008
+
 
 	// live
 	api: "https://tipestry.com/api",

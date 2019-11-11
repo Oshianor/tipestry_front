@@ -6,6 +6,8 @@ import { Lang } from '../../../lang';
 import Progress from "../reuseable/progress";
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import Axios from 'axios';
+import { config } from '../../../config';
 
 
 const styles = (theme) => ({
@@ -45,84 +47,94 @@ class Stages extends Component {
 		}
 	}
 
-	componentDidMount = () => {
+	componentDidMount = async () => {
 		let token = localStorage.getItem('token');
 		this.setState({
 			token
 		})
-	}
 
+		const stage = await Axios.get(config.api + "/user/levels", {
+      headers: { "x-auth-token": token }
+		}); 
+		
+		console.log('stage', stage);
+		
+	}
 
 	render() {
-		const { data, classes } = this.props;
-		const { token } = this.state;
-		return (
-			<div className={classes.root} >
-				<Typography variant="button" style={{ fontSize: 25, borderBottom: "1px solid darkgray" }}>
-					{Lang.b3}
-				</Typography>
-				{
-					token &&
-						<div>
-							{/*Level {the level}  */}
-							<Typography style={{ marginTop: 15 }} >
-								{Lang.z2}&nbsp;
-								<strong>{typeof data.user.stage !== "undefined" ? data.user.stage : 1}</strong>
-							</Typography>
-								<Progress 
-									percent={
-										typeof data.user.stage !== "undefined" ? 
-											(data.user.stage / 10) * 100 
-										:
-											1 / 10 * 100
-									}
-								/>
+		return null
+	}
+
+	// render() {
+	// 	const { data, classes } = this.props;
+	// 	const { token } = this.state;
+	// 	return (
+	// 		<div className={classes.root} >
+	// 			<Typography variant="button" style={{ fontSize: 25, borderBottom: "1px solid darkgray" }}>
+	// 				{Lang.b3}
+	// 			</Typography>
+	// 			{
+	// 				token &&
+	// 					<div>
+	// 						{/*Level {the level}  */}
+	// 						<Typography style={{ marginTop: 15 }} >
+	// 							{Lang.z2}&nbsp;
+	// 							<strong>{typeof data.user.stage !== "undefined" ? data.user.stage : 1}</strong>
+	// 						</Typography>
+	// 							<Progress 
+	// 								percent={
+	// 									typeof data.user.stage !== "undefined" ? 
+	// 										(data.user.stage / 10) * 100 
+	// 									:
+	// 										1 / 10 * 100
+	// 								}
+	// 							/>
 						
 
-						<br />
+	// 					<br />
 				
-							{/* REward for level {the level} */}
-							<Typography>
-								{Lang.a3}&nbsp;{Lang.z2}&nbsp;
-								<strong>{typeof data.user.stage !== "undefined" ? data.user.stage + 1 : 2}:</strong>
-								&nbsp;
-								{
-									typeof data.user.levels.reward !== "undefined" ? 
-										this.displayCoin(data.user.levels.reward.coin) 
-										: ""
-								}
-								{
-									typeof data.user.levels.reward !== "undefined" ? 
-										data.user.levels.reward.amt 
-										: ""
-								}
-							</Typography>
+	// 						{/* REward for level {the level} */}
+	// 						<Typography>
+	// 							{Lang.a3}&nbsp;{Lang.z2}&nbsp;
+	// 							<strong>{typeof data.user.stage !== "undefined" ? data.user.stage + 1 : 2}:</strong>
+	// 							&nbsp;
+	// 							{
+	// 								typeof data.user.levels.reward !== "undefined" ? 
+	// 									this.displayCoin(data.user.levels.reward.coin) 
+	// 									: ""
+	// 							}
+	// 							{
+	// 								typeof data.user.levels.reward !== "undefined" ? 
+	// 									data.user.levels.reward.amt 
+	// 									: ""
+	// 							}
+	// 						</Typography>
 
-							<br />
-							{
-								// typeof data.user.levels.data !== "undefined" &&
-								data.user.levels.data.map((stage, index) => (
-									<Grid container spacing={8} key={index} >
-										<Grid item xs={7} >
-											<Typography>{stage.text}</Typography>
-										</Grid>
-										<Grid item xs={5} >
-											<Progress percent={stage.val} />
-										</Grid>
-									</Grid>
-								))
-							}
+	// 						<br />
+	// 						{
+	// 							// typeof data.user.levels.data !== "undefined" &&
+	// 							data.user.levels.data.map((stage, index) => (
+	// 								<Grid container spacing={8} key={index} >
+	// 									<Grid item xs={7} >
+	// 										<Typography>{stage.text}</Typography>
+	// 									</Grid>
+	// 									<Grid item xs={5} >
+	// 										<Progress percent={stage.val} />
+	// 									</Grid>
+	// 								</Grid>
+	// 							))
+	// 						}
 
-							<Typography variant='caption' style={{ margin: '10% 2% 0%', color: 'gray' }} >
-								<strong>Warning: </strong>
-								Using multiple accounts to give yourself upvotes or tips can result in a ban and the 
-								loss of all coins in the account.
-							</Typography>
-						</div>
-				}
-			</div>
-		);
-	}
+	// 						<Typography variant='caption' style={{ margin: '10% 2% 0%', color: 'gray' }} >
+	// 							<strong>Warning: </strong>
+	// 							Using multiple accounts to give yourself upvotes or tips can result in a ban and the 
+	// 							loss of all coins in the account.
+	// 						</Typography>
+	// 					</div>
+	// 			}
+	// 		</div>
+	// 	);
+	// }
 }
 
 Stages.propTypes = {

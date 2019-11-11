@@ -103,7 +103,9 @@ class MiniDrawer extends React.Component {
 		let token = localStorage.getItem('token')
 		this.setState({
 			token
-		})
+		});
+
+
 	}
 	
 
@@ -236,13 +238,13 @@ class MiniDrawer extends React.Component {
 					<Popular  modal={true} />
 				</Dialog>
 
-				<Dialog open={open === "stage"} handleClose={this.handleClose}>
+				{/* <Dialog open={open === "stage"} handleClose={this.handleClose}>
 					<Stage />
-				</Dialog>
+				</Dialog> */}
 
-				<Dialog open={open === "userinfo"} handleClose={this.handleClose}>
+				{/* <Dialog open={open === "userinfo"} handleClose={this.handleClose}>
 					<Userinfo />
-				</Dialog>
+				</Dialog> */}
       </div>
     );
   }
