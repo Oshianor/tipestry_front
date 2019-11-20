@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-
+import Link from "next/link";
 // created component
 import SharePopover from './sharePopover';
 
@@ -20,6 +20,8 @@ import { config } from "../../../../config";
 import Coin from './coin';
 import Warning from '../../reuseable/warning';
 import { Lang } from '../../../../lang';
+
+
 
 const styles = theme => ({
   button: {
@@ -159,14 +161,16 @@ class CardActionIcons extends React.Component {
         {this.displayFavour()}
         {/*  */}
         <Tooltip title={Lang.g2} aria-label="comments">
-          <IconButton aria-label="comments" className={classes.iconspacing}>
-            <img
-              src="/static/icons/comments.svg"
-              alt="comments"
-              width="25"
-              height="25"
-            />
-          </IconButton>
+          <Link href={link}>
+            <IconButton aria-label="comments" className={classes.iconspacing}>
+              <img
+                src="/static/icons/comments.svg"
+                alt="comments"
+                width="25"
+                height="25"
+              />
+            </IconButton>
+          </Link>
         </Tooltip>
         <p className={classes.num}>{comment}</p>
         &nbsp;&nbsp;
