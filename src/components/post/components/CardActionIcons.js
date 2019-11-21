@@ -40,7 +40,7 @@ const styles = theme => ({
     color: "#403d3d",
     marginLeft: "-7px",
     [theme.breakpoints.up('md')]: {
-      marginLeft: "-18px",
+      marginLeft: "-10px",
     },
   },
   iconspacing: {
@@ -160,7 +160,7 @@ class CardActionIcons extends React.Component {
         {/*  */}
         {this.displayFavour()}
         {/*  */}
-        <Tooltip title={Lang.g2} aria-label="comments">
+        {/* <Tooltip title={Lang.g2} aria-label="comments"> */}
           <Link href={link}>
             <IconButton aria-label="comments" className={classes.iconspacing}>
               <img
@@ -171,7 +171,7 @@ class CardActionIcons extends React.Component {
               />
             </IconButton>
           </Link>
-        </Tooltip>
+        {/* </Tooltip> */}
         <p className={classes.num}>{comment}</p>
         &nbsp;&nbsp;
         {/*  */}
