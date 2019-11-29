@@ -290,7 +290,8 @@ class Post extends React.Component {
               </CardContent>
 
               {/* check if it is youtube */}
-              {!this.checkIfItYouTube(topic.sites[0].url) ? (
+              {!this.checkIfItYouTube(topic.sites[0].url) &&
+              this.getQuery("v", topic.sites[0].url) === null ? (
                 <div>
                   <a
                     href={
@@ -328,12 +329,9 @@ class Post extends React.Component {
                   </a>
                 </div>
               ) : (
+
                 <YouTube
-                  videoId={
-                    this.getQuery("v", topic.sites[0].url) === null
-                      ? url.substring(url.lastIndexOf("/") + 1)
-                      : this.getQuery("v", topic.sites[0].url)
-                  }
+                  videoId={this.getQuery("v", topic.sites[0].url)}
                   opts={{
                     // height: "500px",
                     width: "100%",

@@ -24,6 +24,12 @@ import isURL from 'validator/lib/isURL';
         })
 
       }
+      if (this.checkIfItYouTube(url) == "youtu.be") {
+        this.setState({
+          load: "youtube",
+          videoId: url.substring(url.lastIndexOf("/") + 1)
+        });
+      }
     }
   }
 
@@ -65,11 +71,7 @@ import isURL from 'validator/lib/isURL';
     if (load === 'youtube') {
       return (
         <div style={{ marginTop: 70 }}>
-          <YouTube
-            videoId={this.getQuery('v', url)}
-            opts={opts}
-            onReady={this._onReady}
-          />
+          <YouTube videoId={videoId} opts={opts} onReady={this._onReady} />
         </div>
       );
     }
@@ -153,10 +155,12 @@ import isURL from 'validator/lib/isURL';
     
 		return (
       <div>
-        {this.displayYoutube()}
-        {this.displayIframe()}    
+        {load === "youtube" ? this.displayYoutube() : this.displayIframe()}
+
+        {/* {this.displayYoutube()}
+        {this.displayIframe()}     */}
       </div>
-		)
+    );
 	}
 }
 export default Embed;
