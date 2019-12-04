@@ -308,8 +308,9 @@ class Post extends React.Component {
                       style={{
                         backgroundPosition: "top",
                         // height: "auto",
+                        maxHeight: 550,
                         // minHeight: 500,
-                        minHeight: "-webkit-fill-available",
+                        // minHeight: "-webkit-fill-available",
                         // maxHeight: "-webkit-fill-available",
                         width: "100%"
                       }}
