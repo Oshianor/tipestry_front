@@ -19,7 +19,6 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import IconButton from "@material-ui/core/IconButton";
 import { withStyles } from "@material-ui/core/styles";
-import { clearInterval } from 'timers';
 
 
 const styles = theme => ({
@@ -41,17 +40,10 @@ const styles = theme => ({
 });
 
 class Index extends React.Component {
-  constructor(props) {
-    super(props);
-    this.timer = null;
-
-    this.state = {
-      loading: true,
-      loadingMore: false
-    };
-  }
-  
-  
+  state = {
+    loading: true,
+    loadingMore: false
+  };
 
   static async getInitialProps({ req }) {
     // console.log('req', req);
@@ -109,11 +101,6 @@ class Index extends React.Component {
       this.setState({
         loading: false
       });
-
-
-      this.timer = setInterval(() => {
-        this.handleFetchMoreTopics()
-      }, 10000);
     } catch (error) {
       // console.log("error", error.response);
       if (error.response.data.error) {
@@ -122,11 +109,6 @@ class Index extends React.Component {
       }
     }
   }
-
-  componentWillUnmount() {
-    clearInterval(this.timer)
-  }
-  
 
   // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyT2JqSWQiOiI1Y2I0N2E4NTdhMTlkNjMzNDdmODAyZWUiLCJpZCI6NDUxOCwiaXNfYWRtaW4iOjAsImlhdCI6MTU1NTMzMTc0MX0.ve3dVAyXsFQEjEaanod4BxQp5RjUntuNb67Xrlkc-YM
 
