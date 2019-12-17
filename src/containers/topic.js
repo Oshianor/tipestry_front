@@ -73,7 +73,7 @@ class Topic extends Component {
           handleDrawerOpen={this.handleDrawerOpen}  
           handleDrawerClose={this.handleDrawerClose} 
         >
-					<Grid container spacing={24}>
+					<Grid container>
 						<Grid item xs={12} sm={12} md={6} lg={6} xl={6} >
 							<Typography variant="h6" style={{ margin: 5, marginTop: 80, textAlign: 'center', color: 'black' }} >
 								{typeof data.siteTopic[0] !== "undefined" && data.siteTopic[0].title}
