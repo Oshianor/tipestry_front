@@ -314,15 +314,16 @@ class Post extends React.Component {
                         // maxHeight: "-webkit-fill-available",
                         width: "100%"
                       }}
+                      // //image.thum.io/get/iphoneX/noanimate/crop/650/auth/3228-www.tipestry.com/
                       src={
                         typeof topic.sites[0] !== "undefined"
                           ? this.checkForGif(topic.sites[0].url) == "gif" ||
                             this.checkForGif(topic.sites[0].url) == "png" ||
                             this.checkForGif(topic.sites[0].url) == "jpg"
                             ? topic.sites[0].url
-                            : "//image.thum.io/get/iphoneX/noanimate/crop/650/auth/3228-www.tipestry.com/" +
+                            : "//image.thum.io/get/auth/3228-www.tipestry.com/" +
                               topic.sites[0].url
-                          : "//image.thum.io/get/iphoneX/noanimate/crop/650/auth/3228-www.tipestry.com/" +
+                          : "//image.thum.io/get/auth/3228-www.tipestry.com/" +
                             "https://tipestry.com"
                       }
                     />

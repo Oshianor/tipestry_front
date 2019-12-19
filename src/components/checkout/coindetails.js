@@ -224,7 +224,7 @@ class CoinDetails extends React.Component{
                   </Typography>
                 </div>
                 <div className={classes.sec}>
-                  <Typography variant="button" className={classes.address}>
+                  {/* <Typography variant="button" className={classes.address}>
                     {data.user.btc[0].address}
                     &nbsp;&nbsp;
                     <CopyToClipboard
@@ -239,11 +239,11 @@ class CoinDetails extends React.Component{
                         }}
                       />
                     </CopyToClipboard>
-                  </Typography>
-                  <div style={{ flexGrow: 1 }} />
+                  </Typography> */}
+                  {/* <div style={{ flexGrow: 1 }} />
                   <IconButton onClick={this.handleGenerateBtc}>
                     <RefreshRounded />
-                  </IconButton>
+                  </IconButton> */}
                 </div>
               </Paper>
             </Grid>
@@ -262,7 +262,7 @@ class CoinDetails extends React.Component{
                   </Typography>
                 </div>
                 <div className={classes.sec}>
-                  <Typography variant="button" className={classes.address}>
+                  {/* <Typography variant="button" className={classes.address}>
                     {data.user.doge[0].address}
                     &nbsp;&nbsp;
                     <CopyToClipboard
@@ -281,7 +281,7 @@ class CoinDetails extends React.Component{
                   <div style={{ flexGrow: 1 }} />
                   <IconButton onClick={this.handleGenerateDoge}>
                     <RefreshRounded />
-                  </IconButton>
+                  </IconButton> */}
                 </div>
               </Paper>
             </Grid>
@@ -300,7 +300,7 @@ class CoinDetails extends React.Component{
                   </Typography>
                 </div>
                 <div className={classes.sec}>
-                  <Typography variant="button" className={classes.address}>
+                  {/* <Typography variant="button" className={classes.address}>
                     {data.user.eth[0].address}
                     &nbsp;&nbsp;
                     <CopyToClipboard
@@ -319,7 +319,7 @@ class CoinDetails extends React.Component{
                   <div style={{ flexGrow: 1 }} />
                   <IconButton onClick={this.handleGenerateEth}>
                     <RefreshRounded />
-                  </IconButton>
+                  </IconButton> */}
                 </div>
               </Paper>
             </Grid>
@@ -338,7 +338,7 @@ class CoinDetails extends React.Component{
                   </Typography>
                 </div>
                 <div className={classes.sec}>
-                  <Typography variant="button" className={classes.address}>
+                  {/* <Typography variant="button" className={classes.address}>
                     {data.user.eth[0].address}
                     &nbsp;&nbsp;
                     <CopyToClipboard
@@ -357,7 +357,7 @@ class CoinDetails extends React.Component{
                   <div style={{ flexGrow: 1 }} />
                   <IconButton onClick={this.handleGenerateEth}>
                     <RefreshRounded />
-                  </IconButton>
+                  </IconButton> */}
                 </div>
               </Paper>
             </Grid>
@@ -414,7 +414,7 @@ class CoinDetails extends React.Component{
                   </Typography>
                 </div>
                 <div className={classes.sec}>
-                  <Typography variant="button" className={classes.address}>
+                  {/* <Typography variant="button" className={classes.address}>
                     {data.user.eth[0].address}
                     &nbsp;&nbsp;
                     <CopyToClipboard
@@ -433,7 +433,7 @@ class CoinDetails extends React.Component{
                   <div style={{ flexGrow: 1 }} />
                   <IconButton onClick={this.handleGenerateEth}>
                     <RefreshRounded />
-                  </IconButton>
+                  </IconButton> */}
                 </div>
               </Paper>
             </Grid>
