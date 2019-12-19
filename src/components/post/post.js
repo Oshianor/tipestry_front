@@ -146,7 +146,7 @@ class Post extends React.Component {
           color: "#1F7BD8",
           textDecoration: "none",
           fontSize: 16,
-          textTransform: "capitalize"
+          // textTransform: "capitalize"
         }}
       >
         <Linkify tagName="span">{title}</Linkify>
