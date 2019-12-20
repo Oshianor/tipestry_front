@@ -108,15 +108,20 @@ const styles = theme => ({
 
 
 class Homepage extends Component {
-  state = {
-    drawer: false,
-    stopScroll: false,
-    token: null,
-    loading: false,
-    open: false,
-    searchBy: "tag",
-    tag: []
-  };
+  constructor(props) {
+    super(props);
+    this.timer = null;
+
+    this.state = {
+      drawer: false,
+      stopScroll: false,
+      token: null,
+      loading: false,
+      open: false,
+      searchBy: "tag",
+      tag: []
+    };
+  }
 
   // handle drawer open
   handleDrawerOpen = () => {
@@ -126,6 +131,9 @@ class Homepage extends Component {
   async handleChange(type) {
     const { dataType } = this.state;
     const { getTopics, data, setType, setPageNumber } = this.props;
+
+    clearInterval(this.timer);
+
     this.setState({
       loading: true
     });
@@ -143,7 +151,48 @@ class Homepage extends Component {
     this.setState({
       loading: false
     });
+    this.timer = setInterval(() => {
+      this.handleFetchMoreTopics();
+    }, 30000);
   }
+
+  handleFetchMoreTopics = async () => {
+    try {
+      const { data, getTopics, setPageNumber } = this.props;
+      const { loading } = this.state;
+
+      this.setState({
+        loading: true
+      });
+
+      if (!loading) {
+        let topicsCont = await axios.get(
+          config.api +
+            "/topic?pageNumber=" +
+            data.pageNumber +
+            "&dataType=" +
+            data.type
+        );
+        if (!topicsCont.data.error) {
+          topicsCont.data.content.topic.forEach(obj => {
+            data.topics.topic.push(obj);
+          });
+
+          this.setState({
+            loading: false
+          });
+          getTopics({
+            topic: data.topics.topic,
+            total: topicsCont.data.content.total
+          });
+          let num = Number(data.pageNumber) + 1;
+          setPageNumber(num);
+        }
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
 
   // handle close of drawer
   handleDrawerClose = () => {
@@ -156,10 +205,15 @@ class Homepage extends Component {
     });
     this.handleGetTags();
     addEventListener("scroll", this.trackScrolling);
+
+    this.timer = setInterval(() => {
+      this.handleFetchMoreTopics();
+    }, 30000);
   }
 
   componentWillUnmount() {
     removeEventListener("scroll", this.trackScrolling);
+    clearInterval(this.timer);
   }
 
   handleGetTags = async () => {
@@ -168,7 +222,6 @@ class Homepage extends Component {
       tag: tag.data
     });
   };
-
 
   // track scroolling . when scroll amost to the header
   trackScrolling = e => {

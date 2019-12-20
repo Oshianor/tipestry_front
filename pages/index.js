@@ -110,9 +110,9 @@ class Index extends React.Component {
       });
 
 
-      this.timer = setInterval(() => {
-        this.handleFetchMoreTopics();
-      }, 10000);
+      // this.timer = setInterval(() => {
+      //   this.handleFetchMoreTopics();
+      // }, 10000);
     } catch (error) {
       // console.log("error", error.response);
       if (error.response.data.error) {
@@ -122,11 +122,11 @@ class Index extends React.Component {
     }
   }
 
-  componentWillUnmount() {
-    console.log("this.timer)");
+  // componentWillUnmount() {
+  //   console.log("this.timer)");
     
-    clearInterval(this.timer);
-  }
+  //   clearInterval(this.timer);
+  // }
   
 
   // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyT2JqSWQiOiI1Y2I0N2E4NTdhMTlkNjMzNDdmODAyZWUiLCJpZCI6NDUxOCwiaXNfYWRtaW4iOjAsImlhdCI6MTU1NTMzMTc0MX0.ve3dVAyXsFQEjEaanod4BxQp5RjUntuNb67Xrlkc-YM
@@ -170,6 +170,9 @@ class Index extends React.Component {
       
     }
   };
+
+
+
 
   render() {
     const { loading, loadingMore } = this.state;

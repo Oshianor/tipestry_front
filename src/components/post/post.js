@@ -145,8 +145,8 @@ class Post extends React.Component {
         style={{
           color: "#1F7BD8",
           textDecoration: "none",
-          fontSize: 16,
-          // textTransform: "capitalize"
+          fontSize: 15,
+          textTransform: "lowercase"
         }}
       >
         <Linkify tagName="span">{title}</Linkify>
@@ -315,6 +315,7 @@ class Post extends React.Component {
                         width: "100%"
                       }}
                       // image.thum.io/get/iphoneX/noanimate/crop/650/auth/3228-www.tipestry.com/
+                      // image.thum.io/get/auth/3228-www.tipestry.com/
                       src={
                         typeof topic.sites[0] !== "undefined"
                           ? this.checkForGif(topic.sites[0].url) == "gif" ||
