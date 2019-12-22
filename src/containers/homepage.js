@@ -166,7 +166,7 @@ class Homepage extends Component {
         loading: true
       });
 
-      if (!loadingMore) {
+      if (!loading) {
         const url =
           config.api +
           "/topic?pageNumber=" +
@@ -174,8 +174,8 @@ class Homepage extends Component {
           "&dataType=" +
           data.type;
 
-          console.log("urlurlurl", url);
-          
+        console.log("urlurlurl", url);
+
         let topicsCont = await axios.get(url);
         if (!topicsCont.data.error) {
           topicsCont.data.content.topic.forEach(obj => {
