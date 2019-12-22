@@ -117,6 +117,7 @@ class Homepage extends Component {
       stopScroll: false,
       token: null,
       loading: false,
+      loadingMore: false,
       open: false,
       searchBy: "tag",
       tag: []
@@ -153,7 +154,7 @@ class Homepage extends Component {
     });
     this.timer = setInterval(() => {
       this.handleFetchMoreTopics();
-    }, 30000);
+    }, 50000);
   }
 
   handleFetchMoreTopics = async () => {
@@ -165,14 +166,17 @@ class Homepage extends Component {
         loading: true
       });
 
-      if (!loading) {
-        let topicsCont = await axios.get(
+      if (!loadingMore) {
+        const url =
           config.api +
-            "/topic?pageNumber=" +
-            data.pageNumber +
-            "&dataType=" +
-            data.type
-        );
+          "/topic?pageNumber=" +
+          data.pageNumber +
+          "&dataType=" +
+          data.type;
+
+          console.log("urlurlurl", url);
+          
+        let topicsCont = await axios.get(url);
         if (!topicsCont.data.error) {
           topicsCont.data.content.topic.forEach(obj => {
             data.topics.topic.push(obj);
@@ -208,7 +212,7 @@ class Homepage extends Component {
 
     this.timer = setInterval(() => {
       this.handleFetchMoreTopics();
-    }, 30000);
+    }, 50000);
   }
 
   componentWillUnmount() {

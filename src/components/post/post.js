@@ -146,7 +146,7 @@ class Post extends React.Component {
           color: "#1F7BD8",
           textDecoration: "none",
           fontSize: 15,
-          textTransform: "lowercase"
+          // textTransform: "lowercase"
         }}
       >
         <Linkify tagName="span">{title}</Linkify>
@@ -322,9 +322,9 @@ class Post extends React.Component {
                             this.checkForGif(topic.sites[0].url) == "png" ||
                             this.checkForGif(topic.sites[0].url) == "jpg"
                             ? topic.sites[0].url
-                            : "//image.thum.io/get/iphoneX/noanimate/crop/650/auth/3228-www.tipestry.com/" +
+                            : "//image.thum.io/get/iphoneX/noanimate/crop/420/auth/3228-www.tipestry.com/" +
                               topic.sites[0].url
-                          : "//image.thum.io/get/iphoneX/noanimate/crop/650/auth/3228-www.tipestry.com/" +
+                          : "//image.thum.io/get/iphoneX/noanimate/crop/420/auth/3228-www.tipestry.com/" +
                             "https://tipestry.com"
                       }
                     />
