@@ -322,9 +322,9 @@ class Post extends React.Component {
                             this.checkForGif(topic.sites[0].url) == "png" ||
                             this.checkForGif(topic.sites[0].url) == "jpg"
                             ? topic.sites[0].url
-                            : "//image.thum.io/get/iphoneX/noanimate/crop/420/auth/3228-www.tipestry.com/" +
+                            : "//image.thum.io/get/iphoneX/noanimate/width/400/allowJPG/crop/700/hidePopovers/auth/3228-www.tipestry.com/" +
                               topic.sites[0].url
-                          : "//image.thum.io/get/iphoneX/noanimate/crop/420/auth/3228-www.tipestry.com/" +
+                          : "//image.thum.io/get/iphoneX/noanimate/width/400/allowJPG/crop/700/hidePopovers/auth/3228-www.tipestry.com/" +
                             "https://tipestry.com"
                       }
                     />

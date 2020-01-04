@@ -38,6 +38,7 @@ import Tag from "../components/post/components/tag";
 import UploadSite from '../components/uploadurl/uploadsite';
 import Ads from '../components/ads/ads';
 import Searchpost from '../components/header/searchpost';
+import BottomScrollListerer from "react-bottom-scroll-listener";
 
 
 const styles = theme => ({
@@ -269,128 +270,132 @@ class Homepage extends Component {
       tag
     } = this.state;
     return (
-      <div>
-        <Header
-          drawer={drawer}
-          handleDrawerOpen={this.handleDrawerOpen}
-          handleDrawerClose={this.handleDrawerClose}
-        />
-        <Drawer
-          drawer={drawer}
-          stopScroll={stopScroll}
-          overlay={true}
-          showOnLg={true}
-          top={228}
-          handleDrawerOpen={this.handleDrawerOpen}
-          handleDrawerClose={this.handleDrawerClose}
-        >
-          <Grid container justify="center" spacing={8}>
-            <Grid
-              container
-              justify="space-evenly"
-              alignItems="baseline"
-              className={classes.demo}
-            >
-              {/* trends */}
-              <Hidden mdDown>
-                <Grid item lg={2} xl={2} style={{ marginRight: 25 }}>
-                  <div style={{ position: "absolute" }}>
-                    <div
-                      style={
-                        stopScroll
-                          ? { position: "fixed", top: 90 }
-                          : { position: "fixed" }
-                      }
-                    >
-                      {token && <Userinfo handleOpen={this.handleDialog} />}
-                      {/* <Trends modal={false} />
+      <BottomScrollListerer onBottom={this.handleFetchMoreTopics}>
+        <div>
+          <Header
+            drawer={drawer}
+            handleDrawerOpen={this.handleDrawerOpen}
+            handleDrawerClose={this.handleDrawerClose}
+          />
+          <Drawer
+            drawer={drawer}
+            stopScroll={stopScroll}
+            overlay={true}
+            showOnLg={true}
+            top={228}
+            handleDrawerOpen={this.handleDrawerOpen}
+            handleDrawerClose={this.handleDrawerClose}
+          >
+            <Grid container justify="center" spacing={8}>
+              <Grid
+                container
+                justify="space-evenly"
+                alignItems="baseline"
+                className={classes.demo}
+              >
+                {/* trends */}
+                <Hidden mdDown>
+                  <Grid item lg={2} xl={2} style={{ marginRight: 25 }}>
+                    <div style={{ position: "absolute" }}>
+                      <div
+                        style={
+                          stopScroll
+                            ? { position: "fixed", top: 90 }
+                            : { position: "fixed" }
+                        }
+                      >
+                        {token && <Userinfo handleOpen={this.handleDialog} />}
+                        {/* <Trends modal={false} />
                       <Popular /> */}
-                      <Paper className={classes.wrapitRoot}>
-                        <Typography
-                          className={classes.text}
-                          variant="subheading"
-                        >
-                          Top Hashtags
-                        </Typography>
-                        <div className={classes.wrapit}>
-                          {typeof tag[0] !== "undefined" && <Tag tags={tag} />}
-                        </div>
-                      </Paper>
+                        <Paper className={classes.wrapitRoot}>
+                          <Typography
+                            className={classes.text}
+                            variant="subheading"
+                          >
+                            Top Hashtags
+                          </Typography>
+                          <div className={classes.wrapit}>
+                            {typeof tag[0] !== "undefined" && (
+                              <Tag tags={tag} />
+                            )}
+                          </div>
+                        </Paper>
+                      </div>
+                    </div>
+                  </Grid>
+                </Hidden>
+
+                {/* post  */}
+                <Grid item lg={6} xl={6} md={6} sm={12} xs={12}>
+                  <div
+                    // variant="outlined"
+                    // disabled={loading}
+                    className={classes.formControlNew}
+                  >
+                    {/* upload url modal display */}
+                    <UploadSite />
+
+                    <div className={classes.formControl}>
+                      <Typography variant="body1">
+                        {Lang.q3}
+                        &nbsp;
+                      </Typography>
+                      <Button
+                        style={{ borderRadius: 0 }}
+                        disabled={loading}
+                        onClick={this.handleChange.bind(this, "hot")}
+                        variant={data.type === "hot" ? "contained" : "text"}
+                        color="primary"
+                      >
+                        {Lang.r3}
+                      </Button>
+                      <Button
+                        style={{ borderRadius: 0 }}
+                        disabled={loading}
+                        onClick={this.handleChange.bind(this, "recent")}
+                        variant={data.type === "recent" ? "contained" : "text"}
+                        color="primary"
+                      >
+                        {Lang.s3}
+                      </Button>
                     </div>
                   </div>
-                </Grid>
-              </Hidden>
 
-              {/* post  */}
-              <Grid item lg={6} xl={6} md={6} sm={12} xs={12}>
-                <div
-                  // variant="outlined"
-                  // disabled={loading}
-                  className={classes.formControlNew}
-                >
-                  {/* upload url modal display */}
-                  <UploadSite />
-
-                  <div className={classes.formControl}>
-                    <Typography variant="body1">
-                      {Lang.q3}
-                      &nbsp;
-                    </Typography>
-                    <Button
-                      style={{ borderRadius: 0 }}
-                      disabled={loading}
-                      onClick={this.handleChange.bind(this, "hot")}
-                      variant={data.type === "hot" ? "contained" : "text"}
-                      color="primary"
-                    >
-                      {Lang.r3}
-                    </Button>
-                    <Button
-                      style={{ borderRadius: 0 }}
-                      disabled={loading}
-                      onClick={this.handleChange.bind(this, "recent")}
-                      variant={data.type === "recent" ? "contained" : "text"}
-                      color="primary"
-                    >
-                      {Lang.s3}
-                    </Button>
+                  {/* post component */}
+                  <div className={classes.center}>
+                    <Ads />
+                    <Post topicValue={data.topics.topic} source="topics" />
                   </div>
-                </div>
+                </Grid>
 
-                {/* post component */}
-                <div className={classes.center}>
-                  <Ads />
-                  <Post topicValue={data.topics.topic} source="topics" />
-                </div>
+                {/* coin details */}
+                <Hidden mdDown>
+                  <Grid item lg={3} xl={3} style={{ marginLeft: -25 }}>
+                    <div style={{ position: "absolute" }}>
+                      <div
+                        // style={{ position: 'fixed', maxWidth: 300 }}
+                        style={
+                          stopScroll
+                            ? { position: "fixed", top: 90, maxWidth: 300 }
+                            : { position: "fixed", maxWidth: 300 }
+                        }
+                      >
+                        <Searchpost />
+                        <Tipcoin />
+                        <LeaderBoard />
+                        <SiteInfo />
+                      </div>
+                    </div>
+                  </Grid>
+                </Hidden>
               </Grid>
-
-              {/* coin details */}
-              <Hidden mdDown>
-                <Grid item lg={3} xl={3} style={{ marginLeft: -25 }}>
-                  <div style={{ position: "absolute" }}>
-                    <div
-                      // style={{ position: 'fixed', maxWidth: 300 }}
-                      style={
-                        stopScroll
-                          ? { position: "fixed", top: 90, maxWidth: 300 }
-                          : { position: "fixed", maxWidth: 300 }
-                      }
-                    >
-                      <Searchpost />
-                      <Tipcoin />
-                      <LeaderBoard />
-                      <SiteInfo />
-                    </div>
-                  </div>
-                </Grid>
-              </Hidden>
             </Grid>
-          </Grid>
-        </Drawer>
-        <Dialog open={open} handleClose={this.handleDialog}>
-          <Stage />
-        </Dialog>
-      </div>
+          </Drawer>
+          <Dialog open={open} handleClose={this.handleDialog}>
+            <Stage />
+          </Dialog>
+        </div>
+      </BottomScrollListerer>
     );
   }
 }

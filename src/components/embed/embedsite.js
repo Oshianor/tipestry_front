@@ -105,15 +105,18 @@ import isURL from 'validator/lib/isURL';
         )
       } else {
         return (
-          <img 
+          <img
             // src={
             //   this.checkIfUrl(site.screen_path) ?
             //     site.screen_path
             //   :
             //     config.topic + "/captures/" + site.screen_path
             // }
-            src={"//image.thum.io/get/auth/3228-www.tipestry.com/" + site.url}
-            style={{ 
+            src={
+              "//image.thum.io/get/iphoneX/noanimate/hidePopovers/auth/3228-www.tipestry.com/" +
+              site.url
+            }
+            style={{
               borderRight: "10px solid gray",
               width: "100%",
               height: "85vh",
@@ -121,7 +124,7 @@ import isURL from 'validator/lib/isURL';
               marginTop: top ? top : 0
             }}
           />
-        )
+        );
       }
     } else {
       return (
