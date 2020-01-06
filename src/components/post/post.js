@@ -312,7 +312,7 @@ class Post extends React.Component {
                         // minHeight: 500,
                         // minHeight: "-webkit-fill-available",
                         // maxHeight: "-webkit-fill-available",
-                        width: "100%"
+                        // width: "100%"
                       }}
                       // image.thum.io/get/iphoneX/noanimate/crop/650/auth/3228-www.tipestry.com/
                       // image.thum.io/get/auth/3228-www.tipestry.com/

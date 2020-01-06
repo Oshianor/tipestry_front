@@ -213,7 +213,7 @@ class Homepage extends Component {
 
     this.timer = setInterval(() => {
       this.handleFetchMoreTopics();
-    }, 50000);
+    }, 20000);
   }
 
   componentWillUnmount() {
