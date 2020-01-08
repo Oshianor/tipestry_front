@@ -69,14 +69,32 @@ class Addsite extends Component {
     open: false,
     msg: "",
     tag: "",
-    chipData: [{ key: "tipestry-678", label: "tipestry" }]
+    chipData: []
   };
+
+  // { key: "tipestry-678", label: "tipestry" }
 
   handleClose = () => {
     this.setState({
       open: false
     });
   };
+
+  componentDidMount() {
+    const { url } = this.props;
+    
+    var pathname = new URL(url).hostname;
+    this.setState({
+      chipData: [
+        {
+          key:
+            pathname.toLocaleLowerCase().replace(/[^A-Z0-9]+/gi, "") + "-678",
+          label: pathname.toLocaleLowerCase().replace(/[^A-Z0-9]+/gi, "")
+        }
+      ]
+    });
+  }
+  
 
   handleChange = name => event => {
     if (name === "title") {
