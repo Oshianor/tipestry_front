@@ -35,18 +35,19 @@ const styles = theme => ({
   card: {
     margin: "10px",
     position: "relative",
-    [theme.breakpoints.only("xs")]: {
-      maxWidth: 450
-    },
-    [theme.breakpoints.only("sm")]: {
-      maxWidth: 500
-    },
-    [theme.breakpoints.only("md")]: {
-      maxWidth: 500
-    },
-    [theme.breakpoints.only("lg")]: {
-      maxWidth: 450
-    }
+    width: "70%"
+    // [theme.breakpoints.only("xs")]: {
+    //   maxWidth: 450
+    // },
+    // [theme.breakpoints.only("sm")]: {
+    //   maxWidth: 500
+    // },
+    // [theme.breakpoints.only("md")]: {
+    //   maxWidth: 500
+    // },
+    // [theme.breakpoints.only("lg")]: {
+    //   maxWidth: 450
+    // }
   },
   demo: {
     // width: '100%',
@@ -312,7 +313,7 @@ class Post extends React.Component {
                         // minHeight: 500,
                         // minHeight: "-webkit-fill-available",
                         // maxHeight: "-webkit-fill-available",
-                        // width: "100%"
+                        width: "100%"
                       }}
                       // image.thum.io/get/iphoneX/noanimate/crop/650/auth/3228-www.tipestry.com/
                       // image.thum.io/get/auth/3228-www.tipestry.com/

@@ -221,6 +221,18 @@ class Homepage extends Component {
     clearInterval(this.timer);
   }
 
+
+  componentDidUpdate(prevProps, prevState) {
+    const { data } = this.props;
+
+    if (prevProps.data.pageNumber !== data.pageNumber) {
+      if (data.pageNumber > 10) {
+        clearInterval(this.timer)
+      }
+    }
+  }
+  
+
   handleGetTags = async () => {
     let tag = await axios.get(config.api + "/topic/top/hashtag");
     this.setState({
