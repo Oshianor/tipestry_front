@@ -35,19 +35,23 @@ const styles = theme => ({
   card: {
     margin: "10px",
     position: "relative",
-    width: "70%"
-    // [theme.breakpoints.only("xs")]: {
-    //   maxWidth: 450
-    // },
-    // [theme.breakpoints.only("sm")]: {
-    //   maxWidth: 500
-    // },
-    // [theme.breakpoints.only("md")]: {
-    //   maxWidth: 500
-    // },
-    // [theme.breakpoints.only("lg")]: {
-    //   maxWidth: 450
-    // }
+    // width: "70%"
+    [theme.breakpoints.only("xs")]: {
+      // maxWidth: 450
+      width: "100%"
+    },
+    [theme.breakpoints.only("sm")]: {
+      // maxWidth: 500
+      width: "90%"
+    },
+    [theme.breakpoints.only("md")]: {
+      // maxWidth: 500
+      width: "70%"
+    },
+    [theme.breakpoints.only("lg")]: {
+      // maxWidth: 450
+      width: "70%"
+    }
   },
   demo: {
     // width: '100%',
@@ -309,7 +313,7 @@ class Post extends React.Component {
                       style={{
                         backgroundPosition: "top",
                         // height: "auto",
-                        maxHeight: 550,
+                        // maxHeight: 550,
                         // minHeight: 500,
                         // minHeight: "-webkit-fill-available",
                         // maxHeight: "-webkit-fill-available",

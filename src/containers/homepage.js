@@ -111,6 +111,7 @@ const styles = theme => ({
 class Homepage extends Component {
   constructor(props) {
     super(props);
+
     this.timer = null;
 
     this.state = {
@@ -213,7 +214,7 @@ class Homepage extends Component {
 
     this.timer = setInterval(() => {
       this.handleFetchMoreTopics();
-    }, 20000);
+    }, 10000);
   }
 
   componentWillUnmount() {
