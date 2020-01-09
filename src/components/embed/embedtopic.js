@@ -102,23 +102,27 @@ import isURL from 'validator/lib/isURL';
         )
       } else {
         return (
-          <img 
+          <img
             // src={
             //   this.checkIfUrl(site.screen_path) ?
             //     site.screen_path
             //   :
             //     config.topic + "/captures/" + site.screen_path
             // }
-            src={"//image.thum.io/get/iphoneX/noanimate/hidePopovers/auth/3228-www.tipestry.com/" + site.url}
-            style={{ 
-              borderRight: "10px solid gray",
-              width: "100%",
-              height: "85vh",
+            src={
+              "//image.thum.io/get/iphoneX/noanimate/hidePopovers/auth/3228-www.tipestry.com/" +
+              site.url
+            }
+            style={{
+              // borderRight: "10px solid gray",
+              width: "auto",
+              // width: "100%",
+              height: "auto",
               // marginTop: 70,
               marginTop: top ? top : 0
             }}
           />
-        )
+        );
       }
     } else {
       return (
@@ -154,7 +158,7 @@ import isURL from 'validator/lib/isURL';
     // console.log(this.state, "=======>", this.props);
     
 		return (
-      <div>
+      <div style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
         {load === "youtube" ? this.displayYoutube() : this.displayIframe()}
 
         {/* {this.displayYoutube()}

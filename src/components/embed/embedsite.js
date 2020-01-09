@@ -117,9 +117,11 @@ import isURL from 'validator/lib/isURL';
               site.url
             }
             style={{
-              borderRight: "10px solid gray",
-              width: "100%",
-              height: "85vh",
+              // borderRight: "10px solid gray",
+              // width: "100%",
+              width: "auto",
+              height: "auto",
+              // height: "85vh",
               // marginTop: 70,
               marginTop: top ? top : 0
             }}
@@ -160,7 +162,14 @@ import isURL from 'validator/lib/isURL';
     // console.log(this.state, "=======>", this.props);
     
 		return (
-      <div>
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center"
+        }}
+      >
         {load === "youtube" ? this.displayYoutube() : this.displayIframe()}
         {/* {this.displayYoutube()}
         {this.displayIframe()} */}
