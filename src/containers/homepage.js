@@ -141,7 +141,7 @@ class Homepage extends Component {
       loading: true
     });
     let topics = await axios.get(
-      config.api + "/topic?pageNumber=1&dataType=" + type
+      config.api + "/topic?pageNumber=1&dataType=" + type + "&pageSize=5"
     );
     // console.log("type", type);
     getTopics({
@@ -156,7 +156,7 @@ class Homepage extends Component {
     });
     this.timer = setInterval(() => {
       this.handleFetchMoreTopics();
-    }, 50000);
+    }, 3000);
   }
 
   handleFetchMoreTopics = async () => {
@@ -174,7 +174,7 @@ class Homepage extends Component {
           "/topic?pageNumber=" +
           data.pageNumber +
           "&dataType=" +
-          data.type;
+          data.type + "&pageSize=5";
 
         console.log("urlurlurl", url);
 
@@ -214,7 +214,7 @@ class Homepage extends Component {
 
     this.timer = setInterval(() => {
       this.handleFetchMoreTopics();
-    }, 10000);
+    }, 3000);
   }
 
   componentWillUnmount() {
@@ -227,7 +227,7 @@ class Homepage extends Component {
     const { data } = this.props;
 
     if (prevProps.data.pageNumber !== data.pageNumber) {
-      if (data.pageNumber > 10) {
+      if (data.pageNumber > 5) {
         clearInterval(this.timer)
       }
     }

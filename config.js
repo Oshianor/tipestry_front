@@ -1,12 +1,12 @@
 export const config = {
 	// dev
-	// api: "http://localhost:3000/api",
-	// url: "http://localhost:3000",
-	// host: "http://localhost:8008",
-	// profileimage: "http://localhost:3000/profile_images/",
-	// base64: 'data:image/jpeg;base64,',
-	// topic: "http://localhost:3000",
-	// port: 8008
+	api: "http://localhost:4000/api",
+	url: "http://localhost:4000",
+	host: "http://localhost:8008",
+	profileimage: "http://localhost:4000/profile_images/",
+	base64: 'data:image/jpeg;base64,',
+	topic: "http://localhost:4000",
+	port: 8008
 
 
 	// demo
@@ -20,13 +20,13 @@ export const config = {
 
 
 	// live
-	api: "https://tipestry.com/api",
-	url: "https://tipestry.com",
-	host: "https://tipestry.com",
-	profileimage: "https://tipestry.com/public/profile_images/",
-	base64: 'data:image/jpeg;base64,',
-	topic: "https://tipestry.com/public",
-	port: 4001
+	// api: "https://tipestry.com/api",
+	// url: "https://tipestry.com",
+	// host: "https://tipestry.com",
+	// profileimage: "https://tipestry.com/public/profile_images/",
+	// base64: 'data:image/jpeg;base64,',
+	// topic: "https://tipestry.com/public",
+	// port: 4001
 
 	
 	// cn

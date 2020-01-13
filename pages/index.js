@@ -57,7 +57,7 @@ class Index extends React.Component {
 
     // const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
     let topics = await axios.get(
-      config.api + "/topic?pageNumber=1&dataType=hot"
+      config.api + "/topic?pageNumber=1&dataType=hot&pageSize=5"
     );
     let dataTopics = JSON.stringify(topics.data.content);
 
@@ -66,6 +66,8 @@ class Index extends React.Component {
       dataTopics
     };
   }
+
+  
 
   async componentDidMount() {
     const { dataTopics, getTopics, getUser, getToken } = this.props;
@@ -108,7 +110,6 @@ class Index extends React.Component {
       this.setState({
         loading: false
       });
-
 
       // this.timer = setInterval(() => {
       //   this.handleFetchMoreTopics();
