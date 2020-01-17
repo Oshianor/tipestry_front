@@ -18,14 +18,16 @@ class Sidebar extends Component {
         </Typography>
         {typeof data.siteTopic[0] !== "undefined" && (
           <Typography style={{ textAlign: "center" }}>
-            <Link href={data.siteTopic[0].sites[0].url}>
-              <a style={{ marginLeft: "5%", marginRight: "5%" }}>
-                {/* {data.siteTopic[0].sites[0].url} */}
-                {data.siteTopic[0].sites[0].url.length > 50
-                  ? data.siteTopic[0].sites[0].url.substr(0, 40) + "..."
-                  : data.siteTopic[0].sites[0].url}
-              </a>
-            </Link>
+            <a
+              target="_blank"
+              href={data.siteTopic[0].sites[0].url}
+              style={{ marginLeft: "5%", marginRight: "5%" }}
+            >
+              {/* {data.siteTopic[0].sites[0].url} */}
+              {data.siteTopic[0].sites[0].url.length > 50
+                ? data.siteTopic[0].sites[0].url.substr(0, 40) + "..."
+                : data.siteTopic[0].sites[0].url}
+            </a>
           </Typography>
         )}
         <SiteAbout />

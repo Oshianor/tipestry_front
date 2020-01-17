@@ -191,8 +191,7 @@ class TopicList extends React.Component {
 		// console.log(site, 'wwwwww')
 		return (
       <div style={{ marginTop: 80 }}>
-
-				<Claim token={token} site={site} />
+        <Claim token={token} site={site} />
         {/* {token && typeof site._id !== "undefined" && (
           <Typography variant="h6" style={{ textAlign: "center", margin: "10px 8%", fontSize: 18 }}>
             Do you own this site?
@@ -205,9 +204,9 @@ class TopicList extends React.Component {
 
         {typeof site.url !== "undefined" && (
           <Typography style={{ textAlign: "center", margin: "10px 8%" }}>
-            <Link href={site.url}>
-              <a>{site.url}</a>
-            </Link>
+            <a target="_blank" href={site.url}>
+              {site.url}
+            </a>
           </Typography>
         )}
 
@@ -228,9 +227,7 @@ class TopicList extends React.Component {
               </Typography>
               <div>
                 <div style={{ backgroundColor: "white", width: "100%" }}>
-                  <div className={classes.topic}>
-                    {this.displayTopics()}
-                  </div>
+                  <div className={classes.topic}>{this.displayTopics()}</div>
                 </div>
               </div>
             </Paper>
