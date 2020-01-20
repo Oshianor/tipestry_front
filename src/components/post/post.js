@@ -50,6 +50,10 @@ const styles = theme => ({
     },
     [theme.breakpoints.only("lg")]: {
       // maxWidth: 450
+      width: "65%"
+    },
+    [theme.breakpoints.only("xl")]: {
+      // maxWidth: 450
       width: "70%"
     }
   },
