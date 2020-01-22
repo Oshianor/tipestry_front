@@ -49,7 +49,7 @@ class SiteInfo extends Component {
 			<div>
 				<div className={classes.root} >
 					<Typography style={{ color: 'rgba(0, 0, 0, 0.61)', whiteSpace: 'nowrap', fontWeight: '600' }}>
-						© 2019 Tipestry 
+						© {new Date().getFullYear()} Tipestry 
 					</Typography>
 					&nbsp;&nbsp;
 					<Link href="/faq">
