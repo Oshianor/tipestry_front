@@ -66,13 +66,13 @@ import isURL from 'validator/lib/isURL';
       height: '500px',
       width: '100%',
       playerVars: { // https://developers.google.com/youtube/player_parameters
-        autoplay: 1
+        autoplay: 0
       }
     };
     if (load === 'youtube') {
       return (
         <div style={{ marginTop: 70 }}>
-          <YouTube videoId={videoId} opts={opts} onReady={this._onReady} />
+          <YouTube videoId={videoId} opts={opts} onReady={this._onReady} autoplay={false} />
         </div>
       );
     }
