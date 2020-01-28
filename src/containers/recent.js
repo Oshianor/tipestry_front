@@ -158,6 +158,7 @@ class Homepage extends Component {
       this.handleFetchMoreTopics();
     }, 3000);
   }
+  
 
   handleFetchMoreTopics = async () => {
     try {
@@ -173,8 +174,7 @@ class Homepage extends Component {
           config.api +
           "/topic?pageNumber=" +
           data.pageNumber +
-          "&dataType=" +
-          data.type + "&pageSize=5";
+          "&dataType=recent&pageSize=5";
 
         console.log("urlurlurl", url);
 
@@ -355,7 +355,7 @@ class Homepage extends Component {
                       </Typography>
                       <Button
                         style={{ borderRadius: 0 }}
-                        variant="contained"
+                        href="/"
                         // disabled={loading}
                         // onClick={this.handleChange.bind(this, "hot")}
                         // variant={data.type === "hot" ? "contained" : "text"}
@@ -365,8 +365,9 @@ class Homepage extends Component {
                       </Button>
                       <Button
                         style={{ borderRadius: 0 }}
-                        href="/recent"
-                        // disabled={loading}
+                        // link="/recent"
+                        // disabled={true}
+                        variant="contained"
                         // onClick={this.handleChange.bind(this, "recent")}
                         // variant={data.type === "recent" ? "contained" : "text"}
                         color="primary"

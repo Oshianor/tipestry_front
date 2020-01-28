@@ -2,6 +2,7 @@ const nextRoutes = require('next-routes')
 const routes = module.exports = nextRoutes();
 
 routes.add('index', '/');
+routes.add("recent", "/recent");
 routes.add('login', '/login');
 routes.add('register', '/register');
 routes.add("forgotPassword", "/forgotpassword");

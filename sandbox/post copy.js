@@ -28,18 +28,6 @@ import Tags from "./components/tag";
 import axios from "axios";
 import YouTube from "react-youtube";
 import isURL from "validator/lib/isURL";
-import {
-  TwitterTimelineEmbed,
-  TwitterShareButton,
-  TwitterFollowButton,
-  TwitterHashtagButton,
-  TwitterMentionButton,
-  TwitterTweetEmbed,
-  TwitterMomentShare,
-  TwitterDMButton,
-  TwitterVideoEmbed,
-  TwitterOnAirButton
-} from "react-twitter-embed";
 
 
 
@@ -213,16 +201,16 @@ class Post extends React.Component {
   //   return false
   // };
 
-  checkIfURL = (url, topic) => {
+  checkIfURL = url => {
     var pathname = new URL(url).hostname;
     let improved = pathname.replace(/^(?:https?:\/\/)?(?:www\.)?/i, "");
     if (improved === "youtube.com" || improved === "youtu.be") {
       return (
         <YouTube
           videoId={
-            this.getQuery("v", url) === null
+            this.getQuery("v", topic.sites[0].url) === null
               ? url.substring(url.lastIndexOf("/") + 1)
-              : this.getQuery("v", url)
+              : this.getQuery("v", topic.sites[0].url)
           }
           opts={{
             // height: "500px",
@@ -236,53 +224,11 @@ class Post extends React.Component {
         />
       );
     } else if (improved === "twitter.com") {
-      const arr = url.split("/");
-      if (arr[4] === "status") {
-        return (
-          <TwitterTweetEmbed
-            tweetId={arr[arr.length - 1]}
-          />
-        );
-      } else if (arr.length === 4){
-        return (
-          <TwitterTimelineEmbed
-            sourceType="profile"
-            screenName={arr[arr.length - 1]}
-            options={{ height: 400 }}
-          />
-        );
-      }
-    } 
-    return (
-      <div>
-        <a
-          href={"/topics/" + topic._id + "/" + this.nutralizeTitle(topic.title)}
-          style={{
-            position: "relative",
-            display: "block"
-          }}
-        >
-          <img
-            style={{
-              backgroundPosition: "top",
-              width: "100%"
-            }}
-            src={
-              typeof topic.sites[0] !== "undefined"
-                ? this.checkForGif(url) == "gif" ||
-                  this.checkForGif(url) == "png" ||
-                  this.checkForGif(url) == "jpg"
-                  ? url
-                  : "//image.thum.io/get/iphoneX/noanimate/width/400/allowJPG/crop/700/hidePopovers/auth/3228-www.tipestry.com/" +
-                    url
-                : "//image.thum.io/get/iphoneX/noanimate/width/400/allowJPG/crop/700/hidePopovers/auth/3228-www.tipestry.com/" +
-                  "https://tipestry.com"
-            }
-          />
-        </a>
-      </div>
-    );
+      return "twitter"
+    }
+    return false;
   };
+
 
   render() {
     const { classes, topicValue, errMsg } = this.props;
@@ -381,9 +327,65 @@ class Post extends React.Component {
                 </Typography>
               </CardContent>
 
-
-              {/* render content */}
-              {this.checkIfURL(topic.sites[0].url, topic)}
+              {/* check if it is youtube */}
+              {/* {!this.checkIfItYouTube(topic.sites[0].url ) ? (
+                <div>
+                  <a
+                    href={
+                      "/topics/" +
+                      topic._id +
+                      "/" +
+                      this.nutralizeTitle(topic.title)
+                    }
+                    style={{
+                      position: "relative",
+                      display: "block"
+                    }}
+                  >
+                    <img
+                      style={{
+                        backgroundPosition: "top",
+                        // height: "auto",
+                        // maxHeight: 550,
+                        // minHeight: 500,
+                        // minHeight: "-webkit-fill-available",
+                        // maxHeight: "-webkit-fill-available",
+                        width: "100%"
+                      }}
+                      // image.thum.io/get/iphoneX/noanimate/crop/650/auth/3228-www.tipestry.com/
+                      // image.thum.io/get/auth/3228-www.tipestry.com/
+                      src={
+                        typeof topic.sites[0] !== "undefined"
+                          ? this.checkForGif(topic.sites[0].url) == "gif" ||
+                            this.checkForGif(topic.sites[0].url) == "png" ||
+                            this.checkForGif(topic.sites[0].url) == "jpg"
+                            ? topic.sites[0].url
+                            : "//image.thum.io/get/iphoneX/noanimate/width/400/allowJPG/crop/700/hidePopovers/auth/3228-www.tipestry.com/" +
+                              topic.sites[0].url
+                          : "//image.thum.io/get/iphoneX/noanimate/width/400/allowJPG/crop/700/hidePopovers/auth/3228-www.tipestry.com/" +
+                            "https://tipestry.com"
+                      }
+                    />
+                  </a>
+                </div>
+              ) : (
+                <YouTube
+                  videoId={
+                    this.getQuery("v", topic.sites[0].url) === null
+                      ? url.substring(url.lastIndexOf("/") + 1)
+                      : this.getQuery("v", topic.sites[0].url)
+                  }
+                  opts={{
+                    // height: "500px",
+                    width: "100%",
+                    playerVars: {
+                      // https://developers.google.com/youtube/player_parameters
+                      autoplay: 0
+                    }
+                  }}
+                  onReady={this._onReady}
+                />
+              )} */}
 
               <CardContent>
                 <Typography component="p">

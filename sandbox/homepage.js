@@ -355,20 +355,18 @@ class Homepage extends Component {
                       </Typography>
                       <Button
                         style={{ borderRadius: 0 }}
-                        variant="contained"
-                        // disabled={loading}
-                        // onClick={this.handleChange.bind(this, "hot")}
-                        // variant={data.type === "hot" ? "contained" : "text"}
+                        disabled={loading}
+                        onClick={this.handleChange.bind(this, "hot")}
+                        variant={data.type === "hot" ? "contained" : "text"}
                         color="primary"
                       >
                         {Lang.r3}
                       </Button>
                       <Button
                         style={{ borderRadius: 0 }}
-                        href="/recent"
-                        // disabled={loading}
-                        // onClick={this.handleChange.bind(this, "recent")}
-                        // variant={data.type === "recent" ? "contained" : "text"}
+                        disabled={loading}
+                        onClick={this.handleChange.bind(this, "recent")}
+                        variant={data.type === "recent" ? "contained" : "text"}
                         color="primary"
                       >
                         {Lang.s3}
