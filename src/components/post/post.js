@@ -30,15 +30,7 @@ import YouTube from "react-youtube";
 import isURL from "validator/lib/isURL";
 import {
   TwitterTimelineEmbed,
-  TwitterShareButton,
-  TwitterFollowButton,
-  TwitterHashtagButton,
-  TwitterMentionButton,
-  TwitterTweetEmbed,
-  TwitterMomentShare,
-  TwitterDMButton,
-  TwitterVideoEmbed,
-  TwitterOnAirButton
+  TwitterTweetEmbed
 } from "react-twitter-embed";
 
 

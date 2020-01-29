@@ -4,6 +4,7 @@ import { config } from '../../../config';
 import Preloader from '../preloader/preloader';
 import YouTube from 'react-youtube';
 import isURL from 'validator/lib/isURL';
+import { TwitterTimelineEmbed, TwitterTweetEmbed } from "react-twitter-embed";
 
 
 
@@ -30,6 +31,21 @@ import isURL from 'validator/lib/isURL';
           load: "youtube",
           videoId: url.substring(url.lastIndexOf("/") + 1)
         });
+      }
+
+      if (this.checkIfItYouTube(url) == "twitter.com") {
+        const arr = url.split("/");
+        if (arr[4] === "status") {
+          this.setState({
+            load: "tweet",
+            videoId: arr[arr.length - 1]
+          });
+        } else if (arr.length === 4) {
+          this.setState({
+            load: "tweet",
+            videoId: arr[arr.length - 1]
+          });
+        }
       }
     }
   }
@@ -158,7 +174,7 @@ import isURL from 'validator/lib/isURL';
   
 	render() {
     const { height, top, img } = this.props;
-    const { load } = this.state;
+    const { load, videoId } = this.state;
     // console.log(this.state, "=======>", this.props);
     
 		return (
@@ -167,12 +183,20 @@ import isURL from 'validator/lib/isURL';
           width: "100%",
           display: "flex",
           justifyContent: "center",
-          alignItems: "center"
+          alignItems: "center",
+          marginTop: 50
         }}
       >
-        {load === "youtube" ? this.displayYoutube() : this.displayIframe()}
-        {/* {this.displayYoutube()}
-        {this.displayIframe()} */}
+        {load === "youtube" && this.displayYoutube()}
+        {load === "img" && this.displayIframe()}
+        {load === "twitter" && (
+          <TwitterTimelineEmbed
+            sourceType="profile"
+            screenName={videoId}
+            options={{ height: 400 }}
+          />
+        )}
+        {load === "tweet" && <TwitterTweetEmbed tweetId={videoId} />}
       </div>
     );
 	}
