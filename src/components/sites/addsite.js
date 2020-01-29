@@ -15,6 +15,9 @@ import Alert from '../reuseable/alert';
 import { Lang } from '../../../lang';
 import Paper from '@material-ui/core/Paper';
 import ChipsArray from './components/chip';
+import ReCAPTCHA from "react-google-recaptcha";
+
+
 
 
 const styles = theme => ({
@@ -58,19 +61,28 @@ const styles = theme => ({
 });
 
 class Addsite extends Component {
-  state = {
-    title: "",
-    message: "",
-    titleHelper: {
-      err: false,
-      msg: ""
-    },
-    loading: false,
-    open: false,
-    msg: "",
-    tag: "",
-    chipData: []
-  };
+  constructor(props) {
+    super(props);
+    
+    this.recaptchaRef = React.createRef();
+
+    this.state = {
+      title: "",
+      message: "",
+      titleHelper: {
+        err: false,
+        msg: ""
+      },
+      loading: false,
+      open: false,
+      msg: "",
+      tag: "",
+      chipData: [],
+      token: null
+    };
+  }
+  
+  
 
   // { key: "tipestry-678", label: "tipestry" }
 
@@ -82,6 +94,8 @@ class Addsite extends Component {
 
   componentDidMount() {
     const { url } = this.props;
+    let token = localStorage.getItem("token");
+
     
     var pathname = new URL(url).hostname;
     this.setState({
@@ -91,7 +105,8 @@ class Addsite extends Component {
             pathname.toLocaleLowerCase().replace(/[^A-Z0-9]+/gi, "") + "-678",
           label: pathname.toLocaleLowerCase().replace(/[^A-Z0-9]+/gi, "")
         }
-      ]
+      ],
+      token
     });
   }
   
@@ -173,12 +188,14 @@ class Addsite extends Component {
 
   // handle add topic
   async handleAddTopic() {
-    this.setState({
-      loading: true
-    });
     const { title, message, chipData } = this.state;
     const { url } = this.props;
     let token = localStorage.getItem("token");
+
+
+    this.setState({
+      loading: true
+    });
 
     if (chipData.length === 0) {
       this.setState({
@@ -212,8 +229,6 @@ class Addsite extends Component {
       };
 
       let site = await Axios(options);
-      // console.log(site, "nnn");
-
       // if successful then redirect back to home page
       if (!site.data.error) return Router.push("/");
 
@@ -223,11 +238,42 @@ class Addsite extends Component {
         msg: site.data.msg
       });
     } else {
+      // this.setState({
+      //   open: true,
+      //   loading: false,
+      //   msg: Lang.q
+      //   // // "Title field can't be empty" // 标题字段不能为空
+      // });
+
+      let tags = [];
+      chipData.forEach(chip => {
+        tags.push(chip.label);
+      });
+      const options = {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          // "x-auth-token": token
+        },
+        // pass title, url, and message
+        data: JSON.stringify({
+          url,
+          title,
+          message,
+          tags
+        }),
+        url: config.api + "/topic/anonymous"
+      };
+
+      let site = await Axios(options);
+      // if successful then redirect back to home page
+      if (!site.data.error) return Router.push("/");
+
       this.setState({
-        open: true,
         loading: false,
-        msg: Lang.q
-        // // "Title field can't be empty" // 标题字段不能为空
+        open: true,
+        msg: site.data.msg
       });
     }
   }
@@ -242,10 +288,12 @@ class Addsite extends Component {
       msg,
       open,
       tag,
-      chipData
+      chipData,
+      token
     } = this.state;
     console.log("this.state", this.state);
-    
+
+
     return (
       <Paper className={classes.container}>
         <Typography
@@ -327,10 +375,7 @@ class Addsite extends Component {
         </form> */}
 
         <form onSubmit={this.handleHashtag} className={classes.control}>
-          <ChipsArray
-            chipData={chipData}
-            handleDelete={this.handleDelete}
-          />
+          <ChipsArray chipData={chipData} handleDelete={this.handleDelete} />
 
           <TextField
             required
@@ -347,6 +392,16 @@ class Addsite extends Component {
           />
         </form>
 
+        {!token && (
+          <div style={{ margin: "0 8%" }}>
+            <ReCAPTCHA
+              ref={this.recaptchaRef}
+              sitekey="6LfC9q4UAAAAAMbyFnaZtaQyEOuiBKb1gI8QMZKx"
+              onChange={this.onChange}
+            />
+          </div>
+        )}
+
         <Button
           style={{ margin: "10px 20px" }}
           disabled={loading}
@@ -358,10 +413,7 @@ class Addsite extends Component {
           {!loading ? (
             Lang.r
           ) : (
-            <CircularProgress
-              size={24}
-              className={classes.buttonProgress}
-            />
+            <CircularProgress size={24} className={classes.buttonProgress} />
           )}
         </Button>
         <Alert open={open} message={msg} handleClose={this.handleClose} />
