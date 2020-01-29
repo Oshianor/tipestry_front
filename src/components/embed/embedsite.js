@@ -188,7 +188,7 @@ import { TwitterTimelineEmbed, TwitterTweetEmbed } from "react-twitter-embed";
         }}
       >
         {load === "youtube" && this.displayYoutube()}
-        {load === "img" && this.displayIframe()}
+        {load === "open" && this.displayIframe()}
         {load === "twitter" && (
           <TwitterTimelineEmbed
             sourceType="profile"
