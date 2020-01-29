@@ -133,55 +133,101 @@ class TopicList extends React.Component {
 
 	displayTopics = () => {
 		const { classes, topics } = this.props;
-		return (
-			topics.map((topic) => (
-				<List className={classes.root} key={topic._id} >
-					<ListItem alignItems="flex-start">
-						<ListItemAvatar>
-							{/* <Link href={"/topics/" + topic._id + "/" + this.nutralizeTitle(topic.title)} > */}
-								<a target="_blank" href={"/topics/" + topic._id + "/" + this.nutralizeTitle(topic.title)} style={{ textDecoration: 'none', margin: "6px -1px" }}>
-									<Thumbnails 
-										borderColor="black" 
-										borderWidth={2} 
-										name={topic.user[0].username} 
-										url={
-											topic.user[0].profileimage ?
-												config.profileimage + topic.user[0].profileimage
-											:
-												null
-										}
-									/>
-								</a>
-							{/* </Link> */}
-						</ListItemAvatar>
-						<ListItemText
-							primary = {
-								// <Link href={"/topics/" + topic._id + "/" + this.nutralizeTitle(topic.title)} >
-									<a target="_blank" href={"/topics/" + topic._id + "/" + this.nutralizeTitle(topic.title)} style={{ color: '#1F7BD8', textDecoration: 'none', fontSize: 18 }} >
-										{topic.title.length > 50 ? topic.title.substr(0, 40) + "..." : topic.title}
-										<Sitetopiccoin gift={topic.gift} />
-									</a>
-								// </Link>
-							}
-							secondary={
-								<React.Fragment>
-									<Typography component="span" className={classes.inline} color="textPrimary">
-										By &nbsp;
-										<Link href={"/profile/" + topic.user[0]._id + "/@" + topic.user[0].username}>
-											<a style={{ color: '#1F7BD8', textDecoration: 'none' }} >
-												<strong style={{ color: 'gray' }}>@</strong>
-												{topic.user[0].username}															
-											</a>
-										</Link>
-										&nbsp; {moment(topic.created_at).locale(Lang.locale).fromNow()}
-									</Typography>
-								</React.Fragment>
-							}
-						/>
-					</ListItem>
-				</List>
-			))
-		)
+		return topics.map(topic => (
+      <List className={classes.root} key={topic._id}>
+        <ListItem alignItems="flex-start">
+          <ListItemAvatar>
+            {topic.user_id ? (
+              <a
+                target="_blank"
+                href={
+                  "/topics/" +
+                  topic._id +
+                  "/" +
+                  this.nutralizeTitle(topic.title)
+                }
+                style={{ textDecoration: "none", margin: "6px -1px" }}
+              >
+                <Thumbnails
+                  borderColor="black"
+                  borderWidth={2}
+                  name={topic.user[0].username}
+                  url={
+                    topic.user[0].profileimage
+                      ? config.profileimage + topic.user[0].profileimage
+                      : null
+                  }
+                />
+              </a>
+            ) : (
+              <Thumbnails
+                borderColor="black"
+                borderWidth={2}
+                name="Ano"
+                url={null}
+              />
+            )}
+          </ListItemAvatar>
+          <ListItemText
+            primary={
+              // <Link href={"/topics/" + topic._id + "/" + this.nutralizeTitle(topic.title)} >
+              <a
+                target="_blank"
+                href={
+                  "/topics/" +
+                  topic._id +
+                  "/" +
+                  this.nutralizeTitle(topic.title)
+                }
+                style={{
+                  color: "#1F7BD8",
+                  textDecoration: "none",
+                  fontSize: 18
+                }}
+              >
+                {topic.title.length > 50
+                  ? topic.title.substr(0, 40) + "..."
+                  : topic.title}
+                <Sitetopiccoin gift={topic.gift} />
+              </a>
+              // </Link>
+            }
+            secondary={
+              <React.Fragment>
+                <Typography
+                  component="span"
+                  className={classes.inline}
+                  color="textPrimary"
+                >
+                  By &nbsp;
+                  {topic.user_id ? (
+                    <Link
+                      href={
+                        "/profile/" +
+                        topic.user[0]._id +
+                        "/@" +
+                        topic.user[0].username
+                      }
+                    >
+                      <a style={{ color: "#1F7BD8", textDecoration: "none" }}>
+                        <strong style={{ color: "gray" }}>@</strong>
+                        {topic.user[0].username}
+                      </a>
+                    </Link>
+                  ) : (
+                    <Typography>Anonymous</Typography>
+                  )}
+                  &nbsp;{" "}
+                  {moment(topic.created_at)
+                    .locale(Lang.locale)
+                    .fromNow()}
+                </Typography>
+              </React.Fragment>
+            }
+          />
+        </ListItem>
+      </List>
+    ));
 	}
 
 	render() {

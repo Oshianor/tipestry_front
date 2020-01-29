@@ -86,46 +86,54 @@ class SiteAbout extends React.Component {
         <Card className={classes.card}>
           <CardHeader
             avatar={
-              <Link
-                href={
-                  "/profile/" +
-                  data.siteTopic[0].user[0]._id +
-                  "/@" +
-                  data.siteTopic[0].user[0].username
-                }
-              >
-                <a style={{ textDecoration: "none" }}>
-                  <Thumbnails
-                    borderColor="black"
-                    borderWidth={2}
-                    name={data.siteTopic[0].user[0].username}
-                    url={
-                      data.siteTopic[0].user[0].profileimage === "" ||
-                      !data.siteTopic[0].user[0].profileimage
-                        ? null
-                        : config.profileimage +
-                          data.siteTopic[0].user[0].profileimage
-                    }
-                  />
-                </a>
-              </Link>
+              data.siteTopic[0].user_id ? (
+                <Link
+                  href={
+                    "/profile/" +
+                    data.siteTopic[0].user[0]._id +
+                    "/@" +
+                    data.siteTopic[0].user[0].username
+                  }
+                >
+                  <a style={{ textDecoration: "none" }}>
+                    <Thumbnails
+                      borderColor="black"
+                      borderWidth={2}
+                      name={data.siteTopic[0].user[0].username}
+                      url={
+                        data.siteTopic[0].user[0].profileimage === "" ||
+                        !data.siteTopic[0].user[0].profileimage
+                          ? null
+                          : config.profileimage +
+                            data.siteTopic[0].user[0].profileimage
+                      }
+                    />
+                  </a>
+                </Link>
+              ) : (
+                <Thumbnails name="Anonymous" url={null} />
+              )
             }
             title={
-              <Link
-                href={
-                  "/profile/" +
-                  data.siteTopic[0].user[0]._id +
-                  "/@" +
-                  data.siteTopic[0].user[0].username
-                }
-              >
-                <a style={{ color: "#1F7BD8", textDecoration: "none" }}>
-                  <strong style={{ color: "gray" }}>@</strong>
-                  {typeof data.siteTopic[0].user[0] !== "undefined"
-                    ? `${data.siteTopic[0].user[0].username}`
-                    : "@No name"}
-                </a>
-              </Link>
+              data.siteTopic[0].user_id ? (
+                <Link
+                  href={
+                    "/profile/" +
+                    data.siteTopic[0].user[0]._id +
+                    "/@" +
+                    data.siteTopic[0].user[0].username
+                  }
+                >
+                  <a style={{ color: "#1F7BD8", textDecoration: "none" }}>
+                    <strong style={{ color: "gray" }}>@</strong>
+                    {typeof data.siteTopic[0].user[0] !== "undefined"
+                      ? `${data.siteTopic[0].user[0].username}`
+                      : "@No name"}
+                  </a>
+                </Link>
+              ) : (
+                <Typography>Anonymous</Typography>
+              )
             }
             subheader={
               <p style={{ fontSize: 10, margin: 0 }}>
@@ -138,7 +146,7 @@ class SiteAbout extends React.Component {
           <CardContent style={{ padding: "0px 25px" }}>
             <Typography component="p">
               {typeof data.siteTopic[0].message !== "undefined" &&
-                (data.siteTopic[0].message && (
+                data.siteTopic[0].message && (
                   <Linkify tagName="span">
                     {data.siteTopic[0].message
                       .split("\n")
@@ -151,7 +159,7 @@ class SiteAbout extends React.Component {
                         );
                       })}
                   </Linkify>
-                ))}
+                )}
               {/* {data.siteTopic[0].message} */}
               <Tag tags={data.siteTopic[0].tags} handleTag={this.handleTag} />
             </Typography>
@@ -169,7 +177,7 @@ class SiteAbout extends React.Component {
             comment={data.siteTopic[0].comment.length}
             topicId={data.siteTopic[0].id}
             token={token}
-            topicUserId={data.siteTopic[0].user[0].id}
+            topicUserId={data.siteTopic[0].user_id ? data.siteTopic[0].user[0].id : null}
             topicObjId={data.siteTopic[0]._id}
             link={encodeURI(
               "/topics/" +

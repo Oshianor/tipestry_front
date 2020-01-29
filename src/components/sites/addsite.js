@@ -249,6 +249,7 @@ class Addsite extends Component {
       chipData.forEach(chip => {
         tags.push(chip.label);
       });
+      
       const options = {
         method: "POST",
         headers: {
@@ -267,6 +268,7 @@ class Addsite extends Component {
       };
 
       let site = await Axios(options);
+
       // if successful then redirect back to home page
       if (!site.data.error) return Router.push("/");
 
