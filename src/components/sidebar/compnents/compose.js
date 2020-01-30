@@ -63,17 +63,32 @@ class Compose extends React.Component {
       commentable_type: "AppTopic",
       content: comment
     }
+    
+    let options;
 
-    const options = {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'x-auth-token': token
-      },
-      data: JSON.stringify(obj),
-      url: config.api + "/commentReply/comment",
-    };
+    if (token) {
+      options = {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "x-auth-token": token
+        },
+        data: JSON.stringify(obj),
+        url: config.api + "/commentReply/comment"
+      };
+    } else {
+      options = {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        data: JSON.stringify(obj),
+        url: config.api + "/commentReply/comment/anonymous"
+      };
+    }
+    
 
     try {
       let comment = await Axios(options);
@@ -105,34 +120,39 @@ class Compose extends React.Component {
             rows="3"
             name="comment"
             value={comment}
-            onChange={this.handleChange('comment')}
+            onChange={this.handleChange("comment")}
             className={classes.textField}
             margin="normal"
             variant="outlined"
           />
-          {
-            !token ? 
-              <Typography variant="subtitle1" >
-                {/* You have to be &nbsp; */}
-                {/* 你必须  */}
-                {Lang.x}&nbsp; 
-                <Link href="/login" >
-                  <a>
-                    {/* Logged In */}
-                    {/* 登录 */}
-                    {Lang.y}
-                  </a>
-                </Link>
-                {/* &nbsp; to comment */}
-                &nbsp; {Lang.z}
-                {/* 评论 */}
-              </Typography>
-            :
-              <Button variant="outlined" onClick={this.handleAddComment.bind(this)} color="primary" className={classes.button}>
-                {/* Add Comment // 添加评论 */}
-                {Lang.w}
-              </Button>
-          }
+          {!token && (
+            <Typography variant="subtitle1">
+              {/* You have to be &nbsp; */}
+              {/* 你必须  */}
+              {/* {Lang.x}&nbsp;  */}
+              You are currently not &nbsp;
+              <Link href="/login">
+                <a>
+                  {/* Logged In */}
+                  {/* 登录 */}
+                  {Lang.y}.
+                </a>
+              </Link>
+              &nbsp;Any comment made would be done Anonymously
+              {/* &nbsp; to comment */}
+              {/* &nbsp; {Lang.z} */}
+              {/* 评论 */}
+            </Typography>
+          )}
+          <Button
+            variant="outlined"
+            onClick={this.handleAddComment.bind(this)}
+            color="primary"
+            className={classes.button}
+          >
+            {/* Add Comment // 添加评论 */}
+            {Lang.w}
+          </Button>
         </form>
       </React.Fragment>
     );

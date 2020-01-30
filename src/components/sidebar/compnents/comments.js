@@ -205,44 +205,57 @@ class Comments extends React.Component {
             <CardHeader
               style={{ paddingTop: 5, paddingBottom: 7 }}
               avatar={
-                <Link
-                  href={
-                    "/profile/" +
-                    comment.commentUser[0]._id +
-                    "/@" +
-                    comment.commentUser[0].username
-                  }
-                >
-                  <a style={{ textDecoration: "none" }}>
-                    <Thumbnails
-                      borderColor="black"
-                      borderWidth={2}
-                      name={comment.commentUser[0].username}
-                      url={
-                        comment.commentUser[0].profileimage === "" ||
-                        !comment.commentUser[0].profileimage
-                          ? null
-                          : config.profileimage +
-                            comment.commentUser[0].profileimage
-                      }
-                    />
-                  </a>
-                </Link>
+                comment.user_id ? (
+                  <Link
+                    href={
+                      "/profile/" +
+                      comment.commentUser[0]._id +
+                      "/@" +
+                      comment.commentUser[0].username
+                    }
+                  >
+                    <a style={{ textDecoration: "none" }}>
+                      <Thumbnails
+                        borderColor="black"
+                        borderWidth={2}
+                        name={comment.commentUser[0].username}
+                        url={
+                          comment.commentUser[0].profileimage === "" ||
+                          !comment.commentUser[0].profileimage
+                            ? null
+                            : config.profileimage +
+                              comment.commentUser[0].profileimage
+                        }
+                      />
+                    </a>
+                  </Link>
+                ) : (
+                  <Thumbnails
+                    borderColor="black"
+                    borderWidth={2}
+                    name="ano"
+                    url={null}
+                  />
+                )
               }
               title={
-                <Link
-                  href={
-                    "/profile/" +
-                    comment.commentUser[0]._id +
-                    "/@" +
-                    comment.commentUser[0].username
-                  }
-                >
-                  <a style={{ color: "#1F7BD8", textDecoration: "none" }}>
-                    <strong style={{ color: "gray" }}>@</strong>
-                    {comment.commentUser[0].username}
-                  </a>
-                </Link>
+                comment.user_id ? (
+                  <Link
+                    href={
+                      "/profile/" +
+                      comment.commentUser[0]._id +
+                      "/@" +
+                      comment.commentUser[0].username
+                    }
+                  >
+                    <a style={{ color: "#1F7BD8", textDecoration: "none" }}>
+                      <strong style={{ color: "gray" }}>@</strong>
+                      {comment.commentUser[0].username}
+                    </a>
+                  </Link>
+                ) : (
+                  <Typography> Anonymous</Typography>
+                )
               }
               subheader={
                 <p style={{ fontSize: 10, margin: 0 }}>
@@ -318,7 +331,7 @@ class Comments extends React.Component {
               </IconButton>
               &nbsp;&nbsp;
               {// only show them if the owner of the post and the logged in user are the same
-              data.user._id === comment.commentUser[0]._id && (
+              comment.user_id && data.user._id === comment.commentUser[0]._id && (
                 <IconButton
                   aria-label="Edit"
                   onClick={this.handleEdit.bind(
@@ -331,7 +344,8 @@ class Comments extends React.Component {
                 </IconButton>
               )}
               {// only show them if the owner of the post and the logged in user are the same
-              data.user._id === comment.commentUser[0]._id ||
+              (comment.user_id &&
+                data.user._id === comment.commentUser[0]._id) ||
                 (data.user.is_admin === 1 && (
                   <IconButton
                     aria-label="delete"
@@ -354,6 +368,7 @@ class Comments extends React.Component {
               {/* check if user is logged in and also if 
               the user is not the creator of the comment */}
               {typeof data.user.id !== "undefined" &&
+                comment.user_id &&
                 comment.commentUser[0].id !== data.user.id && (
                   <CommentCoin
                     // topic object id
@@ -362,7 +377,7 @@ class Comments extends React.Component {
                     commentId={comment.id}
                     handleOpen={this.handleNotLoggedIn}
                     // comment owner id
-                    commentUserId={comment.commentUser[0].id}
+                    commentUserId={comment.user_id && comment.commentUser[0].id}
                   />
                 )}
             </CardActions>
@@ -377,7 +392,7 @@ class Comments extends React.Component {
             <Replies
               replyValues={replyValues}
               reply={reply}
-              username={comment.commentUser[0].username}
+              username={comment.user_id ? comment.commentUser[0].username : ""}
               commentId={comment.id}
               handleReply={this.handleReply}
               totalReplies={

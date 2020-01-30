@@ -42,11 +42,11 @@ class ReplyCompose extends React.Component {
     const { reply } = this.state;
 		const { commentId, handleUpdateReply, commentObjId } = this.props;
 
-		let token = localStorage.getItem('token');
+    let token = localStorage.getItem('token');
+    let options;
+
 		if (token) {
-      // console.log('uuu');
-      
-      const options = {
+      options = {
         method: 'POST',
         data: JSON.stringify({
         	commentId,
@@ -59,21 +59,32 @@ class ReplyCompose extends React.Component {
         },
         url: config.api + '/commentReply/reply'
       }
-
-      let comment = await axios(options);
-      // console.log("CHANGEING VOTES", comment);
-      if (comment.data.error === false) {
-        this.setState({
-          reply: ""
-        })
-        handleUpdateReply(comment.data.content.replies, comment.data.content.total);
-        
-      }
-      
     } else {
+      options = {
+        method: "POST",
+        data: JSON.stringify({
+          commentId,
+          content: reply
+        }),
+        headers: {
+          "content-type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        url: config.api + "/commentReply/reply/anonymous"
+      };
+    }
+
+
+    let comment = await axios(options);
+    // console.log("CHANGEING VOTES", comment);
+    if (comment.data.error === false) {
       this.setState({
-        open: true
-      })
+        reply: ""
+      });
+      handleUpdateReply(
+        comment.data.content.replies,
+        comment.data.content.total
+      );
     }
   }
 

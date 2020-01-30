@@ -251,39 +251,46 @@ class Repiles extends React.Component {
                 subheader: classes.time // class name, e.g. `classes-nesting-root-x`
               }}
               avatar={
-                <Link
-                  href={
-                    "/profile/" +
-                    reply.user[0]._id +
-                    "/@" +
-                    reply.user[0].username
-                  }
-                >
-                  <a style={{ textDecoration: "none" }}>
-                    <Thumbnails
-                      size="xs"
-                      borderColor="black"
-                      borderWidth={1}
-                      name={reply.user[0].username}
-                      url={
-                        // check if user profile image exist
-                        reply.user[0].profileimage === "" ||
-                        !reply.user[0].profileimage
-                          ? null
-                          : config.profileimage + reply.user[0].profileimage
-                      }
-                    />
-                  </a>
-                </Link>
+                reply.user_id ? (
+                  <Link
+                    href={
+                      "/profile/" +
+                      reply.user[0]._id +
+                      "/@" +
+                      reply.user[0].username
+                    }
+                  >
+                    <a style={{ textDecoration: "none" }}>
+                      <Thumbnails
+                        size="xs"
+                        borderColor="black"
+                        borderWidth={1}
+                        name={reply.user[0].username}
+                        url={
+                          // check if user profile image exist
+                          reply.user[0].profileimage === "" ||
+                          !reply.user[0].profileimage
+                            ? null
+                            : config.profileimage + reply.user[0].profileimage
+                        }
+                      />
+                    </a>
+                  </Link>
+                ) : (
+                  <Thumbnails
+                    size="xs"
+                    borderColor="black"
+                    borderWidth={1}
+                    name="Anon"
+                    url={null}
+                  />
+                )
               }
               titleTypographyProps={{ fontSize: 12 }}
               style={{ padding: "8px 25px" }}
               action={
-                data.user._id === reply.user[0]._id && (
-                  <CardActions
-                    className={classes.actions}
-                    disableActionSpacing
-                  >
+                reply.user_id && data.user._id === reply.user[0]._id && (
+                  <CardActions className={classes.actions} disableActionSpacing>
                     <div style={{ flexGrow: 1 }} />
                     <IconButton
                       aria-label="Thumbs Up"
@@ -296,30 +303,37 @@ class Repiles extends React.Component {
                     >
                       <Edit style={{ fontSize: 14 }} />
                     </IconButton>
-                    <IconButton
-                      aria-label="delete"
-                      onClick={this.handleDeleteReply.bind(this, reply._id)}
-                      className={classes.iconspacing}
-                    >
-                      <RemoveCircle style={{ fontSize: 14 }} />
-                    </IconButton>
+
+                    {reply.user_id && (
+                      <IconButton
+                        aria-label="delete"
+                        onClick={this.handleDeleteReply.bind(this, reply._id)}
+                        className={classes.iconspacing}
+                      >
+                        <RemoveCircle style={{ fontSize: 14 }} />
+                      </IconButton>
+                    )}
                   </CardActions>
                 )
               }
               title={
-                <Link
-                  href={
-                    "/profile/" +
-                    reply.user[0]._id +
-                    "/@" +
-                    reply.user[0].username
-                  }
-                >
-                  <a style={{ color: "#1F7BD8", textDecoration: "none" }}>
-                    <strong style={{ color: "gray" }}>@</strong>
-                    {reply.user[0].username}
-                  </a>
-                </Link>
+                reply.user_id ? (
+                  <Link
+                    href={
+                      "/profile/" +
+                      reply.user[0]._id +
+                      "/@" +
+                      reply.user[0].username
+                    }
+                  >
+                    <a style={{ color: "#1F7BD8", textDecoration: "none" }}>
+                      <strong style={{ color: "gray" }}>@</strong>
+                      {reply.user[0].username}
+                    </a>
+                  </Link>
+                ) : (
+                  <Typography>Anonymous</Typography>
+                )
               }
               subheader={
                 <p style={{ fontSize: 10, margin: 0 }}>
