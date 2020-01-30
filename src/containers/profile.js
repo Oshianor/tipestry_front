@@ -398,7 +398,7 @@ class Profile extends React.Component {
                   {
                     loading ?
                       <CircularProgress className={classes.progress} color="secondary" />
-                    : 
+                    :
                       <ExpandMore />
                   }
                 </IconButton>

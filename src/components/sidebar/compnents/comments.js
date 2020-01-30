@@ -312,10 +312,7 @@ class Comments extends React.Component {
               {/* reply icon */}
               <IconButton
                 aria-label="Reply"
-                onClick={this.handleDisplayReplyCompose.bind(
-                  this,
-                  comment._id
-                )}
+                onClick={this.handleDisplayReplyCompose.bind(this, comment._id)}
               >
                 <Reply style={{ fontSize: 20 }} />
               </IconButton>
@@ -334,14 +331,15 @@ class Comments extends React.Component {
                 </IconButton>
               )}
               {// only show them if the owner of the post and the logged in user are the same
-              data.user._id === comment.commentUser[0]._id && (
-                <IconButton
-                  aria-label="delete"
-                  onClick={this.handleCommentDelete.bind(this, comment._id)}
-                >
-                  <Remove style={{ fontSize: 20 }} />
-                </IconButton>
-              )}
+              data.user._id === comment.commentUser[0]._id ||
+                (data.user.is_admin === 1 && (
+                  <IconButton
+                    aria-label="delete"
+                    onClick={this.handleCommentDelete.bind(this, comment._id)}
+                  >
+                    <Remove style={{ fontSize: 20 }} />
+                  </IconButton>
+                ))}
               {//  fetch replies for this comment
               // if reply exist for this comment then show this
               typeof comment.replyCount[0] !== "undefined" && (
