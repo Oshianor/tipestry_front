@@ -184,7 +184,7 @@ class CardActionIcons extends React.Component {
         />
         {/* </Tooltip> */}
         {/* tips coin icons */}
-        {typeof data.user.id !== "undefined" &&
+        {typeof data.user.id !== "undefined" && topicUserId &&
           topicUserId !== data.user.id && (
             <Coin
               topicUserId={topicUserId}
