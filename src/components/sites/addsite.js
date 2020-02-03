@@ -192,9 +192,6 @@ class Addsite extends Component {
     const { url } = this.props;
     let token = localStorage.getItem("token");
 
-    const recaptchaValue = this.recaptchaRef.current.getValue();
-
-
     if (chipData.length === 0) {
       this.setState({
         loading: false,
@@ -247,6 +244,8 @@ class Addsite extends Component {
       //   msg: Lang.q
       //   // // "Title field can't be empty" // 标题字段不能为空
       // });
+
+      const recaptchaValue = this.recaptchaRef.current.getValue();
 
       if (recaptchaValue !== "") {
         this.setState({
