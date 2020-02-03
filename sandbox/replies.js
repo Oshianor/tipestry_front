@@ -20,7 +20,7 @@ import Button from '@material-ui/core/Button';
 import { Lang } from '../../../../lang';
 import Linkify from 'linkifyjs/react';
 import Replycompose from './replycompose';
-import ThumbComment from "./thumbComment";
+
 
 const styles = theme => ({
 	semicard: {
@@ -237,7 +237,7 @@ class Repiles extends React.Component {
   render() {
 		const { classes, data } = this.props;
 		const { edit, content, replyValues } = this.state;
-		console.log("PPPPPPPPP", replyValues);
+		// console.log("PPPPPPPPP", replyValues);
 		
 
     return (
@@ -289,8 +289,7 @@ class Repiles extends React.Component {
               titleTypographyProps={{ fontSize: 12 }}
               style={{ padding: "8px 25px" }}
               action={
-                reply.user_id &&
-                data.user._id === reply.user[0]._id && (
+                reply.user_id && data.user._id === reply.user[0]._id && (
                   <CardActions className={classes.actions} disableActionSpacing>
                     <div style={{ flexGrow: 1 }} />
                     <IconButton
@@ -347,7 +346,7 @@ class Repiles extends React.Component {
             <CardContent
               style={{
                 paddingTop: 0,
-                paddingBottom: 0,
+                paddingBottom: 9,
                 paddingLeft: 25,
                 paddingRight: 25
               }}
@@ -396,11 +395,7 @@ class Repiles extends React.Component {
               )}
             </CardContent>
             <CardActions>
-              <ThumbComment
-                commentObjId={reply._id}
-                votes={reply.votesCount}
-                // votes={0}
-              />
+              
             </CardActions>
           </Card>
         ))}

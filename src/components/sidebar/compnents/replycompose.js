@@ -64,7 +64,6 @@ class ReplyCompose extends React.Component {
     const { reply } = this.state;
 		const { commentId, handleUpdateReply, commentObjId } = this.props;
 
-    const recaptchaValue = this.recaptchaRef.current.getValue();
 
     let token = localStorage.getItem('token');
     let options;
@@ -84,6 +83,7 @@ class ReplyCompose extends React.Component {
         url: config.api + '/commentReply/reply'
       }
     } else {
+    const recaptchaValue = this.recaptchaRef.current.getValue();
 
       if (recaptchaValue === "") {
         return;

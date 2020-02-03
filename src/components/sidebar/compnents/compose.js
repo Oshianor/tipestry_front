@@ -65,7 +65,6 @@ class Compose extends React.Component {
     const { data, token, getSiteTopic, handleUpdate } = this.props;
     const { comment } = this.state;
 
-    const recaptchaValue = this.recaptchaRef.current.getValue();
     
 
     let obj = {
@@ -89,6 +88,7 @@ class Compose extends React.Component {
         url: config.api + "/commentReply/comment"
       };
     } else {
+      const recaptchaValue = this.recaptchaRef.current.getValue();
 
       if (recaptchaValue === "") {
         return
