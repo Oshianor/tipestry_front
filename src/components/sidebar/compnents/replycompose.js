@@ -7,12 +7,16 @@ import axios from 'axios';
 import { config } from '../../../../config';
 import Alert from '../../reuseable/alert';
 import Warning from "../../reuseable/warning";
+import ReCAPTCHA from "react-google-recaptcha";
+
+
 
 
 const styles = theme => ({
   container: {
     display: 'flex',
     alignItems: "flex-start",
+    flexWrap: "wrap",
     marginLeft: 60
 	},
 	button: {
@@ -21,10 +25,28 @@ const styles = theme => ({
 });
 
 class ReplyCompose extends React.Component {
-  state = {
-    open: false,
-    reply:''
+  constructor(props) {
+    super(props);
+    
+    this.recaptchaRef = React.createRef();
+
+    this.state = {
+      open: false,
+      reply: "",
+      token: null
+    };
   }
+
+  componentDidMount() {
+    let token = localStorage.getItem("token");
+    
+    this.setState({
+      token
+    })
+  }
+  
+  
+  
 
   handleChange = event => {
     this.setState({
@@ -41,6 +63,8 @@ class ReplyCompose extends React.Component {
   handleReply = async () => {
     const { reply } = this.state;
 		const { commentId, handleUpdateReply, commentObjId } = this.props;
+
+    const recaptchaValue = this.recaptchaRef.current.getValue();
 
     let token = localStorage.getItem('token');
     let options;
@@ -60,6 +84,11 @@ class ReplyCompose extends React.Component {
         url: config.api + '/commentReply/reply'
       }
     } else {
+
+      if (recaptchaValue === "") {
+        return;
+      }
+
       options = {
         method: "POST",
         data: JSON.stringify({
@@ -90,36 +119,48 @@ class ReplyCompose extends React.Component {
 
   render() {
     const { classes, username } = this.props;
-    const { reply, open } = this.state;
+    const { reply, open, token } = this.state;
     return (
       <form className={classes.container} noValidate autoComplete="off">
         <TextField
           id="reply"
           label={
             <span>
-              <span style={{ color: 'gray' }}>reply @</span>
+              <span style={{ color: "gray" }}>reply @</span>
               <b>{username}</b>
             </span>
           }
           value={reply}
-					style={{ margin: 8 }}
-					onChange={this.handleChange}
+          style={{ margin: 8 }}
+          onChange={this.handleChange}
           fullWidth
           rowsMax={3}
-					margin="normal"
+          margin="normal"
           multiline
-          color='secondary'
+          color="secondary"
         />
-        <Button 
-          color="secondary" 
-          style={{ marginTop: 20 }} 
+        <br />
+        <br />
+        {!token && (
+          <div style={{ margin: "0 8%" }}>
+            <ReCAPTCHA
+              ref={this.recaptchaRef}
+              sitekey="6LfC9q4UAAAAAMbyFnaZtaQyEOuiBKb1gI8QMZKx"
+              onChange={this.onChange}
+            />
+          </div>
+        )}
+        <Button
+          color="secondary"
+          style={{ marginTop: 20 }}
           disabled={reply.length === 0}
           className={classes.button}
           onClick={this.handleReply}
         >
-					Save
-				</Button>
-        <Warning open={open} handleClose={this.handleClose}/>
+          Save
+        </Button>
+
+        <Warning open={open} handleClose={this.handleClose} />
       </form>
     );
   }

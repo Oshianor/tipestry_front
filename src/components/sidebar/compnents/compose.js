@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import { getSiteTopic } from "../../../actions/data";
 import Link from "next/link";
 import { Lang } from '../../../../lang';
+import ReCAPTCHA from "react-google-recaptcha";
 
 
 
@@ -33,10 +34,18 @@ const styles = theme => ({
 
 
 class Compose extends React.Component {
-  state = {
-    comment: '',
-    token: null
+  constructor(props) {
+    super(props);
+    
+    this.recaptchaRef = React.createRef();
+
+    this.state = {
+      comment: "",
+      token: null
+    };
   }
+  
+  
 
   handleChange = name => event => {
     this.setState({
@@ -55,6 +64,8 @@ class Compose extends React.Component {
   async handleAddComment() {
     const { data, token, getSiteTopic, handleUpdate } = this.props;
     const { comment } = this.state;
+
+    const recaptchaValue = this.recaptchaRef.current.getValue();
     
 
     let obj = {
@@ -78,6 +89,11 @@ class Compose extends React.Component {
         url: config.api + "/commentReply/comment"
       };
     } else {
+
+      if (recaptchaValue === "") {
+        return
+      }
+      
       options = {
         method: "POST",
         headers: {
@@ -125,6 +141,15 @@ class Compose extends React.Component {
             margin="normal"
             variant="outlined"
           />
+          {!token && (
+            <div style={{ margin: "0 8%" }}>
+              <ReCAPTCHA
+                ref={this.recaptchaRef}
+                sitekey="6LfC9q4UAAAAAMbyFnaZtaQyEOuiBKb1gI8QMZKx"
+                onChange={this.onChange}
+              />
+            </div>
+          )}
           {!token && (
             <Typography variant="subtitle1">
               {/* You have to be &nbsp; */}

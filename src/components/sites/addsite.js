@@ -192,10 +192,8 @@ class Addsite extends Component {
     const { url } = this.props;
     let token = localStorage.getItem("token");
 
+    const recaptchaValue = this.recaptchaRef.current.getValue();
 
-    this.setState({
-      loading: true
-    });
 
     if (chipData.length === 0) {
       this.setState({
@@ -207,6 +205,11 @@ class Addsite extends Component {
     }
 
     if (token && title !== "") {
+      this.setState({
+        loading: true
+      });
+
+
       let tags = [];
       chipData.forEach(chip => {
         tags.push(chip.label);
@@ -245,38 +248,46 @@ class Addsite extends Component {
       //   // // "Title field can't be empty" // 标题字段不能为空
       // });
 
-      let tags = [];
-      chipData.forEach(chip => {
-        tags.push(chip.label);
-      });
-      
-      const options = {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-          // "x-auth-token": token
-        },
-        // pass title, url, and message
-        data: JSON.stringify({
-          url,
-          title,
-          message,
-          tags
-        }),
-        url: config.api + "/topic/anonymous"
-      };
+      if (recaptchaValue !== "") {
+        this.setState({
+          loading: true
+        });
 
-      let site = await Axios(options);
+        
+        let tags = [];
+        chipData.forEach(chip => {
+          tags.push(chip.label);
+        });
 
-      // if successful then redirect back to home page
-      if (!site.data.error) return Router.push("/");
+        const options = {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+            "Access-Control-Allow-Origin": "*"
+            // "x-auth-token": token
+          },
+          // pass title, url, and message
+          data: JSON.stringify({
+            url,
+            title,
+            message,
+            tags
+          }),
+          url: config.api + "/topic/anonymous"
+        };
 
-      this.setState({
-        loading: false,
-        open: true,
-        msg: site.data.msg
-      });
+        let site = await Axios(options);
+
+        // if successful then redirect back to home page
+        if (!site.data.error) return Router.push("/");
+
+        this.setState({
+          loading: false,
+          open: true,
+          msg: site.data.msg
+        });
+      }
+
     }
   }
 
