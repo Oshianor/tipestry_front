@@ -17,6 +17,8 @@ import { config } from "../../../../config";
 import { getSiteTopic } from "../../../actions/data";
 import { bindActionCreators } from 'redux';
 import Alert from '../../reuseable/alert';
+import Router, { withRouter } from "next/router";
+
 
 
 function Transition(props) {
@@ -52,7 +54,7 @@ class CoinGift extends React.Component {
 
 	handleGift = async () => {
 		const { amount } = this.state;
-		const { commentUserId, type, handleClose, topicObjId, commentId, getSiteTopic } = this.props;
+		const { commentUserId, router, type, handleClose, topicObjId, commentId, getSiteTopic } = this.props;
 		let token = localStorage.getItem('token');
 		
 		if (token) {
@@ -91,9 +93,10 @@ class CoinGift extends React.Component {
 					msg: 'Something went wrong...'
 				})
 			}
-			// Router.push('/');
+			Router.reload();
 			// Router.pushRoute('/')
 			handleClose();
+			// router.reload();
 		}
 	}
 
@@ -189,4 +192,7 @@ function mapDispatchToProps(dispatch) {
 	}, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(CoinGift));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(withStyles(styles)(CoinGift)));

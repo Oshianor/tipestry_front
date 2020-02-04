@@ -402,6 +402,7 @@ class Comments extends React.Component {
               }
               commentObjId={comment._id}
               handleUpdateReply={this.handleUpdateReply}
+              topicObjId={data.siteTopic[0]._id}
             />
           </Card>
         ))}

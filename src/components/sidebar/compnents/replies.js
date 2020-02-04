@@ -21,6 +21,8 @@ import { Lang } from '../../../../lang';
 import Linkify from 'linkifyjs/react';
 import Replycompose from './replycompose';
 import ThumbComment from "./thumbComment";
+import CommentCoin from "./commentCoin";
+import TopicCoins from "./topicCoins";
 
 const styles = theme => ({
 	semicard: {
@@ -28,7 +30,8 @@ const styles = theme => ({
 		marginTop: 5,
 		// boxShadow: '0px 1px 2px -1px',
 		boxShadow: "1px 4px 0px -4px",
-		backgroundColor: "white",
+    // backgroundColor: "white",
+    // backgroundColor: "rgb(230, 236, 240)",
 		borderRadius: 5
 	},
   media: {
@@ -236,7 +239,7 @@ class Repiles extends React.Component {
 
   render() {
 		const { classes, data } = this.props;
-		const { edit, content, replyValues } = this.state;
+		const { edit, content, replyValues, topicObjId } = this.state;
 		console.log("PPPPPPPPP", replyValues);
 		
 
@@ -289,33 +292,37 @@ class Repiles extends React.Component {
               titleTypographyProps={{ fontSize: 12 }}
               style={{ padding: "8px 25px" }}
               action={
-                reply.user_id &&
-                data.user._id === reply.user[0]._id && (
+                
                   <CardActions className={classes.actions} disableActionSpacing>
                     <div style={{ flexGrow: 1 }} />
-                    <IconButton
-                      aria-label="Thumbs Up"
-                      onClick={this.enableEdit.bind(
-                        this,
-                        reply._id,
-                        reply.content
-                      )}
-                      className={classes.iconspacing}
-                    >
-                      <Edit style={{ fontSize: 14 }} />
-                    </IconButton>
+                    {
+                      reply.user_id &&
+                      data.user._id === reply.user[0]._id && (
+                        <IconButton
+                          aria-label="Thumbs Up"
+                          onClick={this.enableEdit.bind(
+                            this,
+                            reply._id,
+                            reply.content
+                          )}
+                          className={classes.iconspacing}
+                        >
+                          <Edit style={{ fontSize: 14 }} />
+                        </IconButton>
+                      )
+                    }
+                    
 
-                    {reply.user_id && (
-                      <IconButton
-                        aria-label="delete"
-                        onClick={this.handleDeleteReply.bind(this, reply._id)}
-                        className={classes.iconspacing}
-                      >
-                        <RemoveCircle style={{ fontSize: 14 }} />
-                      </IconButton>
-                    )}
+                    {data.user.is_admin === 1 && (
+                        <IconButton
+                          aria-label="delete"
+                          onClick={this.handleDeleteReply.bind(this, reply._id)}
+                          className={classes.iconspacing}
+                        >
+                          <RemoveCircle style={{ fontSize: 14 }} />
+                        </IconButton>
+                      )}
                   </CardActions>
-                )
               }
               title={
                 reply.user_id ? (
@@ -401,7 +408,22 @@ class Repiles extends React.Component {
                 votes={reply.votesCount}
                 // votes={0}
               />
+
+              {reply.user_id && (
+                <CommentCoin
+                  // topic object id
+                  topicObjId={topicObjId}
+                  // comment id
+                  commentId={reply.id}
+                  // handleOpen={this.handleNotLoggedIn}
+                  // comment owner id
+                  commentUserId={reply.user_id && reply.user[0]._id}
+                />
+              )}
             </CardActions>
+
+            {/* tips for comment */}
+            <TopicCoins gift={reply.gifts} />
           </Card>
         ))}
         {this.displayLoadMoreButton()}
