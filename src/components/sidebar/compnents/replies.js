@@ -292,37 +292,32 @@ class Repiles extends React.Component {
               titleTypographyProps={{ fontSize: 12 }}
               style={{ padding: "8px 25px" }}
               action={
-                
-                  <CardActions className={classes.actions} disableActionSpacing>
-                    <div style={{ flexGrow: 1 }} />
-                    {
-                      reply.user_id &&
-                      data.user._id === reply.user[0]._id && (
-                        <IconButton
-                          aria-label="Thumbs Up"
-                          onClick={this.enableEdit.bind(
-                            this,
-                            reply._id,
-                            reply.content
-                          )}
-                          className={classes.iconspacing}
-                        >
-                          <Edit style={{ fontSize: 14 }} />
-                        </IconButton>
-                      )
-                    }
-                    
-
-                    {data.user.is_admin === 1 && (
-                        <IconButton
-                          aria-label="delete"
-                          onClick={this.handleDeleteReply.bind(this, reply._id)}
-                          className={classes.iconspacing}
-                        >
-                          <RemoveCircle style={{ fontSize: 14 }} />
-                        </IconButton>
+                <CardActions className={classes.actions} disableActionSpacing>
+                  <div style={{ flexGrow: 1 }} />
+                  {reply.user_id && data.user._id === reply.user[0]._id && (
+                    <IconButton
+                      aria-label="Thumbs Up"
+                      onClick={this.enableEdit.bind(
+                        this,
+                        reply._id,
+                        reply.content
                       )}
-                  </CardActions>
+                      className={classes.iconspacing}
+                    >
+                      <Edit style={{ fontSize: 14 }} />
+                    </IconButton>
+                  )}
+
+                  {data.user.is_admin === 1 && (
+                    <IconButton
+                      aria-label="delete"
+                      onClick={this.handleDeleteReply.bind(this, reply._id)}
+                      className={classes.iconspacing}
+                    >
+                      <RemoveCircle style={{ fontSize: 14 }} />
+                    </IconButton>
+                  )}
+                </CardActions>
               }
               title={
                 reply.user_id ? (
@@ -423,7 +418,9 @@ class Repiles extends React.Component {
             </CardActions>
 
             {/* tips for comment */}
-            <TopicCoins gift={reply.gifts} />
+            {typeof reply.gifts !== "undefined" && (
+              <TopicCoins gift={reply.gifts} />
+            )}
           </Card>
         ))}
         {this.displayLoadMoreButton()}
