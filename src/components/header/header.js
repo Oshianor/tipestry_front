@@ -85,10 +85,10 @@ const styles = theme => ({
 		}
 	},
 	logo: {
-		width: 200,
+		// width: 200,
 		height: 60,
 		[theme.breakpoints.down('sm')]: {
-			width: 100,
+			// width: 100,
 			height: 40,
 		},
 	},
@@ -725,7 +725,8 @@ class Header extends React.Component {
                     style={{ margin: "0px 3%" }}
                   >
                     <img
-                      src="/static/login/newlogo.png"
+                      src="/static/tipcoins/Tip-1.png"
+                      // src="/static/login/newlogo.png"
                       className={classes.logo}
                     />
                   </Typography>
