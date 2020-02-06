@@ -725,7 +725,7 @@ class Header extends React.Component {
                     style={{ margin: "0px 3%" }}
                   >
                     <img
-                      src="/static/tipcoins/Tip-1.png"
+                      src="/static/login/tipcoin.png"
                       // src="/static/login/newlogo.png"
                       className={classes.logo}
                     />
