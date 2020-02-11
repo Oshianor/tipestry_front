@@ -34,32 +34,32 @@ class Stages extends Component {
 	state = {
 		token: null
 	}
-	displayCoin = (coin) => {
-		const sty = {
-			marginBottom: -5
-		}
-		if (coin === "XRT") {
-			return <img src="/static/tipcoins/Tip-3.png" alt="comments" width='25' height="25" style={sty} />;
-		} else if (coin === "TIPC") {
-			return <img src="/static/tipcoins/Tip-1.png" alt="comments" width='25' height="25" style={sty} />;
-		} else if (coin === "DOGE") {
-			return <img src="/static/tipcoins/Dogecoin-Icon.svg" alt="comments" width='25' height="25" style={sty} />;
-		}
-	}
+	// displayCoin = (coin) => {
+	// 	const sty = {
+	// 		marginBottom: -5
+	// 	}
+	// 	if (coin === "XRT") {
+	// 		return <img src="/static/tipcoins/Tip-3.png" alt="comments" width='25' height="25" style={sty} />;
+	// 	} else if (coin === "TIPC") {
+	// 		return <img src="/static/tipcoins/Tip-1.png" alt="comments" width='25' height="25" style={sty} />;
+	// 	} else if (coin === "DOGE") {
+	// 		return <img src="/static/tipcoins/Dogecoin-Icon.svg" alt="comments" width='25' height="25" style={sty} />;
+	// 	}
+	// }
 
-	componentDidMount = async () => {
-		let token = localStorage.getItem('token');
-		this.setState({
-			token
-		})
+	// componentDidMount = async () => {
+	// 	let token = localStorage.getItem('token');
+	// 	this.setState({
+	// 		token
+	// 	})
 
-		const stage = await Axios.get(config.api + "/user/levels", {
-      headers: { "x-auth-token": token }
-		}); 
+	// 	const stage = await Axios.get(config.api + "/user/levels", {
+  //     headers: { "x-auth-token": token }
+	// 	}); 
 		
-		console.log('stage', stage);
+	// 	console.log('stage', stage);
 		
-	}
+	// }
 
 	render() {
 		return null
