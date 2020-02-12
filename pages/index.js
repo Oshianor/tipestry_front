@@ -75,6 +75,12 @@ class Index extends React.Component {
     let token = localStorage.getItem("token");
     let user = sessionStorage.getItem("user");
 
+    this.setState({
+      loading: false
+    });
+
+    getTopics(JSON.parse(dataTopics));
+
     try {
       if (token) {
         if (!user) {
@@ -105,7 +111,6 @@ class Index extends React.Component {
         }
       }
 
-      getTopics(JSON.parse(dataTopics));
 
       this.setState({
         loading: false
@@ -123,112 +128,26 @@ class Index extends React.Component {
     }
   }
 
-  // componentWillUnmount() {
-  //   console.log("this.timer)");
-    
-  //   clearInterval(this.timer);
-  // }
-  
-
-  // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyT2JqSWQiOiI1Y2I0N2E4NTdhMTlkNjMzNDdmODAyZWUiLCJpZCI6NDUxOCwiaXNfYWRtaW4iOjAsImlhdCI6MTU1NTMzMTc0MX0.ve3dVAyXsFQEjEaanod4BxQp5RjUntuNb67Xrlkc-YM
-
-  // handleFetchMoreTopics = async () => {
-  //   try {
-  //     const { data, getTopics, setPageNumber } = this.props;
-  //     const { loadingMore } = this.state;
-
-  //     this.setState({
-  //       loadingMore: true
-  //     });
-      
-
-  //     if (!loadingMore) {
-  //       let topicsCont = await axios.get(
-  //         config.api +
-  //           "/topic?pageNumber=" +
-  //           data.pageNumber +
-  //           "&dataType=" +
-  //           data.type
-  //       );
-  //       if (!topicsCont.data.error) {
-  //         topicsCont.data.content.topic.forEach(obj => {
-  //           data.topics.topic.push(obj);
-  //         });
-
-  //         this.setState({
-  //           loadingMore: false
-  //         });
-  //         getTopics({
-  //           topic: data.topics.topic,
-  //           total: topicsCont.data.content.total
-  //         });
-  //         let num = Number(data.pageNumber) + 1;          
-  //         setPageNumber(num);
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.log("error", error);
-      
-  //   }
-  // };
-
-
-
 
   render() {
     const { loading, loadingMore } = this.state;
     const { classes } = this.props;
     return (
       <div>
-        <Head>
-          {/* <link
-            rel="stylesheet"
-            type="text/css"
-            charset="UTF-8"
-            href="/static/containerStyle.css"
-          />
-          <link
-            rel="stylesheet"
-            type="text/css"
-            charset="UTF-8"
-            href="/static/sliderStyle.css"
-          /> */}
-        </Head>
-        {loading ? (
-          <Preloader />
-        ) : (
-          <>
-            <Homepage />
-            <CookieConsent
-              style={{ zIndex: 99999, background: "rgb(146, 95, 126)" }}
-              buttonStyle={{ background: "rgb(255, 255, 255)" }}
-            >
-              {Lang.m3}
-              {/* This website uses cookies to enhance the user experience.It is your responsibility to keep the coins you earn safe by withdrawing them to your own wallet. */}
-            </CookieConsent>
-          </>
-        )}
-        {// show a preloader sign for user post and user favourite post
-        loadingMore && (
-          <IconButton style={{ display: "contents" }}>
-            {/* {loading ? ( */}
-              <CircularProgress
-                className={classes.progress}
-                color="secondary"
-              />
-            {/* ) : (
-              <ExpandMore />
-            )} */}
-          </IconButton>
-        )}
+        <Homepage />
+        <CookieConsent
+          style={{ zIndex: 99999, background: "rgb(146, 95, 126)" }}
+          buttonStyle={{ background: "rgb(255, 255, 255)" }}
+        >
+          {Lang.m3}
+          {/* This website uses cookies to enhance the user experience.It is your responsibility to keep the coins you earn safe by withdrawing them to your own wallet. */}
+        </CookieConsent>
       </div>
     );
   }
 }
 
-// { email: "1904303852@qq.com" }
- 
-// export default Index;
+
 function mapStateToProps(state) {
   return {
     data: state.data,
