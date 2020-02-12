@@ -14,7 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { config } from "../../../../config";
-import { getTopics, getUser } from "../../../actions/data";
+import { getTopics, getUser, setCoinGift } from "../../../actions/data";
 import { bindActionCreators } from 'redux';
 // import Router from "next/router";
 // import Router from 'next-routes';
@@ -61,6 +61,7 @@ class CoinGift extends React.Component {
 			getTopics,
 			getUser,
 			data,
+			setCoinGift,
 			showAlert
 		} = this.props;
 		let token = localStorage.getItem('token');
@@ -118,7 +119,15 @@ class CoinGift extends React.Component {
 			}
 			// Router.push('/');
 			// Router.pushRoute('/')
-			handleClose();
+			// handleClose();
+			setCoinGift({
+        open: false,
+        type: null,
+        image: null,
+        currentCoin: null,
+        topicUserId: null,
+        topicId: null
+      });
 		}
 	}
 
@@ -142,55 +151,81 @@ class CoinGift extends React.Component {
 
 
   render() {
-		const { classes, open, image, handleClose, currentCoin } = this.props;
+		const {
+      classes,
+      open,
+      image,
+      handleClose,
+      currentCoin,
+      setCoinGift
+    } = this.props;
 		const { error, amount, loading } = this.state;
     return (
-			<Dialog
-				open={open}
-				TransitionComponent={Transition}
-				keepMounted
-				onClose={() => handleClose()}
-				aria-labelledby="alert-dialog-slide-title"
-				aria-describedby="alert-dialog-slide-description"
-			>
-				<DialogTitle id="alert-dialog-slide-title">
-					<div style={{ display: 'flex' }} >
-						<img src={image} width={50} height={50} />
-						<div style={{ flexGrow: 1 }} />
-						<Typography style={{ margin: 15 }} >Balance: {currentCoin}</Typography>
-					</div>
-					
-				</DialogTitle>
-				<DialogContent>
-					<TextField
-						error={error !== ""}
-						id="outlined-adornment-amount"
-						className={classNames(classes.margin, classes.textField)}
-						variant="outlined"
-						label="Amount"
-						type='number'
-						helperText={error}
-						value={amount}
-						onChange={this.handleChange('amount')}
-						InputProps={{
-							startAdornment: <InputAdornment position="start">$</InputAdornment>,
-						}}
-					/>
-				</DialogContent>
-				<DialogActions>
-					<Button onClick={() => handleClose()} color='secondary' >
-						Maybe later
-					</Button>
-					<Button 
-						disabled={error !== "" || loading} 
-						onClick={this.handleGift} 
-						color="primary"
-					>
-						{/* Gift */}
-						{!loading ? 'Gift' : <CircularProgress size={20} className={classes.buttonProgress} />}
-					</Button>
-				</DialogActions>
-			</Dialog>
+      <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={() => handleClose()}
+        aria-labelledby="alert-dialog-slide-title"
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle id="alert-dialog-slide-title">
+          <div style={{ display: "flex" }}>
+            <img src={image} width={50} height={50} />
+            <div style={{ flexGrow: 1 }} />
+            <Typography style={{ margin: 15 }}>
+              Balance: {currentCoin}
+            </Typography>
+          </div>
+        </DialogTitle>
+        <DialogContent>
+          <TextField
+            error={error !== ""}
+            id="outlined-adornment-amount"
+            className={classNames(classes.margin, classes.textField)}
+            variant="outlined"
+            label="Amount"
+            type="number"
+            helperText={error}
+            value={amount}
+            onChange={this.handleChange("amount")}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">$</InputAdornment>
+              )
+            }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() =>
+              setCoinGift({
+                open: false,
+                type: null,
+                image: null,
+                currentCoin: null,
+                topicUserId: null,
+                topicId: null
+              })
+            }
+            color="secondary"
+          >
+            Maybe later
+          </Button>
+          <Button
+            disabled={error !== "" || loading}
+            onClick={this.handleGift}
+            color="primary"
+          >
+            {/* Gift */}
+            {!loading ? (
+              "Gift"
+            ) : (
+              <CircularProgress size={20} className={classes.buttonProgress} />
+            )}
+          </Button>
+        </DialogActions>
+      </Dialog>
     );
   }
 }
@@ -206,10 +241,14 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({
-		getTopics: getTopics,
-		getUser: getUser
-	}, dispatch)
+	return bindActionCreators(
+    {
+      getTopics: getTopics,
+      getUser: getUser,
+      setCoinGift: setCoinGift
+    },
+    dispatch
+  );
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(CoinGift));

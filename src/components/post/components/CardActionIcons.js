@@ -13,7 +13,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderOutlined from '@material-ui/icons/FavoriteBorderOutlined';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getUser } from "../../../actions/data";
+import { getUser, setWarning } from "../../../actions/data";
 import Thumb from './thumb';
 import Axios from 'axios';
 import { config } from "../../../../config";
@@ -75,7 +75,7 @@ class CardActionIcons extends React.Component {
 
   handleFavourite = async () => {
     let token = localStorage.getItem('token');
-    const { topicId, getUser, data } = this.props;
+    const { topicId, getUser, data, setWarning } = this.props;
 
     if (token) {
       const options = {
@@ -96,9 +96,10 @@ class CardActionIcons extends React.Component {
       getUser(data.user);
     } else {
       // if the user isn't logged in
-      this.setState({
-        open: true
-      })
+      // this.setState({
+      //   open: true
+      // })
+      setWarning(true);
     }
   }
 
@@ -193,7 +194,7 @@ class CardActionIcons extends React.Component {
               handleClose={this.handleClose}
             />
           )}
-        <Warning open={open} handleClose={this.handleClose} />
+        {/* <Warning open={open} handleClose={this.handleClose} /> */}
       </CardActions>
     );
   }
@@ -216,9 +217,13 @@ function mapStateToProps(state) {
   }
 }
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    getUser: getUser,
-  }, dispatch)
+  return bindActionCreators(
+    {
+      getUser: getUser,
+      setWarning: setWarning
+    },
+    dispatch
+  );
 }
 
 

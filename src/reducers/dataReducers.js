@@ -1,7 +1,7 @@
 const initialstate = {
   topics: [],
   user: {},
-  token: '',
+  token: "",
   siteTopic: {},
   profile: {},
   favourite: [],
@@ -14,14 +14,19 @@ const initialstate = {
   leaderboard: [],
   popular: [],
   type: "hot",
-  pageNumber: 2
-}
+  pageNumber: 2,
+  warning: false
+};
 
 export default (state = initialstate, action) => {
   switch (action.type) {
     case "X_AUTH_TOKEN":
       return Object.assign({}, state, {
         token: action.payload
+      });
+    case "LOGIN_WARNING":
+      return Object.assign({}, state, {
+        warning: action.payload
       });
     case "INCREASE_PAGE_NUMBER":
       return Object.assign({}, state, {

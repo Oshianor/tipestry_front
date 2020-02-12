@@ -19,17 +19,16 @@ import Dialog from '../components/reuseable/dialog';
 import Stage from "../components/stage/stage";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
-import OutlinedInput from "@material-ui/core/OutlinedInput";
-import FilledInput from "@material-ui/core/FilledInput";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
 import Typography from "@material-ui/core/Typography";
 import { config } from "../../config";
 import { bindActionCreators } from "redux";
-import { getTopics, getUser, setType, setPageNumber } from "../actions/data";
+import {
+  getTopics,
+  getUser,
+  setType,
+  setPageNumber,
+  setWarning
+} from "../actions/data";
 import axios from 'axios';
 import { Lang } from "../../lang"
 import VerificationWarning from '../components/header/components/verificationWarning';
@@ -39,6 +38,10 @@ import UploadSite from '../components/uploadurl/uploadsite';
 import Ads from '../components/ads/ads';
 import Searchpost from '../components/header/searchpost';
 import BottomScrollListerer from "react-bottom-scroll-listener";
+import CoinModal from "../components/post/components/coingift"
+import Alert from "../components/reuseable/alert";
+import Warning from "../components/reuseable/warning";
+
 
 
 const styles = theme => ({
@@ -122,7 +125,9 @@ class Homepage extends Component {
       loadingMore: false,
       open: false,
       searchBy: "tag",
-      tag: []
+      tag: [],
+      msgOpen: false,
+      msg: ""
     };
   }
 
@@ -174,7 +179,8 @@ class Homepage extends Component {
           "/topic?pageNumber=" +
           data.pageNumber +
           "&dataType=" +
-          data.type + "&pageSize=5";
+          data.type +
+          "&pageSize=5";
 
         console.log("urlurlurl", url);
 
@@ -222,17 +228,15 @@ class Homepage extends Component {
     clearInterval(this.timer);
   }
 
-
   componentDidUpdate(prevProps, prevState) {
     const { data } = this.props;
 
     if (prevProps.data.pageNumber !== data.pageNumber) {
       if (data.pageNumber > 5) {
-        clearInterval(this.timer)
+        clearInterval(this.timer);
       }
     }
   }
-  
 
   handleGetTags = async () => {
     let tag = await axios.get(config.api + "/topic/top/hashtag");
@@ -269,8 +273,22 @@ class Homepage extends Component {
     });
   };
 
+  showAlert(msg) {
+    this.setState({
+      msgOpen: true,
+      msg
+    });
+  }
+
+  hideAlert = () => {
+    this.setState({
+      msgOpen: false
+    });
+  };
+
+
   render() {
-    const { data, classes } = this.props;
+    const { data, classes, gift, setWarning } = this.props;
     // console.log(this.state);
 
     const {
@@ -280,7 +298,9 @@ class Homepage extends Component {
       open,
       loading,
       searchBy,
-      tag
+      tag,
+      msgOpen,
+      msg
     } = this.state;
     return (
       <BottomScrollListerer onBottom={this.handleFetchMoreTopics}>
@@ -299,121 +319,132 @@ class Homepage extends Component {
             handleDrawerOpen={this.handleDrawerOpen}
             handleDrawerClose={this.handleDrawerClose}
           > */}
-            <Grid container justify="center" spacing={8}>
-              <Grid
-                container
-                justify="space-evenly"
-                alignItems="baseline"
-                className={classes.demo}
-              >
-                {/* trends */}
-                <Hidden mdDown>
-                  <Grid item lg={2} xl={2} style={{ marginRight: 25 }}>
-                    <div style={{ position: "absolute" }}>
-                      <div
-                        style={
-                          stopScroll
-                            ? { position: "fixed", top: 90 }
-                            : { position: "fixed" }
-                        }
-                      >
-                        {token && <Userinfo handleOpen={this.handleDialog} />}
-                        {/* <Trends modal={false} />
+          <Grid container justify="center" spacing={8}>
+            <Grid
+              container
+              justify="space-evenly"
+              alignItems="baseline"
+              className={classes.demo}
+            >
+              {/* trends */}
+              <Hidden mdDown>
+                <Grid item lg={2} xl={2} style={{ marginRight: 25 }}>
+                  <div style={{ position: "absolute" }}>
+                    <div
+                      style={
+                        stopScroll
+                          ? { position: "fixed", top: 90 }
+                          : { position: "fixed" }
+                      }
+                    >
+                      {token && <Userinfo handleOpen={this.handleDialog} />}
+                      {/* <Trends modal={false} />
                       <Popular /> */}
-                        <Paper className={classes.wrapitRoot}>
-                          <Typography
-                            className={classes.text}
-                            variant="subheading"
-                          >
-                            Top Hashtags
-                          </Typography>
-                          <div className={classes.wrapit}>
-                            {typeof tag[0] !== "undefined" && (
-                              <Tag tags={tag} />
-                            )}
-                          </div>
-                        </Paper>
-                      </div>
+                      <Paper className={classes.wrapitRoot}>
+                        <Typography
+                          className={classes.text}
+                          variant="subheading"
+                        >
+                          Top Hashtags
+                        </Typography>
+                        <div className={classes.wrapit}>
+                          {typeof tag[0] !== "undefined" && <Tag tags={tag} />}
+                        </div>
+                      </Paper>
                     </div>
-                  </Grid>
-                </Hidden>
-
-                {/* post  */}
-                <Grid item lg={6} xl={6} md={6} sm={12} xs={12}>
-                  <div
-                    // variant="outlined"
-                    // disabled={loading}
-                    className={classes.formControlNew}
-                  >
-                    {/* upload url modal display */}
-                    <UploadSite />
-
-                    <div className={classes.formControl}>
-                      <Typography variant="body1">
-                        {Lang.q3}
-                        &nbsp;
-                      </Typography>
-                      <Button
-                        style={{ borderRadius: 0 }}
-                        variant="contained"
-                        // disabled={loading}
-                        // onClick={this.handleChange.bind(this, "hot")}
-                        // variant={data.type === "hot" ? "contained" : "text"}
-                        color="primary"
-                      >
-                        {Lang.r3}
-                      </Button>
-                      <Button
-                        style={{ borderRadius: 0 }}
-                        href="/recent"
-                        // disabled={loading}
-                        // onClick={this.handleChange.bind(this, "recent")}
-                        // variant={data.type === "recent" ? "contained" : "text"}
-                        color="primary"
-                      >
-                        {Lang.s3}
-                      </Button>
-                    </div>
-                  </div>
-
-                  {/* post component */}
-                  <div className={classes.center}>
-                    <Ads />
-                    <Post topicValue={data.topics.topic} source="topics" />
                   </div>
                 </Grid>
+              </Hidden>
 
-                {/* coin details */}
-                <Hidden mdDown>
-                  <Grid item lg={3} xl={3} style={{ marginLeft: -25 }}>
-                    <div style={{ position: "absolute" }}>
-                      <div
-                        // style={{ position: 'fixed', maxWidth: 300 }}
-                        style={
-                          stopScroll
-                            ? { position: "fixed", top: 90, maxWidth: 300 }
-                            : { position: "fixed", maxWidth: 300 }
-                        }
-                      >
-                        <Searchpost />
-                        <Tipcoin />
-                        <LeaderBoard />
-                        <SiteInfo />
-                      </div>
-                    </div>
-                  </Grid>
-                </Hidden>
+              {/* post  */}
+              <Grid item lg={6} xl={6} md={6} sm={12} xs={12}>
+                <div
+                  // variant="outlined"
+                  // disabled={loading}
+                  className={classes.formControlNew}
+                >
+                  {/* upload url modal display */}
+                  <UploadSite />
+
+                  <div className={classes.formControl}>
+                    <Typography variant="body1">
+                      {Lang.q3}
+                      &nbsp;
+                    </Typography>
+                    <Button
+                      style={{ borderRadius: 0 }}
+                      variant="contained"
+                      // disabled={loading}
+                      // onClick={this.handleChange.bind(this, "hot")}
+                      // variant={data.type === "hot" ? "contained" : "text"}
+                      color="primary"
+                    >
+                      {Lang.r3}
+                    </Button>
+                    <Button
+                      style={{ borderRadius: 0 }}
+                      href="/recent"
+                      // disabled={loading}
+                      // onClick={this.handleChange.bind(this, "recent")}
+                      // variant={data.type === "recent" ? "contained" : "text"}
+                      color="primary"
+                    >
+                      {Lang.s3}
+                    </Button>
+                  </div>
+                </div>
+
+                {/* post component */}
+                <div className={classes.center}>
+                  <Ads />
+                  <Post topicValue={data.topics.topic} source="topics" />
+                </div>
               </Grid>
+
+              {/* coin details */}
+              <Hidden mdDown>
+                <Grid item lg={3} xl={3} style={{ marginLeft: -25 }}>
+                  <div style={{ position: "absolute" }}>
+                    <div
+                      // style={{ position: 'fixed', maxWidth: 300 }}
+                      style={
+                        stopScroll
+                          ? { position: "fixed", top: 90, maxWidth: 300 }
+                          : { position: "fixed", maxWidth: 300 }
+                      }
+                    >
+                      <Searchpost />
+                      <Tipcoin />
+                      <LeaderBoard />
+                      <SiteInfo />
+                    </div>
+                  </div>
+                </Grid>
+              </Hidden>
             </Grid>
+          </Grid>
           {/* </Drawer> */}
-          <Dialog open={open} handleClose={this.handleDialog}>
+          {/* <Dialog open={open} handleClose={this.handleDialog}>
             <Stage />
-          </Dialog>
+          </Dialog> */}
+          <CoinModal
+            open={gift.open}
+            image={gift.image}
+            type={gift.type}
+            topicId={gift.topicId}
+            currentCoin={gift.currentCoin}
+            topicUserId={gift.topicUserId}
+            // handleClose={this.handleGiftClose}
+            showAlert={this.showAlert.bind(this)}
+          />
+          <Warning open={data.warning} handleClose={() => setWarning(false)} />
+          <Alert handleClose={this.hideAlert} open={msgOpen} message={msg} />
         </div>
       </BottomScrollListerer>
     );
   }
 }
+
 
 Homepage.propTypes = {
   classes: PropTypes.object.isRequired,
@@ -422,7 +453,8 @@ Homepage.propTypes = {
 function mapStateToProps(state) {
   return {
     data: state.data,
-  }
+    gift: state.gift
+  };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -431,7 +463,8 @@ function mapDispatchToProps(dispatch) {
       getTopics: getTopics,
       getUser: getUser,
       setType: setType,
-      setPageNumber: setPageNumber
+      setPageNumber: setPageNumber,
+      setWarning
     },
     dispatch
   );

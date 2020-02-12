@@ -11,6 +11,10 @@ import { config } from '../../../../config';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Snackbar from '@material-ui/core/Snackbar';
 import axios from 'axios';
+import { connect } from "react-redux";
+import { getToken, setWarning } from "../../../actions/data";
+import { bindActionCreators } from "redux";
+
 
 
 const styles = theme => ({
@@ -146,7 +150,7 @@ class AnchorPlayground extends React.Component {
     //   open: !state.open,
     //   arrowRef: node,
     // }));
-    const { handleOpen } = this.props;
+    const { handleOpen, setWarning } = this.props;
     let token = localStorage.getItem('token');
     if (token) {
       this.setState(state => ({
@@ -154,7 +158,8 @@ class AnchorPlayground extends React.Component {
         arrowRef: node,
       }));
     } else {
-      handleOpen();
+      // handleOpen();
+      setWarning(true);
     }
   };
 
@@ -248,4 +253,24 @@ AnchorPlayground.propTypes = {
   title: PropTypes.string.isRequired
 };
 
-export default withRouter(withStyles(styles)(AnchorPlayground));
+function mapStateToProps(state) {
+  return {
+    data: state.data
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    {
+      getToken: getToken,
+      setWarning
+    },
+    dispatch
+  );
+}
+
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(AnchorPlayground));

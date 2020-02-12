@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import Axios from 'axios';
 import { config } from "../../../../config";
 import Alert from '../../reuseable/alert';
+import { setCoinGift } from "../../../actions/data";
 
 
 
@@ -195,60 +196,65 @@ class Coin extends React.Component {
   };
 
   handleGift(img, name) {
-    const { data, topicUserObjId } = this.props;
+    const {
+      data,
+      topicUserObjId,
+      setCoinGift,
+      topicUserId,
+      topicId
+    } = this.props;
     // make this check just in case the user info didn't come back soon
     if (typeof data.user.id !== "undefined") {
 
+      let currentCoin;
+      let image, type, open
+
       if (data.user._id !== topicUserObjId) {
-        this.setState({
-          img: '/static/tipcoins/' + img,
-          type: name,
-          gift: true
-        })
+        // this.setState({
+        //   img: '/static/tipcoins/' + img,
+        //   type: name,
+        //   gift: true
+        // })
+        image = '/static/tipcoins/' + img;
+        // type = name;
       }
 
-    // set the balance of the currenlty selected coin
-    // {
-    //   "_id": "5c48b3beac8a226514dd0595",
-    //   "transactionid": 1548268478844,
-    //   "network_fee": 0,
-    //   "amount": 1,
-    //   "site_id": 0,
-    //   "updated_at": "2019-01-23T18:34:38.845Z",
-    //   "created_at": "2019-01-23T18:34:38.845Z",
-    //   "userid": 4902,
-    //   "transactiontype": "gifted",
-    //   "wallettype": "dogecoin",
-    //   "id": 9,
-    //   "__v": 0
-    // }
-      
     
+
       if (name === "bitcoin") {
-        this.setState({
-          currentCoin: typeof data.user.btc[0] !== "undefined" && data.user.btc[0].balance
-        })
+        // this.setState({
+          currentCoin = typeof data.user.btc[0] !== "undefined" && data.user.btc[0].balance
+        // })
       } else if (name === 'dogecoin') {
-        this.setState({
-          currentCoin: typeof data.user.doge[0] !== "undefined" && data.user.doge[0].doge_balance
-        })	
+        // this.setState({
+          currentCoin = typeof data.user.doge[0] !== "undefined" && data.user.doge[0].doge_balance
+        // })	
       } else if (name === 'ethcoin') {
-        this.setState({
-          currentCoin: typeof data.user.eth[0] !== "undefined" && data.user.eth[0].ethapibalance
-        })	
+        // this.setState({
+          currentCoin = typeof data.user.eth[0] !== "undefined" && data.user.eth[0].ethapibalance
+        // })	
       } else if (name === 'ethtipc') {
-        this.setState({
-          currentCoin: typeof data.user.eth[0] !== "undefined" && data.user.eth[0].tipcapibalance
-        })		
+        // this.setState({
+          currentCoin = typeof data.user.eth[0] !== "undefined" && data.user.eth[0].tipcapibalance
+        // })		
       } else if (name === 'ethtipcoin') {
-        this.setState({
-          currentCoin: typeof data.user.eth[0] !== "undefined" && data.user.eth[0].tipapibalance
-        })	
+        // this.setState({
+          currentCoin = typeof data.user.eth[0] !== "undefined" && data.user.eth[0].tipapibalance
+        // })	
       } else if (name === 'ethxrtcoin') {
-        this.setState({
-          currentCoin: typeof data.user.eth[0] !== "undefined" && data.user.eth[0].xrtapibalance
-        })		
+        // this.setState({
+          currentCoin = typeof data.user.eth[0] !== "undefined" && data.user.eth[0].xrtapibalance
+        // })		
       }
+
+      setCoinGift({
+        open: true,
+        type: name,
+        image,
+        currentCoin,
+        topicUserId,
+        topicId
+      });
     
     }
   }
@@ -321,7 +327,7 @@ class Coin extends React.Component {
             </a>
           </Paper>
         </Popper>
-        <CoinGift 
+        {/* <CoinGift 
           open={gift}
           image={img}
           type={type}
@@ -330,12 +336,12 @@ class Coin extends React.Component {
           topicUserId={topicUserId}
           handleClose={this.handleGiftClose}
           showAlert={this.showAlert.bind(this)}
-        />
-        <Alert 
+        /> */}
+        {/* <Alert 
 					handleClose={this.hideAlert} 
 					open={msgOpen} 
 					message={msg} 
-				/>
+				/> */}
       </div>
     );
   }
@@ -353,4 +359,11 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, )(withStyles(styles)(Coin));
+const mapDispatchToProps = {
+  setCoinGift
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(Coin));

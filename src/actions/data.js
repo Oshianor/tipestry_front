@@ -7,6 +7,22 @@ export const getToken = (token) => {
 }
 
 
+
+export const setWarning = (payload) => {
+  return {
+    type: "LOGIN_WARNING",
+    payload
+  };
+}
+
+
+export const setCoinGift = (payload) => {
+  return {
+    type: "COIN_GIFT",
+    payload
+  };
+}
+
 // topic page number
 export const setPageNumber = (num) => {
   return {

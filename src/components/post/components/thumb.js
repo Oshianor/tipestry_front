@@ -12,7 +12,7 @@ import ThumbUpAlt from '@material-ui/icons/ThumbUpAlt';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getToken } from "../../../actions/data";
+import { getToken, setWarning } from "../../../actions/data";
 
 import axios from 'axios';
 import { config } from '../../../../config';
@@ -109,7 +109,14 @@ class Thumb extends React.Component {
 
 
   async handleVote(votes) {
-    const { topicObjId, handleOpen, views, gift, comment } = this.props;
+    const {
+      topicObjId,
+      handleOpen,
+      views,
+      gift,
+      comment,
+      setWarning
+    } = this.props;
     const { count } = this.state; 
     let token = localStorage.getItem('token');
 
@@ -139,7 +146,8 @@ class Thumb extends React.Component {
         
       }
     } else {
-      handleOpen();
+      // handleOpen();
+      setWarning(true);
     }
   }
 
@@ -221,9 +229,13 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    getToken: getToken
-  }, dispatch)
+  return bindActionCreators(
+    {
+      getToken: getToken,
+      setWarning
+    },
+    dispatch
+  );
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Thumb));

@@ -23,8 +23,13 @@ import axios from 'axios';
 import { config } from '../../config';
 import { withRouter } from 'next/router';
 import { bindActionCreators } from 'redux';
-import { getTopics, getFavourite } from "../actions/data";
+import { getTopics, getFavourite, setWarning } from "../actions/data";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import CoinModal from "../components/post/components/coingift";
+import Alert from "../components/reuseable/alert";
+import Warning from "../components/reuseable/warning";
+
+
 
 const styles = (theme) => ({
   root: {
@@ -50,13 +55,13 @@ class Profile extends React.Component {
     drawer: false,
     stopScroll: false,
     userTopicPageNum: 2,
-    favouritePageNum: 2, 
+    favouritePageNum: 2,
     loading: false
   };
 
   handleChange(value) {
     this.setState({ value });
-  };
+  }
 
   getCurrentLevel = () => {
     const { data } = this.props;
@@ -64,40 +69,40 @@ class Profile extends React.Component {
       return (
         <div style={{ marginTop: -5 }}>
           <img src="/static/levels/newbie.png" width={25} height={25} />
-          <Typography variant='body2' style={{ fontSize: 10 }} >
+          <Typography variant="body2" style={{ fontSize: 10 }}>
             Newbie
           </Typography>
         </div>
-      )
+      );
     } else if (data.profile.user_level === 2) {
       return (
         <div style={{ marginTop: -5 }}>
           <img src="/static/levels/expert.png" width={25} height={25} />
-          <Typography variant='body2' style={{ fontSize: 10 }} >
+          <Typography variant="body2" style={{ fontSize: 10 }}>
             Expert
           </Typography>
         </div>
-      )
+      );
     } else if (data.profile.user_level === 3) {
       return (
         <div style={{ marginTop: -5 }}>
           <img src="/static/levels/pro.png" width={25} height={25} />
-          <Typography variant='body2' style={{ fontSize: 10 }} >
+          <Typography variant="body2" style={{ fontSize: 10 }}>
             Pro
           </Typography>
         </div>
-      )
+      );
     } else if (data.profile.user_level === 4) {
       return (
         <div style={{ marginTop: -5 }}>
           <img src="/static/levels/veteran.png" width={25} height={25} />
-          <Typography variant='body2' style={{ fontSize: 10 }} >
+          <Typography variant="body2" style={{ fontSize: 10 }}>
             Veteran
           </Typography>
         </div>
-      )
+      );
     }
-  }
+  };
 
   getFutureLevel = () => {
     const { data } = this.props;
@@ -105,176 +110,198 @@ class Profile extends React.Component {
       return (
         <div style={{ marginTop: -5 }}>
           <img src="/static/levels/expert.png" width={25} height={25} />
-          <Typography variant='body2' style={{ fontSize: 10 }} >
+          <Typography variant="body2" style={{ fontSize: 10 }}>
             Expert
           </Typography>
         </div>
-      )
+      );
     } else if (data.profile.user_level === 2) {
       return (
         <div style={{ marginTop: -5 }}>
           <img src="/static/levels/pro.png" width={25} height={25} />
-          <Typography variant='body2' style={{ fontSize: 10 }} >
+          <Typography variant="body2" style={{ fontSize: 10 }}>
             Pro
           </Typography>
         </div>
-      )
+      );
     } else if (data.profile.user_level === 3) {
       return (
         <div style={{ marginTop: -5 }}>
           <img src="/static/levels/veteran.png" width={25} height={25} />
-          <Typography variant='body2' style={{ fontSize: 10 }} >
+          <Typography variant="body2" style={{ fontSize: 10 }}>
             Veteran
           </Typography>
         </div>
-      )
+      );
     }
-  }
+  };
 
   displayInfo = () => {
     const { data } = this.props;
-    
+
     return (
-      <div style={{ marginTop: 250, marginBottom: 10, textAlign: 'center' }} >
+      <div style={{ marginTop: 250, marginBottom: 10, textAlign: "center" }}>
         <Typography variant="h4" style={{ textTransform: "capitalize" }}>
-          {
-            typeof data.profile.name !== "undefined" ?
-              data.profile.name
-            :
-              data.profile.username
-          }
+          {typeof data.profile.name !== "undefined"
+            ? data.profile.name
+            : data.profile.username}
         </Typography>
         <Typography variant="subtitle2">
           {/* Member Since:  */}
-          {Lang.d2}{moment(data.profile.created_at).locale(Lang.locale).format('YYYY')}
+          {Lang.d2}
+          {moment(data.profile.created_at)
+            .locale(Lang.locale)
+            .format("YYYY")}
         </Typography>
 
         <div style={{ margin: "20px 20%" }}>
-          <Grid container >
-            <Grid item xs={1} >
+          <Grid container>
+            <Grid item xs={1}>
               {this.getCurrentLevel()}
             </Grid>
-            <Grid item xs={10} >
-              <Progress percent={parseInt((data.profile.user_level / 6) * 100)} />
+            <Grid item xs={10}>
+              <Progress
+                percent={parseInt((data.profile.user_level / 6) * 100)}
+              />
             </Grid>
-            <Grid item xs={1} >
+            <Grid item xs={1}>
               {this.getFutureLevel()}
             </Grid>
           </Grid>
         </div>
-        
 
-        <Typography variant="subtitle2" style={{ margin: "5px 10%" }} >
+        <Typography variant="subtitle2" style={{ margin: "5px 10%" }}>
           {data.profile.bio && data.profile.bio}
         </Typography>
       </div>
-    )
-  }
+    );
+  };
 
   handleFetchMoreUserPost = async () => {
     const { router, getTopics, data, userPostTotal } = this.props;
     const { userTopicPageNum, loading } = this.state;
-    
+
     if (!loading && userPostTotal > data.topics.length) {
       try {
         this.setState({ loading: true });
-        let profile = await axios.get(config.api + '/users/profile/' + router.query.userObjId + "?userPageTopic=" + userTopicPageNum);
+        let profile = await axios.get(
+          config.api +
+            "/users/profile/" +
+            router.query.userObjId +
+            "?userPageTopic=" +
+            userTopicPageNum
+        );
         // console.log('profile =====>>>>', profile);
-        
+
         if (profile.data.userTopics) {
           this.setState({
             userTopicPageNum: userTopicPageNum + 1,
             loading: false
-          })
+          });
           // get the new updated data and push to the end of the array topics
           profile.data.userTopics.forEach(obj => {
             data.topics.push(obj);
-          })
+          });
           getTopics(data.topics);
         }
-
       } catch (err) {
         // console.log(err);
-
       }
     }
-  }
+  };
 
   handleFetchMoreUserFavouritePost = async () => {
     const { router, getFavourite, data } = this.props;
     const { favouritePageNum, loading } = this.state;
-    
+
     if (!loading) {
       try {
         this.setState({ loading: true });
-        let favor = await axios.get(config.api + '/users/profile/' + router.query.userObjId + "?userFavouritePageTopic=" + favouritePageNum)
+        let favor = await axios.get(
+          config.api +
+            "/users/profile/" +
+            router.query.userObjId +
+            "?userFavouritePageTopic=" +
+            favouritePageNum
+        );
         // console.log(favor);
-        
+
         if (favor.data.favourite) {
           this.setState({
             favouritePageNum: favouritePageNum + 1,
             loading: false
-          })
+          });
           // get the new updated data and push to the end of the array topics
           favor.data.favourite.forEach(obj => {
             data.favourite.push(obj);
-          })
+          });
           getFavourite(data.favourite);
         }
-
       } catch (err) {
         // console.log(err);
-
       }
     }
-    
-  }
+  };
 
   displaySection = () => {
     const { value } = this.state;
     const { data } = this.props;
     if (value === 0) {
       return (
-        <BottomScrollListerer onBottom={this.handleFetchMoreUserPost} >
+        <BottomScrollListerer onBottom={this.handleFetchMoreUserPost}>
           <Post topicValue={data.topics} source="usertopics" />
         </BottomScrollListerer>
       );
     } else if (value === 1) {
       return (
-        <BottomScrollListerer onBottom={this.handleFetchMoreUserFavouritePost} >
+        <BottomScrollListerer onBottom={this.handleFetchMoreUserFavouritePost}>
           <Post topicValue={data.favourite} source="favourite" />
         </BottomScrollListerer>
-      )
+      );
     } else if (value === 2) {
       return <Comments value={data.comment} />;
     } else if (value === 3) {
       return <Replies value={data.replies} />;
     } else if (value === 4) {
-      return <Following value={data.following} profile={data.profile} user={data.user} />;
+      return (
+        <Following
+          value={data.following}
+          profile={data.profile}
+          user={data.user}
+        />
+      );
     } else if (value === 5) {
-      return <Follower value={data.followers} profile={data.profile} user={data.user} /> ;
+      return (
+        <Follower
+          value={data.followers}
+          profile={data.profile}
+          user={data.user}
+        />
+      );
     }
-        
-  }
+  };
 
   displayTab = () => {
     const { classes, data, userPostTotal } = this.props;
     const { value } = this.state;
-    let token = localStorage.getItem('token')
+    let token = localStorage.getItem("token");
     const curr = {
       // backgroundColor: "#1f7be1"
       borderBottom: "2px solid #1f7be1"
-    }
+    };
     const not = {
       backgroundColor: "white"
       // borderBottom: "2px solid #1f7be1"
-    }
+    };
     return (
       <Paper>
         <Grid container justify="center">
-          <Grid style={value === 0 ? curr : not} >
-            <Button className={classes.tab} onClick={this.handleChange.bind(this, 0)}  >
-              <Typography className={classes.pos} >
+          <Grid style={value === 0 ? curr : not}>
+            <Button
+              className={classes.tab}
+              onClick={this.handleChange.bind(this, 0)}
+            >
+              <Typography className={classes.pos}>
                 {userPostTotal}
                 &nbsp;
               </Typography>
@@ -282,44 +309,56 @@ class Profile extends React.Component {
               {Lang.e2}
             </Button>
           </Grid>
-          {
-            token &&
-              data.profile._id === data.user._id &&
-              <Grid style={value === 1 ? curr : not} >
-                <Button className={classes.tab} onClick={this.handleChange.bind(this, 1)}  >
-                  <Typography className={classes.pos} >
-                    { data.profile.favourite.length === 0 ? "" : data.profile.favourite.length }
-                    &nbsp;
-                  </Typography>
-                  {/* Favourites */}
-                  {Lang.f2}
-                </Button>
-              </Grid>
-          }
-          <Grid style={value === 2 ? curr : not} >
-            <Button className={classes.tab} onClick={this.handleChange.bind(this, 2)}  >
-              <Typography className={classes.pos} >
-                { data.comment.length === 0 ? "" : data.comment.length }
+          {token && data.profile._id === data.user._id && (
+            <Grid style={value === 1 ? curr : not}>
+              <Button
+                className={classes.tab}
+                onClick={this.handleChange.bind(this, 1)}
+              >
+                <Typography className={classes.pos}>
+                  {data.profile.favourite.length === 0
+                    ? ""
+                    : data.profile.favourite.length}
+                  &nbsp;
+                </Typography>
+                {/* Favourites */}
+                {Lang.f2}
+              </Button>
+            </Grid>
+          )}
+          <Grid style={value === 2 ? curr : not}>
+            <Button
+              className={classes.tab}
+              onClick={this.handleChange.bind(this, 2)}
+            >
+              <Typography className={classes.pos}>
+                {data.comment.length === 0 ? "" : data.comment.length}
                 &nbsp;
               </Typography>
               {/* Comments */}
               {Lang.g2}
             </Button>
           </Grid>
-          <Grid style={value === 4 ? curr : not} >
-            <Button className={classes.tab} onClick={this.handleChange.bind(this, 4)}  >
-              <Typography className={classes.pos} >
-                { data.following.length === 0 ? "" : data.following.length }
+          <Grid style={value === 4 ? curr : not}>
+            <Button
+              className={classes.tab}
+              onClick={this.handleChange.bind(this, 4)}
+            >
+              <Typography className={classes.pos}>
+                {data.following.length === 0 ? "" : data.following.length}
                 &nbsp;
               </Typography>
               {/* Following */}
               {Lang.g}
             </Button>
           </Grid>
-          <Grid style={value === 5 ? curr : not} >
-            <Button className={classes.tab} onClick={this.handleChange.bind(this, 5)}  >
-              <Typography className={classes.pos} >
-                {data.followers.length === 0 ? "" : data.followers.length }
+          <Grid style={value === 5 ? curr : not}>
+            <Button
+              className={classes.tab}
+              onClick={this.handleChange.bind(this, 5)}
+            >
+              <Typography className={classes.pos}>
+                {data.followers.length === 0 ? "" : data.followers.length}
                 &nbsp;
               </Typography>
               {/* Followers */}
@@ -328,96 +367,123 @@ class Profile extends React.Component {
           </Grid>
         </Grid>
       </Paper>
-    )
-  }
+    );
+  };
 
-    // handle drawer open
+  // handle drawer open
   handleDrawerOpen = () => {
     this.setState({ drawer: true });
-  }
+  };
 
-    // handle close of drawer
+  // handle close of drawer
   handleDrawerClose = () => {
     this.setState({ drawer: false });
+  };
+
+  componentWillUnmount() {
+    removeEventListener("scroll", this.trackScrolling);
   }
 
-	componentWillUnmount() {
-		removeEventListener('scroll', this.trackScrolling);
-  }
-  
   // track scroolling . when scroll amost to the header
-  trackScrolling = (e) => {
+  trackScrolling = e => {
     // console.log(window.scrollY, "vvv", window.scrollX);
-    
+
     if (window.scrollY > 240) {
       this.setState({
         stopScroll: true
-      })
-      return false
+      });
+      return false;
     }
     this.setState({
       stopScroll: false
-    })
+    });
     return false;
-  }
-	
+  };
+
   componentDidMount() {
-		addEventListener('scroll', this.trackScrolling);		
-	}
+    addEventListener("scroll", this.trackScrolling);
+  }
+
+  showAlert(msg) {
+    this.setState({
+      msgOpen: true,
+      msg
+    });
+  }
+
+  hideAlert = () => {
+    this.setState({
+      msgOpen: false
+    });
+  };
 
   render() {
-    const { stopScroll, drawer, loading, value } = this.state;
-    const { classes, userPostTotal, data } = this.props;
+    const { stopScroll, drawer, loading, value, msgOpen, msg } = this.state;
+    const { classes, userPostTotal, data, gift, setWarning } = this.props;
     // console.log('userPostTotal', userPostTotal, 'data.topics.length', data.topics.length);
-    
+
     return (
       <div>
-        <Header 
-          drawer={drawer} 
-          handleDrawerOpen={this.handleDrawerOpen}  
-          handleDrawerClose={this.handleDrawerClose} 
+        <Header
+          drawer={drawer}
+          handleDrawerOpen={this.handleDrawerOpen}
+          handleDrawerClose={this.handleDrawerClose}
         />
-        <Drawer 
-					drawer={drawer} 
-					// this props is to check if overlay exisit 
-					// in that page an push the icons to the top.
+        <Drawer
+          drawer={drawer}
+          // this props is to check if overlay exisit
+          // in that page an push the icons to the top.
           overlay={true}
           top={130}
           stopScroll={stopScroll}
-          handleDrawerOpen={this.handleDrawerOpen}  
-          handleDrawerClose={this.handleDrawerClose} 
+          handleDrawerOpen={this.handleDrawerOpen}
+          handleDrawerClose={this.handleDrawerClose}
         >
           <div>
             {this.displayInfo()}
             {this.displayTab()}
             {this.displaySection()}
-            {
-              // show a preloader sign for user post and user favourite post
-              value === 0 && userPostTotal > data.topics.length &&
-                <IconButton style={{ display: "contents" }} >
-                  {
-                    loading ?
-                      <CircularProgress className={classes.progress} color="secondary" />
-                    :
-                      <ExpandMore />
-                  }
-                </IconButton>
-            }
+            {// show a preloader sign for user post and user favourite post
+            value === 0 && userPostTotal > data.topics.length && (
+              <IconButton style={{ display: "contents" }}>
+                {loading ? (
+                  <CircularProgress
+                    className={classes.progress}
+                    color="secondary"
+                  />
+                ) : (
+                  <ExpandMore />
+                )}
+              </IconButton>
+            )}
 
-            {
-              // show a preloader sign for user post and user favourite post
-              value === 1 &&
-                <IconButton style={{ display: "contents" }} >
-                  {
-                    loading ?
-                      <CircularProgress className={classes.progress} color="secondary" />
-                    : 
-                      <ExpandMore />
-                  }
-                </IconButton>
-            }
+            {// show a preloader sign for user post and user favourite post
+            value === 1 && (
+              <IconButton style={{ display: "contents" }}>
+                {loading ? (
+                  <CircularProgress
+                    className={classes.progress}
+                    color="secondary"
+                  />
+                ) : (
+                  <ExpandMore />
+                )}
+              </IconButton>
+            )}
           </div>
         </Drawer>
+        <CoinModal
+          open={gift.open}
+          image={gift.image}
+          type={gift.type}
+          topicId={gift.topicId}
+          currentCoin={gift.currentCoin}
+          topicUserId={gift.topicUserId}
+          // handleClose={this.handleGiftClose}
+          showAlert={this.showAlert.bind(this)}
+        />
+        <Alert handleClose={this.hideAlert} open={msgOpen} message={msg} />
+        <Warning open={data.warning} handleClose={() => setWarning(false)} />
       </div>
     );
   }
@@ -430,14 +496,19 @@ Profile.propTypes = {
 function mapStateToProps(state) {
   return {
     data: state.data,
-  }
+    gift: state.gift
+  };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    getTopics: getTopics,
-    getFavourite: getFavourite
-  }, dispatch)
+  return bindActionCreators(
+    {
+      getTopics: getTopics,
+      getFavourite: getFavourite,
+      setWarning
+    },
+    dispatch
+  );
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withStyles(styles)(Profile)));

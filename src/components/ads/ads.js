@@ -1,68 +1,3 @@
-// import React, { Component } from 'react';
-// import Slider from "react-animated-slider";
-// import "react-animated-slider/build/horizontal.css";
-// import Typography from "@material-ui/core/Typography";
-// import Button from "@material-ui/core/Button";
-
-// class Ads extends Component {
-// 	render() {
-// 		const content = [
-//       {
-//         title: "tghimff",
-//         link: "https://tipestry.com",
-//         image: "/static/images/default.png",
-//         description: "description uguhir description io iodescription",
-//         button: "See More"
-//       },
-//       {
-//         title: "tghimff",
-//         link: "https://tipestry.com",
-//         image: "/static/images/login.png",
-//         description: "description uguhir description io iodescription",
-//         button: "See More"
-//       }
-//     ];
-// 		return (
-//       <Slider
-//         className="slider-wrapper"
-//         buttonDisabled={true}
-//         autoplay={3000}
-//       >
-//         {content.map((item, index) => (
-//           <div
-//             key={index}
-//             className="slider-content"
-//             style={{
-//               background: `url('${item.image}') no-repeat center center`
-//             }}
-//           >
-//             <div className="inner">
-//               <Typography variant="h1">{item.title}</Typography>
-//               <Typography variant="body1">
-//                 {/* {moment(game.createdAt).fromNow()} */}
-//                 &#8358;{item.description}
-//               </Typography>
-//               <a href={"/game"} style={{ textDecoration: "none" }}>
-//                 <Button
-//                   size="large"
-//                   style={{ background: "red", color: "white" }}
-//                 >
-//                   Enter Now
-//                 </Button>
-//               </a>
-//             </div>
-//           </div>
-//         ))}
-//       </Slider>
-//     );
-// 	}
-// }
-
-// export default Ads;
-
-
-
-
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import MobileStepper from "@material-ui/core/MobileStepper";
@@ -106,6 +41,8 @@ const useStyles = theme => ({
     width: "100%"
   }
 });
+
+
 
 function SwipeableTextMobileStepper(props) {
   const { classes } = props;
