@@ -286,11 +286,11 @@ class Homepage extends Component {
       <BottomScrollListerer onBottom={this.handleFetchMoreTopics}>
         <div>
           <Header
-            drawer={drawer}
+            // drawer={drawer}
             handleDrawerOpen={this.handleDrawerOpen}
             handleDrawerClose={this.handleDrawerClose}
           />
-          <Drawer
+          {/* <Drawer
             drawer={drawer}
             stopScroll={stopScroll}
             overlay={true}
@@ -298,7 +298,7 @@ class Homepage extends Component {
             top={228}
             handleDrawerOpen={this.handleDrawerOpen}
             handleDrawerClose={this.handleDrawerClose}
-          >
+          > */}
             <Grid container justify="center" spacing={8}>
               <Grid
                 container
@@ -405,7 +405,7 @@ class Homepage extends Component {
                 </Hidden>
               </Grid>
             </Grid>
-          </Drawer>
+          {/* </Drawer> */}
           <Dialog open={open} handleClose={this.handleDialog}>
             <Stage />
           </Dialog>
