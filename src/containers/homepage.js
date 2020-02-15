@@ -224,7 +224,7 @@ class Homepage extends Component {
 
     this.handleLazyLoadImage();
 
-    
+
     this.setState({
       token: localStorage.getItem("token")
     });
@@ -245,6 +245,7 @@ class Homepage extends Component {
     const { data } = this.props;
 
     if (prevProps.data.pageNumber !== data.pageNumber) {
+      this.handleLazyLoadImage();
       if (data.pageNumber > 5) {
         clearInterval(this.timer);
       }

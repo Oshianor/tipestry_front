@@ -32,6 +32,7 @@ import {
   TwitterTimelineEmbed,
   TwitterTweetEmbed
 } from "react-twitter-embed";
+import lozad from "lozad";
 
 
 
@@ -135,9 +136,19 @@ class Post extends React.Component {
     return ext ? ext[1] : null;
   };
 
+  // handleLazyLoadImage = () => {
+  //   const observer = lozad(); // lazy loads elements with default selector as '.lozad'
+  //   observer.observe();
+  // };
+
+
   // when the component ount set the token to the state
   componentDidMount() {
     let token = localStorage.getItem("token");
+
+    // this.handleLazyLoadImage();
+
+
     this.setState({
       token
     });
@@ -231,12 +242,8 @@ class Post extends React.Component {
     } else if (improved === "twitter.com") {
       const arr = url.split("/");
       if (arr[4] === "status") {
-        return (
-          <TwitterTweetEmbed
-            tweetId={arr[arr.length - 1]}
-          />
-        );
-      } else if (arr.length === 4){
+        return <TwitterTweetEmbed tweetId={arr[arr.length - 1]} />;
+      } else if (arr.length === 4) {
         return (
           <TwitterTimelineEmbed
             sourceType="profile"
@@ -256,7 +263,7 @@ class Post extends React.Component {
           }}
         >
           <img
-            class="lozad"
+            className="lozad"
             style={{
               backgroundPosition: "top",
               width: "100%"
@@ -316,10 +323,7 @@ class Post extends React.Component {
                       </a>
                     </Link>
                   ) : (
-                    <Thumbnails
-                      name="Anonymous"
-                      url={null}
-                    />
+                    <Thumbnails name="Anonymous" url={null} />
                   )
                 }
                 action={
