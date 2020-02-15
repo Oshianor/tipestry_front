@@ -35,6 +35,7 @@ import {
 
 
 
+
 const styles = theme => ({
   card: {
     margin: "10px",
@@ -244,7 +245,7 @@ class Post extends React.Component {
           />
         );
       }
-    } 
+    }
     return (
       <div>
         <a
@@ -255,11 +256,12 @@ class Post extends React.Component {
           }}
         >
           <img
+            class="lozad"
             style={{
               backgroundPosition: "top",
               width: "100%"
             }}
-            src={
+            data-src={
               typeof topic.sites[0] !== "undefined"
                 ? this.checkForGif(url) == "gif" ||
                   this.checkForGif(url) == "png" ||

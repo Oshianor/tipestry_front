@@ -41,6 +41,9 @@ import BottomScrollListerer from "react-bottom-scroll-listener";
 import CoinModal from "../components/post/components/coingift"
 import Alert from "../components/reuseable/alert";
 import Warning from "../components/reuseable/warning";
+import lozad from "lozad";
+
+
 
 
 
@@ -206,12 +209,22 @@ class Homepage extends Component {
     }
   };
 
+
+  handleLazyLoadImage = () => {
+    const observer = lozad(); // lazy loads elements with default selector as '.lozad'
+    observer.observe();
+  }
+
   // handle close of drawer
   handleDrawerClose = () => {
     this.setState({ drawer: false });
   };
 
   componentDidMount() {
+
+    this.handleLazyLoadImage();
+
+    
     this.setState({
       token: localStorage.getItem("token")
     });
