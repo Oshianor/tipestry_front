@@ -77,7 +77,7 @@ class Header extends React.Component {
       <div className={classes.root}>
         <AppBar position="fixed" className={classes.appBar}>
           <Toolbar className={classes.rootGrow}>
-            <Link href="/" prefetch>
+            <Link href="/">
               <a
                 style={{
                   margin: "0px 3%",

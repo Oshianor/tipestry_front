@@ -309,7 +309,7 @@ class LoginPath extends Component {
     return (
       <div className={classes.root}>
         {/* <Typography variant="h2" gutterBottom style={{ margin: '4% 8%' }} >Tipestry</Typography> */}
-        <Link href="/" prefetch>
+        <Link href="/">
           <a>
             <Typography
               variant="h2"

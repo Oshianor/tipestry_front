@@ -588,13 +588,13 @@ class Header extends React.Component {
                 {/* Abount */}
               </Button>
             </a>
-            <Link href="/login" prefetch>
+            <Link href="/login">
               <Button color="inherit">
                 {Lang.j}
                 {/* Login */}
               </Button>
             </Link>
-            <Link href="/register" prefetch>
+            <Link href="/register">
               <Button color="inherit">
                 {Lang.k}
                 {/* Register */}
@@ -648,10 +648,10 @@ class Header extends React.Component {
             >
               <MenuItem>{Lang.d3}</MenuItem>
             </a>
-            <Link href="/login" prefetch>
+            <Link href="/login">
               <MenuItem>{Lang.j}</MenuItem>
             </Link>
-            <Link href="/register" prefetch>
+            <Link href="/register">
               <MenuItem>{Lang.k}</MenuItem>
             </Link>
           </React.Fragment>
@@ -717,7 +717,7 @@ class Header extends React.Component {
                 <MenuIcon />
               </IconButton>
 
-              <Link href="/" prefetch>
+              <Link href="/" >
                 <a>
                   <Typography
                     variant="h2"

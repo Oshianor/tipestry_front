@@ -28,7 +28,7 @@ class HeaderSiteVerification extends Component {
 		const { classes } = this.props;
 		return (
       <div className={classes.root}>
-        <Link href="/" prefetch>
+        <Link href="/" >
           <a className={classes.link} >
             <img
               src="/static/login/newlogo.png"

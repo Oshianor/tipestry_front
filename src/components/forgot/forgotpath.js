@@ -212,7 +212,7 @@ class ForgotPath extends Component {
     return (
       <div className={classes.root}>
         {/* <Typography variant="h2" gutterBottom style={{ margin: '4% 8%' }} >Tipestry</Typography> */}
-        <Link href="/" prefetch>
+        <Link href="/">
           <a>
             <Typography variant="h2" gutterBottom style={{ margin: '4% 8%' }} >
               <img src="/static/login/newlogo.png" style={{ width: 200, height: 60 }} />

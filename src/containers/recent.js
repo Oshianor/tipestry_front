@@ -39,6 +39,7 @@ import UploadSite from '../components/uploadurl/uploadsite';
 import Ads from '../components/ads/ads';
 import Searchpost from '../components/header/searchpost';
 import BottomScrollListerer from "react-bottom-scroll-listener";
+import lozad from "lozad";
 
 
 const styles = theme => ({
@@ -158,7 +159,6 @@ class Homepage extends Component {
       this.handleFetchMoreTopics();
     }, 3000);
   }
-  
 
   handleFetchMoreTopics = async () => {
     try {
@@ -200,12 +200,20 @@ class Homepage extends Component {
     }
   };
 
+  handleLazyLoadImage = () => {
+    const observer = lozad(); // lazy loads elements with default selector as '.lozad'
+    observer.observe();
+  };
+
+  
   // handle close of drawer
   handleDrawerClose = () => {
     this.setState({ drawer: false });
   };
 
   componentDidMount() {
+    this.handleLazyLoadImage();
+
     this.setState({
       token: localStorage.getItem("token")
     });
@@ -222,17 +230,26 @@ class Homepage extends Component {
     clearInterval(this.timer);
   }
 
+  // componentDidUpdate(prevProps, prevState) {
+  //   const { data } = this.props;
+
+  //   if (prevProps.data.pageNumber !== data.pageNumber) {
+  //     if (data.pageNumber > 5) {
+  //       clearInterval(this.timer);
+  //     }
+  //   }
+  // }
 
   componentDidUpdate(prevProps, prevState) {
     const { data } = this.props;
 
     if (prevProps.data.pageNumber !== data.pageNumber) {
+      this.handleLazyLoadImage();
       if (data.pageNumber > 5) {
-        clearInterval(this.timer)
+        clearInterval(this.timer);
       }
     }
   }
-  
 
   handleGetTags = async () => {
     let tag = await axios.get(config.api + "/topic/top/hashtag");
