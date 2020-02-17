@@ -28,6 +28,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import CoinModal from "../components/post/components/coingift";
 import Alert from "../components/reuseable/alert";
 import Warning from "../components/reuseable/warning";
+import lozad from "lozad";
 
 
 
@@ -203,6 +204,7 @@ class Profile extends React.Component {
             data.topics.push(obj);
           });
           getTopics(data.topics);
+          this.handleLazyLoadImage()
         }
       } catch (err) {
         // console.log(err);
@@ -400,7 +402,22 @@ class Profile extends React.Component {
     return false;
   };
 
+  handleLazyLoadImage = () => {
+    const observer = lozad(); // lazy loads elements with default selector as '.lozad'
+    observer.observe();
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    const { data } = this.props;
+
+    if (prevProps.data.topics !== data.topics) {
+      this.handleLazyLoadImage()
+    }
+  }
+  
+
   componentDidMount() {
+    this.handleLazyLoadImage();
     addEventListener("scroll", this.trackScrolling);
   }
 
