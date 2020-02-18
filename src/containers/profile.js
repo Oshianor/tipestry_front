@@ -410,6 +410,11 @@ class Profile extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     const { data } = this.props;
 
+    if (data.topics.length > 0) {
+      this.handleLazyLoadImage();
+
+    }
+
     if (prevProps.data.topics !== data.topics) {
       this.handleLazyLoadImage()
     }
